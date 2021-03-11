@@ -6,6 +6,11 @@ using UnityEngine.Events;
 
 public class G_DropItem : MonoBehaviour
 {
+
+    private void Start()
+    {
+        Item.myItem = new GameObject[3];
+    }
     void Update()
     {
         Drop();
@@ -24,19 +29,20 @@ public class G_DropItem : MonoBehaviour
                     
                 if (Item.itemInstance == null)
                     {                        
-                        Item.myItem.SetActive(true);
-                        Item.myItem.transform.position = transform.position;
+                        Item.myItem[Item.arrayIndex-1].SetActive(true);
+                        Item.myItem[Item.arrayIndex-1].transform.position = transform.position;
+
+                    Debug.Log("버림 : " + Item.myItem[Item.arrayIndex - 1].name + "   index : " + (Item.arrayIndex-1) );
                      }
 
                 if (Item.itemInstance != null)
                 {
-                    Item.itemInstance.transform.SetParent(null);
-                    Item.itemInstance.transform.position = transform.position;
-                    Item.itemInstance = null;
+                    Debug.Log("아이템 버릴 수 없음");
+                    
                 }
 
                     
-                   Item.arrayIndex = 0;                                
+                   Item.arrayIndex -= 1;                                
                    Item.inventoryBox[Item.arrayIndex].GetComponent<Image>().sprite = Resources.Load<Sprite>("./Resources/inventory Background.png");
 
                 }
