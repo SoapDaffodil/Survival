@@ -7,9 +7,13 @@ public class F_GetItem_OpenDoor : MonoBehaviour
 {
     void Start()
     {
+        Item.myItem = new GameObject[3];
         Item.arrayIndex = 0;
-        Item.inventoryBox = new GameObject[1];
-        Item.inventoryBox[0] = GameObject.Find("ItemImage");
+        Item.inventoryBox = new GameObject[3];
+        for (int i = 0; i < 3; i++)
+        {
+            Item.inventoryBox[i] = GameObject.Find("ItemImage" + i);
+        }
     }
 
     void OnTriggerStay(Collider other)
@@ -24,7 +28,7 @@ public class F_GetItem_OpenDoor : MonoBehaviour
                 }
                 else
                 {
-                    Item.myItem = other.gameObject;
+                    Item.myItem[Item.arrayIndex] = other.gameObject;
                     other.gameObject.SetActive(false);
                     Item.inventoryBox[Item.arrayIndex].GetComponent<Image>().sprite = other.GetComponent<Image>().sprite;
                     Item.arrayIndex++;
@@ -49,3 +53,4 @@ public class F_GetItem_OpenDoor : MonoBehaviour
         }
     }
 }
+

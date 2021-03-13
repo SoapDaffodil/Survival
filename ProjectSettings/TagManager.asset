@@ -3,7 +3,11 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Button
+  - Item
+  - Door
+  - EMPZone
   layers:
   - Default
   - TransparentFX
