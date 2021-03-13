@@ -28,7 +28,11 @@ public class Gun : MonoBehaviour
     {
         CheckBettery();
 
+<<<<<<< HEAD
         if (currentBettery == 0)
+=======
+        if(currentBettery == 0)
+>>>>>>> 52826d8f7255cf9032802a180b071499a8dcea54
         {
             Debug.Log("배터리가 없습니다");
             state = State.Empty;
@@ -74,7 +78,11 @@ public class Gun : MonoBehaviour
     public void Fire(Vector3 startPosition, Vector3 direction)
     {
 
+<<<<<<< HEAD
         if (state == State.Ready && Time.time >= lastFireTime + fireTime)
+=======
+        if(state == State.Ready && Time.time >= lastFireTime + fireTime)
+>>>>>>> 52826d8f7255cf9032802a180b071499a8dcea54
         {
             RaycastHit hit;
             Vector3 hitPosition;
@@ -94,7 +102,11 @@ public class Gun : MonoBehaviour
             currentBulletText.text = string.Format(" {0:} ", currentBullet);
             bulletAmoutText.text = string.Format(" {0:} ", betteryAmount * 30);
             Debug.Log("뚜쉬뚜쉬!!");
+<<<<<<< HEAD
 
+=======
+           
+>>>>>>> 52826d8f7255cf9032802a180b071499a8dcea54
 
             if (currentBullet % 30 == 0)
             {
@@ -105,12 +117,17 @@ public class Gun : MonoBehaviour
             {
                 state = State.Empty;
                 Debug.Log("배터리가 없습니다");
+<<<<<<< HEAD
             }
+=======
+            }            
+>>>>>>> 52826d8f7255cf9032802a180b071499a8dcea54
         }
     }
 
     public void CheckBettery()
     {
+<<<<<<< HEAD
         for (int i = 0; i < Item.arrayIndex; i++)
         {
             if (Item.myItem[i].name == "Battery")
@@ -123,3 +140,17 @@ public class Gun : MonoBehaviour
 
 
 }
+=======
+        for(int i = 0; i < Item.arrayIndex; i++)
+        {
+            if(Item.myItem[i].name == "Bettery")
+            {
+                betteryAmount += 1;
+            }            
+        }
+    }
+
+   
+
+}
+>>>>>>> 52826d8f7255cf9032802a180b071499a8dcea54
