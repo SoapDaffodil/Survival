@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class EMP : MonoBehaviour
+public class M_Light : MonoBehaviour
 {
-    private float distance = 5f;
     private float minGauge = 15f;
     private float maxGauge = 45f;
     private float chargingTime = 2f;
@@ -14,10 +13,8 @@ public class EMP : MonoBehaviour
     private float currenGauge;
     private float chargingSpeed;
     private bool finished;
-    private int empAmount = 0;
+    private int LightAmount = 0;
 
-    public int count = 0;
-    public bool isDetectedMode = false;
 
     private void Start()
     {
@@ -37,18 +34,17 @@ public class EMP : MonoBehaviour
     public void Install()
     {
         powerSlider.gameObject.SetActive(true);
-        gameObject.GetComponent<SphereCollider>().radius = 0.5f;
 
-        if (finished == true || empAmount == 0)
+        if (finished == true || LightAmount == 0)
         {
             currenGauge = minGauge;
             powerSlider.value = currenGauge;
             powerSlider.gameObject.SetActive(false);
 
             return;
-        }        
+        }
 
-        if(currenGauge >= maxGauge && !finished)
+        if (currenGauge >= maxGauge && !finished)
         {
             currenGauge = maxGauge;
             finished = true;
@@ -56,20 +52,15 @@ public class EMP : MonoBehaviour
             Item.myItem[Item.arrayIndex - 1].SetActive(true);
             Item.myItem[Item.arrayIndex - 1].transform.position = GameObject.Find("CharacterObject").transform.position;
             EliminateItem();
-
-            count++;
-            Debug.Log("emp 설치 개수 : " + count);
-
-            isDetectedMode = true;
         }
 
-        else if(Input.GetKey(KeyCode.E) && !finished)
+        else if (Input.GetKey(KeyCode.E) && !finished)
         {
             currenGauge = currenGauge + chargingSpeed * Time.deltaTime;
             powerSlider.value = currenGauge;
         }
 
-        else if(Input.GetKeyUp(KeyCode.E))
+        else if (Input.GetKeyUp(KeyCode.E))
         {
             currenGauge = minGauge;
             powerSlider.value = minGauge;
@@ -78,30 +69,23 @@ public class EMP : MonoBehaviour
             Debug.Log("slider value : " + powerSlider.value);
         }
 
-        empAmount = empAmount - 1;
+        LightAmount = LightAmount - 1;
     }
 
-    public void CheckEMP()
+    public void CheckLight()
     {
         for (int i = 0; i < Item.arrayIndex; i++)
         {
             if (Item.myItem[i].name == "EMP")
             {
-                empAmount += 1;
-                Debug.Log("emp : " + empAmount);
+                LightAmount += 1;
+                Debug.Log("emp : " + LightAmount);
             }
 
             Debug.Log("emp가 없습니다");
         }
     }
 
-    public void OnDetect()
-    {
-        gameObject.GetComponent<SphereCollider>().radius = distance;
-        gameObject.GetComponent<SphereCollider>().isTrigger = true;
-
-
-    }
 
     public void EliminateItem()
     {
@@ -114,4 +98,6 @@ public class EMP : MonoBehaviour
 
 
 }
+
+
 

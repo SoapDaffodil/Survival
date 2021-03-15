@@ -24,16 +24,6 @@ public class Shooter : MonoBehaviour
         {
             GunOnHand();
         }
-
-        if (Input.GetMouseButtonDown(0))
-        {
-            if (Item.gun != null)
-            {
-                UpdateAimPoint();
-                Shoot();
-            }
-        }
-
         if (Input.GetKeyDown(KeyCode.R))
         {
             gun.CheckBettery();
@@ -50,23 +40,23 @@ public class Shooter : MonoBehaviour
             Debug.Log("소지하고있는 아이템이 없습니다");
         }
 
-        if (Item.gun == null)
+        if (Item.itemOnHand == null)
         {
             for (int i = 0; i < Item.arrayIndex; i++)
             {
                 if (Item.myItem[i].name == "Gun")
                 {
-                    Item.gun = Item.myItem[i].gameObject;
+                    Item.itemOnHand = Item.myItem[i].gameObject;
                 }
             }
-            Item.gun.transform.position = transform.position + new Vector3(0.7f, 0f, 0f);
-            Item.gun.gameObject.SetActive(true);
-            Item.gun.transform.SetParent(transform);
+            Item.itemOnHand.transform.position = transform.position + new Vector3(0.7f, 0f, 0f);
+            Item.itemOnHand.gameObject.SetActive(true);
+            Item.itemOnHand.transform.SetParent(transform);
         }
     }
 
 
-    void Shoot()
+    public void Shoot()
     {
         gun.Fire(fireTransform.position, aimPoint - fireTransform.position);
     }
@@ -76,7 +66,7 @@ public class Shooter : MonoBehaviour
         gun.Reloade();
     }
 
-    void UpdateAimPoint()
+    public void UpdateAimPoint()
     {
         RaycastHit hit;
 

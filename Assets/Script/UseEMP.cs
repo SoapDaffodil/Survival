@@ -14,7 +14,9 @@ public class UseEMP : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        if(Input.GetKeyDown(KeyCode.E) && other.CompareTag("EMPZone"))
+        Debug.Log("other = " + other.gameObject.name);
+
+        if (Input.GetKey(KeyCode.E) && other.CompareTag("EMPZone"))
         {
             emp.CheckEMP();
             emp.Install();
@@ -29,10 +31,23 @@ public class UseEMP : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.E))
         {
-            Debug.Log("설치 시작");
             emp.CheckEMP();
             emp.Install();
-            //emp.OnDetect();
+        }
+
+        if(emp.isDetectedMode == true)
+        {
+            emp.OnDetect();
+        }
+        
+    }
+
+    public void CompliteEMPInstall()
+    {
+        if(emp.count >= 2)
+        {
+            Debug.Log("EMP 설치 완료! 괴물에게 공격이 가능합니다!");
+            //ToDo : 괴물에게 공격하면 괴물이 데미지를 입을 수 있는 상태가 됨.
         }
     }
 }
