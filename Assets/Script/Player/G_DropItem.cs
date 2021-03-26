@@ -29,7 +29,7 @@ public class G_DropItem : MonoBehaviour
 
                 if (Item.itemOnHand == null)
                 {
-                    Item.myItem[Item.arrayIndex - 1].SetActive(true);
+                    Item.myItem[Item.arrayIndex - 1].GetComponent<MeshRenderer>().enabled = true;
                     Item.myItem[Item.arrayIndex - 1].transform.position = transform.position;                    
                 }
                                                 

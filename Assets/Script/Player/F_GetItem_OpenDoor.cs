@@ -16,7 +16,7 @@ public class F_GetItem_OpenDoor : MonoBehaviour
         }
     }
 
-    void OnTriggerStay(Collider other)
+    public void OnTriggerStay(Collider other)
     {
         if (Input.GetKeyDown(KeyCode.F))
         {
@@ -29,9 +29,23 @@ public class F_GetItem_OpenDoor : MonoBehaviour
                 else
                 {
                     Item.myItem[Item.arrayIndex] = other.gameObject;
+
+                    Debug.Log("줍는 아이템 : " + Item.myItem[Item.arrayIndex]);
+
                     other.gameObject.SetActive(false);
-                    Item.inventoryBox[Item.arrayIndex].GetComponent<Image>().sprite = other.GetComponent<Image>().sprite;
+                    //other.gameObject.GetComponent<MeshRenderer>().enabled = false;
+
+                    if(other.GetComponent<Image>() != null)
+                    {
+                        Item.inventoryBox[Item.arrayIndex].GetComponent<Image>().sprite = other.GetComponent<Image>().sprite;
+                    }
+                    else
+                    {
+                        Item.inventoryBox[Item.arrayIndex].GetComponent<Image>().sprite = Resources.Load<Sprite>("./Resources/inventory Background.png");
+                    }
+
                     Item.arrayIndex++;
+                    Debug.Log("array index : " + Item.arrayIndex);
                 }
 
             }

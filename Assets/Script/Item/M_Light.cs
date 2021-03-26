@@ -8,38 +8,43 @@ public class M_Light : MonoBehaviour
     private float minGauge = 15f;
     private float maxGauge = 45f;
     private float chargingTime = 2f;
-    public Slider powerSlider;
+    private Slider lightSlider;
+    public Light m_light;
 
     private float currenGauge;
     private float chargingSpeed;
-    private bool finished;
-    private int LightAmount = 0;
+    public bool finished;
+    private int lightAmount = 0;
 
 
     private void Start()
     {
-
+        lightSlider = GameObject.Find("LightSlider").GetComponent<Slider>();
+        m_light = GetComponent<Light>();
         chargingSpeed = (maxGauge - minGauge) / chargingTime;
+        SetUp();
     }
 
     public void SetUp()
     {
         finished = false;
         currenGauge = minGauge;
-        powerSlider.value = minGauge;
-        powerSlider.gameObject.SetActive(false);
+        lightSlider.value = minGauge;
+        lightSlider.gameObject.SetActive(false);
+        m_light.type = LightType.Point;
+        m_light.range = 0f;
     }
 
 
     public void Install()
     {
-        powerSlider.gameObject.SetActive(true);
+        lightSlider.gameObject.SetActive(true);
 
-        if (finished == true || LightAmount == 0)
+        if (finished == true || lightAmount == 0)
         {
             currenGauge = minGauge;
-            powerSlider.value = currenGauge;
-            powerSlider.gameObject.SetActive(false);
+            lightSlider.value = currenGauge;
+            lightSlider.gameObject.SetActive(false);
 
             return;
         }
@@ -48,55 +53,45 @@ public class M_Light : MonoBehaviour
         {
             currenGauge = maxGauge;
             finished = true;
-
+            m_light.range = 7f;
+           
             Item.myItem[Item.arrayIndex - 1].SetActive(true);
-            Item.myItem[Item.arrayIndex - 1].transform.position = GameObject.Find("CharacterObject").transform.position;
-            EliminateItem();
+            Item.myItem[Item.arrayIndex - 1].transform.SetParent(null);
+            Item.myItem[Item.arrayIndex - 1].transform.position = GameObject.Find("Monster").transform.position;
+            Item.EliminateItem();
         }
 
         else if (Input.GetKey(KeyCode.E) && !finished)
         {
             currenGauge = currenGauge + chargingSpeed * Time.deltaTime;
-            powerSlider.value = currenGauge;
+            lightSlider.value = currenGauge;
         }
 
         else if (Input.GetKeyUp(KeyCode.E))
         {
             currenGauge = minGauge;
-            powerSlider.value = minGauge;
+            lightSlider.value = minGauge;
 
             Debug.Log("current : " + currenGauge);
-            Debug.Log("slider value : " + powerSlider.value);
+            Debug.Log("slider value : " + lightSlider.value);
         }
 
-        LightAmount = LightAmount - 1;
+        lightAmount = lightAmount - 1;
     }
 
     public void CheckLight()
     {
         for (int i = 0; i < Item.arrayIndex; i++)
         {
-            if (Item.myItem[i].name == "EMP")
+            if (Item.myItem[i].name == "Light")
             {
-                LightAmount += 1;
-                Debug.Log("emp : " + LightAmount);
+                lightAmount += 1;
+                Debug.Log("light : " + lightAmount);
             }
 
-            Debug.Log("emp가 없습니다");
+            Debug.Log("light 가 없습니다");
         }
     }
-
-
-    public void EliminateItem()
-    {
-        Item.arrayIndex -= 1;
-        Item.inventoryBox[Item.arrayIndex].GetComponent<Image>().sprite = Resources.Load<Sprite>("./Resources/inventory Background.png");
-
-        finished = false;
-    }
-
-
-
 }
 
 

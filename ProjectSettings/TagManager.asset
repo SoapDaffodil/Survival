@@ -9,6 +9,7 @@ TagManager:
   - Door
   - EMPZone
   - Monster
+  - CureZone
   layers:
   - Default
   - TransparentFX

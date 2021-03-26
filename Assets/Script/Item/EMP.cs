@@ -5,39 +5,67 @@ using UnityEngine.UI;
 
 public class EMP : MonoBehaviour
 {
-    private float distance = 5f;
     private float minGauge = 15f;
     private float maxGauge = 45f;
     private float chargingTime = 2f;
-    public Slider powerSlider;
+    protected Slider powerSlider;
 
     private float currenGauge;
     private float chargingSpeed;
-    private bool finished;
+    public  bool finished;
     private int empAmount = 0;
 
     public int count = 0;
-    public bool isDetectedMode = false;
 
+    
     private void Start()
-    {
-
+    {        
+        powerSlider = GameObject.Find("Power Slider").GetComponent<Slider>();       
         chargingSpeed = (maxGauge - minGauge) / chargingTime;
+
+        SetUp();
+
+        if(powerSlider != null)
+        {
+            Debug.Log("slider : " + powerSlider);
+        }
+        else
+        {
+            Debug.Log("slider : null " );
+        }
+       
     }
+
 
     public void SetUp()
     {
-        finished = false;
-        currenGauge = minGauge;
-        powerSlider.value = minGauge;
-        powerSlider.gameObject.SetActive(false);
+        if (powerSlider != null)
+        {
+            finished = false;
+            currenGauge = minGauge;
+            powerSlider.value = minGauge;
+            powerSlider.gameObject.SetActive(false);
+        }
+        else
+        {
+            Debug.Log("slider : " + powerSlider);
+            Debug.Log("슬라이더가 없음");
+            
+        }      
     }
 
 
     public void Install()
     {
-        powerSlider.gameObject.SetActive(true);
-        gameObject.GetComponent<SphereCollider>().radius = 0.5f;
+        if (powerSlider != null)
+        {
+            powerSlider.gameObject.SetActive(true);
+        }
+        else
+        {
+            Debug.Log("슬라이더가 없음");
+        }
+        
 
         if (finished == true || empAmount == 0)
         {
@@ -52,15 +80,9 @@ public class EMP : MonoBehaviour
         {
             currenGauge = maxGauge;
             finished = true;
+            empAmount = empAmount - 1;
 
-            Item.myItem[Item.arrayIndex - 1].SetActive(true);
-            Item.myItem[Item.arrayIndex - 1].transform.position = GameObject.Find("CharacterObject").transform.position;
-            EliminateItem();
-
-            count++;
-            Debug.Log("emp 설치 개수 : " + count);
-
-            isDetectedMode = true;
+            Item.EliminateItem();
         }
 
         else if(Input.GetKey(KeyCode.E) && !finished)
@@ -73,12 +95,7 @@ public class EMP : MonoBehaviour
         {
             currenGauge = minGauge;
             powerSlider.value = minGauge;
-
-            Debug.Log("current : " + currenGauge);
-            Debug.Log("slider value : " + powerSlider.value);
-        }
-
-        empAmount = empAmount - 1;
+        }     
     }
 
     public void CheckEMP()
@@ -89,29 +106,13 @@ public class EMP : MonoBehaviour
             {
                 empAmount += 1;
                 Debug.Log("emp : " + empAmount);
-            }
-
-            Debug.Log("emp가 없습니다");
+            }            
         }
     }
 
-    public void OnDetect()
+    public void CheckSlider()
     {
-        gameObject.GetComponent<SphereCollider>().radius = distance;
-        gameObject.GetComponent<SphereCollider>().isTrigger = true;
-
-
+        Debug.Log("나의 slider : " + powerSlider);
     }
-
-    public void EliminateItem()
-    {
-        Item.arrayIndex -= 1;
-        Item.inventoryBox[Item.arrayIndex].GetComponent<Image>().sprite = Resources.Load<Sprite>("./Resources/inventory Background.png");
-
-        finished = false;
-    }
-
-
-
 }
 
