@@ -20,9 +20,10 @@ GameObject:
   - component: {fileID: 1907209285817030957}
   - component: {fileID: 2925982537265845454}
   - component: {fileID: 8405207688434467546}
+  - component: {fileID: 7599400913829489321}
   m_Layer: 0
   m_Name: Monster
-  m_TagString: Untagged
+  m_TagString: Monster
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -208,6 +209,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04150eb31b265824e8b1c099cc703085, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &7599400913829489321
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1907209285817030954}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: baef3bcd0a8ea4d48a9dea023d848931, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  drone: {fileID: 0}
 --- !u!1 &1907209286283489085
 GameObject:
   m_ObjectHideFlags: 0

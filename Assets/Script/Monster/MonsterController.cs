@@ -6,13 +6,14 @@ public class MonsterController : MonoBehaviour
 {
     private playerItem myItem;
 
-    class playerItem
+    public class playerItem
     {
-        private GameObject presentItem = null;
         private M_Light myLight;
         private M_Drone myDrone;
 
         private UseLight useLight = GameObject.FindObjectOfType<UseLight>();
+        private M_UseDrone useDrone = GameObject.FindObjectOfType<M_UseDrone>();
+
         public void CheckItem()
         {
             switch (Item.myItem[Item.arrayIndex - 1].name)
@@ -24,7 +25,7 @@ public class MonsterController : MonoBehaviour
 
                 case "Drone":
                     myDrone = Item.myItem[Item.arrayIndex - 1].GetComponent<M_Drone>();
-                   // useEmp.emp = myEMP;
+                    useDrone.drone = myDrone;
                     break;
             }
         }
