@@ -8,7 +8,7 @@ public class UseFire : MonoBehaviour
 
     private void Start()
     {
-        fire = GameObject.Find("Fire").GetComponent<Fire>();
+        //fire = GameObject.Find("Fire").GetComponent<Fire>();
     }
 
     void Update()

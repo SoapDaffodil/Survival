@@ -17,11 +17,11 @@ public class Cure : MonoBehaviour
 
     private void Start()
     {
-        hpSlider = GameObject.Find("hpSlider").GetComponent<Slider>();
+        //hpSlider = GameObject.Find("hpSlider").GetComponent<Slider>();
         chargingSpeed = (maxGauge - minGauge) / chargingTime;
         currenGauge = minGauge;
-        hpSlider.value = minGauge;
-        hpSlider.gameObject.SetActive(false);
+        //hpSlider.value = minGauge;
+        //hpSlider.gameObject.SetActive(false);
     }
 
     private void OnTriggerEnter(Collider other)
