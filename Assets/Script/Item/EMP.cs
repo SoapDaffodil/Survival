@@ -8,7 +8,6 @@ public class EMP : MonoBehaviour
     private float minGauge = 15f;
     private float maxGauge = 45f;
     private float chargingTime = 2f;
-    protected Slider powerSlider;
 
     private float currenGauge;
     private float chargingSpeed;
@@ -20,14 +19,14 @@ public class EMP : MonoBehaviour
     
     private void Start()
     {        
-        powerSlider = GameObject.Find("Power Slider").GetComponent<Slider>();       
+        UIManager.instance.powerSlider = GameObject.Find("Power Slider").GetComponent<Slider>();       
         chargingSpeed = (maxGauge - minGauge) / chargingTime;
 
         SetUp();
 
-        if(powerSlider != null)
+        if(UIManager.instance.powerSlider != null)
         {
-            Debug.Log("slider : " + powerSlider);
+            Debug.Log("slider : " + UIManager.instance.powerSlider);
         }
         else
         {
@@ -39,16 +38,16 @@ public class EMP : MonoBehaviour
 
     public void SetUp()
     {
-        if (powerSlider != null)
+        if (UIManager.instance.powerSlider != null)
         {
             finished = false;
             currenGauge = minGauge;
-            powerSlider.value = minGauge;
-            powerSlider.gameObject.SetActive(false);
+            UIManager.instance.powerSlider.value = minGauge;
+            UIManager.instance.powerSlider.gameObject.SetActive(false);
         }
         else
         {
-            Debug.Log("slider : " + powerSlider);
+            Debug.Log("slider : " + UIManager.instance.powerSlider);
             Debug.Log("슬라이더가 없음");
             
         }      
@@ -57,9 +56,9 @@ public class EMP : MonoBehaviour
 
     public void Install()
     {
-        if (powerSlider != null)
+        if (UIManager.instance.powerSlider != null)
         {
-            powerSlider.gameObject.SetActive(true);
+            UIManager.instance.powerSlider.gameObject.SetActive(true);
         }
         else
         {
@@ -70,8 +69,8 @@ public class EMP : MonoBehaviour
         if (finished == true || empAmount == 0)
         {
             currenGauge = minGauge;
-            powerSlider.value = currenGauge;
-            powerSlider.gameObject.SetActive(false);
+            UIManager.instance.powerSlider.value = currenGauge;
+            UIManager.instance.powerSlider.gameObject.SetActive(false);
 
             return;
         }        
@@ -88,13 +87,13 @@ public class EMP : MonoBehaviour
         else if(Input.GetKey(KeyCode.E) && !finished)
         {
             currenGauge = currenGauge + chargingSpeed * Time.deltaTime;
-            powerSlider.value = currenGauge;
+            UIManager.instance.powerSlider.value = currenGauge;
         }
 
         else if(Input.GetKeyUp(KeyCode.E))
         {
             currenGauge = minGauge;
-            powerSlider.value = minGauge;
+            UIManager.instance.powerSlider.value = minGauge;
         }     
     }
 
@@ -112,7 +111,7 @@ public class EMP : MonoBehaviour
 
     public void CheckSlider()
     {
-        Debug.Log("나의 slider : " + powerSlider);
+        Debug.Log("나의 slider : " + UIManager.instance.powerSlider);
     }
 }
 

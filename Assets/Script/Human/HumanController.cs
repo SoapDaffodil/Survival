@@ -42,6 +42,7 @@ public class HumanController : MonoBehaviour
         myItem = new playerItem();
     }
 
+    
     // Update is called once per frame
     void Update()
     {
@@ -50,4 +51,5 @@ public class HumanController : MonoBehaviour
             myItem.CheckItem();
         }
     }
+    
 }
