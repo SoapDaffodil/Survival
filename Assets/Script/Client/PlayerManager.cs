@@ -10,6 +10,7 @@ public class PlayerManager : MonoBehaviour
     public float maxHp = 100f;              //최대체력
     public int itemCount = 0;               //아이템 소요개수
     public MeshRenderer model;
+    public ItemSpawner grabItem;            //현재 들고있는 아이템
 
     public void Initialize(int _id, string _username)
     {

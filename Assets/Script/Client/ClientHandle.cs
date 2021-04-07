@@ -117,6 +117,17 @@ public class ClientHandle : MonoBehaviour
         GameManager.players[_byPlayer].itemCount++;
     }
 
+    /// <summary>아이템 버리기정보 update</summary>
+    /// <param name="_packet"></param>
+    public static void ItemThrow(Packet _packet)
+    {
+        int _spawnerId = _packet.ReadInt();
+        int _byPlayer = _packet.ReadInt();
+
+        GameManager.itemSpawners[_spawnerId].ItemThrow();
+        GameManager.players[_byPlayer].itemCount--;
+    }
+
     /// <summary>패킷에 담긴 폭탄 생성정보(ID,position,던진player)를 통해 폭탄생성</summary>
     /// <param name="_packet"></param>
     public static void SpawnProjectile(Packet _packet)

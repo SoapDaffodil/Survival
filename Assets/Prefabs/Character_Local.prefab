@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 1412440801411826187}
   - component: {fileID: 1412440801411826186}
   - component: {fileID: 1412440801411826185}
+  - component: {fileID: 567215893074962507}
   - component: {fileID: 2484276171620038930}
   - component: {fileID: 1412440801411826176}
   - component: {fileID: 1412440801411826177}
@@ -19,6 +20,7 @@ GameObject:
   - component: {fileID: 8674900761320416233}
   - component: {fileID: 4751943142008692606}
   - component: {fileID: 815207331069061500}
+  - component: {fileID: 1702174932078865510}
   m_Layer: 0
   m_Name: Character
   m_TagString: Player
@@ -89,6 +91,22 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!54 &567215893074962507
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1412440801411826191}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!65 &2484276171620038930
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -97,7 +115,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1412440801411826191}
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
@@ -114,6 +132,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc072cdc1b7f3db4586644e3321b6243, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  getKeyDownF: 0
 --- !u!114 &1412440801411826177
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -121,7 +140,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1412440801411826191}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3c80dbec06ef2a44c8c9887b2939c88d, type: 3}
   m_Name: 
@@ -192,6 +211,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDead: 0
+--- !u!114 &1702174932078865510
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1412440801411826191}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c07a3e5ca58c0654297a50b4bdaee820, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  camTransform: {fileID: 1363759545208930449}
+  getKeyDownF: 0
 --- !u!1 &4867908298992594591
 GameObject:
   m_ObjectHideFlags: 0
@@ -301,7 +334,6 @@ GameObject:
   m_Component:
   - component: {fileID: 8828351322205852131}
   - component: {fileID: 40877396189769419}
-  - component: {fileID: 2969886969119032762}
   m_Layer: 0
   m_Name: Character_Local
   m_TagString: Untagged
@@ -343,16 +375,4 @@ MonoBehaviour:
   maxHp: 100
   itemCount: 0
   model: {fileID: 1412440801411826185}
---- !u!114 &2969886969119032762
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6125660374198497925}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c07a3e5ca58c0654297a50b4bdaee820, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  camTransform: {fileID: 1363759545208930449}
+  grabItem: {fileID: 0}

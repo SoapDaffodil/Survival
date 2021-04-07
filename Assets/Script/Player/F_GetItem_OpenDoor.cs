@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class F_GetItem_OpenDoor : MonoBehaviour
 {
+    public bool getKeyDownF = false;
     void Start()
     {
         Item.myItem = new GameObject[3];
@@ -15,11 +16,19 @@ public class F_GetItem_OpenDoor : MonoBehaviour
             Item.inventoryBox[i] = GameObject.Find("ItemImage" + i);
         }
     }
+    void Update()
+    {/*
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            getKeyDownF = true;
+        }*/
+    }
 
     public void OnTriggerStay(Collider other)
     {
-        if (Input.GetKeyDown(KeyCode.F))
+        if (getKeyDownF)
         {
+            getKeyDownF = false;
             if (other.CompareTag("Item"))
             {
                 if (Item.arrayIndex == Item.inventoryBox.Length)

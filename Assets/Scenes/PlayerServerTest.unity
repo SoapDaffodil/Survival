@@ -567,7 +567,7 @@ MonoBehaviour:
   playerMesh:
   - {fileID: 0}
   - {fileID: 0}
-  itemSpawnerPrefab: {fileID: 446239496960903307, guid: 4e9d6eb42c313e145be6ad2008d3be23, type: 3}
+  itemSpawnerPrefab: {fileID: 2824943518711138377, guid: 1fe57f78570cad146b3dc790d4968431, type: 3}
   projectilePrefab: {fileID: 2765098290509911380, guid: 219c8f2c4324a7b43a7032a782e54193, type: 3}
 --- !u!4 &475494750
 Transform:
