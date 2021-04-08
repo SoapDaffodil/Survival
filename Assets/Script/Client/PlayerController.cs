@@ -1,34 +1,53 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
-public class F_GetItem_OpenDoor : MonoBehaviour
+public class PlayerController : MonoBehaviour
 {
-<<<<<<< HEAD
-    Item myItem = Item.instance;
-=======
+    public Transform camTransform;
     public bool getKeyDownF = false;
->>>>>>> ed4ea78d44db50ea7759824ea6ade76dbf0b81cc
-    void Start()
-    {
 
-        /*
-        Item.myItem = new GameObject[3];
-        Item.arrayIndex = 0;
-        Item.inventoryBox = new GameObject[3];
-        for (int i = 0; i < 3; i++)
+    private void Update()
+    {
+        //총 발사
+        if (Input.GetKeyDown(KeyCode.Mouse0))
         {
-            Item.inventoryBox[i] = GameObject.Find("ItemImage" + i);
+            ClientSend.PlayerShoot(camTransform.forward);
         }
-        */
-    }
-    void Update()
-    {/*
+        //탄 발사
+        if (Input.GetKeyDown(KeyCode.Mouse1))
+        {
+            ClientSend.PlayerLaunchItem(camTransform.forward);
+        }
+        //상호작용(아이템획득, 문열기, 은폐 등
         if (Input.GetKeyDown(KeyCode.F))
         {
             getKeyDownF = true;
-        }*/
+        }
+        if (Input.GetKeyDown(KeyCode.G))
+        {
+            ClientSend.PlayerThrowItem(GameManager.players[Client.instance.myId].grabItem.gameObject);
+        }
+    }
+
+    private void FixedUpdate()
+    {
+        SendInputToServer();
+    }
+
+    /// <summary>Sends player input to the server.</summary>
+    private void SendInputToServer()
+    {
+        bool[] _inputs = new bool[]
+        {
+            Input.GetKey(KeyCode.W),
+            Input.GetKey(KeyCode.S),
+            Input.GetKey(KeyCode.A),
+            Input.GetKey(KeyCode.D),
+            Input.GetKey(KeyCode.Space)
+        };
+
+        ClientSend.PlayerMovement(_inputs);
     }
 
     public void OnTriggerStay(Collider other)
@@ -36,29 +55,32 @@ public class F_GetItem_OpenDoor : MonoBehaviour
         if (getKeyDownF)
         {
             getKeyDownF = false;
+            //아이템획득
             if (other.CompareTag("Item"))
             {
-
-                if (false)
+                if (Item.arrayIndex == Item.inventoryBox.Length)
                 {
                     Debug.Log("아이템 창이 가득 찼습니다");
                 }
                 else
                 {
-                    myItem.currentItem = other.gameObject;
-                    other.gameObject.SetActive(false);
+                    ClientSend.PlayerGetItem(other.gameObject);
 
-                    myItem.CheckItem(other.gameObject.GetComponent<MonoBehaviour>());
 
-                    
+
+
+
+
+
                     /*
                     Item.myItem[Item.arrayIndex] = other.gameObject;
 
                     Debug.Log("줍는 아이템 : " + Item.myItem[Item.arrayIndex]);
 
                     other.gameObject.SetActive(false);
+                    //other.gameObject.GetComponent<MeshRenderer>().enabled = false;
 
-                    if(other.GetComponent<Image>() != null)
+                    if (other.GetComponent<Image>() != null)
                     {
                         Item.inventoryBox[Item.arrayIndex].GetComponent<Image>().sprite = other.GetComponent<Image>().sprite;
                     }
@@ -68,12 +90,11 @@ public class F_GetItem_OpenDoor : MonoBehaviour
                     }
 
                     Item.arrayIndex++;
-                    Debug.Log("array index : " + Item.arrayIndex);
-                    */
+                    Debug.Log("array index : " + Item.arrayIndex);*/
                 }
 
             }
-
+            //문열기
             else if (other.CompareTag("Door"))
             {
 
@@ -88,18 +109,6 @@ public class F_GetItem_OpenDoor : MonoBehaviour
                 }
 
             }
-
-            else if (other.CompareTag("Hide"))
-            {
-                Debug.Log("은폐!");
-                gameObject.transform.position = other.gameObject.transform.position;
-            }
         }
-
-        
     }
-
-
-
 }
-

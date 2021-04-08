@@ -20,13 +20,11 @@ public class Gun : MonoBehaviour
 
     private float fireTime = 0.3f; // 총알 발사 사이 시간 간격
     private float lastFireTime; // 총을 마지막으로 쏜 시간
-    private Text currentBulletText;
-    private Text bulletAmoutText;
 
     private void Start()
     {
-        currentBulletText = GameObject.Find("Current Bullet").GetComponent<Text>();
-        bulletAmoutText = GameObject.Find("Bullet Amount").GetComponent<Text>();
+        UIManager.instance.currentBulletText = GameObject.Find("Current Bullet").GetComponent<Text>();
+        UIManager.instance.bulletAmoutText = GameObject.Find("Bullet Amount").GetComponent<Text>();
     }
 
     public void Setup()
@@ -68,8 +66,8 @@ public class Gun : MonoBehaviour
         batteryAmount = batteryAmount - chargeBettery;
 
         currentBullet = currentBettery * 30;
-        currentBulletText.text = string.Format(" {0:} ", currentBullet);
-        bulletAmoutText.text = string.Format(" {0:} ", batteryAmount * 30);
+        UIManager.instance.currentBulletText.text = string.Format(" {0:} ", currentBullet);
+        UIManager.instance.bulletAmoutText.text = string.Format(" {0:} ", batteryAmount * 30);
 
         Debug.Log("충전 된 총알 : " + chargeBettery * 30);
         Debug.Log("현재 탄창에 있는 총알 : " + currentBettery * 30);
@@ -100,8 +98,8 @@ public class Gun : MonoBehaviour
             lastFireTime = Time.time;
 
             currentBullet -= 1;
-            currentBulletText.text = string.Format(" {0:} ", currentBullet);
-            bulletAmoutText.text = string.Format(" {0:} ", batteryAmount * 30);
+            UIManager.instance.currentBulletText.text = string.Format(" {0:} ", currentBullet);
+            UIManager.instance.bulletAmoutText.text = string.Format(" {0:} ", batteryAmount * 30);
             Debug.Log("뚜쉬뚜쉬!!");
 
             if (currentBullet % 30 == 0)

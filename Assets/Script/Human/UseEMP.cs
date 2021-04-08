@@ -14,7 +14,7 @@ public class UseEMP : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        Debug.Log("collider other : " + other.gameObject);
+        //Debug.Log("collider other : " + other.gameObject);
 
         if(emp != null)
         {
