@@ -5,8 +5,19 @@ using UnityEngine.UI;
 
 public class M_UseDrone : MonoBehaviour
 {
-    public M_Drone drone;
-    private M_Drone presentItem;
+    public Drone drone;
+    private Drone presentItem;
+    private Camera droneCam;
+    private Camera monsterCam;
+    private bool isFlying = false;
+
+    private void Start()
+    {
+        droneCam = GameObject.Find("DroneCam").GetComponent<Camera>();
+        monsterCam = GameObject.Find("Monster Camera").GetComponent<Camera>();
+        monsterCam.enabled = true;
+        droneCam.enabled = false;
+    }
 
 
     // Update is called once per frame
@@ -28,6 +39,16 @@ public class M_UseDrone : MonoBehaviour
             {
                 drone.ChargingGauge();
             }
+
+            if(drone.isGaugeFull == true)
+            {
+                ControllDrone();
+            }
+
+            if(isFlying == true && Input.GetKeyDown(KeyCode.E))
+            {
+                TurnOnLight();
+            }
         }
     }
 
@@ -46,5 +67,45 @@ public class M_UseDrone : MonoBehaviour
             drone.transform.SetParent(transform);
 
         }
+    }
+
+    void ControllDrone()
+    {
+        if (Input.GetMouseButtonDown(0) && !isFlying)
+        {
+            monsterCam.enabled = false;
+            droneCam.enabled = true;
+            drone.transform.SetParent(null);
+            drone.transform.position += new Vector3(0f, 5f, 0f);
+
+            drone.droneMoving.enabled = true;
+            gameObject.GetComponent<Move>().enabled = false;
+
+            isFlying = true;
+        }
+
+        else if(isFlying && Input.GetMouseButtonDown(0))
+        {
+            monsterCam.enabled = true;
+            droneCam.enabled = false;
+            drone.transform.SetParent(transform);
+            drone.transform.position -= new Vector3(0f, 5f, 0f);
+
+            drone.droneMoving.enabled = false;
+            gameObject.GetComponent<Move>().enabled = true;
+
+            TurnOffLight();
+            isFlying = false;
+        }
+    }
+
+    void TurnOnLight()
+    {
+        drone.OnFlash();
+    }
+
+    void TurnOffLight()
+    {
+        drone.OffFlash();
     }
 }

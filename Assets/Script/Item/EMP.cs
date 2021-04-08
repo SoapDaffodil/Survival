@@ -3,17 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class EMP : MonoBehaviour
+public  class EMP : MonoBehaviour
 {
-    private float minGauge = 15f;
-    private float maxGauge = 45f;
-    private float chargingTime = 2f;
+    protected float minGauge = 15f;
+    protected float maxGauge = 45f;
+    protected float chargingTime = 2f;
     protected Slider powerSlider;
 
-    private float currenGauge;
-    private float chargingSpeed;
+    protected float currenGauge;
+    protected float chargingSpeed;
     public  bool finished;
-    private int empAmount = 0;
+    protected int empAmount = 0;
 
     public int count = 0;
 
@@ -55,48 +55,7 @@ public class EMP : MonoBehaviour
     }
 
 
-    public void Install()
-    {
-        if (powerSlider != null)
-        {
-            powerSlider.gameObject.SetActive(true);
-        }
-        else
-        {
-            Debug.Log("슬라이더가 없음");
-        }
-        
-
-        if (finished == true || empAmount == 0)
-        {
-            currenGauge = minGauge;
-            powerSlider.value = currenGauge;
-            powerSlider.gameObject.SetActive(false);
-
-            return;
-        }        
-
-        if(currenGauge >= maxGauge && !finished)
-        {
-            currenGauge = maxGauge;
-            finished = true;
-            empAmount = empAmount - 1;
-
-            Item.EliminateItem();
-        }
-
-        else if(Input.GetKey(KeyCode.E) && !finished)
-        {
-            currenGauge = currenGauge + chargingSpeed * Time.deltaTime;
-            powerSlider.value = currenGauge;
-        }
-
-        else if(Input.GetKeyUp(KeyCode.E))
-        {
-            currenGauge = minGauge;
-            powerSlider.value = minGauge;
-        }     
-    }
+  //  public abstract void Install();
 
     public void CheckEMP()
     {
@@ -108,11 +67,6 @@ public class EMP : MonoBehaviour
                 Debug.Log("emp : " + empAmount);
             }            
         }
-    }
-
-    public void CheckSlider()
-    {
-        Debug.Log("나의 slider : " + powerSlider);
     }
 }
 

@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class M_Drone : MonoBehaviour
+public class Drone : MonoBehaviour
 {
     private Slider charge;
+    public Move droneMoving;
+    private Light flash;
     private float minGauge = 15f;
     private float maxGauge = 45f;
     private float chargingTime = 2f;
@@ -13,11 +15,16 @@ public class M_Drone : MonoBehaviour
     private float chargingSpeed;
     private float currentGauge;
     public bool finished;
+    public bool isGaugeFull = false;
 
     // Start is called before the first frame update
     void Start()
     {
         charge = GameObject.Find("DroneSlider").GetComponent<Slider>();
+        droneMoving = gameObject.GetComponent<Move>();
+        flash = gameObject.GetComponent<Light>();
+
+        droneMoving.enabled = false;
         SetUp();
     }
 
@@ -31,6 +38,12 @@ public class M_Drone : MonoBehaviour
             chargingSpeed = (maxGauge - minGauge) / chargingTime;
             finished = false;
             charge.gameObject.SetActive(false);
+        }
+
+        else if(flash != null)
+        {
+            flash.type = LightType.Point;
+            flash.range = 0f;
         }
     }
 
@@ -49,6 +62,7 @@ public class M_Drone : MonoBehaviour
             finished = true;
             currentGauge = minGauge;
             charge.value = minGauge;
+            isGaugeFull = true;
 
             charge.gameObject.SetActive(false);
         }
@@ -64,5 +78,15 @@ public class M_Drone : MonoBehaviour
             currentGauge = minGauge;
             charge.value = currentGauge;
         }
+    }
+
+    public void OnFlash()
+    {
+        flash.range = 8f;
+    }
+
+    public void OffFlash()
+    {
+        flash.range = 0f;
     }
 }

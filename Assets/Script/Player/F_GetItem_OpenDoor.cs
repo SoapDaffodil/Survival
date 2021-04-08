@@ -5,8 +5,11 @@ using UnityEngine.UI;
 
 public class F_GetItem_OpenDoor : MonoBehaviour
 {
+    Item myItem = Item.instance;
     void Start()
     {
+
+        /*
         Item.myItem = new GameObject[3];
         Item.arrayIndex = 0;
         Item.inventoryBox = new GameObject[3];
@@ -14,6 +17,7 @@ public class F_GetItem_OpenDoor : MonoBehaviour
         {
             Item.inventoryBox[i] = GameObject.Find("ItemImage" + i);
         }
+        */
     }
 
     public void OnTriggerStay(Collider other)
@@ -22,18 +26,25 @@ public class F_GetItem_OpenDoor : MonoBehaviour
         {
             if (other.CompareTag("Item"))
             {
-                if (Item.arrayIndex == Item.inventoryBox.Length)
+
+                if (false)
                 {
                     Debug.Log("아이템 창이 가득 찼습니다");
                 }
                 else
                 {
+                    myItem.currentItem = other.gameObject;
+                    other.gameObject.SetActive(false);
+
+                    myItem.CheckItem(other.gameObject.GetComponent<MonoBehaviour>());
+
+                    
+                    /*
                     Item.myItem[Item.arrayIndex] = other.gameObject;
 
                     Debug.Log("줍는 아이템 : " + Item.myItem[Item.arrayIndex]);
 
                     other.gameObject.SetActive(false);
-                    //other.gameObject.GetComponent<MeshRenderer>().enabled = false;
 
                     if(other.GetComponent<Image>() != null)
                     {
@@ -46,11 +57,12 @@ public class F_GetItem_OpenDoor : MonoBehaviour
 
                     Item.arrayIndex++;
                     Debug.Log("array index : " + Item.arrayIndex);
+                    */
                 }
 
             }
 
-            if (other.CompareTag("Door"))
+            else if (other.CompareTag("Door"))
             {
 
                 if (other.gameObject.transform.rotation.y == 0f)
@@ -64,7 +76,18 @@ public class F_GetItem_OpenDoor : MonoBehaviour
                 }
 
             }
+
+            else if (other.CompareTag("Hide"))
+            {
+                Debug.Log("은폐!");
+                gameObject.transform.position = other.gameObject.transform.position;
+            }
         }
+
+        
     }
+
+
+
 }
 

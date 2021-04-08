@@ -26,12 +26,13 @@ public class G_DropItem : MonoBehaviour
             }
             else
             {
-
+                /*
                 if (Item.itemOnHand == null)
                 {
-                    Item.myItem[Item.arrayIndex - 1].GetComponent<MeshRenderer>().enabled = true;
+                    Item.myItem[Item.arrayIndex - 1].gameObject.SetActive(true);
                     Item.myItem[Item.arrayIndex - 1].transform.position = transform.position;                    
                 }
+                */
                                                 
                    Item.arrayIndex -= 1;                                
                    Item.inventoryBox[Item.arrayIndex].GetComponent<Image>().sprite = Resources.Load<Sprite>("./Resources/inventory Background.png");
