@@ -58,7 +58,7 @@ public class M_Light : MonoBehaviour
             Item.myItem[Item.arrayIndex - 1].SetActive(true);
             Item.myItem[Item.arrayIndex - 1].transform.SetParent(null);
             Item.myItem[Item.arrayIndex - 1].transform.position = GameObject.Find("Monster").transform.position;
-            Item.EliminateItem();
+            //Item.EliminateItem();
         }
 
         else if (Input.GetKey(KeyCode.E) && !finished)

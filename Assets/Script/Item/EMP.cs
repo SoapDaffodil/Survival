@@ -3,16 +3,19 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class EMP : MonoBehaviour
+public  class EMP : MonoBehaviour
 {
-    private float minGauge = 15f;
-    private float maxGauge = 45f;
-    private float chargingTime = 2f;
 
-    private float currenGauge;
-    private float chargingSpeed;
+    protected float minGauge = 15f;
+    protected float maxGauge = 45f;
+    protected float chargingTime = 2f;
+    protected Slider powerSlider;
+
+
+    protected float currenGauge;
+    protected float chargingSpeed;
     public  bool finished;
-    private int empAmount = 0;
+    protected int empAmount = 0;
 
     public int count = 0;
 
@@ -54,6 +57,9 @@ public class EMP : MonoBehaviour
     }
 
 
+
+  //  public abstract void Install();
+
     public void Install()
     {
         if (UIManager.instance.powerSlider != null)
@@ -81,7 +87,7 @@ public class EMP : MonoBehaviour
             finished = true;
             empAmount = empAmount - 1;
 
-            Item.EliminateItem();
+            //Item.EliminateItem();
         }
 
         else if(Input.GetKey(KeyCode.E) && !finished)
@@ -97,6 +103,7 @@ public class EMP : MonoBehaviour
         }     
     }
 
+
     public void CheckEMP()
     {
         for (int i = 0; i < Item.arrayIndex; i++)
@@ -109,9 +116,6 @@ public class EMP : MonoBehaviour
         }
     }
 
-    public void CheckSlider()
-    {
-        Debug.Log("나의 slider : " + UIManager.instance.powerSlider);
-    }
+
 }
 

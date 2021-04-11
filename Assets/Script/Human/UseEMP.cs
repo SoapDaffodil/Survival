@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class UseEMP : MonoBehaviour
 {
+    public List<EMP> empList;
+
     public EMP emp;
     public EmpForTrap trap;
     public EMP installation;
@@ -16,6 +18,13 @@ public class UseEMP : MonoBehaviour
 
         if(emp != null)
         {
+            /*
+            empList.Add(this.GetComponent<EMP>());
+            empList.Count > 0
+            EMP a=    empList[0];
+            empList.Remove(a);
+            */
+
             if (other.CompareTag("EMPZone"))
             {
                 if (Input.GetKeyDown(KeyCode.E))
@@ -24,13 +33,13 @@ public class UseEMP : MonoBehaviour
                 }
                 else if (Input.GetKey(KeyCode.E))
                 {                    
-                    emp.Install();
+                    //((EmpForInstalling)emp).Install();
                 }
                 else if (Input.GetKeyUp(KeyCode.E))
                 {
-                    emp.Install();
+                    //((EmpForInstalling)emp).Install();
                 }
-                if (emp.finished == true && installingInstance == null)
+                if (((EmpForInstalling)emp).finished == true && installingInstance == null)
                 {
                     installingInstance = Instantiate(installation, transform);
                     installingInstance.transform.SetParent(null);
@@ -42,28 +51,31 @@ public class UseEMP : MonoBehaviour
                 }
             }
 
-            else if(other.tag != "EMPZone" || other == null)
+            else if(other == null)
             {
-                if (Input.GetKey(KeyCode.E))
+                if (Input.GetKeyDown(KeyCode.E))
                 {
                     if (empTrapInstance == null)
                     {
                         emp.CheckEMP();
                     }
-                    emp.Install();
+                    
+                }
+                else if(Input.GetKeyDown(KeyCode.E))
+                {
+                    //((EmpForTrap)emp).Install();
                 }
                 else if (Input.GetKeyUp(KeyCode.E))
                 {
-                    emp.Install();
+                   // ((EmpForTrap)emp).Install();
                 }
 
-                if (emp.finished == true)
+                if (((EmpForTrap)emp).finished == true && empTrapInstance == null)
                 {
                     Debug.Log("trap 생성!");
                     empTrapInstance = Instantiate(trap, transform);
                     empTrapInstance.transform.SetParent(null);
 
-                    empTrapInstance.isDetectedMode = true;
                     emp.finished = false;
                 }
             }

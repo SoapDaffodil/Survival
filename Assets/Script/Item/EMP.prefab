@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 4180773450263009793}
   - component: {fileID: 4180773450263009794}
   - component: {fileID: 4180773450263009795}
-  - component: {fileID: 3906663106982156259}
+  - component: {fileID: 7227480529486448911}
   m_Layer: 8
   m_Name: EMP
   m_TagString: Item
@@ -141,7 +141,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &3906663106982156259
+--- !u!114 &7227480529486448911
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -153,4 +153,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d62cd26d232ea94eb8dad12fe16e766, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  powerSlider: {fileID: 0}
+  finished: 0
+  count: 0

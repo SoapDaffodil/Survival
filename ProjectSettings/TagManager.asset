@@ -10,6 +10,7 @@ TagManager:
   - EMPZone
   - Monster
   - CureZone
+  - Hide
   layers:
   - Default
   - TransparentFX

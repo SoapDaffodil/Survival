@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum ItemType { GUN, EMP, DRONE, LIGHTTRAP }
 public class ItemSpawner : MonoBehaviour
 {
     public int spawnerId;                   //아이템ID
@@ -12,9 +13,12 @@ public class ItemSpawner : MonoBehaviour
     public float itemBobSpeed = 2f;         //아이템 이동속도
     private Vector3 basePosition;           //아이템 기본포지션
 
-    private void Start()
+    public ItemType itemType;               //이 아이템이 무엇인가
+    
+    public void Start()
     {
         itemModel = GetComponent<MeshRenderer>();
+        itemType = (ItemType)(this.name);
     }
     /*
     private void Update()

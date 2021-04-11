@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum PlayerType { MONSTER, HUMAN }
+
 public class PlayerManager : MonoBehaviour
 {
     public int id;
@@ -11,6 +13,9 @@ public class PlayerManager : MonoBehaviour
     public int itemCount = 0;               //아이템 소요개수
     public MeshRenderer model;
     public ItemSpawner grabItem;            //현재 들고있는 아이템
+    public Item playerItem;                 //플레이어의 아이템목록
+    public PlayerType playerType;           //플레이어의 타입(괴물, 인간)
+    
 
     public void Initialize(int _id, string _username)
     {

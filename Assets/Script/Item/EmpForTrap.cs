@@ -15,11 +15,15 @@ public class EmpForTrap : EMP
             Debug.Log("감지용 설치 완료!");
             gameObject.GetComponent<SphereCollider>().radius = 5f;
             gameObject.GetComponent<SphereCollider>().isTrigger = true;
+        }
 
-            if (other.CompareTag("Player"))
-            {
-                Debug.Log("Player가 접근하고 있습니다!!");
-            }
+        if (other.CompareTag("Monster"))
+        {
+            Debug.Log("몬스터가 감지 되었습니다");
         }
     }
+
+    
+
+    
 }

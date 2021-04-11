@@ -69,7 +69,7 @@ public class GameManager : MonoBehaviour
         players.Add(_id, _player.GetComponent<PlayerManager>());
     }
 
-    
+
 
     /// <summary>아이템 생성(아이템 초기화 및 dictionary 추가)</summary>
     /// <param name="_spawnerId">아이템ID</param>
@@ -82,15 +82,47 @@ public class GameManager : MonoBehaviour
         itemSpawners.Add(_spawnerId, _spawner.GetComponent<ItemSpawner>());
     }
 
-    /// <summary>폭탄 생성</summary>
-    /// <param name="_id">폭탄 ID</param>
-    /// <param name="_position">폭탄 position</param>
-    public void SpawnProjectile(int _id, Vector3 _position)
+    /// <summary>플레이어가 먹은 아이템 할당</summary>
+    /// <param name="_spawnerId">아이템ID</param>
+    /// <param name="_playerId">플레이어ID</param>
+    public void SaveItemToPlayer(int _spawnerId, int _playerId)
     {
-        GameObject _projectile = Instantiate(projectilePrefab, _position, Quaternion.identity);
-        _projectile.GetComponent<ProjectileManager>().Initialize(_id);
-        projectiles.Add(_id, _projectile.GetComponent<ProjectileManager>());
+        switch (players[_playerId].GetComponent<PlayerManager>().playerType)
+        {
+            case PlayerType.HUMAN:
+                if (itemSpawners[_spawnerId].itemType == ItemType.GUN)
+                {
+                    Gun gun = players[_playerId].GetComponent<PlayerManager>().playerItem.item_number1.GetComponent<Gun>();
+                }
+                else if (itemSpawners[_spawnerId].itemType == ItemType.EMP)
+                {
+                    EMP emp = players[_playerId].GetComponent<PlayerManager>().playerItem.item_number2[0].GetComponent<EMP>();
+                }
+                break;
+
+            case PlayerType.MONSTER:
+                if (itemSpawners[_spawnerId].itemType == ItemType.DRONE)
+                {
+                    Drone gun = players[_playerId].GetComponent<PlayerManager>().playerItem.item_number1.GetComponent<Drone>();
+                }
+                else if (itemSpawners[_spawnerId].itemType == ItemType.EMP)
+                {
+                    M_Light lightTrap = players[_playerId].GetComponent<PlayerManager>().playerItem.item_number2[0].GetComponent<M_Light>();
+                }
+                break;
+        }
     }
 
-    
+
+        /// <summary>폭탄 생성</summary>
+        /// <param name="_id">폭탄 ID</param>
+        /// <param name="_position">폭탄 position</param>
+        public void SpawnProjectile(int _id, Vector3 _position)
+        {
+            GameObject _projectile = Instantiate(projectilePrefab, _position, Quaternion.identity);
+            _projectile.GetComponent<ProjectileManager>().Initialize(_id);
+            projectiles.Add(_id, _projectile.GetComponent<ProjectileManager>());
+        }
+
+
 }

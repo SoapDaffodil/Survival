@@ -5,7 +5,6 @@ using UnityEngine;
 public class Move : MonoBehaviour
 {
     float moveSpeed = 15;
-    Vector3 startPosition;          //움직이는 물체가 처음 시작하는 위치
 
     // Start is called before the first frame update
     void Start()

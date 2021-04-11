@@ -4,49 +4,18 @@ using UnityEngine;
 
 public class MonsterController : MonoBehaviour
 {
-    private playerItem myItem;
+   
 
-    public class playerItem
-    {
-        private M_Light myLight;
-        private M_Drone myDrone;
-
-        private UseLight useLight = GameObject.FindObjectOfType<UseLight>();
-        private M_UseDrone useDrone = GameObject.FindObjectOfType<M_UseDrone>();
-
-        public void CheckItem()
-        {
-            switch (Item.myItem[Item.arrayIndex - 1].name)
-            {
-                case "Light":
-                    myLight = Item.myItem[Item.arrayIndex - 1].GetComponent<M_Light>();
-                    useLight.light = myLight;
-                    break;
-
-                case "Drone":
-                    myDrone = Item.myItem[Item.arrayIndex - 1].GetComponent<M_Drone>();
-                    useDrone.drone = myDrone;
-                    break;
-            }
-        }
-
-    }
+ 
 
     // Start is called before the first frame update
     void Start()
     {
-        myItem = new playerItem();
+       
     }
 
     // Update is called once per frame
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.F))
-        {
-            myItem.CheckItem();
-            Debug.Log("checkItem()");
-        }
-    }
+
    
 
 

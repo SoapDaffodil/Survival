@@ -117,6 +117,7 @@ public class ClientHandle : MonoBehaviour
         GameManager.players[_byPlayer].grabItem = GameManager.itemSpawners[_spawnerId];
 
         GameManager.itemSpawners[_spawnerId].ItemPickedUp();
+        GameManager.instance.SaveItemToPlayer(_spawnerId, _byPlayer);
         GameManager.players[_byPlayer].itemCount++;
     }
 
@@ -131,6 +132,18 @@ public class ClientHandle : MonoBehaviour
         GameManager.itemSpawners[_spawnerId].ItemThrow(_position);
         GameManager.players[_byPlayer].itemCount--;
     }
+
+    public static void KeyChange(Packet _packet)
+    {
+        // 패킷에서 받아오는 정보
+        //int _spawnerId = _packet.ReadInt();
+        int _byPlayer = _packet.ReadInt();
+        
+
+        GameManager.players[_byPlayer].GetComponent<PlayerController>().KeyChange();
+
+    }
+
 
     /// <summary>패킷에 담긴 폭탄 생성정보(ID,position,던진player)를 통해 폭탄생성</summary>
     /// <param name="_packet"></param>

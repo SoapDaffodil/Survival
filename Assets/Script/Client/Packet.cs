@@ -22,6 +22,7 @@ public enum ServerPackets
     spawnProjectile,    //폭탄 생성
     projectilePosition, //폭탄 위치
     projectileExploded, //폭탄 폭발여부
+    keyChange,          //키 체인지
     //udpTest
 }
 
