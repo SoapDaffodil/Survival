@@ -13,7 +13,7 @@ public enum ServerPackets
     playerPosition,     //player position
     playerRotation,     //player rotation
     playerDisconnected, //plyaer 연결끊김
-    playerHealth,       //player hp
+    playerHP,           //player hp
     playerRespawned,    //player 리스폰
     createItemSpawner,  //아이템 생성
     itemSpawned,        //아이템 스폰
@@ -29,12 +29,12 @@ public enum ServerPackets
 /// <summary>클라이언트가 보내는 packet이 어떤정보인지 알려주는 역할</summary>
 public enum ClientPackets
 {
-    welcomeReceived = 1,//접속
-    playerMovement,     //움직임
-    playerShootBullet,        //공격?
-    playerShootBomb,   //아이템 던지기
-    playerGetItem,      //아이템 획득
-    playerThrowItem,    //아이템 버리기
+    welcomeReceived = 1,    //접속
+    playerMovement,         //움직임
+    playerShootBullet,      //총 공격(좌클릭)
+    playerShootBomb,        //폭탄 공격(우클릭)
+    playerGetItem,          //아이템 획득
+    playerThrowItem,        //아이템 버리기
     // udpTestReceived
 }
 

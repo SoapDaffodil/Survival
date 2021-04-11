@@ -66,7 +66,7 @@ public class ClientHandle : MonoBehaviour
 
     /// <summary>패킷에 담긴 HP정보 update</summary>
     /// <param name="_packet"></param>
-    public static void PlayerHealth(Packet _packet)
+    public static void PlayerHP(Packet _packet)
     {
         int _id = _packet.ReadInt();
         float _health = _packet.ReadFloat();
