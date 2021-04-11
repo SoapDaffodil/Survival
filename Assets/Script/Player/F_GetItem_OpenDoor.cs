@@ -5,11 +5,10 @@ using UnityEngine.UI;
 
 public class F_GetItem_OpenDoor : MonoBehaviour
 {
-<<<<<<< HEAD
     Item myItem = Item.instance;
-=======
+
     public bool getKeyDownF = false;
->>>>>>> ed4ea78d44db50ea7759824ea6ade76dbf0b81cc
+
     void Start()
     {
 
@@ -51,25 +50,7 @@ public class F_GetItem_OpenDoor : MonoBehaviour
                     myItem.CheckItem(other.gameObject.GetComponent<MonoBehaviour>());
 
                     
-                    /*
-                    Item.myItem[Item.arrayIndex] = other.gameObject;
-
-                    Debug.Log("줍는 아이템 : " + Item.myItem[Item.arrayIndex]);
-
-                    other.gameObject.SetActive(false);
-
-                    if(other.GetComponent<Image>() != null)
-                    {
-                        Item.inventoryBox[Item.arrayIndex].GetComponent<Image>().sprite = other.GetComponent<Image>().sprite;
-                    }
-                    else
-                    {
-                        Item.inventoryBox[Item.arrayIndex].GetComponent<Image>().sprite = Resources.Load<Sprite>("./Resources/inventory Background.png");
-                    }
-
-                    Item.arrayIndex++;
-                    Debug.Log("array index : " + Item.arrayIndex);
-                    */
+             
                 }
 
             }

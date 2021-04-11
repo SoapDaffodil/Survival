@@ -12,12 +12,7 @@ public class HumanController : MonoBehaviour
         myItem = new Item();
     }
 
-<<<<<<< HEAD
 
-
-=======
-    
-    // Update is called once per frame
     void Update()
     {
         if(Input.GetKeyDown(KeyCode.F))
@@ -26,5 +21,5 @@ public class HumanController : MonoBehaviour
         }
     }
     
->>>>>>> ed4ea78d44db50ea7759824ea6ade76dbf0b81cc
+
 }

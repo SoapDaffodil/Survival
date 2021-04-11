@@ -12,40 +12,15 @@ public class Item : MonoBehaviour
     public static int arrayIndex = 0;
     #endregion
 
-    public static Gun gun;
-    public static Drone drone;
-    public static List<EMP> empList;
-    public static List<M_Light> lightTrapList;
-    public GameObject itemOnHand;
-    public GameObject currentItem;
-    public delegate void GrabItem();
+    public GameObject item_number1;
+    public GameObject[] item_number2;
 
-    public enum playerType { PLAYER, MONSTER}
+    
 
-    void Start()
-    {
-        itemOnHand = null;
-        currentItem = null;
 
-        empList = new List<EMP>();
-    }
 
     /*
-    public void GrabItem(int number)
-    {
-        switch(Client.instance.playerType)
-        {
-            case playerType.PLAYER:
-                델리게이트이름[2*number-2];
-                break;
-            case playerType.MONSTER:
-                델리게이트이름[2*number-1];
-                break;
-        }
-    }
-   */
-
-    public void CheckItem(MonoBehaviour item)
+    public void CheckItem(GameObject item)
     {
         switch (item.name)
         {
@@ -102,6 +77,7 @@ public class Item : MonoBehaviour
             }
         }
     }
+    */
      
     public void EliminateItem()
     {

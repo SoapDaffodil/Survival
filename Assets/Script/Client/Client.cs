@@ -319,6 +319,7 @@ public class Client : MonoBehaviour
             { (int)ServerPackets.projectilePosition, ClientHandle.ProjectilePosition},
             { (int)ServerPackets.projectileExploded, ClientHandle.ProjectileExploded},
             { (int)ServerPackets.itemThrow, ClientHandle.ItemThrow},
+            { (int)ServerPackets.keyChange, ClientHandle.KeyChange},
             
             //{ (int)ServerPackets.udpTest, ClientHandle.UDPTest }
         };

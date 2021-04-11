@@ -6,6 +6,7 @@ public class PlayerController : MonoBehaviour
 {
     public Transform camTransform;
     public bool getKeyDownF = false;
+    public KeyCode[] input = { KeyCode.W , KeyCode.A , KeyCode.S , KeyCode.D , KeyCode.Space };
 
     private void Update()
     {
@@ -40,15 +41,59 @@ public class PlayerController : MonoBehaviour
     {
         bool[] _inputs = new bool[]
         {
-            Input.GetKey(KeyCode.W),
-            Input.GetKey(KeyCode.S),
-            Input.GetKey(KeyCode.A),
-            Input.GetKey(KeyCode.D),
-            Input.GetKey(KeyCode.Space)
+            Input.GetKey(input[0]),
+            Input.GetKey(input[1]),
+            Input.GetKey(input[2]),
+            Input.GetKey(input[3]),
+            Input.GetKey(input[4])
         };
 
         ClientSend.PlayerMovement(_inputs);
     }
+
+    public void KeyChange()
+    {
+        KeyCode[] changeInput = new KeyCode[5];
+        bool isSame;
+
+        for (int i = 0; i < input.Length; i++)
+        {
+
+            while (true)
+            {
+                int value = Random.Range(0, 5);
+                isSame = false;
+
+                changeInput[i] = input[value];
+
+
+                if (i == value)
+                {
+                    isSame = true;
+                }
+
+
+                for (int j = 0; j < i; j++)
+                {
+
+                    if (changeInput[j] == changeInput[i])
+                    {
+                        isSame = true;
+                        break;
+                    }
+                }
+
+                if (!isSame)
+                {
+                    break;
+                }
+            }
+        }
+
+        input = changeInput;
+
+    }
+
 
     public void OnTriggerStay(Collider other)
     {
@@ -65,32 +110,6 @@ public class PlayerController : MonoBehaviour
                 else
                 {
                     ClientSend.PlayerGetItem(other.gameObject);
-
-
-
-
-
-
-
-                    /*
-                    Item.myItem[Item.arrayIndex] = other.gameObject;
-
-                    Debug.Log("줍는 아이템 : " + Item.myItem[Item.arrayIndex]);
-
-                    other.gameObject.SetActive(false);
-                    //other.gameObject.GetComponent<MeshRenderer>().enabled = false;
-
-                    if (other.GetComponent<Image>() != null)
-                    {
-                        Item.inventoryBox[Item.arrayIndex].GetComponent<Image>().sprite = other.GetComponent<Image>().sprite;
-                    }
-                    else
-                    {
-                        Item.inventoryBox[Item.arrayIndex].GetComponent<Image>().sprite = Resources.Load<Sprite>("./Resources/inventory Background.png");
-                    }
-
-                    Item.arrayIndex++;
-                    Debug.Log("array index : " + Item.arrayIndex);*/
                 }
 
             }

@@ -33,7 +33,7 @@ public class G_DropItem : MonoBehaviour
                 Item.myItem[Item.arrayIndex - 1].GetComponent<MeshRenderer>().enabled = true;
                 Item.myItem[Item.arrayIndex - 1].transform.position = transform.position;
             }
-<<<<<<< HEAD
+
             else
             {
                 /*
@@ -43,15 +43,16 @@ public class G_DropItem : MonoBehaviour
                     Item.myItem[Item.arrayIndex - 1].transform.position = transform.position;                    
                 }
                 */
-                                                
-                   Item.arrayIndex -= 1;                                
-                   Item.inventoryBox[Item.arrayIndex].GetComponent<Image>().sprite = Resources.Load<Sprite>("./Resources/inventory Background.png");
-=======
 
-            Item.arrayIndex -= 1;
-            Item.inventoryBox[Item.arrayIndex].GetComponent<Image>().sprite = Resources.Load<Sprite>("./Resources/inventory Background.png");
->>>>>>> ed4ea78d44db50ea7759824ea6ade76dbf0b81cc
+                Item.arrayIndex -= 1;
+                Item.inventoryBox[Item.arrayIndex].GetComponent<Image>().sprite = Resources.Load<Sprite>("./Resources/inventory Background.png");
 
+
+                Item.arrayIndex -= 1;
+                Item.inventoryBox[Item.arrayIndex].GetComponent<Image>().sprite = Resources.Load<Sprite>("./Resources/inventory Background.png");
+
+
+            }
         }
     }
 }

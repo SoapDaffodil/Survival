@@ -5,16 +5,12 @@ using UnityEngine.UI;
 
 public  class EMP : MonoBehaviour
 {
-<<<<<<< HEAD
+
     protected float minGauge = 15f;
     protected float maxGauge = 45f;
     protected float chargingTime = 2f;
     protected Slider powerSlider;
-=======
-    private float minGauge = 15f;
-    private float maxGauge = 45f;
-    private float chargingTime = 2f;
->>>>>>> ed4ea78d44db50ea7759824ea6ade76dbf0b81cc
+
 
     protected float currenGauge;
     protected float chargingSpeed;
@@ -61,9 +57,9 @@ public  class EMP : MonoBehaviour
     }
 
 
-<<<<<<< HEAD
+
   //  public abstract void Install();
-=======
+
     public void Install()
     {
         if (UIManager.instance.powerSlider != null)
@@ -91,7 +87,7 @@ public  class EMP : MonoBehaviour
             finished = true;
             empAmount = empAmount - 1;
 
-            Item.EliminateItem();
+            //Item.EliminateItem();
         }
 
         else if(Input.GetKey(KeyCode.E) && !finished)
@@ -106,7 +102,7 @@ public  class EMP : MonoBehaviour
             UIManager.instance.powerSlider.value = minGauge;
         }     
     }
->>>>>>> ed4ea78d44db50ea7759824ea6ade76dbf0b81cc
+
 
     public void CheckEMP()
     {
@@ -119,13 +115,7 @@ public  class EMP : MonoBehaviour
             }            
         }
     }
-<<<<<<< HEAD
-=======
 
-    public void CheckSlider()
-    {
-        Debug.Log("나의 slider : " + UIManager.instance.powerSlider);
-    }
->>>>>>> ed4ea78d44db50ea7759824ea6ade76dbf0b81cc
+
 }
 
