@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class F_GetItem_OpenDoor : MonoBehaviour
 {
-    Item myItem = Item.instance;
+    //Item myItem = Item.instance;
 
     public bool getKeyDownF = false;
 
@@ -37,17 +37,17 @@ public class F_GetItem_OpenDoor : MonoBehaviour
             getKeyDownF = false;
             if (other.CompareTag("Item"))
             {
-
+                /*
                 if (false)
                 {
                     Debug.Log("아이템 창이 가득 찼습니다");
                 }
-                else
+                else*/
                 {
-                    myItem.currentItem = other.gameObject;
+                    //myItem.currentItem = other.gameObject;
                     other.gameObject.SetActive(false);
 
-                    myItem.CheckItem(other.gameObject.GetComponent<MonoBehaviour>());
+                    //myItem.CheckItem(other.gameObject.GetComponent<MonoBehaviour>());
 
                     
              

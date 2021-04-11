@@ -18,7 +18,7 @@ public class ItemSpawner : MonoBehaviour
     public void Start()
     {
         itemModel = GetComponent<MeshRenderer>();
-        itemType = (ItemType)(this.name);
+        itemType = (ItemType)ItemType.Parse(typeof(ItemType), this.name);
     }
     /*
     private void Update()

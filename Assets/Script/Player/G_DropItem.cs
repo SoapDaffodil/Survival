@@ -28,13 +28,13 @@ public class G_DropItem : MonoBehaviour
         else
         {
 
-            if (Item.itemOnHand == null)
-            {
-                Item.myItem[Item.arrayIndex - 1].GetComponent<MeshRenderer>().enabled = true;
-                Item.myItem[Item.arrayIndex - 1].transform.position = transform.position;
-            }
+            //if (Item.itemOnHand == null)
+            //{
+            //    Item.myItem[Item.arrayIndex - 1].GetComponent<MeshRenderer>().enabled = true;
+            //    Item.myItem[Item.arrayIndex - 1].transform.position = transform.position;
+            // }
 
-            else
+            //else
             {
                 /*
                 if (Item.itemOnHand == null)

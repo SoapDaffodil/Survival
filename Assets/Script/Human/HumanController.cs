@@ -17,7 +17,7 @@ public class HumanController : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.F))
         {
-            myItem.CheckItem();
+            //myItem.CheckItem();
         }
     }
     

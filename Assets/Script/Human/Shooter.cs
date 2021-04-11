@@ -39,8 +39,8 @@ public class Shooter : MonoBehaviour
     {
         if (gun == null)
         {          
-            Debug.Log($"아이템 창에 있는 총 :  {Item.gun}");
-            gun = Item.gun;
+            //Debug.Log($"아이템 창에 있는 총 :  {Item.gun}");
+            gun = new Gun();
 
 
             gun.transform.position = transform.position + new Vector3(0.7f, 0f, 0f);
