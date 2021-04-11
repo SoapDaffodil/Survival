@@ -12,12 +12,12 @@ public class PlayerController : MonoBehaviour
         //총 발사
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
-            ClientSend.PlayerShoot(camTransform.forward);
+            ClientSend.PlayerShootBullet(camTransform.forward);
         }
         //탄 발사
         if (Input.GetKeyDown(KeyCode.Mouse1))
         {
-            ClientSend.PlayerLaunchItem(camTransform.forward);
+            ClientSend.PlayerShootBomb(camTransform.forward);
         }
         //상호작용(아이템획득, 문열기, 은폐 등
         if (Input.GetKeyDown(KeyCode.F))
@@ -26,7 +26,7 @@ public class PlayerController : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.G))
         {
-            ClientSend.PlayerThrowItem(GameManager.players[Client.instance.myId].grabItem.gameObject);
+            ClientSend.PlayerThrowItem(GameManager.players[Client.instance.myId].grabItem.gameObject, GameManager.players[Client.instance.myId].transform.position);
         }
     }
 

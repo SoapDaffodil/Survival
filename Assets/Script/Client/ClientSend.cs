@@ -57,11 +57,12 @@ public class ClientSend : MonoBehaviour
         }
     }
     /// <summary>player 공격에 대한 packet TCP전송(공격할 때 한번만 전송하므로 누락이 될지언정 오류가 발생하지는 않음)</summary>
-    public static void PlayerShoot(Vector3 _facing)
+    public static void PlayerShootBullet(Vector3 _facing)
     {
-        using (Packet _packet = new Packet((int)ClientPackets.playerShoot))
+        using (Packet _packet = new Packet((int)ClientPackets.playerShootBullet))
         {
             _packet.Write(_facing);
+            _packet.Write(GameManager.EMPInstallFinished);
 
             SendTCPData(_packet);
         }
@@ -69,9 +70,9 @@ public class ClientSend : MonoBehaviour
 
     /// <summary>아이템 버리기에 대한 packet TCP전송(한번만 전송하므로 누락이 될지언정 오류가 발생하지는 않음)</summary>
     /// <param name="_facing">버릴 위치</param>
-    public static void PlayerLaunchItem(Vector3 _facing)
+    public static void PlayerShootBomb(Vector3 _facing)
     {
-        using (Packet _packet = new Packet((int)ClientPackets.PlayerLaunchItem))
+        using (Packet _packet = new Packet((int)ClientPackets.playerShootBomb))
         {
             _packet.Write(_facing);
 
@@ -94,12 +95,17 @@ public class ClientSend : MonoBehaviour
 
     /// <summary>아이템 버리기에 대한 packet TCP전송(한번만 전송하므로 누락이 될지언정 오류가 발생하지는 않음)</summary>
     /// <param name="_item">버릴 아이템종류</param>
-    public static void PlayerThrowItem(GameObject _item)
+    /// <param name="_position">버릴위치</param>
+    public static void PlayerThrowItem(GameObject _item, Vector3 _position)
     {
         using (Packet _packet = new Packet((int)ClientPackets.playerThrowItem))
         {
             _packet.Write(_item.name);
             _packet.Write(_item.GetComponent<ItemSpawner>().spawnerId);
+
+            _packet.Write(_position.x);
+            _packet.Write(0.5f);
+            _packet.Write(_position.z);
 
             SendTCPData(_packet);
         }

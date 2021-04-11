@@ -113,6 +113,9 @@ public class ClientHandle : MonoBehaviour
         int _spawnerId = _packet.ReadInt();
         int _byPlayer = _packet.ReadInt();
 
+        //G 버리기 테스트용 temp
+        GameManager.players[_byPlayer].grabItem = GameManager.itemSpawners[_spawnerId];
+
         GameManager.itemSpawners[_spawnerId].ItemPickedUp();
         GameManager.players[_byPlayer].itemCount++;
     }
@@ -123,8 +126,9 @@ public class ClientHandle : MonoBehaviour
     {
         int _spawnerId = _packet.ReadInt();
         int _byPlayer = _packet.ReadInt();
+        Vector3 _position = _packet.ReadVector3();
 
-        GameManager.itemSpawners[_spawnerId].ItemThrow();
+        GameManager.itemSpawners[_spawnerId].ItemThrow(_position);
         GameManager.players[_byPlayer].itemCount--;
     }
 

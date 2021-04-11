@@ -11,6 +11,11 @@ public class ItemSpawner : MonoBehaviour
     public float itemRotationSpeed = 50f;   //아이템 회전속도
     public float itemBobSpeed = 2f;         //아이템 이동속도
     private Vector3 basePosition;           //아이템 기본포지션
+
+    private void Start()
+    {
+        itemModel = GetComponent<MeshRenderer>();
+    }
     /*
     private void Update()
     {
@@ -49,9 +54,10 @@ public class ItemSpawner : MonoBehaviour
     }
 
     /// <summary>아이템 버리기 > 맵에 표시O</summary>
-    public void ItemThrow()
+    public void ItemThrow(Vector3 _position)
     {
         hasItem = true;
         itemModel.enabled = true;
+        this.transform.position = _position;
     }
 }

@@ -8,6 +8,8 @@ public class GameManager : MonoBehaviour
     public static GameManager instance;
     /// <summary>player가 사람인지 괴물인지 판단</summary>
     public static bool character_human;
+    /// <summary>emp존 설치완료여부 판단</summary>
+    public static bool EMPInstallFinished = false;
 
     public static Dictionary<int, PlayerManager> players = new Dictionary<int, PlayerManager>();            //모든플레이어정보 저장
     public static Dictionary<int, ItemSpawner> itemSpawners = new Dictionary<int, ItemSpawner>();           //모든아이템정보 저장
