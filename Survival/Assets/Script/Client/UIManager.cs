@@ -22,6 +22,15 @@ public class UIManager : MonoBehaviour
     [Tooltip("장전가능한 탄 수")]
     public Text bulletAmoutText;
 
+    /// <summary>1층 맵 플레이어위치</summary>
+    [Tooltip("1층 맵 플레이어위치")]
+    public GameObject fisrtFloorPlayer;
+
+    /// <summary>맵 UI</summary>
+    [Tooltip("맵 UI")]
+    public GameObject map;
+    public bool mapActive = false;
+
     /// <summary>이미 존재하는지 체크</summary>
     private void Awake()
     {
@@ -34,6 +43,7 @@ public class UIManager : MonoBehaviour
             Debug.Log("Instance already exists, destoying object!");
             Destroy(this);
         }
+        map.SetActive(mapActive);
     }
 
     /// <summary>연결을 시작하면 UI숨기고 client를 server에 연결</summary>

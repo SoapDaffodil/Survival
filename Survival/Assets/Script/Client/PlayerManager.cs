@@ -15,7 +15,21 @@ public class PlayerManager : MonoBehaviour
     public ItemSpawner grabItem;            //현재 들고있는 아이템
     public Item playerItem;                 //플레이어의 아이템목록
     public PlayerType playerType;           //플레이어의 타입(괴물, 인간)
-    
+
+    public PlayerController controller;
+
+    public void Start()
+    {
+        controller = GetComponentInChildren<PlayerController>();
+    }
+
+    public void FixedUpdate()
+    {
+        if (controller != null)
+        {
+            UIManager.instance.fisrtFloorPlayer.transform.rotation = Quaternion.Euler(this.transform.rotation.eulerAngles + new Vector3(0, 180, 0));
+        }
+    }
 
     public void Initialize(int _id, string _username)
     {

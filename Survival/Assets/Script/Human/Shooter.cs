@@ -29,7 +29,7 @@ public class Shooter : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0))
         {
-            UpdateAimPoint();
+           // UpdateAimPoint();
             Shoot();
         }
 
@@ -77,11 +77,11 @@ public class Shooter : MonoBehaviour
         RaycastHit hit;
 
         Ray ray = new Ray(transform.position, transform.forward);
-
+        /*
         if (Physics.Raycast(ray, out hit, gun.fireDistance))
         {
             aimPoint = hit.point;
-        }
+        }*/
     }
 
 }

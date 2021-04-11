@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class Drone : MonoBehaviour
 {
     private Slider charge;
-    public Move droneMoving;
+    //public Move droneMoving;
     private Light flash;
     private float minGauge = 15f;
     private float maxGauge = 45f;
@@ -21,10 +21,10 @@ public class Drone : MonoBehaviour
     void Start()
     {
         charge = GameObject.Find("DroneSlider").GetComponent<Slider>();
-        droneMoving = gameObject.GetComponent<Move>();
+        //droneMoving = gameObject.GetComponent<Move>();
         flash = gameObject.GetComponent<Light>();
 
-        droneMoving.enabled = false;
+        //droneMoving.enabled = false;
         SetUp();
     }
 

@@ -6,7 +6,16 @@ public class PlayerController : MonoBehaviour
 {
     public Transform camTransform;
     public bool getKeyDownF = false;
-    public KeyCode[] input = { KeyCode.W , KeyCode.A , KeyCode.S , KeyCode.D , KeyCode.Space };
+    public KeyCode[] input = { KeyCode.W , KeyCode.S , KeyCode.A , KeyCode.D , KeyCode.Space };
+
+    private void Start()
+    {
+        input[0] = KeyCode.W;
+        input[1] = KeyCode.S;
+        input[2] = KeyCode.A;
+        input[3] = KeyCode.D;
+        input[4] = KeyCode.Space;
+    }
 
     private void Update()
     {
@@ -28,6 +37,11 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.G))
         {
             ClientSend.PlayerThrowItem(GameManager.players[Client.instance.myId].grabItem.gameObject, GameManager.players[Client.instance.myId].transform.position);
+        }
+        if (Input.GetKeyDown(KeyCode.M))
+        {
+            UIManager.instance.mapActive = !UIManager.instance.mapActive;
+            UIManager.instance.map.SetActive(UIManager.instance.mapActive);
         }
     }
 
@@ -80,14 +94,15 @@ public class PlayerController : MonoBehaviour
             //아이템획득
             if (other.CompareTag("Item"))
             {
-                if (Item.arrayIndex == Item.inventoryBox.Length)
+                /*if (Item.arrayIndex == Item.inventoryBox.Length)
                 {
                     Debug.Log("아이템 창이 가득 찼습니다");
                 }
                 else
                 {
                     ClientSend.PlayerGetItem(other.gameObject);
-                }
+                }*/
+                ClientSend.PlayerGetItem(other.gameObject);
 
             }
             //문열기

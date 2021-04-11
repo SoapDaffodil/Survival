@@ -97,7 +97,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 80
   m_CollisionDetection: 0
 --- !u!65 &1593246754591154876
 BoxCollider:
@@ -162,3 +162,7 @@ MonoBehaviour:
   maxHp: 100
   itemCount: 0
   model: {fileID: 2881259310195251623}
+  grabItem: {fileID: 0}
+  playerItem: {fileID: 0}
+  playerType: 0
+  controller: {fileID: 0}

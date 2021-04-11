@@ -39,6 +39,9 @@ public class ClientHandle : MonoBehaviour
         if (GameManager.players.TryGetValue(_id, out PlayerManager _player))
         {
             _player.transform.position = _position;
+            if (_id == Client.instance.myId) {
+                UIManager.instance.fisrtFloorPlayer.transform.position = _position + new Vector3(-100, 0, 0);
+            }
         }
     }
     /// <summary>player Rotation을 담은 패킷을 받음</summary>
