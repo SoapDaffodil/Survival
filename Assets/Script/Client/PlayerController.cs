@@ -53,45 +53,22 @@ public class PlayerController : MonoBehaviour
 
     public void KeyChange()
     {
-        KeyCode[] changeInput = new KeyCode[5];
-        bool isSame;
-
+        KeyCode[] changeInput = new KeyCode[input.Length];
+        int[] index = new int[input.Length];
         for (int i = 0; i < input.Length; i++)
         {
-
-            while (true)
-            {
-                int value = Random.Range(0, 5);
-                isSame = false;
-
-                changeInput[i] = input[value];
-
-
-                if (i == value)
-                {
-                    isSame = true;
-                }
-
-
-                for (int j = 0; j < i; j++)
-                {
-
-                    if (changeInput[j] == changeInput[i])
-                    {
-                        isSame = true;
-                        break;
-                    }
-                }
-
-                if (!isSame)
-                {
-                    break;
-                }
-            }
+            index[i] = i;
         }
-
+        for (int i = input.Length; i > 0; i--)
+        {
+            int value = Random.Range(0, i - 1);
+            index[value] = index[i - 1];
+        }
+        for (int i = 0; i < input.Length; i++)
+        {
+            changeInput[i] = input[index[i]];
+        }
         input = changeInput;
-
     }
 
 
