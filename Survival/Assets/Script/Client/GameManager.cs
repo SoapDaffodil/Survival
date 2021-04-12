@@ -114,10 +114,11 @@ public class GameManager : MonoBehaviour
     }
 
 
-        /// <summary>폭탄 생성</summary>
-        /// <param name="_id">폭탄 ID</param>
-        /// <param name="_position">폭탄 position</param>
-        public void SpawnProjectile(int _id, Vector3 _position)
+
+    /// <summary>폭탄 생성</summary>
+    /// <param name="_id">폭탄 ID</param>
+    /// <param name="_position">폭탄 position</param>
+    public void SpawnProjectile(int _id, Vector3 _position)
         {
             GameObject _projectile = Instantiate(projectilePrefab, _position, Quaternion.identity);
             _projectile.GetComponent<ProjectileManager>().Initialize(_id);

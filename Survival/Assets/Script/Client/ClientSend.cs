@@ -34,9 +34,11 @@ public class ClientSend : MonoBehaviour
         {
             case "0": case "monster": case "Monster":
                 GameManager.character_human = false;
+                UIManager.instance.SetActiveTrueMonsterKey();
                 break;
             case "1": case "human": case "Human":
                 GameManager.character_human = true;
+                UIManager.instance.SetActiveFalseMonsterKey();
                 break;
         }
     }

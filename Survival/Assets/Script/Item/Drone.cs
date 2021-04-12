@@ -21,10 +21,10 @@ public class Drone : MonoBehaviour
     void Start()
     {
         charge = GameObject.Find("DroneSlider").GetComponent<Slider>();
-        droneMoving = gameObject.GetComponent<Move>();
+        //droneMoving = gameObject.GetComponent<Move>();
         flash = gameObject.GetComponent<Light>();
 
-        droneMoving.enabled = false;
+        //droneMoving.enabled = false;
         SetUp();
     }
 

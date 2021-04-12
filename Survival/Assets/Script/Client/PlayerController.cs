@@ -29,6 +29,10 @@ public class PlayerController : MonoBehaviour
         {
             ClientSend.PlayerThrowItem(GameManager.players[Client.instance.myId].grabItem.gameObject, GameManager.players[Client.instance.myId].transform.position);
         }
+        if (Input.GetKeyDown(KeyCode.U))
+        {
+            KeyChange();
+        }
     }
 
     private void FixedUpdate()
@@ -55,6 +59,8 @@ public class PlayerController : MonoBehaviour
     {
         KeyCode[] changeInput = new KeyCode[input.Length];
         int[] index = new int[input.Length];
+        int[] random = new int[input.Length];
+
         for (int i = 0; i < input.Length; i++)
         {
             index[i] = i;
@@ -62,13 +68,21 @@ public class PlayerController : MonoBehaviour
         for (int i = input.Length; i > 0; i--)
         {
             int value = Random.Range(0, i - 1);
+            random[i - 1] = index[value];
             index[value] = index[i - 1];
         }
         for (int i = 0; i < input.Length; i++)
         {
-            changeInput[i] = input[index[i]];
+            changeInput[i] = input[random[i]];
         }
         input = changeInput;
+
+
+        UIManager.instance.monsterKey[0].text = "전진 :" + input[0].ToString();
+        UIManager.instance.monsterKey[1].text = "왼쪽 :" + input[1].ToString();
+        UIManager.instance.monsterKey[2].text = "뒤로 :" + input[2].ToString();
+        UIManager.instance.monsterKey[3].text = "오른쪽 :" + input[3].ToString();
+        UIManager.instance.monsterKey[4].text = "점프 :" + input[4].ToString();
     }
 
 

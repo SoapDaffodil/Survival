@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum ItemType { GUN, EMP, DRONE, LIGHTTRAP }
+public enum ItemType { GUN, EMP, DRONE, LIGHTTRAP, BATTERY }
 public class ItemSpawner : MonoBehaviour
 {
     public int spawnerId;                   //아이템ID
@@ -14,11 +14,18 @@ public class ItemSpawner : MonoBehaviour
     private Vector3 basePosition;           //아이템 기본포지션
 
     public ItemType itemType;               //이 아이템이 무엇인가
-    
+
     public void Start()
     {
         itemModel = GetComponent<MeshRenderer>();
-        itemType = (ItemType)ItemType.Parse(typeof(ItemType), this.name);
+        try
+        {
+            itemType = (ItemType)ItemType.Parse(typeof(ItemType), this.name);
+        }
+        catch (System.Exception ex)
+        {
+            itemType = (ItemType)ItemType.Parse(typeof(ItemType), this.name.Remove(this.name.Length - 7, 7));
+        }
     }
     /*
     private void Update()
