@@ -14,7 +14,7 @@ public class ItemSpawner : MonoBehaviour
     private Vector3 basePosition;           //아이템 기본포지션
 
     public ItemType itemType;               //이 아이템이 무엇인가
-    
+
     public void Start()
     {
         itemModel = GetComponent<MeshRenderer>();

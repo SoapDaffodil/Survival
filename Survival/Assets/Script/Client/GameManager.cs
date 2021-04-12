@@ -136,7 +136,7 @@ public class GameManager : MonoBehaviour
         _projectile.GetComponent<ProjectileManager>().Initialize(_id);
         projectiles.Add(_id, _projectile.GetComponent<ProjectileManager>());
     }
-
+    
     public void AddLightTrap(int _floor, MonoBehaviour _lightTrap)
     {
         lightTrapList.Add(new LightTrapInfo(_floor, _lightTrap));

@@ -77,7 +77,7 @@ public class M_UseDrone : MonoBehaviour
             droneCam.enabled = true;
             drone.transform.SetParent(null);
             drone.transform.position += new Vector3(0f, 5f, 0f);
-
+            
             //drone.droneMoving.enabled = true;
             gameObject.GetComponent<Move>().enabled = false;
 

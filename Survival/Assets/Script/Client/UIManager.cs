@@ -10,6 +10,7 @@ public class UIManager : MonoBehaviour
     public GameObject startMenu;
     public InputField usernameField;
 
+
     /// <summary>EMP설치게이지</summary>
     [Tooltip("EMP설치게이지")]
     public Slider powerSlider;
@@ -21,7 +22,7 @@ public class UIManager : MonoBehaviour
     /// <summary>장전가능한 탄 수</summary>
     [Tooltip("장전가능한 탄 수")]
     public Text bulletAmoutText;
-
+    
     /// <summary>1층 맵 플레이어위치</summary>
     [Tooltip("1층 맵 플레이어위치")]
     public GameObject fisrtFloorPlayer;
@@ -33,6 +34,10 @@ public class UIManager : MonoBehaviour
 
     /// <summary>LightTrap 버튼 리스트</summary>
     public UnityEngine.UI.Button[] lightTrapUIButton;
+
+    /// <summary>몬스터의 현재 키배치</summary>
+    [Tooltip("몬스터의 현재 키배치")]
+    public Text[] monsterKey;
 
     /// <summary>이미 존재하는지 체크</summary>
     private void Awake()
@@ -55,6 +60,7 @@ public class UIManager : MonoBehaviour
         if (usernameField.text == "0" || usernameField.text == "monster" || usernameField.text == "Monster" ||
             usernameField.text == "1" || usernameField.text == "human" || usernameField.text == "Human") {
             startMenu.SetActive(false);
+            SetActiveFalseMonsterKey();
             usernameField.interactable = false;
             Client.instance.ConnectToServer();
         }
@@ -64,4 +70,21 @@ public class UIManager : MonoBehaviour
             usernameField.placeholder.GetComponent<Text>().text = "올바른 캐릭터를 입력해주세요\n(0: human, 1: monster)";
         }
     }
+
+    public void SetActiveTrueMonsterKey()
+    {
+            for (int i = 0; i < monsterKey.Length; i++)
+            {
+                monsterKey[i].gameObject.SetActive(true);
+            }       
+    }
+
+    public void SetActiveFalseMonsterKey()
+    {
+        for (int i = 0; i < monsterKey.Length; i++)
+        {
+            monsterKey[i].gameObject.SetActive(false);
+        }
+    }
+        
 }
