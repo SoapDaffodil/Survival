@@ -31,6 +31,9 @@ public class UIManager : MonoBehaviour
     public GameObject map;
     public bool mapActive = false;
 
+    /// <summary>LightTrap 버튼 리스트</summary>
+    public UnityEngine.UI.Button[] lightTrapUIButton;
+
     /// <summary>이미 존재하는지 체크</summary>
     private void Awake()
     {

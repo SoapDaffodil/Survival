@@ -133,6 +133,8 @@ public class ClientHandle : MonoBehaviour
         Vector3 _position = _packet.ReadVector3();
 
         GameManager.itemSpawners[_spawnerId].ItemThrow(_position);
+        //temp 수정예정 테스트용 test
+        GameManager.instance.AddLightTrap(1, GameManager.itemSpawners[_spawnerId]);
         GameManager.players[_byPlayer].itemCount--;
     }
 

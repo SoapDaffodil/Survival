@@ -16,9 +16,6 @@ public class Item : MonoBehaviour
     public GameObject[] item_number2;
 
     
-
-
-
     /*
     public void CheckItem(GameObject item)
     {

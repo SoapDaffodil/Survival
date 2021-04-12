@@ -27,6 +27,22 @@ public class GameManager : MonoBehaviour
     /// <summary>폭탄 프리팹</summary>
     public GameObject projectilePrefab;
 
+    /// <summary>LightTrap 리스트</summary>
+    public struct LightTrapInfo
+    {
+        public int floor;
+        public MonoBehaviour lightTrap;
+        public LightTrapInfo(int f, MonoBehaviour trap)
+        {
+            floor = f;
+            lightTrap = trap;
+        }
+    }
+    public List<LightTrapInfo> lightTrapList = new List<LightTrapInfo>();
+    public GameObject[] UI_LightTrapList;
+    public Material[] material_UI_LightTrap;
+    public Vector3[] position_UI_LightTrap = { new Vector3(-100, 0, 0), new Vector3(-200, 0, 0) };
+
     private void Awake()
     {
         if (instance == null)
@@ -68,9 +84,7 @@ public class GameManager : MonoBehaviour
         _player.GetComponent<PlayerManager>().Initialize(_id, _username);
         players.Add(_id, _player.GetComponent<PlayerManager>());
     }
-
-
-
+    
     /// <summary>아이템 생성(아이템 초기화 및 dictionary 추가)</summary>
     /// <param name="_spawnerId">아이템ID</param>
     /// <param name="_position">아이템 position</param>
@@ -112,17 +126,41 @@ public class GameManager : MonoBehaviour
                 break;
         }
     }
+    
+    /// <summary>폭탄 생성</summary>
+    /// <param name="_id">폭탄 ID</param>
+    /// <param name="_position">폭탄 position</param>
+    public void SpawnProjectile(int _id, Vector3 _position)
+    {
+        GameObject _projectile = Instantiate(projectilePrefab, _position, Quaternion.identity);
+        _projectile.GetComponent<ProjectileManager>().Initialize(_id);
+        projectiles.Add(_id, _projectile.GetComponent<ProjectileManager>());
+    }
 
-
-        /// <summary>폭탄 생성</summary>
-        /// <param name="_id">폭탄 ID</param>
-        /// <param name="_position">폭탄 position</param>
-        public void SpawnProjectile(int _id, Vector3 _position)
+    public void AddLightTrap(int _floor, MonoBehaviour _lightTrap)
+    {
+        lightTrapList.Add(new LightTrapInfo(_floor, _lightTrap));
+        SetLightTrapUI();
+    }
+    public void RemoveLightTrap(int number)
+    {
+        lightTrapList.Remove(lightTrapList[number]);
+        SetLightTrapUI();
+    }
+    public void SetLightTrapUI()
+    {
+        for (int i=0;i< UI_LightTrapList.Length;i++)
         {
-            GameObject _projectile = Instantiate(projectilePrefab, _position, Quaternion.identity);
-            _projectile.GetComponent<ProjectileManager>().Initialize(_id);
-            projectiles.Add(_id, _projectile.GetComponent<ProjectileManager>());
+            if (i >= lightTrapList.Count)
+            {
+                UI_LightTrapList[i].SetActive(false);
+                UIManager.instance.lightTrapUIButton[i].gameObject.SetActive(false);
+                continue;
+            }
+            UI_LightTrapList[i].SetActive(true);
+            UIManager.instance.lightTrapUIButton[i].gameObject.SetActive(true);
+            UI_LightTrapList[i].transform.position = lightTrapList[i].lightTrap.transform.position + position_UI_LightTrap[lightTrapList[i].floor - 1];
+            UI_LightTrapList[i].GetComponent<MeshRenderer>().material = material_UI_LightTrap[i];
         }
-
-
+    }
 }
