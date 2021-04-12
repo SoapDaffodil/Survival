@@ -1817,7 +1817,7 @@ GameObject:
   - component: {fileID: 653478047}
   - component: {fileID: 653478054}
   m_Layer: 0
-  m_Name: Drone
+  m_Name: DRONE
   m_TagString: Item
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3921,7 +3921,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 3b43973deb3c97a40bac30cfe33a26d7, type: 3}
       propertyPath: m_Name
-      value: Light
+      value: LIGHTTRAP
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 3b43973deb3c97a40bac30cfe33a26d7, type: 3}
       propertyPath: m_IsActive
@@ -4808,6 +4808,7 @@ MonoBehaviour:
   - {fileID: 742198477}
   - {fileID: 738212317}
   - {fileID: 752062474}
+  monsterKey: []
 --- !u!1 &1595033391
 GameObject:
   m_ObjectHideFlags: 0

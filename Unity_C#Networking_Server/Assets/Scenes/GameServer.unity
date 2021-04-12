@@ -330,7 +330,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2765098290509911380, guid: 06bb422422869864f9f46be318f36228, type: 3}
       propertyPath: m_Name
-      value: Battery
+      value: BATTERY
       objectReference: {fileID: 0}
     - target: {fileID: 6995645067185008688, guid: 06bb422422869864f9f46be318f36228, type: 3}
       propertyPath: itemModel
