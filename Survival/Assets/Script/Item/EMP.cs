@@ -39,6 +39,8 @@ public  class EMP : MonoBehaviour
     }
 
 
+
+
     public void SetUp()
     {
         if (UIManager.instance.powerSlider != null)
@@ -56,9 +58,6 @@ public  class EMP : MonoBehaviour
         }      
     }
 
-
-
-  //  public abstract void Install();
 
     public void Install()
     {
@@ -85,9 +84,6 @@ public  class EMP : MonoBehaviour
         {
             currenGauge = maxGauge;
             finished = true;
-            empAmount = empAmount - 1;
-
-            //Item.EliminateItem();
         }
 
         else if(Input.GetKey(KeyCode.E) && !finished)

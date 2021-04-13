@@ -56,6 +56,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
+
     /// <summary>Spawns a player.</summary>
     /// <param name="_id">The player's ID.</param>
     /// <param name="_name">The player's name.</param>
@@ -106,27 +107,28 @@ public class GameManager : MonoBehaviour
             case PlayerType.HUMAN:
                 if (itemSpawners[_spawnerId].itemType == ItemType.GUN)
                 {
-                    Gun gun = players[_playerId].GetComponent<PlayerManager>().playerItem.item_number1.GetComponent<Gun>();
+                    players[_playerId].GetComponent<PlayerManager>().playerItem.item_number1 = itemSpawners[_spawnerId].gameObject;
                 }
                 else if (itemSpawners[_spawnerId].itemType == ItemType.EMP)
                 {
-                    EMP emp = players[_playerId].GetComponent<PlayerManager>().playerItem.item_number2[0].GetComponent<EMP>();
+                    players[_playerId].GetComponent<PlayerManager>().playerItem.item_number2[0] = itemSpawners[_spawnerId].gameObject;
                 }
                 break;
 
             case PlayerType.MONSTER:
                 if (itemSpawners[_spawnerId].itemType == ItemType.DRONE)
                 {
-                    Drone gun = players[_playerId].GetComponent<PlayerManager>().playerItem.item_number1.GetComponent<Drone>();
+                    players[_playerId].GetComponent<PlayerManager>().playerItem.item_number1 = itemSpawners[_spawnerId].gameObject;
                 }
-                else if (itemSpawners[_spawnerId].itemType == ItemType.EMP)
+                else if (itemSpawners[_spawnerId].itemType == ItemType.LIGHTTRAP)
                 {
-                    M_Light lightTrap = players[_playerId].GetComponent<PlayerManager>().playerItem.item_number2[0].GetComponent<M_Light>();
+                    players[_playerId].GetComponent<PlayerManager>().playerItem.item_number2[0] = itemSpawners[_spawnerId].gameObject;
                 }
                 break;
         }
     }
-    
+
+
     /// <summary>폭탄 생성</summary>
     /// <param name="_id">폭탄 ID</param>
     /// <param name="_position">폭탄 position</param>
