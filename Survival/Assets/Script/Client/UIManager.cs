@@ -39,6 +39,10 @@ public class UIManager : MonoBehaviour
     [Tooltip("몬스터의 현재 키배치")]
     public Text[] monsterKey;
 
+    public GameObject[] UI_LightTrapList;
+    public Material[] material_UI_LightTrap;
+    public Vector3[] position_UI_LightTrap = { new Vector3(-100, 0, 0), new Vector3(-200, 0, 0) };
+
     /// <summary>이미 존재하는지 체크</summary>
     private void Awake()
     {

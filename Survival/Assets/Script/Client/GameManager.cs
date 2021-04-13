@@ -39,9 +39,6 @@ public class GameManager : MonoBehaviour
         }
     }
     public List<LightTrapInfo> lightTrapList = new List<LightTrapInfo>();
-    public GameObject[] UI_LightTrapList;
-    public Material[] material_UI_LightTrap;
-    public Vector3[] position_UI_LightTrap = { new Vector3(-100, 0, 0), new Vector3(-200, 0, 0) };
 
     private void Awake()
     {
@@ -149,18 +146,18 @@ public class GameManager : MonoBehaviour
     }
     public void SetLightTrapUI()
     {
-        for (int i=0;i< UI_LightTrapList.Length;i++)
+        for (int i=0;i< UIManager.instance.UI_LightTrapList.Length;i++)
         {
             if (i >= lightTrapList.Count)
             {
-                UI_LightTrapList[i].SetActive(false);
+                UIManager.instance.UI_LightTrapList[i].SetActive(false);
                 UIManager.instance.lightTrapUIButton[i].gameObject.SetActive(false);
                 continue;
             }
-            UI_LightTrapList[i].SetActive(true);
+            UIManager.instance.UI_LightTrapList[i].SetActive(true);
             UIManager.instance.lightTrapUIButton[i].gameObject.SetActive(true);
-            UI_LightTrapList[i].transform.position = lightTrapList[i].lightTrap.transform.position + position_UI_LightTrap[lightTrapList[i].floor - 1];
-            UI_LightTrapList[i].GetComponent<MeshRenderer>().material = material_UI_LightTrap[i];
+            UIManager.instance.UI_LightTrapList[i].transform.position = lightTrapList[i].lightTrap.transform.position + UIManager.instance.position_UI_LightTrap[lightTrapList[i].floor - 1];
+            UIManager.instance.UI_LightTrapList[i].GetComponent<MeshRenderer>().material = UIManager.instance.material_UI_LightTrap[i];
         }
     }
 }
