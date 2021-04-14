@@ -285,6 +285,24 @@ public class ServerSend
             SendTCPData(_playerID, _packet);
         }
     }
+
+
+    /// <summary>EMPZONE에 EMP 설치완료</summary>
+    /// /// <param name="_spawnerId">아이템 ID</param>
+    /// <param name="_byPlayer">플레이어 ID</param>
+    /// /// <param name="_position">아이템 포지션</param>
+    public static void InstallEMP(int _spawnerId, int _byPlayer, Vector3 _position)
+    {
+        using (Packet _packet = new Packet((int)ServerPackets.installEMP))
+        {
+            _packet.Write(_spawnerId);
+            _packet.Write(_byPlayer);
+            _packet.Write(_position);
+
+            SendTCPDataToAll(_packet);
+        }
+    }
+
     /*
     public static void UDPTest(int _toClient)
     {

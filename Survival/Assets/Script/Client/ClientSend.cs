@@ -113,6 +113,24 @@ public class ClientSend : MonoBehaviour
         }
     }
 
+    /// <summary>EMPZONE에 설치한 EMP packet TCP전송(한번만 전송하므로 누락이 될지언정 오류가 발생하지는 않음)</summary>
+    /// <param name="_position">플레이어 위치</param>
+    /// <param name="_emp">설치하는 emp</param>
+    public static void InstallEMP(Vector3 _position, GameObject _emp)
+    {
+        using (Packet _packet = new Packet((int)ClientPackets.installEMP))
+        {
+            _packet.Write(_position.x);
+            _packet.Write(0.5f);
+            _packet.Write(_position.z);
+
+            _packet.Write(_emp.GetComponent<ItemSpawner>().spawnerId);
+            
+
+            SendTCPData(_packet);
+        }
+    }
+
     /*
     public static void UDPTestReceived()
     {

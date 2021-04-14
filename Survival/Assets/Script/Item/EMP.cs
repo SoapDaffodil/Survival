@@ -18,6 +18,7 @@ public  class EMP : MonoBehaviour
     protected int empAmount = 0;
 
     public int count = 0;
+    public bool isInstalling = false;
 
     
     private void Start()
@@ -61,6 +62,43 @@ public  class EMP : MonoBehaviour
 
     public void Install()
     {
+        if(finished)
+        {
+            currenGauge = minGauge;
+            finished = false;
+            UIManager.instance.powerSlider.value = currenGauge;
+            UIManager.instance.powerSlider.gameObject.SetActive(false);
+
+            Debug.Log("이미 설치가 완료 되었습니다");
+        }
+
+        else if(currenGauge >= maxGauge && !finished)
+        {
+            finished = true;
+            currenGauge = maxGauge;
+            isInstalling = false;
+
+            ClientSend.InstallEMP(transform.position, GameManager.players[Client.instance.myId].GetComponent<PlayerManager>().playerItem.item_number2[0]);
+        }
+
+        else if(currenGauge < maxGauge && !finished)
+        {
+            currenGauge = currenGauge * chargingSpeed * Time.deltaTime;
+            UIManager.instance.powerSlider.value = currenGauge;
+            isInstalling = true;
+        }
+    }
+
+    public void InstallCancle()
+    {
+        currenGauge = minGauge;
+        UIManager.instance.powerSlider.value = minGauge;
+    }
+
+
+    /*
+    public void Install()
+    {
         if (UIManager.instance.powerSlider != null)
         {
             UIManager.instance.powerSlider.gameObject.SetActive(true);
@@ -98,7 +136,7 @@ public  class EMP : MonoBehaviour
             UIManager.instance.powerSlider.value = minGauge;
         }     
     }
-
+    */
 
     public void CheckEMP()
     {

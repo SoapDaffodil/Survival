@@ -71,4 +71,12 @@ public class ItemSpawner : MonoBehaviour
         itemModel.enabled = true;
         this.transform.position = _position;
     }
+
+    /// <summary>EMPZONE에 EMP 설치하기 > 맵에 표시O</summary>
+    public void InstallEMP(Vector3 _position)
+    {
+        hasItem = true;
+        itemModel.enabled = true;
+        this.transform.position = _position;
+    }
 }

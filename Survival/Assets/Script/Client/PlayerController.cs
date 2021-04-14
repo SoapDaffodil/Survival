@@ -48,22 +48,10 @@ public class PlayerController : MonoBehaviour
         {
             KeyChange();
         }
-        if (Input.GetKey(KeyCode.E))
+        if (Input.GetKeyDown(KeyCode.E))
         {
             getKeyDownE = true;
 
-            // 아이템 가져오기
-            EMP emp = GameManager.players[Client.instance.myId].GetComponent<PlayerManager>().playerItem.item_number2[0].GetComponent<EMP>();
-
-            if(!emp && !emp.finished)
-            {
-                emp.Install();
-            }
-            else if (Input.GetKeyUp(KeyCode.E) && !emp.finished)
-            {
-                getKeyDownE = false;
-                emp.Install();
-            }
         }
 
     }
@@ -152,22 +140,38 @@ public class PlayerController : MonoBehaviour
                     }
 
                 }
+            }
 
-                else if (getKeyDownE)
+            if (getKeyDownE)
+            {
+                getKeyDownE = false;
+                EMP emp = GameManager.players[Client.instance.myId].GetComponent<PlayerManager>().playerItem.item_number2[0].GetComponent<EMP>();
+
+                if (!emp)
                 {
-                /*
-                    getKeyDownE = false;
-
-                    EMP emp = GameManager.players[Client.instance.myId].GetComponent<PlayerManager>().playerItem.item_number2[0].GetComponent<EMP>();
-
-                    if (other.CompareTag("EMPZONE") && !emp)
+                    if(other.CompareTag("EMPZONE"))
                     {
-                        emp.Install();
-                        emp.count++;
+                        if (emp.isInstalling)
+                        {
+                            // emp 설치 취소
+                            emp.InstallCancle();
+                        }
+                        else
+                        {
+                            emp.Install();
+                        }
                     }
-                */
+                    else
+                    {
+                        //EMP TRAP 설치
+                    }
+                }
+                else
+                {
+                    Debug.Log("가지고 있는 emp가 없습니다");
                 }
             }
-        }
+         
+    }
     
 }

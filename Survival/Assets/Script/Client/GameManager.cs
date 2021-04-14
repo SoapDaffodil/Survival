@@ -162,4 +162,6 @@ public class GameManager : MonoBehaviour
             UIManager.instance.UI_LightTrapList[i].GetComponent<MeshRenderer>().material = UIManager.instance.material_UI_LightTrap[i];
         }
     }
+
+
 }

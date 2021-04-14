@@ -146,6 +146,17 @@ public class ClientHandle : MonoBehaviour
         GameManager.players[_byPlayer].GetComponent<PlayerController>().KeyChange();
     }
 
+    public static void InstallEMP(Packet _packet)
+    {
+        int _spawnerId = _packet.ReadInt();
+        int _byPlayer = _packet.ReadInt();
+        Vector3 _position = _packet.ReadVector3();
+
+        GameManager.itemSpawners[_spawnerId].InstallEMP(_position);
+        GameManager.players[_byPlayer].itemCount--;
+        //item_number2삭제하기
+    }
+
 
     /// <summary>패킷에 담긴 폭탄 생성정보(ID,position,던진player)를 통해 폭탄생성</summary>
     /// <param name="_packet"></param>

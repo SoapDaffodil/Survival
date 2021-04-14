@@ -7,11 +7,11 @@ TagManager:
   - Button
   - Item
   - Door
-  - EMPZone
   - Monster
   - CureZone
   - Hide
   - Map
+  - EMPZONE
   layers:
   - Default
   - TransparentFX

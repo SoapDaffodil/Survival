@@ -77,4 +77,17 @@ public class ItemSpawner : MonoBehaviour
             ServerSend.ItemThrow(spawnerId, _byPlayer, _position);
         }
     }
+
+    /// <summary>EMPZONE에 EMP를 설치했다는 정보를 모든 클라이언트에게 전송</summary>
+    /// <param name="_byPlayer">EMP를 설치한 플레이어</param>
+    /// <param name="_position">EMP를 설치한 위치</param>
+    public void InstallEMP(int _byPlayer, Vector3 _position)
+    {
+        hasItem = true;
+        itemModel.enabled = hasItem;
+        this.transform.position = _position;
+        ServerSend.InstallEMP(spawnerId, _byPlayer, _position);
+    }
+
+
 }
