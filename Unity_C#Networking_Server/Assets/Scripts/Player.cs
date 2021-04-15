@@ -3,10 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum PlayerType { MONSTER, HUMAN }
+
 public class Player : MonoBehaviour
 {
     public int id;                          //id
     public string username;                 //player 이름
+    public PlayerType playerType;           //player 타입(괴물,인간)
 
     public CharacterController controller;  //player의 컨트롤러
     public Transform shootOrigin;           //총알방향
@@ -26,6 +29,17 @@ public class Player : MonoBehaviour
     {
         id = _id;
         username = _username;
+        string _playerType = "";
+        switch (_username)
+        {
+            case "0": case "monster": case "Monster":
+                _playerType = "MONSTER";
+                break;
+            case "1":  case "human": case "Human":
+                _playerType = "HUMAN";
+                break;
+        }
+        playerType = (PlayerType)PlayerType.Parse(typeof(PlayerType), _playerType);
         hp = maxHp;
 
         inputs = new bool[5];

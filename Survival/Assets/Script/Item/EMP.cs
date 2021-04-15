@@ -23,7 +23,7 @@ public  class EMP : MonoBehaviour
     
     private void Start()
     {        
-        UIManager.instance.powerSlider = GameObject.Find("Power Slider").GetComponent<Slider>();       
+        //UIManager.instance.powerSlider = GameObject.Find("Power Slider").GetComponent<Slider>();       
         chargingSpeed = (maxGauge - minGauge) / chargingTime;
 
         SetUp();

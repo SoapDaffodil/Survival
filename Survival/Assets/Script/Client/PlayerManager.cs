@@ -21,6 +21,7 @@ public class PlayerManager : MonoBehaviour
     public void Start()
     {
         controller = GetComponentInChildren<PlayerController>();
+        playerItem = new Item();
     }
 
     public void FixedUpdate()

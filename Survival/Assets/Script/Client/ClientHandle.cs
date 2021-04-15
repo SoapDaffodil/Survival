@@ -20,6 +20,14 @@ public class ClientHandle : MonoBehaviour
         Client.instance.udp.Connect(((IPEndPoint)Client.instance.tcp.socket.Client.LocalEndPoint).Port);
     }
 
+    /// <summary>서버로 부터 welcome data를 받음</summary>
+    public static void Error(Packet _packet)
+    {
+        string _msg = _packet.ReadString();
+
+        Debug.Log($"Error _ Message from server: {_msg}");
+    }
+
     public static void SpawnPlayer(Packet _packet)
     {
         int _id = _packet.ReadInt();
@@ -120,6 +128,7 @@ public class ClientHandle : MonoBehaviour
 
         //G 버리기 테스트용 temp
         GameManager.players[_byPlayer].grabItem = GameManager.itemSpawners[_spawnerId];
+        GameManager.instance.SaveItemToPlayer(_spawnerId, _byPlayer);
 
         GameManager.itemSpawners[_spawnerId].ItemPickedUp();
         GameManager.instance.SaveItemToPlayer(_spawnerId, _byPlayer);

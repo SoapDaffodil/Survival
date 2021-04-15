@@ -56,10 +56,34 @@ public class ItemSpawner : MonoBehaviour
     {
         if (Server.clients[_byPlayer].player.AttemptPickupItem())
         {
-            hasItem = false;
-            itemModel.enabled = hasItem;
-            ServerSend.ItemPickedUp(spawnerId, _byPlayer);
+            switch (Server.clients[_byPlayer].player.playerType)
+            {
+                case PlayerType.HUMAN:
+                    if (this.tag == "GUN" || this.tag == "EMP")
+                    {
+                        hasItem = false;
+                        itemModel.enabled = hasItem;
+                        ServerSend.ItemPickedUp(spawnerId, _byPlayer);
+                    }
+                    else
+                    {
+                        ServerSend.Error(_byPlayer, "It is not your Item");
+                    }
+                    break;
 
+                case PlayerType.MONSTER:
+                    if (this.tag == "DRONE" || this.tag == "LIGHTTRAP")
+                    {
+                        hasItem = false;
+                        itemModel.enabled = hasItem;
+                        ServerSend.ItemPickedUp(spawnerId, _byPlayer);
+                    }
+                    else
+                    {
+                        ServerSend.Error(_byPlayer, "It is not your Item");
+                    }
+                    break;
+            }
             //StartCoroutine(SpawnItem());
         }
     }

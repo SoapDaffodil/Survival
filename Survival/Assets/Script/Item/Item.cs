@@ -13,7 +13,7 @@ public class Item : MonoBehaviour
     #endregion
 
     public GameObject item_number1;
-    public GameObject[] item_number2;
+    public List<GameObject> item_number2 = new List<GameObject>();
 
     
     /*

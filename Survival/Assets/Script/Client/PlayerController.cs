@@ -147,7 +147,7 @@ public class PlayerController : MonoBehaviour
                 getKeyDownE = false;
                 EMP emp = GameManager.players[Client.instance.myId].GetComponent<PlayerManager>().playerItem.item_number2[0].GetComponent<EMP>();
 
-                if (!emp)
+                if (emp)
                 {
                     if(other.CompareTag("EMPZONE"))
                     {

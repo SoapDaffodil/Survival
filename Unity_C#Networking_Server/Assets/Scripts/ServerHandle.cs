@@ -13,7 +13,8 @@ public class ServerHandle
     {
         int _clientIdCheck = _packet.ReadInt();
         string _username = _packet.ReadString();
-
+        string _playerType;
+        
         Debug.Log($"{Server.clients[_fromClient].tcp.socket.Client.RemoteEndPoint} connected successfully and is now player {_fromClient}.");
         if (_fromClient != _clientIdCheck)
         {

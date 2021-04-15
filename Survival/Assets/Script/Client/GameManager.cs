@@ -6,8 +6,6 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
-    /// <summary>player가 사람인지 괴물인지 판단</summary>
-    public static bool character_human;
     /// <summary>emp존 설치완료여부 판단</summary>
     public static bool EMPInstallFinished = false;
 
@@ -15,8 +13,9 @@ public class GameManager : MonoBehaviour
     public static Dictionary<int, ItemSpawner> itemSpawners = new Dictionary<int, ItemSpawner>();           //모든아이템정보 저장
     public static Dictionary<int, ProjectileManager> projectiles = new Dictionary<int, ProjectileManager>();//모든 폭탄정보 저장
     public static Dictionary<int, EmpTrap> empTraps = new Dictionary<int, EmpTrap>();                 //모든 EMPTrap 정보 저장
-    //public static Dictionary<int, EnemyManager> enemies = new Dictionary<int, EnemyManager>();
-
+                                                                                                      //public static Dictionary<int, EnemyManager> enemies = new Dictionary<int, EnemyManager>();
+    /// <summary>자신이 사람인지 몬스터인지 판단</summary>
+    public static bool character_human;
     /// <summary>자신 player 프리팹</summary>
     public GameObject localPlayerPrefab;
     /// <summary>다른 player 프리팹</summary>
@@ -92,6 +91,18 @@ public class GameManager : MonoBehaviour
         */
         _player.GetComponent<PlayerManager>().Initialize(_id, _username);
         players.Add(_id, _player.GetComponent<PlayerManager>());
+        if (_id.ToString() == UIManager.instance.usernameField.text)
+        {
+            switch (UIManager.instance.usernameField.text)
+            {
+                case "0": case "monster": case "Monster":
+                    players[_id].playerType = PlayerType.MONSTER;
+                    break;
+                case "1": case "human": case "Human":
+                    players[_id].playerType = PlayerType.HUMAN;
+                    break;
+            }
+        }
     }
     
     /// <summary>아이템 생성(아이템 초기화 및 dictionary 추가)</summary>
@@ -119,7 +130,7 @@ public class GameManager : MonoBehaviour
                 }
                 else if (itemSpawners[_spawnerId].itemType == ItemType.EMP)
                 {
-                    players[_playerId].GetComponent<PlayerManager>().playerItem.item_number2[0] = itemSpawners[_spawnerId].gameObject;
+                    players[_playerId].GetComponent<PlayerManager>().playerItem.item_number2.Add(itemSpawners[_spawnerId].gameObject);
                 }
                 break;
 
@@ -130,7 +141,7 @@ public class GameManager : MonoBehaviour
                 }
                 else if (itemSpawners[_spawnerId].itemType == ItemType.LIGHTTRAP)
                 {
-                    players[_playerId].GetComponent<PlayerManager>().playerItem.item_number2[0] = itemSpawners[_spawnerId].gameObject;
+                    players[_playerId].GetComponent<PlayerManager>().playerItem.item_number2.Add(itemSpawners[_spawnerId].gameObject);
                 }
                 break;
         }

@@ -94,6 +94,18 @@ public class ServerSend
         }
     }
 
+    /// <summary>에러발생</summary>
+    /// <param name="_message">에러 메세지 전송</param>
+    public static void Error(int _toClient, string _message)
+    {
+        using (Packet _packet = new Packet((int)ServerPackets.error))
+        {
+            _packet.Write(_message);
+
+            SendTCPData(_toClient, _packet);
+        }
+    }
+
     /// <summary>클라이언트들에게 스폰된 플레이어를 전달(한번만 전달하기 때문에 TCP)</summary>
     /// <param name="_toClient">플레이어를 스폰해야하는 클라이언트</param>
     /// <param name="_player">스폰되는 플레이어</param>

@@ -9,6 +9,7 @@ using UnityEngine;
 public enum ServerPackets
 {
     welcome = 1,        //접속
+    error,              //error 메세지
     spawnPlayer,        //player 스폰
     playerPosition,     //player position
     playerRotation,     //player rotation
