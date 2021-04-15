@@ -23,6 +23,8 @@ public enum ServerPackets
     projectilePosition, //폭탄 위치
     projectileExploded, //폭탄 폭발여부
     keyChange,          //키 체인지
+    installEMP,         //EMPZONE에 EMP 설치완료
+    spawnEMPTrap        //EMPTrap 생성
     //udpTest
 }
 
@@ -36,6 +38,7 @@ public enum ClientPackets
     playerGetItem,          //아이템 획득
     playerThrowItem,        //아이템 버리기
     installEMP,             //EMPZONE에 EMP 설치완료
+    spawnEMPTrap,           //EMPTrap 생성
     // udpTestReceived
 }
 

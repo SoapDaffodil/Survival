@@ -164,6 +164,14 @@ public class PlayerController : MonoBehaviour
                     else
                     {
                         //EMP TRAP 설치
+                        if(emp.isInstalling)
+                        {
+                            emp.InstallCancle();
+                        }
+                        else
+                        {
+                            emp.Install();
+                        }
                     }
                 }
                 else

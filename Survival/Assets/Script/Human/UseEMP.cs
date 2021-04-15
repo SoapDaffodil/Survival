@@ -7,9 +7,7 @@ public class UseEMP : MonoBehaviour
     public List<EMP> empList;
 
     public EMP emp;
-    public EmpForTrap trap;
     public EMP installation;
-    private EmpForTrap empTrapInstance;
     private EMP installingInstance;
 
     private void OnTriggerStay(Collider other)
@@ -25,6 +23,7 @@ public class UseEMP : MonoBehaviour
             empList.Remove(a);
             */
 
+            /*
             if (other.CompareTag("EMPZone"))
             {
                 if (Input.GetKeyDown(KeyCode.E))
@@ -39,7 +38,7 @@ public class UseEMP : MonoBehaviour
                 {
                     //((EmpForInstalling)emp).Install();
                 }
-                if (((EmpForInstalling)emp).finished == true && installingInstance == null)
+                if emp.finished == true && installingInstance == null)
                 {
                     installingInstance = Instantiate(installation, transform);
                     installingInstance.transform.SetParent(null);
@@ -73,14 +72,14 @@ public class UseEMP : MonoBehaviour
                 if (((EmpForTrap)emp).finished == true && empTrapInstance == null)
                 {
                     Debug.Log("trap 생성!");
-                    empTrapInstance = Instantiate(trap, transform);
-                    empTrapInstance.transform.SetParent(null);
+                   // empTrapInstance = Instantiate(trap, transform);
+                   // empTrapInstance.transform.SetParent(null);
 
                     emp.finished = false;
                 }
             }
 
-           
+           */
         }       
     }
 

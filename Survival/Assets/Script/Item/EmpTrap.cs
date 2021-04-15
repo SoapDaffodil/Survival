@@ -3,10 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class EmpForTrap : EMP
+public class EmpTrap : MonoBehaviour
 {
+    public int id;
     public bool isDetectedMode = false;
 
+    public void Initialize(int _id)
+    {
+        id = _id;
+    }
 
     private void OnTriggerStay(Collider other)
     {

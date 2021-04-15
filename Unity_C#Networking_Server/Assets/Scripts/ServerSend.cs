@@ -303,6 +303,21 @@ public class ServerSend
         }
     }
 
+    /// <summary>EMPTrap 생성</summary>
+    /// <param name="_empTrap"> EMPTrap </param>
+    /// <param name="_byPlayer">설치한 player</param>
+    public static void SpawnEMPTrap(EMPTrap _empTrap, int _byPlayer)
+    {
+        using (Packet _packet = new Packet((int)ServerPackets.spawnEMPTrap))
+        {
+            _packet.Write(_empTrap.id);
+            _packet.Write(_empTrap.transform.position);
+            _packet.Write(_byPlayer);
+
+            SendTCPDataToAll(_packet);
+        }
+    }
+
     /*
     public static void UDPTest(int _toClient)
     {
