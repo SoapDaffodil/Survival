@@ -14,9 +14,9 @@ GameObject:
   - component: {fileID: 3406075731991387021}
   - component: {fileID: 3406075731991387020}
   - component: {fileID: 3406075731991387059}
-  - component: {fileID: 3406075731991387017}
+  - component: {fileID: 5842147077173192032}
   m_Layer: 8
-  m_Name: Gun
+  m_Name: GUN
   m_TagString: Item
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -141,7 +141,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &3406075731991387017
+--- !u!114 &5842147077173192032
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -150,9 +150,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 3406075731991387058}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e88b96338623451428b3b2eeffd188e5, type: 3}
+  m_Script: {fileID: 11500000, guid: 3ab138e41129e8346b4bf92b2dda7b94, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fireDistance: 100
-  currentBulletText: {fileID: 0}
-  bulletAmoutText: {fileID: 0}
+  spawnerId: 0
+  hasItem: 0
+  itemModel: {fileID: 3406075731991387022}
+  itemRotationSpeed: 50
+  itemBobSpeed: 2
+  itemType: 0

@@ -567,7 +567,12 @@ MonoBehaviour:
   playerMesh:
   - {fileID: 0}
   - {fileID: 0}
-  itemSpawnerPrefab: {fileID: 2824943518711138377, guid: 1fe57f78570cad146b3dc790d4968431, type: 3}
+  itemSpawnerPrefab:
+  - {fileID: 3406075731991387058, guid: b112b001b44338b479c5459a8feea134, type: 3}
+  - {fileID: 0}
+  - {fileID: 4180773450263009796, guid: 3856d8d22b9f7bb4b954475534e0343b, type: 3}
+  - {fileID: 919132149155446097, guid: 23f42b4c8921c334eb1da8c5d68c1c46, type: 3}
+  - {fileID: 2824943518711138377, guid: 1fe57f78570cad146b3dc790d4968431, type: 3}
   projectilePrefab: {fileID: 2765098290509911380, guid: 219c8f2c4324a7b43a7032a782e54193, type: 3}
 --- !u!4 &475494750
 Transform:
@@ -632,20 +637,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 3b43973deb3c97a40bac30cfe33a26d7, type: 3}
   m_PrefabInstance: {fileID: 1290595360}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &497713343
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 497713341}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d854667b846a0b24eaa9fef7c06529d0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_light: {fileID: 0}
-  finished: 0
 --- !u!135 &497713344
 SphereCollider:
   m_ObjectHideFlags: 0

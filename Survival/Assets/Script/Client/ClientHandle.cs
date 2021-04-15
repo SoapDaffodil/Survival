@@ -96,8 +96,10 @@ public class ClientHandle : MonoBehaviour
         int _spawnerId = _packet.ReadInt();
         Vector3 _spawnerPosition = _packet.ReadVector3();
         bool _hasItem = _packet.ReadBool();
+        string _tag = _packet.ReadString();
+        ItemType _type = (ItemType)ItemType.Parse(typeof(ItemType), _tag);
 
-        GameManager.instance.CreateItemSpawner(_spawnerId, _spawnerPosition, _hasItem);
+        GameManager.instance.CreateItemSpawner(_spawnerId, _spawnerPosition, _hasItem, _type);
     }
 
     /// <summary>패킷에 담긴 아이템 스폰정보(id) update</summary>

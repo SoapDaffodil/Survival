@@ -23,7 +23,8 @@ public class GameManager : MonoBehaviour
     [Tooltip("[0] : monster, [1] : human 모델링 메쉬")]
     public Mesh[] playerMesh = new Mesh[2];
     /// <summary>아이템 프리팹</summary>
-    public GameObject itemSpawnerPrefab;
+    public GameObject[] itemSpawnerPrefab;
+    public Dictionary<ItemType, GameObject> itemSpawnerObject;
     /// <summary>폭탄 프리팹</summary>
     public GameObject projectilePrefab;
 
@@ -51,6 +52,13 @@ public class GameManager : MonoBehaviour
             Debug.Log("Instance already exists, destroying object!");
             Destroy(this);
         }
+        itemSpawnerObject = new Dictionary<ItemType, GameObject>() {
+            { ItemType.GUN, itemSpawnerPrefab[0] },
+            { ItemType.DRONE, itemSpawnerPrefab[1] },
+            { ItemType.EMP, itemSpawnerPrefab[2] },
+            { ItemType.LIGHTTRAP, itemSpawnerPrefab[3] },
+            { ItemType.BATTERY, itemSpawnerPrefab[4] },
+        };
     }
 
 
@@ -87,9 +95,9 @@ public class GameManager : MonoBehaviour
     /// <param name="_spawnerId">아이템ID</param>
     /// <param name="_position">아이템 position</param>
     /// <param name="_hasItem">아이템 존재여부</param>
-    public void CreateItemSpawner(int _spawnerId, Vector3 _position, bool _hasItem)
+    public void CreateItemSpawner(int _spawnerId, Vector3 _position, bool _hasItem, ItemType _type)
     {
-        GameObject _spawner = Instantiate(itemSpawnerPrefab, _position, itemSpawnerPrefab.transform.rotation);
+        GameObject _spawner = Instantiate(itemSpawnerObject[_type], _position, itemSpawnerObject[_type].transform.rotation);
         _spawner.GetComponent<ItemSpawner>().Initialize(_spawnerId, _hasItem);
         itemSpawners.Add(_spawnerId, _spawner.GetComponent<ItemSpawner>());
     }
