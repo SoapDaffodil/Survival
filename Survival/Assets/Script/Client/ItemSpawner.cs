@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum ItemType { GUN, EMP, DRONE, LIGHTTRAP, BATTERY }
+public enum ItemType { GUN, DRONE, EMP, LIGHTTRAP, BATTERY }
 public class ItemSpawner : MonoBehaviour
 {
     public int spawnerId;                   //아이템ID

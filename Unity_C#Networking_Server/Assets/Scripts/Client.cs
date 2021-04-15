@@ -241,7 +241,7 @@ public class Client
         // 아이템정보 전송
         foreach (ItemSpawner _itemSpawner in ItemSpawner.spawners.Values)
         {
-            ServerSend.CreateItemSpawner(id, _itemSpawner.spawnerId, _itemSpawner.transform.position, _itemSpawner.hasItem);
+            ServerSend.CreateItemSpawner(id, _itemSpawner.spawnerId, _itemSpawner.transform.position, _itemSpawner.hasItem, _itemSpawner.tag);
         }
 
     }

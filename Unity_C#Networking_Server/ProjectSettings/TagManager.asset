@@ -5,6 +5,11 @@ TagManager:
   serializedVersion: 2
   tags:
   - Map
+  - GUN
+  - DRONE
+  - EMP
+  - LIGHTTRAP
+  - BATTERY
   layers:
   - Default
   - TransparentFX

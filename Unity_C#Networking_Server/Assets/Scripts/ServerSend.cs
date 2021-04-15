@@ -179,13 +179,14 @@ public class ServerSend
     /// <param name="_spawnerId">아이템ID</param>
     /// <param name="_spawnerPosition">아이템 position</param>
     /// <param name="_hasItem">아이템 존재여부</param>
-    public static void CreateItemSpawner(int _toClient, int _spawnerId, Vector3 _spawnerPosition, bool _hasItem)
+    public static void CreateItemSpawner(int _toClient, int _spawnerId, Vector3 _spawnerPosition, bool _hasItem, string _tag)
     {
         using (Packet _packet = new Packet((int)ServerPackets.createItemSpawner))
         {
             _packet.Write(_spawnerId);
             _packet.Write(_spawnerPosition);
             _packet.Write(_hasItem);
+            _packet.Write(_tag);
 
             SendTCPData(_toClient, _packet);
         }

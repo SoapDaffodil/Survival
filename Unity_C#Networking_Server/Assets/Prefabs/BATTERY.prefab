@@ -14,8 +14,8 @@ GameObject:
   - component: {fileID: 9050157565957331949}
   - component: {fileID: 6995645067185008688}
   m_Layer: 0
-  m_Name: Projectile 5
-  m_TagString: Untagged
+  m_Name: BATTERY
+  m_TagString: BATTERY
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -61,7 +61,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 9bf38231e4d453444b35c120d904d20b, type: 2}
+  - {fileID: 2100000, guid: 0c1620f6b954ed7439a81f4439906a85, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -91,7 +91,7 @@ SphereCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2765098290509911380}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.5
@@ -110,3 +110,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnerId: 0
   hasItem: 0
+  itemModel: {fileID: 71573584938816084}
