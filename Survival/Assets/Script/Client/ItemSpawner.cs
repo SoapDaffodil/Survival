@@ -79,14 +79,4 @@ public class ItemSpawner : MonoBehaviour
         itemModel.enabled = true;
         this.transform.position = _position;
     }
-
-    /// <summary>EMPTrap 설치하기 > 맵에 표시O</summary>
-    public void InstallEMPTrap(Vector3 _position)
-    {
-        hasItem = true;
-        itemModel.enabled = true;
-        this.transform.position = _position;
-        gameObject.GetComponent<SphereCollider>().radius = 5f;
-
-    }
 }

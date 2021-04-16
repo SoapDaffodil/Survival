@@ -168,18 +168,6 @@ public class ClientHandle : MonoBehaviour
         //item_number2삭제하기
     }
 
-    public static void SpawnEMPTrap(Packet _packet)
-    {
-        int _empTrapId = _packet.ReadInt();
-        Vector3 _position = _packet.ReadVector3();
-        int _byPlayer = _packet.ReadInt();
-
-        GameManager.instance.SpawnEMPTrap(_empTrapId, _position);
-        GameManager.players[_byPlayer].itemCount--;
-        //item_number2삭제하기
-    }
-
-
     /// <summary>패킷에 담긴 폭탄 생성정보(ID,position,던진player)를 통해 폭탄생성</summary>
     /// <param name="_packet"></param>
     public static void SpawnProjectile(Packet _packet)

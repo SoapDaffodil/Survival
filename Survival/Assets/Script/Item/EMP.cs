@@ -8,7 +8,7 @@ public  class EMP : MonoBehaviour
 
     protected float minGauge = 15f;
     protected float maxGauge = 45f;
-    protected float chargingTime = 2f;
+    protected float chargingTime;
     protected Slider powerSlider;
 
 
@@ -19,33 +19,24 @@ public  class EMP : MonoBehaviour
 
     public int count = 0;
     public bool isInstalling = false;
+    public bool gaugeCheck = false;
+    public bool isDetectiveMode = false;
 
-    
+
+
     private void Start()
-    {        
-        //UIManager.instance.powerSlider = GameObject.Find("Power Slider").GetComponent<Slider>();       
-        chargingSpeed = (maxGauge - minGauge) / chargingTime;
-
-        SetUp();
-
-        if(UIManager.instance.powerSlider != null)
-        {
-            Debug.Log("slider : " + UIManager.instance.powerSlider);
-        }
-        else
-        {
-            Debug.Log("slider : null " );
-        }
-       
-    }
-
-
-
-
-    public void SetUp()
     {
+        chargingSpeed = 2f;
+        isInstalling = false;
+        gaugeCheck = false;
+        isDetectiveMode = false;
+
+        //UIManager.instance.powerSlider = GameObject.Find("Power Slider").GetComponent<Slider>();       
+        chargingTime = (maxGauge - minGauge)/100 * chargingSpeed;
+
         if (UIManager.instance.powerSlider != null)
         {
+            Debug.Log("slider : " + UIManager.instance.powerSlider);
             finished = false;
             currenGauge = minGauge;
             UIManager.instance.powerSlider.value = minGauge;
@@ -55,129 +46,61 @@ public  class EMP : MonoBehaviour
         {
             Debug.Log("slider : " + UIManager.instance.powerSlider);
             Debug.Log("슬라이더가 없음");
-            
-        }      
+
+        }
     }
-
-
-    public void Install()
+    public void Update()
     {
-        if(finished)
+        if (isInstalling && gaugeCheck)
         {
-            currenGauge = minGauge;
-            finished = false;
-            UIManager.instance.powerSlider.value = currenGauge;
-            UIManager.instance.powerSlider.gameObject.SetActive(false);
+            gaugeCheck = false;
+            UIManager.instance.powerSlider.gameObject.SetActive(true);
 
-            Debug.Log("이미 설치가 완료 되었습니다");
-        }
+            if (currenGauge < maxGauge)
+            {
+                currenGauge += currenGauge * chargingTime * Time.deltaTime;
+                UIManager.instance.powerSlider.value = currenGauge;
+            }
 
-        else if(currenGauge >= maxGauge && !finished)
-        {
-            finished = true;
-            currenGauge = maxGauge;
-            isInstalling = false;
+            if (currenGauge >= maxGauge)
+            {
+                isInstalling = false;
+                currenGauge = maxGauge;
+                
+                UIManager.instance.powerSlider.gameObject.SetActive(false);
 
-            ClientSend.InstallEMP(transform.position, GameManager.players[Client.instance.myId].GetComponent<PlayerManager>().playerItem.item_number2[0]);
-        }
-
-        else if(currenGauge < maxGauge && !finished)
-        {
-            currenGauge = currenGauge * chargingSpeed * Time.deltaTime;
-            UIManager.instance.powerSlider.value = currenGauge;
-            isInstalling = true;
-        }
-    }
-
-    public void InstallEMPTrap()
-    {
-        if (finished)
-        {
-            currenGauge = minGauge;
-            finished = false;
-            UIManager.instance.powerSlider.value = currenGauge;
-            UIManager.instance.powerSlider.gameObject.SetActive(false);
-
-            Debug.Log("이미 설치가 완료 되었습니다");
-        }
-
-        else if (currenGauge >= maxGauge && !finished)
-        {
-            finished = true;
-            currenGauge = maxGauge;
-            isInstalling = false;
-
-            ClientSend.InstallEMPTrap(transform.position, GameManager.players[Client.instance.myId].GetComponent<PlayerManager>().playerItem.item_number2[0]);
-        }
-
-        else if (currenGauge < maxGauge && !finished)
-        {
-            currenGauge = currenGauge * chargingSpeed * Time.deltaTime;
-            UIManager.instance.powerSlider.value = currenGauge;
-            isInstalling = true;
+                ClientSend.InstallEMP(GameManager.players[Client.instance.myId].transform.position, GameManager.players[Client.instance.myId].GetComponent<PlayerManager>().playerItem.item_number2[0]);
+            }
+            else
+            {
+                gaugeCheck = true;
+            }
         }
     }
 
+   
+    
     public void InstallCancle()
     {
         currenGauge = minGauge;
         UIManager.instance.powerSlider.value = minGauge;
+        isInstalling = false;
     }
 
-
-    /*
-    public void Install()
+    public void OnTriggerStay(Collider other)
     {
-        if (UIManager.instance.powerSlider != null)
+        if (isDetectiveMode)
         {
-            UIManager.instance.powerSlider.gameObject.SetActive(true);
-        }
-        else
-        {
-            Debug.Log("슬라이더가 없음");
-        }
-        
+            gameObject.GetComponent<SphereCollider>().radius = 5f;
+            gameObject.GetComponent<SphereCollider>().isTrigger = true;
 
-        if (finished == true || empAmount == 0)
-        {
-            currenGauge = minGauge;
-            UIManager.instance.powerSlider.value = currenGauge;
-            UIManager.instance.powerSlider.gameObject.SetActive(false);
-
-            return;
-        }        
-
-        if(currenGauge >= maxGauge && !finished)
-        {
-            currenGauge = maxGauge;
-            finished = true;
-        }
-
-        else if(Input.GetKey(KeyCode.E) && !finished)
-        {
-            currenGauge = currenGauge + chargingSpeed * Time.deltaTime;
-            UIManager.instance.powerSlider.value = currenGauge;
-        }
-
-        else if(Input.GetKeyUp(KeyCode.E))
-        {
-            currenGauge = minGauge;
-            UIManager.instance.powerSlider.value = minGauge;
-        }     
-    }
-    */
-
-    public void CheckEMP()
-    {
-        for (int i = 0; i < Item.arrayIndex; i++)
-        {
-            if (Item.myItem[i].name == "EMP")
+            if (other.GetComponent<PlayerManager>().playerType == PlayerType.MONSTER)
             {
-                empAmount += 1;
-                Debug.Log("emp : " + empAmount);
-            }            
+                Debug.Log($"몬스터가 접근하고 있는 중입니다.");
+            }
         }
     }
+
 
 
 }

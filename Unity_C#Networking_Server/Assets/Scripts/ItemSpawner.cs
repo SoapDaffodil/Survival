@@ -113,13 +113,4 @@ public class ItemSpawner : MonoBehaviour
         ServerSend.InstallEMP(spawnerId, _byPlayer, _position);
     }
 
-    /// <summary>EMPTrap을 설치했다는 정보를 모든 클라이언트에게 전송</summary>
-    /// <param name="_byPlayer">EMP를 설치한 플레이어</param>
-    /// <param name="_position">EMP를 설치한 위치</param>
-    public EMPTrap InstallEMPTrap(int _byPlayer, Vector3 _position)
-    {     
-        return NetworkManager.instance.InstantiateEmpTrap(_position);
-    }
-
-
 }

@@ -144,7 +144,6 @@ public class Server
                 {(int)ClientPackets.playerGetItem, ServerHandle.PlayerGetItem },
                 {(int)ClientPackets.playerThrowItem, ServerHandle.PlayerThrowItem },
                 {(int)ClientPackets.installEMP, ServerHandle.InstallEMP },
-                {(int)ClientPackets.spawnEMPTrap, ServerHandle.InstallEMPTrap },
                 //{(int)ClientPackets.udpTestReceived, ServerHandle.UDPTestReceived }
             };
         Debug.Log("Initialized packets.");

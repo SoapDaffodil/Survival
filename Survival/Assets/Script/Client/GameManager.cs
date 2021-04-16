@@ -12,7 +12,6 @@ public class GameManager : MonoBehaviour
     public static Dictionary<int, PlayerManager> players = new Dictionary<int, PlayerManager>();            //모든플레이어정보 저장
     public static Dictionary<int, ItemSpawner> itemSpawners = new Dictionary<int, ItemSpawner>();           //모든아이템정보 저장
     public static Dictionary<int, ProjectileManager> projectiles = new Dictionary<int, ProjectileManager>();//모든 폭탄정보 저장
-    public static Dictionary<int, EmpTrap> empTraps = new Dictionary<int, EmpTrap>();                 //모든 EMPTrap 정보 저장
                                                                                                       //public static Dictionary<int, EnemyManager> enemies = new Dictionary<int, EnemyManager>();
     /// <summary>자신이 사람인지 몬스터인지 판단</summary>
     public static bool character_human;
@@ -27,8 +26,7 @@ public class GameManager : MonoBehaviour
     public Dictionary<ItemType, GameObject> itemSpawnerObject;
     /// <summary>폭탄 프리팹</summary>
     public GameObject projectilePrefab;
-    /// <summary>empTrap 프리팹</summary>
-    public GameObject empTrapPrefab;
+
 
     /// <summary>LightTrap 리스트</summary>
     public struct LightTrapInfo
@@ -185,13 +183,4 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    /// <summary>EMPTrap 생성</summary>
-    /// <param name="_id">EMPTrap ID</param>
-    /// <param name="_position">EMPTrap position</param>
-    public void SpawnEMPTrap(int _id, Vector3 _position)
-    {
-        GameObject _empTrap = Instantiate(empTrapPrefab, _position, Quaternion.identity);
-        _empTrap.GetComponent<EmpTrap>().Initialize(_id);
-        empTraps.Add(_id, _empTrap.GetComponent<EmpTrap>());
-    }
 }

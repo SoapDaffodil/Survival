@@ -322,7 +322,6 @@ public class Client : MonoBehaviour
             { (int)ServerPackets.itemThrow, ClientHandle.ItemThrow},
             { (int)ServerPackets.keyChange, ClientHandle.KeyChange},
             { (int)ServerPackets.installEMP, ClientHandle.InstallEMP},
-            { (int)ServerPackets.spawnEMPTrap, ClientHandle.SpawnEMPTrap},
 
             
             //{ (int)ServerPackets.udpTest, ClientHandle.UDPTest }

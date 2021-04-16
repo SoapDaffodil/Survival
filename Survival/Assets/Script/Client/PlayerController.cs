@@ -56,121 +56,129 @@ public class PlayerController : MonoBehaviour
 
     }
 
-        private void FixedUpdate()
-        {
-            SendInputToServer();
-        }
+    private void FixedUpdate()
+    {
+        SendInputToServer();
+    }
 
-        /// <summary>Sends player input to the server.</summary>
-        private void SendInputToServer()
+    /// <summary>Sends player input to the server.</summary>
+    private void SendInputToServer()
+    {
+        bool[] _inputs = new bool[]
         {
-            bool[] _inputs = new bool[]
-            {
             Input.GetKey(input[0]),
             Input.GetKey(input[1]),
             Input.GetKey(input[2]),
             Input.GetKey(input[3]),
             Input.GetKey(input[4])
-            };
+        };
 
-            ClientSend.PlayerMovement(_inputs);
-        }
+        ClientSend.PlayerMovement(_inputs);
+    }
 
-        public void KeyChange()
+    public void KeyChange()
+    {
+        KeyCode[] changeInput = new KeyCode[input.Length];
+        int[] index = new int[input.Length];
+        int[] random = new int[input.Length];
+        for (int i = 0; i < input.Length; i++)
         {
-            KeyCode[] changeInput = new KeyCode[input.Length];
-            int[] index = new int[input.Length];
-            int[] random = new int[input.Length];
-            for (int i = 0; i < input.Length; i++)
-            {
-                index[i] = i;
-            }
-            for (int i = input.Length; i > 0; i--)
-            {
-                int value = Random.Range(0, i - 1);
-                random[i - 1] = index[value];
-                index[value] = index[i - 1];
-            }
-            for (int i = 0; i < input.Length; i++)
-            {
-                changeInput[i] = input[random[i]];
-            }
-            input = changeInput;
-
-
-            UIManager.instance.monsterKey[0].text = "전진 :" + input[0].ToString();
-            UIManager.instance.monsterKey[1].text = "왼쪽 :" + input[1].ToString();
-            UIManager.instance.monsterKey[2].text = "뒤로 :" + input[2].ToString();
-            UIManager.instance.monsterKey[3].text = "오른쪽 :" + input[3].ToString();
-            UIManager.instance.monsterKey[4].text = "점프 :" + input[4].ToString();
+            index[i] = i;
         }
-
-
-        public void OnTriggerStay(Collider other)
+        for (int i = input.Length; i > 0; i--)
         {
-            if (getKeyDownF)
+            int value = Random.Range(0, i - 1);
+            random[i - 1] = index[value];
+            index[value] = index[i - 1];
+        }
+        for (int i = 0; i < input.Length; i++)
+        {
+            changeInput[i] = input[random[i]];
+        }
+        input = changeInput;
+
+
+        UIManager.instance.monsterKey[0].text = "전진 :" + input[0].ToString();
+        UIManager.instance.monsterKey[1].text = "왼쪽 :" + input[1].ToString();
+        UIManager.instance.monsterKey[2].text = "뒤로 :" + input[2].ToString();
+        UIManager.instance.monsterKey[3].text = "오른쪽 :" + input[3].ToString();
+        UIManager.instance.monsterKey[4].text = "점프 :" + input[4].ToString();
+    }
+
+
+    public void OnTriggerStay(Collider other)
+    {
+        if (getKeyDownF)
+        {
+            getKeyDownF = false;
+            //아이템획득
+            if (other.CompareTag("Item"))
             {
-                getKeyDownF = false;
-                //아이템획득
-                if (other.CompareTag("Item"))
+                /*if (Item.arrayIndex == Item.inventoryBox.Length)
                 {
-                    /*if (Item.arrayIndex == Item.inventoryBox.Length)
-                    {
-                        Debug.Log("아이템 창이 가득 찼습니다");
-                    }
-                    else
-                    {
-                        ClientSend.PlayerGetItem(other.gameObject);
-                    }*/
+                    Debug.Log("아이템 창이 가득 찼습니다");
+                }
+                else
+                {
                     ClientSend.PlayerGetItem(other.gameObject);
+                }*/
+                ClientSend.PlayerGetItem(other.gameObject);
 
-                }
-                //문열기
-                else if (other.CompareTag("Door"))
-                {
-
-                    if (other.gameObject.transform.rotation.y == 0f)
-                    {
-                        other.gameObject.transform.RotateAround(other.gameObject.transform.GetChild(0).position, Vector3.up, -90f);
-                    }
-
-                    else
-                    {
-                        other.gameObject.transform.RotateAround(other.gameObject.transform.GetChild(0).position, Vector3.up, 90f);
-                    }
-
-                }
             }
-
-            if (getKeyDownE)
+            //문열기
+            else if (other.CompareTag("Door"))
             {
-                getKeyDownE = false;
+
+                if (other.gameObject.transform.rotation.y == 0f)
+                {
+                    other.gameObject.transform.RotateAround(other.gameObject.transform.GetChild(0).position, Vector3.up, -90f);
+                }
+
+                else
+                {
+                    other.gameObject.transform.RotateAround(other.gameObject.transform.GetChild(0).position, Vector3.up, 90f);
+                }
+
+            }
+        }
+
+        if (getKeyDownE)
+        {
+            getKeyDownE = false;
+
+            if(GameManager.players[Client.instance.myId].GetComponent<PlayerManager>().playerType == PlayerType.HUMAN)
+            {
                 EMP emp = GameManager.players[Client.instance.myId].GetComponent<PlayerManager>().playerItem.item_number2[0].GetComponent<EMP>();
 
                 if (emp)
                 {
-                    if(other.CompareTag("EMPZONE"))
+                    if (other.CompareTag("EMPZONE"))
                     {
                         if (emp.isInstalling)
                         {
-                            // emp 설치 취소
+                            Debug.Log($"emp 설치 취소");
                             emp.InstallCancle();
                         }
                         else
                         {
-                            emp.Install();
+                            emp.isInstalling = true;
+                            emp.gaugeCheck = true;
                         }
                     }
                     else
                     {
                         //EMP TRAP 설치
-                        if(emp.isInstalling)
+                        if (emp.isInstalling)
                         {
                             emp.InstallCancle();
                         }
                         else
                         {
-                            emp.Install();
+                            //emp.Install();
+                            emp.isDetectiveMode = true;
+                            emp.isInstalling = true;
+                            emp.gaugeCheck = true;
+
                         }
                     }
                 }
@@ -179,7 +187,12 @@ public class PlayerController : MonoBehaviour
                     Debug.Log("가지고 있는 emp가 없습니다");
                 }
             }
-         
+            else
+            {
+                //괴물 LIGHT TRAP 설치
+            }
+        }
+           
+
     }
-    
 }

@@ -8,7 +8,6 @@ public class NetworkManager : MonoBehaviour
 
     public GameObject playerPrefab;
     public GameObject projectilePrefab;
-    public GameObject empTrap;
 
     // Start is called before the first frame update
     /// <summary>이미 존재하는지 체크</summary>
@@ -52,12 +51,5 @@ public class NetworkManager : MonoBehaviour
     public Projectile InstantiateProjectile(Transform _shootOrigin)
     {
         return Instantiate(projectilePrefab, _shootOrigin.position + _shootOrigin.forward * 0.7f, Quaternion.identity).GetComponent<Projectile>();
-    }
-
-    /// <summary>empTrap 초기화</summary>
-    /// <returns></returns>
-    public EMPTrap InstantiateEmpTrap(Vector3 _position)
-    {
-        return Instantiate(empTrap, _position, Quaternion.identity).GetComponent<EMPTrap>();
     }
 }
