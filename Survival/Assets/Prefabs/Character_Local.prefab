@@ -113,7 +113,6 @@ GameObject:
   - component: {fileID: 7647174268335937219}
   - component: {fileID: 7552266553728197505}
   - component: {fileID: 2344869733043346656}
-  - component: {fileID: 8671846891915788535}
   - component: {fileID: 696825816360874159}
   - component: {fileID: 4830645790061921965}
   - component: {fileID: 9148487813931248127}
@@ -234,22 +233,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   empList: []
   emp: {fileID: 0}
-  trap: {fileID: 7952064074521095809, guid: e84538fbfb417bf4eb8ef29347a5a970, type: 3}
   installation: {fileID: 4608252811850032005, guid: e93880f37206afe4680f83719ec7e347, type: 3}
---- !u!114 &8671846891915788535
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6611331617352936926}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2689eabf4ec6d9b4ba96273ea3acf4b4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gun: {fileID: 0}
-  fireTransform: {fileID: 3406075731991387016, guid: b112b001b44338b479c5459a8feea134, type: 3}
 --- !u!114 &696825816360874159
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -311,4 +295,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   camTransform: {fileID: 6536086916414107456}
   getKeyDownF: 0
+  getKeyDownE: 0
   input: 7700000073000000610000006400000020000000

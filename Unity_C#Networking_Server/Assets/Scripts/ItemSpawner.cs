@@ -98,7 +98,36 @@ public class ItemSpawner : MonoBehaviour
             hasItem = true;
             itemModel.enabled = hasItem;
             this.transform.position = _position;
+            if (this.transform.parent != null)
+            {
+                this.transform.SetParent(null, true);
+            }
             ServerSend.ItemThrow(spawnerId, _byPlayer, _position);
+        }
+    }
+
+    /// <summary>아이템을 들었다는 정보를 클라이언트에게 전송</summary>
+    /// <param name="_byPlayer">아이템을 들 플레이어</param>
+    /// <param name="_key">플레이어가 누른 키</param>
+    /// /// <param name="_spawnerId">아이템 id</param>
+    public void ItemGrab(int _spawnerId, int _byPlayer, int _key)
+    {
+        if (!hasItem)
+        {
+            Vector3 _itemPosition = Server.clients[_byPlayer].player.transform.position;
+            _itemPosition.y = 1f;
+            hasItem = true;
+            itemModel.enabled = hasItem;
+            this.transform.position = _itemPosition;
+            if (this.transform.parent != Server.clients[_byPlayer].player.transform)
+            {
+                this.transform.SetParent(Server.clients[_byPlayer].player.transform, true);
+            }
+            ServerSend.ItemGrab(spawnerId, _byPlayer, _itemPosition);
+        }
+        else
+        {
+            ServerSend.Error(_byPlayer, "아이템이 이미 활성화 되어있습니다");
         }
     }
 

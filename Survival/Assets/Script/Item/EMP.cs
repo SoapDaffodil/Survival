@@ -78,7 +78,7 @@ public  class EMP : MonoBehaviour
             currenGauge = maxGauge;
             isInstalling = false;
 
-            ClientSend.InstallEMP(transform.position, GameManager.players[Client.instance.myId].GetComponent<PlayerManager>().playerItem.item_number2[0]);
+            ClientSend.InstallEMP(transform.position, ((ItemSpawner)(GameManager.players[Client.instance.myId].GetComponent<PlayerManager>().playerItem.item_number2[0])).gameObject);
         }
 
         else if(currenGauge < maxGauge && !finished)
@@ -107,7 +107,7 @@ public  class EMP : MonoBehaviour
             currenGauge = maxGauge;
             isInstalling = false;
 
-            ClientSend.InstallEMPTrap(transform.position, GameManager.players[Client.instance.myId].GetComponent<PlayerManager>().playerItem.item_number2[0]);
+            ClientSend.InstallEMPTrap(transform.position, ((ItemSpawner)(GameManager.players[Client.instance.myId].GetComponent<PlayerManager>().playerItem.item_number2[0])).gameObject);
         }
 
         else if (currenGauge < maxGauge && !finished)
