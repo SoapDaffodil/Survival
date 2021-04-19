@@ -229,4 +229,23 @@ public class Player : MonoBehaviour
         itemAmount--;
         return true;
     }
+
+    public void Cure(float _playerHp)
+    {
+        hp = _playerHp;
+
+        if(hp + 50f <= maxHp)
+        {
+            hp += 50f;
+        }     
+
+        ServerSend.PlayerHP(this);
+    }
+
+    public void Hide(Vector3 _hidePosition)
+    {
+        this.transform.position = _hidePosition;
+
+        ServerSend.Hide(this);
+    }
 }

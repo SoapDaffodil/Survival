@@ -39,6 +39,10 @@ public class UIManager : MonoBehaviour
     [Tooltip("몬스터의 현재 키배치")]
     public Text[] monsterKey;
 
+    /// <summary>플레이어 체력 회복 게이지</summary>
+    [Tooltip("플레이어 체력 회복 게이지")]
+    public Slider hpSlider;
+
     public GameObject[] UI_LightTrapList;
     public Material[] material_UI_LightTrap;
     public Vector3[] position_UI_LightTrap = { new Vector3(-100, 0, 0), new Vector3(-200, 0, 0) };

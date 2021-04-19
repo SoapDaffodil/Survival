@@ -300,7 +300,7 @@ public class ServerSend
     }
 
 
-    /// <summary>EMPZONE에 EMP 설치완료</summary>
+    /// <summary>EMP 설치완료</summary>
     /// /// <param name="_spawnerId">아이템 ID</param>
     /// <param name="_byPlayer">플레이어 ID</param>
     /// /// <param name="_position">아이템 포지션</param>
@@ -311,6 +311,19 @@ public class ServerSend
             _packet.Write(_spawnerId);
             _packet.Write(_byPlayer);
             _packet.Write(_position);
+
+            SendTCPDataToAll(_packet);
+        }
+    }
+
+    /// <summary>플레이어 은폐</summary>
+    /// <param name="_player">전송하고싶은 Player</param>
+    public static void Hide(Player _player)
+    {
+        using (Packet _packet = new Packet((int)ServerPackets.hide))
+        {
+            _packet.Write(_player.id);
+            _packet.Write(_player.transform.position);
 
             SendTCPDataToAll(_packet);
         }

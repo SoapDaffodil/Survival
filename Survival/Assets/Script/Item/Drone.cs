@@ -20,7 +20,7 @@ public class Drone : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        charge = GameObject.Find("DroneSlider").GetComponent<Slider>();
+        //charge = GameObject.Find("DroneSlider").GetComponent<Slider>();
         //droneMoving = gameObject.GetComponent<Move>();
         flash = gameObject.GetComponent<Light>();
 
@@ -34,10 +34,10 @@ public class Drone : MonoBehaviour
         if (charge != null)
         {
             currentGauge = minGauge;
-            charge.value = minGauge;
+            //charge.value = minGauge;
             chargingSpeed = (maxGauge - minGauge) / chargingTime;
             finished = false;
-            charge.gameObject.SetActive(false);
+           // charge.gameObject.SetActive(false);
         }
 
         else if(flash != null)
@@ -61,22 +61,22 @@ public class Drone : MonoBehaviour
             Debug.Log("드론 충전 완료!");
             finished = true;
             currentGauge = minGauge;
-            charge.value = minGauge;
+            //charge.value = minGauge;
             isGaugeFull = true;
 
-            charge.gameObject.SetActive(false);
+           // charge.gameObject.SetActive(false);
         }
         
         else if(Input.GetMouseButton(0) && !finished)
         {
             currentGauge += chargingSpeed * Time.deltaTime;
-            charge.value = currentGauge;
+            //charge.value = currentGauge;
         }
         
         else if(Input.GetMouseButtonUp(0) && !finished)
         {
             currentGauge = minGauge;
-            charge.value = currentGauge;
+            //charge.value = currentGauge;
         }
     }
 

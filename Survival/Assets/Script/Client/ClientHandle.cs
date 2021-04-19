@@ -204,7 +204,15 @@ public class ClientHandle : MonoBehaviour
         GameManager.projectiles[_projectileId].Explode(_position);
     }
 
-    
+    /// <summary>플레이어 은폐</summary>
+    /// <param name="_packet"></param>
+    public static void Hide(Packet _packet)
+    {
+        int _id = _packet.ReadInt();
+        Vector3 _position = _packet.ReadVector3();
+
+        GameManager.players[_id].Hide(_position);
+    }
 
     /*
     /// <summary>서버로 부터 UDPTest data를 받음</summary>

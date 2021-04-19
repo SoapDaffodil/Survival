@@ -15,6 +15,7 @@ public class PlayerManager : MonoBehaviour
     public ItemSpawner grabItem;            //현재 들고있는 아이템
     public Item playerItem;                 //플레이어의 아이템목록
     public PlayerType playerType;           //플레이어의 타입(괴물, 인간)
+    public bool isCuring = false;           //플레이어 치료 중
 
     public PlayerController controller;
 
@@ -44,7 +45,7 @@ public class PlayerManager : MonoBehaviour
     public void SetHealth(float _health)
     {
         hp = _health;
-
+        Debug.Log($"플레이어 체력 : {GameManager.players[Client.instance.myId].hp}");
         //HP가 0이 되면 죽음
         if (hp <= 0f)
         {
@@ -63,5 +64,11 @@ public class PlayerManager : MonoBehaviour
     {
         model.enabled = true;
         SetHealth(maxHp);
+    }
+
+    public void Hide(Vector3 _position)
+    {
+        this.transform.position = _position;
+        Debug.Log("은폐");
     }
 }

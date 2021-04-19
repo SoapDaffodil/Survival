@@ -25,7 +25,9 @@ public enum ServerPackets
     projectileExploded, //폭탄 폭발여부
     keyChange,          //키 체인지
     installEMP,         //EMP 설치완료
-    
+    cure,               //플레이어 체력 회복
+    hide,               //플레이어 은폐 
+
     //udpTest
 }
 
@@ -39,7 +41,8 @@ public enum ClientPackets
     playerGetItem,          //아이템 획득
     playerThrowItem,        //아이템 버리기
     installEMP,             //EMP 설치완료
-   
+    cure,                   //플레이어 체력 회복
+    hide,               //플레이어 은폐 
     // udpTestReceived
 }
 

@@ -83,7 +83,7 @@ public class ServerHandle
         ItemSpawner.spawners[_spawnerId].ItemThrow(Server.clients[_fromClient].player.id, _position);
     }
 
-    /// <summary>EMPZONE에 EMP 설치완료에 관해 패킷을 통해 처리</summary>
+    /// <summary>EMP 설치완료에 관해 패킷을 통해 처리</summary>
     /// <param name="_fromClient"></param>
     /// <param name="_packet"></param>
     public static void InstallEMP(int _fromClient, Packet _packet)
@@ -94,6 +94,25 @@ public class ServerHandle
         ItemSpawner.spawners[_spawnerId].InstallEMP(Server.clients[_fromClient].player.id, _position);
     }
 
+    /// <summary>플레이어 체력 회복에 관해 패킷을 통해 처리</summary>
+    /// <param name="_fromClient"></param>
+    /// <param name="_packet"></param>
+    public static void Cure(int _fromClient, Packet _packet)
+    {
+        float _hp = _packet.ReadFloat();
+
+        Server.clients[_fromClient].player.Cure(_hp);
+    }
+
+    /// <summary>플레이어 은폐 관해 패킷을 통해 처리</summary>
+    /// <param name="_fromClient"></param>
+    /// <param name="_packet"></param>
+    public static void Hide(int _fromClient, Packet _packet)
+    {
+        Vector3 _hidePosition = _packet.ReadVector3();
+
+        Server.clients[_fromClient].player.Hide(_hidePosition);
+    }
 
     /*
     /// <summary>welcome 잘받았다는 메세지 도착 시 클라이언트ID가 맞는지 확인 후 서버에 출력</summary>

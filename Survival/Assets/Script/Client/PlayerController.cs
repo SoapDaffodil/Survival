@@ -51,7 +51,10 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.E))
         {
             getKeyDownE = true;
-
+        }
+        if (Input.GetKeyDown(KeyCode.Z))
+        {
+            GameManager.players[Client.instance.myId].isCuring = true;
         }
 
     }
@@ -139,6 +142,11 @@ public class PlayerController : MonoBehaviour
                     other.gameObject.transform.RotateAround(other.gameObject.transform.GetChild(0).position, Vector3.up, 90f);
                 }
 
+            }
+            //은폐
+            else if (other.CompareTag("Hide"))
+            {
+                ClientSend.Hide(other.gameObject.transform.position);
             }
         }
 

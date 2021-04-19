@@ -5,88 +5,57 @@ using UnityEngine.UI;
 
 public class Cure : MonoBehaviour
 {
-    private int hp = 1;
-    public bool isDead = false;
+    //private int hp = 1;
+    //public bool isDead = false;
     private Slider hpSlider;
     private float minGauge = 15f;
     private float maxGauge = 45f;
     private float currenGauge;
     private float chargingSpeed;
     private float chargingTime = 3f;
-    private bool finished = false;
 
     private void Start()
     {
-        //hpSlider = GameObject.Find("hpSlider").GetComponent<Slider>();
-        chargingSpeed = (maxGauge - minGauge) / chargingTime;
+        chargingSpeed = 2f;
+        chargingTime = (maxGauge - minGauge) / 100 * chargingSpeed;
         currenGauge = minGauge;
-        //hpSlider.value = minGauge;
-        //hpSlider.gameObject.SetActive(false);
-    }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if(other.CompareTag("CureZone") && isDead == false)
+        if (UIManager.instance.hpSlider != null)
         {
-            if (hp >= 3)
-            {
-                Debug.Log("체력이 모두 가득 찼습니다.");
-            }
-            else if (hp == 0)
-            {
-                Debug.Log("죽었습니다.");
-            }
-            else
-            {
-                hpSlider.gameObject.SetActive(true);
-            }
+            Debug.Log("slider : " + UIManager.instance.hpSlider);
+            currenGauge = minGauge;
+            UIManager.instance.hpSlider.value = minGauge;
+            UIManager.instance.hpSlider.gameObject.SetActive(false);
+        }
+        else
+        {
+            Debug.Log("slider : " + UIManager.instance.powerSlider);
+            Debug.Log("슬라이더가 없음");
         }
     }
-    private void OnTriggerStay(Collider other)
+
+    public void Update()
     {
-        if(other.CompareTag("CureZone") && isDead == false)
+        if (GameManager.players[Client.instance.myId].GetComponent<PlayerManager>().isCuring)
         {
-            if (hp >= 3)
+            UIManager.instance.hpSlider.gameObject.SetActive(true);
+
+            if(currenGauge < maxGauge)
             {
-                Debug.Log("체력이 모두 가득 찼습니다.");
-            }
-            else if (hp == 0)
-            {
-                Debug.Log("죽었습니다.");
+                currenGauge += currenGauge * chargingTime * Time.deltaTime;
+                UIManager.instance.hpSlider.value = currenGauge;
             }
             else if(currenGauge >= maxGauge)
             {
-                finished = true;
-                currenGauge = minGauge;
-                hpSlider.gameObject.SetActive(false);
+                GameManager.players[Client.instance.myId].GetComponent<PlayerManager>().isCuring = false;
+                currenGauge = maxGauge;
+                UIManager.instance.hpSlider.gameObject.SetActive(false);
 
-                Debug.Log("현재 hp : " + hp);
-                hp = hp + 1;
-                Debug.Log("회복 후 hp : " + hp);
-
-            }
-            else if(hp > 0 && finished == false)
-            {
-                currenGauge += chargingSpeed * Time.deltaTime;
-                hpSlider.value = currenGauge;                
+                Debug.Log($"플레이어 체력 : {GameManager.players[Client.instance.myId].GetComponent<PlayerManager>().hp}");
+                ClientSend.Cure(GameManager.players[Client.instance.myId].GetComponent<PlayerManager>().hp);
             }
         }
     }
 
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.CompareTag("CureZone"))
-        {
-            if(finished == false)
-            {
-                currenGauge = minGauge;
-                hpSlider.value = currenGauge;
-            }
-            else
-            {
-                finished = false;
-                Debug.Log("finished : " + finished);
-            }
-        }
-    }
+
 }
