@@ -20,6 +20,7 @@ public enum ServerPackets
     itemSpawned,        //아이템 스폰
     itemPickedUp,       //아이템 획득
     itemThrow,          //아이템 버리기
+    itemGrab,           //아이템 들기
     spawnProjectile,    //폭탄 생성
     projectilePosition, //폭탄 위치
     projectileExploded, //폭탄 폭발여부
@@ -39,6 +40,9 @@ public enum ClientPackets
     playerShootBomb,        //폭탄 공격(우클릭)
     playerGetItem,          //아이템 획득
     playerThrowItem,        //아이템 버리기
+    playerGrabItem,         //아이템 들기
+    installEMP,             //EMPZONE에 EMP 설치완료
+    spawnEMPTrap,           //EMPTrap 생성
     installEMP,             //EMP 설치완료
     cure,                   //플레이어 체력 회복
     hide,                   //플레이어 은폐 

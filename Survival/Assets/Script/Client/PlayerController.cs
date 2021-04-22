@@ -57,6 +57,20 @@ public class PlayerController : MonoBehaviour
             GameManager.players[Client.instance.myId].isCuring = true;
         }
 
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            if (this.GetComponent<PlayerManager>().playerItem.item_number1 != null)
+            {
+                ClientSend.PlayerGrabItem(((ItemSpawner)(this.GetComponent<PlayerManager>().playerItem.item_number1)).spawnerId, 1);
+            }
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            if (this.GetComponent<PlayerManager>().playerItem.item_number2.Count > 0)
+            {
+                ClientSend.PlayerGrabItem(((ItemSpawner)(this.GetComponent<PlayerManager>().playerItem.item_number2[0])).spawnerId, 2);
+            }
+        }
     }
 
     private void FixedUpdate()
@@ -150,12 +164,9 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        if (getKeyDownE)
-        {
-            getKeyDownE = false;
-
-            if(GameManager.players[Client.instance.myId].GetComponent<PlayerManager>().playerType == PlayerType.HUMAN)
+            if (getKeyDownE)
             {
+                getKeyDownE = false;
                 EMP emp = GameManager.players[Client.instance.myId].GetComponent<PlayerManager>().playerItem.item_number2[0].GetComponent<EMP>();
 
                 if (emp)

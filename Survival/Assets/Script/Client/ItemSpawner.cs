@@ -67,9 +67,24 @@ public class ItemSpawner : MonoBehaviour
     /// <summary>아이템 버리기 > 맵에 표시O</summary>
     public void ItemThrow(Vector3 _position)
     {
+        if (this.transform.parent != null)
+        {
+            this.transform.SetParent(null, true);
+        }
+        this.transform.position = _position;
+        hasItem = true;
+        itemModel.enabled = true;
+    }
+
+    /// <summary>아이템 들기</summary>
+    public void ItemGrab(int _byPlayer, Vector3 _position)
+    {
         hasItem = true;
         itemModel.enabled = true;
         this.transform.position = _position;
+        if (this.transform.parent != GameManager.players[_byPlayer].transform) {
+            this.transform.SetParent(GameManager.players[_byPlayer].transform, true);
+        }
     }
 
     /// <summary>EMPZONE에 EMP 설치하기 > 맵에 표시O</summary>

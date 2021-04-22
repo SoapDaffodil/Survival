@@ -127,7 +127,8 @@ public class ClientHandle : MonoBehaviour
         int _byPlayer = _packet.ReadInt();
 
         //G 버리기 테스트용 temp
-        GameManager.players[_byPlayer].grabItem = GameManager.itemSpawners[_spawnerId];
+        //GameManager.players[_byPlayer].grabItem = GameManager.itemSpawners[_spawnerId];
+
         GameManager.instance.SaveItemToPlayer(_spawnerId, _byPlayer);
 
         GameManager.itemSpawners[_spawnerId].ItemPickedUp();
@@ -147,6 +148,18 @@ public class ClientHandle : MonoBehaviour
         //temp 수정예정 테스트용 test
         GameManager.instance.AddLightTrap(1, GameManager.itemSpawners[_spawnerId]);
         GameManager.players[_byPlayer].itemCount--;
+    }
+
+    /// <summary>아이템 들기정보 update</summary>
+    /// <param name="_packet"></param>
+    public static void ItemGrab(Packet _packet)
+    {
+        int _spawnerId = _packet.ReadInt();
+        int _byPlayer = _packet.ReadInt();
+        Vector3 _position = _packet.ReadVector3();
+
+        GameManager.players[_byPlayer].grabItem = GameManager.itemSpawners[_spawnerId];
+        GameManager.itemSpawners[_spawnerId].ItemGrab(_byPlayer, _position);
     }
 
     public static void KeyChange(Packet _packet)

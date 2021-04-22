@@ -12,8 +12,8 @@ public class Item : MonoBehaviour
     public static int arrayIndex = 0;
     #endregion
 
-    public GameObject item_number1;
-    public List<GameObject> item_number2 = new List<GameObject>();
+    public Object item_number1;
+    public List<Object> item_number2 = new List<Object>();
 
     
     /*

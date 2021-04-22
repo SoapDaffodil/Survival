@@ -124,22 +124,22 @@ public class GameManager : MonoBehaviour
             case PlayerType.HUMAN:
                 if (itemSpawners[_spawnerId].itemType == ItemType.GUN)
                 {
-                    players[_playerId].GetComponent<PlayerManager>().playerItem.item_number1 = itemSpawners[_spawnerId].gameObject;
+                    players[_playerId].GetComponent<PlayerManager>().playerItem.item_number1 = itemSpawners[_spawnerId];
                 }
                 else if (itemSpawners[_spawnerId].itemType == ItemType.EMP)
                 {
-                    players[_playerId].GetComponent<PlayerManager>().playerItem.item_number2.Add(itemSpawners[_spawnerId].gameObject);
+                    players[_playerId].GetComponent<PlayerManager>().playerItem.item_number2.Add(itemSpawners[_spawnerId]);
                 }
                 break;
 
             case PlayerType.MONSTER:
                 if (itemSpawners[_spawnerId].itemType == ItemType.DRONE)
                 {
-                    players[_playerId].GetComponent<PlayerManager>().playerItem.item_number1 = itemSpawners[_spawnerId].gameObject;
+                    players[_playerId].GetComponent<PlayerManager>().playerItem.item_number1 = itemSpawners[_spawnerId];
                 }
                 else if (itemSpawners[_spawnerId].itemType == ItemType.LIGHTTRAP)
                 {
-                    players[_playerId].GetComponent<PlayerManager>().playerItem.item_number2.Add(itemSpawners[_spawnerId].gameObject);
+                    players[_playerId].GetComponent<PlayerManager>().playerItem.item_number2.Add(itemSpawners[_spawnerId]);
                 }
                 break;
         }

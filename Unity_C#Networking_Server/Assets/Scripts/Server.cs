@@ -143,6 +143,7 @@ public class Server
                 {(int)ClientPackets.playerShootBomb, ServerHandle.PlayerShootBomb },
                 {(int)ClientPackets.playerGetItem, ServerHandle.PlayerGetItem },
                 {(int)ClientPackets.playerThrowItem, ServerHandle.PlayerThrowItem },
+                 {(int)ClientPackets.playerGrabItem, ServerHandle.PlayerGrabItem },
                 {(int)ClientPackets.installEMP, ServerHandle.InstallEMP },
                 {(int)ClientPackets.cure, ServerHandle.Cure },
                 {(int)ClientPackets.hide, ServerHandle.Hide },
