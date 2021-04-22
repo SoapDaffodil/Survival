@@ -6,32 +6,18 @@ using UnityEngine.UI;
 
 public class Shooter : MonoBehaviour
 {
-    public Gun gun = null;
     public Transform fireTransform;
     private Vector3 aimPoint;
+    public Gun gun;
 
     void Update()
     {
-        if(gun != null)
-        {
-            Debug.DrawRay(transform.position, transform.forward * gun.fireDistance, Color.green);
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            GunOnHand();
-            gun.Setup();
-        }
         if (Input.GetKeyDown(KeyCode.R))
         {
-            gun.CheckBettery();
             Reload();
         }
 
-        if (Input.GetMouseButtonDown(0))
-        {
-           // UpdateAimPoint();
-            Shoot();
-        }
+
 
     }
 

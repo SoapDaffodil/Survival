@@ -147,6 +147,7 @@ public class ClientHandle : MonoBehaviour
         GameManager.itemSpawners[_spawnerId].ItemThrow(_position);
         //temp 수정예정 테스트용 test
         GameManager.instance.AddLightTrap(1, GameManager.itemSpawners[_spawnerId]);
+        GameManager.players[_byPlayer].isOnHand = false;
         GameManager.players[_byPlayer].itemCount--;
     }
 
@@ -160,6 +161,7 @@ public class ClientHandle : MonoBehaviour
 
         GameManager.players[_byPlayer].grabItem = GameManager.itemSpawners[_spawnerId];
         GameManager.itemSpawners[_spawnerId].ItemGrab(_byPlayer, _position);
+        GameManager.players[_byPlayer].isOnHand = true;
     }
 
     public static void KeyChange(Packet _packet)

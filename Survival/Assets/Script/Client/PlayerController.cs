@@ -71,6 +71,21 @@ public class PlayerController : MonoBehaviour
                 ClientSend.PlayerGrabItem(((ItemSpawner)(this.GetComponent<PlayerManager>().playerItem.item_number2[0])).spawnerId, 2);
             }
         }
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            if (GameManager.players[Client.instance.myId].GetComponent<PlayerManager>().playerType == PlayerType.HUMAN)
+            {
+                Gun gun = ((ItemSpawner)(GameManager.players[Client.instance.myId].GetComponent<PlayerManager>().playerItem.item_number1)).GetComponent<Gun>();
+                
+
+                if (GameManager.players[Client.instance.myId].isOnHand == true && transform.GetChild(1).gameObject.GetComponent<Gun>())
+                {
+                    Debug.Log("장전!");
+                    gun.state = Gun.State.Empty;
+                    gun.Reloade();
+                }
+            }
+        }
     }
 
     private void FixedUpdate()
@@ -167,50 +182,53 @@ public class PlayerController : MonoBehaviour
             if (getKeyDownE)
             {
                 getKeyDownE = false;
-                EMP emp = GameManager.players[Client.instance.myId].GetComponent<PlayerManager>().playerItem.item_number2[0].GetComponent<EMP>();
+
+                if(GameManager.players[Client.instance.myId].GetComponent<PlayerManager>().playerType == PlayerType.HUMAN)
+                {
+                    EMP emp = ((ItemSpawner)(GameManager.players[Client.instance.myId].GetComponent<PlayerManager>().playerItem.item_number2[0])).GetComponent<EMP>();
 
                 if (emp)
-                {
-                    if (other.CompareTag("EMPZONE"))
                     {
-                        if (emp.isInstalling)
+                        if (other.CompareTag("EMPZONE"))
                         {
-                            Debug.Log($"emp 설치 취소");
-                            emp.InstallCancle();
+                            if (emp.isInstalling)
+                            {
+                                Debug.Log($"emp 설치 취소");
+                             emp.InstallCancle();
+                            }
+                            else
+                            {
+                                emp.isInstalling = true;
+                                emp.gaugeCheck = true;
+                            }
                         }
                         else
                         {
-                            emp.isInstalling = true;
-                            emp.gaugeCheck = true;
+                            //EMP TRAP 설치
+                            if (emp.isInstalling)
+                            {
+                             emp.InstallCancle();
+                            }
+                            else
+                            {
+                                //emp.Install();
+                                emp.isDetectiveMode = true;
+                                emp.isInstalling = true;
+                                emp.gaugeCheck = true;
+
+                            }
                         }
                     }
                     else
                     {
-                        //EMP TRAP 설치
-                        if (emp.isInstalling)
-                        {
-                            emp.InstallCancle();
-                        }
-                        else
-                        {
-                            //emp.Install();
-                            emp.isDetectiveMode = true;
-                            emp.isInstalling = true;
-                            emp.gaugeCheck = true;
-
-                        }
+                    Debug.Log("가지고 있는 emp가 없습니다");
                     }
                 }
                 else
                 {
-                    Debug.Log("가지고 있는 emp가 없습니다");
+                    //괴물 LIGHT TRAP 설치
                 }
             }
-            else
-            {
-                //괴물 LIGHT TRAP 설치
-            }
-        }
            
 
     }

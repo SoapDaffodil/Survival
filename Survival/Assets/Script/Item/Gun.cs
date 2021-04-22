@@ -10,7 +10,7 @@ public class Gun : MonoBehaviour
         Ready, Empty, Reloading
     }
 
-    public State state { get; private set; }
+    public State state { get;  set; }
     private int damage = 50;
     public float fireDistance = 100f;
     private int batteryAmount; // 가지고 있는 총 배터리 수
@@ -23,14 +23,6 @@ public class Gun : MonoBehaviour
 
     private void Start()
     {
-        UIManager.instance.currentBulletText = GameObject.Find("Current Bullet").GetComponent<Text>();
-        UIManager.instance.bulletAmoutText = GameObject.Find("Bullet Amount").GetComponent<Text>();
-    }
-
-    public void Setup()
-    {
-        CheckBettery();
-
         if (currentBettery == 0)
         {
             Debug.Log("배터리가 없습니다");
@@ -40,9 +32,12 @@ public class Gun : MonoBehaviour
         {
             state = State.Ready;
         }
+
+        UIManager.instance.currentBulletText = GameObject.Find("Current Bullet").GetComponent<Text>();
+        UIManager.instance.bulletAmoutText = GameObject.Find("Bullet Amount").GetComponent<Text>();
     }
 
-    public bool Reloade()
+    public void Reloade()
     {
         state = State.Reloading;
 
@@ -50,7 +45,6 @@ public class Gun : MonoBehaviour
         {
             Debug.Log("충전이 이미 된 상태입니다");
             state = State.Ready;
-            return false;
         }
         else if(batteryAmount == 0)
         {
@@ -74,8 +68,6 @@ public class Gun : MonoBehaviour
         state = State.Ready;
         Debug.Log("장전 완료");
 
-        //Todo : 배터리 아이템 창에서 사라지게 하기
-        return true;
     }
 
     public void Fire(Vector3 startPosition, Vector3 direction)

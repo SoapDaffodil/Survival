@@ -16,6 +16,7 @@ public class PlayerManager : MonoBehaviour
     public Item playerItem;                 //플레이어의 아이템목록
     public PlayerType playerType;           //플레이어의 타입(괴물, 인간)
     public bool isCuring = false;           //플레이어 치료 중
+    public bool isOnHand = false;           //플레이어가 아이템을 들고 있는지
 
     public PlayerController controller;
 

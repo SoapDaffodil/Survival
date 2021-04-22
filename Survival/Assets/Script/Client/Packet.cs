@@ -42,8 +42,6 @@ public enum ClientPackets
     playerGetItem,          //아이템 획득
     playerThrowItem,        //아이템 버리기
     playerGrabItem,         //아이템 들기
-    installEMP,             //EMPZONE에 EMP 설치완료
-    spawnEMPTrap,           //EMPTrap 생성
     installEMP,             //EMP 설치완료
     cure,                   //플레이어 체력 회복
     hide,               //플레이어 은폐 
