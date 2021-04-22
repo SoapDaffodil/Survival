@@ -68,7 +68,10 @@ public class PlayerManager : MonoBehaviour
 
     public void Hide(Vector3 _position)
     {
-        this.transform.position = _position;
+        Debug.Log($"현재 플레이어의 위치 : { transform.position}");
+        transform.position = _position;
+        
+        Debug.Log($"은폐 위치 : {_position}");
         Debug.Log("은폐");
     }
 }

@@ -47,10 +47,7 @@ public class F_GetItem_OpenDoor : MonoBehaviour
                     //myItem.currentItem = other.gameObject;
                     other.gameObject.SetActive(false);
 
-                    //myItem.CheckItem(other.gameObject.GetComponent<MonoBehaviour>());
-
-                    
-             
+                    //myItem.CheckItem(other.gameObject.GetComponent<MonoBehaviour>());            
                 }
 
             }

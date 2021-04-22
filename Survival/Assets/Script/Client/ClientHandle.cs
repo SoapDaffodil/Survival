@@ -211,7 +211,7 @@ public class ClientHandle : MonoBehaviour
         int _id = _packet.ReadInt();
         Vector3 _position = _packet.ReadVector3();
 
-        GameManager.players[_id].Hide(_position);
+        GameManager.players[_id].GetComponent<PlayerManager>().Hide(_position);
     }
 
     /*

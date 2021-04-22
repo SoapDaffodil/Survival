@@ -146,7 +146,7 @@ public class PlayerController : MonoBehaviour
             //은폐
             else if (other.CompareTag("Hide"))
             {
-                ClientSend.Hide(other.gameObject.transform.position);
+                ClientSend.Hide(other.gameObject);
             }
         }
 

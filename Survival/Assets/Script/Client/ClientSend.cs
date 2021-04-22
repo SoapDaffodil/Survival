@@ -144,14 +144,14 @@ public class ClientSend : MonoBehaviour
     }
 
     /// <summary>플레이어 은폐 packet TCP전송(한번만 전송하므로 누락이 될지언정 오류가 발생하지는 않음)</summary>
-    /// <param name="_position">은폐하는 위치</param>
-    public static void Hide(Vector3 _position)
+    /// <param name="_hidePlace">은폐하는 오브젝트</param>
+    public static void Hide(GameObject _hidePlace)
     {
         using (Packet _packet = new Packet((int)ClientPackets.hide))
         {
-            _packet.Write(_position.x);
-            _packet.Write(_position.y);
-            _packet.Write(_position.z);
+            _packet.Write(_hidePlace.transform.position.x);
+            _packet.Write(_hidePlace.transform.position.y);
+            _packet.Write(_hidePlace.transform.position.z);
 
             SendTCPData(_packet);
         }

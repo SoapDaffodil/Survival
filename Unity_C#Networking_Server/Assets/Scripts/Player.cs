@@ -244,7 +244,7 @@ public class Player : MonoBehaviour
 
     public void Hide(Vector3 _hidePosition)
     {
-        this.transform.position = _hidePosition;
+        transform.position = _hidePosition;
 
         ServerSend.Hide(this);
     }
