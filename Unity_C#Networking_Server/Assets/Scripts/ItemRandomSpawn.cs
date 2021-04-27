@@ -6,7 +6,7 @@ public class ItemRandomSpawn : MonoBehaviour
 {
     public GameObject[] itemPrefabs;
     public Transform[] itemSpawnTransform;
-    private static int[] randomCount = { 0, 1, 2, 3, 4, 0, 1, 2, 3, 4, 0, 1, 2, 3, 4 };
+    private static int[] randomCount = { 0, 1, 2, 3, 4, 0, 1, 2, 3, 4 };
     // Start is called before the first frame update
     void Awake()
     {
@@ -18,8 +18,9 @@ public class ItemRandomSpawn : MonoBehaviour
         for(int i = randomCount.Length; i > 0; i--)
         {
             int itemNumber = Random.Range(0, i - 1);
-            Instantiate(itemPrefabs[itemNumber], itemSpawnTransform[itemNumber].position, itemSpawnTransform[itemNumber].rotation);
+            Instantiate(itemPrefabs[randomCount[itemNumber]], itemSpawnTransform[itemNumber].position, itemSpawnTransform[itemNumber].rotation).GetComponent<ItemSpawner>().Initialize();
             randomCount[itemNumber] = randomCount[i - 1];
+            itemSpawnTransform[itemNumber] = itemSpawnTransform[i - 1];
         }
     }
 

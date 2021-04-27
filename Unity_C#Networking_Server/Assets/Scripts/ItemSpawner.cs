@@ -12,7 +12,7 @@ public class ItemSpawner : MonoBehaviour
     public bool hasItem = false;            //아이템이 존재하는지 체크
     public MeshRenderer itemModel;          //아이템 mesh
 
-    private void Start()
+    public void Initialize()
     {
         itemModel = GetComponent<MeshRenderer>();
         hasItem = false;
@@ -39,11 +39,11 @@ public class ItemSpawner : MonoBehaviour
     }
     */
 
-    /// <summary>10초뒤에 아이템생성하고 클라이언트들에게 아이템스폰정보 전송</summary>
+    /// <summary>3초뒤에 아이템생성하고 클라이언트들에게 아이템스폰정보 전송</summary>
     /// <returns></returns>
     private IEnumerator SpawnItem()
     {
-        yield return new WaitForSeconds(10f);
+        yield return new WaitForSeconds(3f);
 
         hasItem = true;
         itemModel.enabled = hasItem;
