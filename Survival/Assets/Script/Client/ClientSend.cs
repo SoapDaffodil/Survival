@@ -163,14 +163,23 @@ public class ClientSend : MonoBehaviour
     {
         using (Packet _packet = new Packet((int)ClientPackets.hide))
         {
-            _packet.Write(_hidePlace.transform.position.x);
-            _packet.Write(_hidePlace.transform.position.y);
-            _packet.Write(_hidePlace.transform.position.z);
+            _packet.Write(_hidePlace.transform.position);
 
             SendTCPData(_packet);
         }
     }
-}
+
+    /// <summary>플레이어 은폐 packet TCP전송(한번만 전송하므로 누락이 될지언정 오류가 발생하지는 않음)</summary>
+    /// <param name="_hidePlace">은폐하는 오브젝트</param>
+    public static void SkillTeleportation(Vector3 _target)
+    {
+        using (Packet _packet = new Packet((int)ClientPackets.skillTeleportation))
+        {
+            _packet.Write(_target);
+
+            SendTCPData(_packet);
+        }
+    }
 
     /*
     public static void UDPTestReceived()
@@ -182,4 +191,5 @@ public class ClientSend : MonoBehaviour
         }
     }*/
     #endregion
+}
 

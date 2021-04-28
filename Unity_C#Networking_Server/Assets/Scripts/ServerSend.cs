@@ -332,19 +332,6 @@ public class ServerSend
         }
     }
 
-    /// <summary>플레이어 은폐</summary>
-    /// <param name="_player">전송하고싶은 Player</param>
-    public static void Hide(Player _player)
-    {
-        using (Packet _packet = new Packet((int)ServerPackets.hide))
-        {
-            _packet.Write(_player.id);
-            _packet.Write(_player.transform.position);
-
-            SendTCPDataToAll(_packet);
-        }
-    }
-
     /*
     public static void UDPTest(int _toClient)
     {

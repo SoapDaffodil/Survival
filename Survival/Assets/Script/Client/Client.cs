@@ -316,15 +316,13 @@ public class Client : MonoBehaviour
             { (int)ServerPackets.createItemSpawner, ClientHandle.CreateItemSpawner},
             { (int)ServerPackets.itemSpawned, ClientHandle.ItemSpawned},
             { (int)ServerPackets.itemPickedUp, ClientHandle.ItemPickedUp},
-             { (int)ServerPackets.itemThrow, ClientHandle.ItemThrow},
+            { (int)ServerPackets.itemThrow, ClientHandle.ItemThrow},
             { (int)ServerPackets.itemGrab, ClientHandle.ItemGrab},
             { (int)ServerPackets.spawnProjectile, ClientHandle.SpawnProjectile},
             { (int)ServerPackets.projectilePosition, ClientHandle.ProjectilePosition},
             { (int)ServerPackets.projectileExploded, ClientHandle.ProjectileExploded},
             { (int)ServerPackets.keyChange, ClientHandle.KeyChange},
             { (int)ServerPackets.installEMP, ClientHandle.InstallEMP},
-            { (int)ServerPackets.hide, ClientHandle.Hide},
-
             
             //{ (int)ServerPackets.udpTest, ClientHandle.UDPTest }
         };

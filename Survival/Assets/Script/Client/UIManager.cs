@@ -94,5 +94,30 @@ public class UIManager : MonoBehaviour
             monsterKey[i].gameObject.SetActive(false);
         }
     }
-        
+    
+    /// <summary>괴물 맵 이동스킬</summary>
+    public void SkillTeleportationMap()
+    {
+        Button clickedButton = UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject.GetComponent<Button>();
+        int buttonNumber = System.Int32.Parse(clickedButton.GetComponentInChildren<Text>().text);
+        if (GameManager.instance.lightTrapList.Count < buttonNumber)
+        {
+            Debug.Log($"{buttonNumber}번째 LightTrap이 없습니다");
+            return;
+        }
+        else
+        {
+            Vector3 target = Vector3.zero;
+            try
+            {
+                target = GameManager.instance.lightTrapList[buttonNumber - 1].lightTrap.transform.position;
+            }
+            catch
+            {
+                //temp 수정해야함
+                //target = GameManager.instance.drone.transform.position;
+            }
+            ClientSend.SkillTeleportation(target);
+        }
+    }
 }

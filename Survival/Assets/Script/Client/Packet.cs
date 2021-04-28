@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
 
-//GameServer VisualStudio에도 똑같이 수정(패킷형식 동일화)
+//server에도 똑같이 수정(패킷형식 동일화)
 /// <summary>서버가 보내는packet이 어떤정보인지 알려주는 역할</summary>
 public enum ServerPackets
 {
@@ -27,24 +27,23 @@ public enum ServerPackets
     keyChange,          //키 체인지
     installEMP,         //EMP 설치완료
     cure,               //플레이어 체력 회복
-    hide,               //플레이어 은폐 
-
     //udpTest
 }
 
 /// <summary>클라이언트가 보내는 packet이 어떤정보인지 알려주는 역할</summary>
 public enum ClientPackets
 {
-    welcomeReceived = 1,    //접속
-    playerMovement,         //움직임
-    playerShootBullet,      //총 공격(좌클릭)
-    playerShootBomb,        //폭탄 공격(우클릭)
-    playerGetItem,          //아이템 획득
-    playerThrowItem,        //아이템 버리기
-    playerGrabItem,         //아이템 들기
-    installEMP,             //EMP 설치완료
-    cure,                   //플레이어 체력 회복
-    hide,               //플레이어 은폐 
+    welcomeReceived = 1,//접속
+    playerMovement,     //움직임
+    playerShootBullet,  //총 공격(좌클릭)
+    playerShootBomb,    //폭탄 공격(우클릭)
+    playerGetItem,      //아이템 획득
+    playerThrowItem,    //아이템 버리기
+    playerGrabItem,     //아이템 들기
+    installEMP,         //EMP 설치완료
+    cure,               //플레이어 체력 회복
+    hide,               //플레이어 은폐
+    skillTeleportation, //스킬 순간이동
     // udpTestReceived
 }
 

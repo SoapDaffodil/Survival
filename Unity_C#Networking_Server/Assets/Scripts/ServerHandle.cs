@@ -126,6 +126,14 @@ public class ServerHandle
         Server.clients[_fromClient].player.Hide(_hidePosition);
     }
 
+    /// <summary>순간이동 스킬</summary>
+    /// <param name="_fromClient"></param>
+    /// <param name="_packet"></param>
+    public static void SkillTeleportation(int _fromClient, Packet _packet)
+    {
+        Server.clients[_fromClient].player.Teleportation(_packet.ReadVector3());
+    }
+
     /*
     /// <summary>welcome 잘받았다는 메세지 도착 시 클라이언트ID가 맞는지 확인 후 서버에 출력</summary>
     /// <param name="_fromClient"></param>
