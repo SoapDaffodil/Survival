@@ -9,6 +9,8 @@ public class PlayerController : MonoBehaviour
     public bool getKeyDownE = false;
     public KeyCode[] input = { KeyCode.W , KeyCode.S , KeyCode.A , KeyCode.D , KeyCode.Space };
 
+    private IEnumerator lightTrapInstall;
+
     private void Start()
     {
         input[0] = KeyCode.W;
@@ -137,7 +139,6 @@ public class PlayerController : MonoBehaviour
         UIManager.instance.monsterKey[4].text = "점프 :" + input[4].ToString();
     }
 
-
     public void OnTriggerStay(Collider other)
     {
         if (getKeyDownF)
@@ -179,57 +180,68 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-            if (getKeyDownE)
+        if (getKeyDownE)
+        {
+            getKeyDownE = false;
+
+            if (GameManager.players[Client.instance.myId].GetComponent<PlayerManager>().playerType == PlayerType.HUMAN)
             {
-                getKeyDownE = false;
-
-                if(GameManager.players[Client.instance.myId].GetComponent<PlayerManager>().playerType == PlayerType.HUMAN)
+                if (GameManager.players[Client.instance.myId].GetComponent<PlayerManager>().grabItem.itemType == ItemType.EMP)
                 {
-                    EMP emp = ((ItemSpawner)(GameManager.players[Client.instance.myId].GetComponent<PlayerManager>().playerItem.item_number2[0])).GetComponent<EMP>();
+                    EMP emp = (GameManager.players[Client.instance.myId].GetComponent<PlayerManager>().grabItem).GetComponent<EMP>();
 
-                if (emp)
+                    if (other.CompareTag("EMPZONE"))
                     {
-                        if (other.CompareTag("EMPZONE"))
+                        if (emp.isInstalling)
                         {
-                            if (emp.isInstalling)
-                            {
-                                Debug.Log($"emp 설치 취소");
-                             emp.InstallCancle();
-                            }
-                            else
-                            {
-                                emp.isInstalling = true;
-                                emp.gaugeCheck = true;
-                            }
+                            Debug.Log($"emp 설치 취소");
+                            emp.InstallCancle();
                         }
                         else
                         {
-                            //EMP TRAP 설치
-                            if (emp.isInstalling)
-                            {
-                             emp.InstallCancle();
-                            }
-                            else
-                            {
-                                //emp.Install();
-                                emp.isDetectiveMode = true;
-                                emp.isInstalling = true;
-                                emp.gaugeCheck = true;
-
-                            }
+                            emp.isInstalling = true;
+                            emp.gaugeCheck = true;
                         }
                     }
                     else
                     {
-                    Debug.Log("가지고 있는 emp가 없습니다");
+                        //EMP TRAP 설치
+                        if (emp.isInstalling)
+                        {
+                            emp.InstallCancle();
+                        }
+                        else
+                        {
+                            //emp.Install();
+                            emp.isDetectiveMode = true;
+                            emp.isInstalling = true;
+                            emp.gaugeCheck = true;
+                        }
                     }
                 }
                 else
                 {
-                    //괴물 LIGHT TRAP 설치
+                    Debug.Log("가지고 있는 emp가 없습니다");
                 }
             }
-           
+            else
+            {
+                ItemSpawner lightTrap = (ItemSpawner)(GameManager.players[Client.instance.myId].GetComponent<PlayerManager>().playerItem.item_number2[0]);
+                //괴물 LIGHT TRAP 설치
+                lightTrapInstall = InstallLightTrap();
+                StartCoroutine(lightTrapInstall);
+            }
+        }          
+
+    }
+
+    /// <summary>괴물 Light Trap 설치</summary>
+    /// <returns></returns>
+    private IEnumerator InstallLightTrap()
+    {
+        //animation실행
+        yield return new WaitForSeconds(1f);
+
 
     }
 }

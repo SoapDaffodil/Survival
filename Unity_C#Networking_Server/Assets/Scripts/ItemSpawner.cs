@@ -6,6 +6,18 @@ public class ItemSpawner : MonoBehaviour
 {
     /// <summary>아이템을 저장할 Dictionary</summary>
     public static Dictionary<int, ItemSpawner> spawners = new Dictionary<int, ItemSpawner>();
+    public struct LightTrapInfo
+    {
+        public int floor;
+        public MonoBehaviour lightTrap;
+        public LightTrapInfo(int f, MonoBehaviour trap)
+        {
+            floor = f;
+            lightTrap = trap;
+        }
+    }
+    public List<LightTrapInfo> lightTrapList = new List<LightTrapInfo>();
+
     private static int nextSpawnerId = 1;   //다음으로 스폰될 아이템의 ID
 
     public int spawnerId;                   //스폰되는 아이템의 ID

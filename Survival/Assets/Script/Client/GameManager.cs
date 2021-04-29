@@ -159,12 +159,18 @@ public class GameManager : MonoBehaviour
     public void AddLightTrap(int _floor, MonoBehaviour _lightTrap)
     {
         lightTrapList.Add(new LightTrapInfo(_floor, _lightTrap));
-        SetLightTrapUI();
+        if (players[Client.instance.myId].GetComponent<PlayerManager>().playerType == PlayerType.MONSTER)
+        {
+            SetLightTrapUI();
+        }
     }
     public void RemoveLightTrap(int number)
     {
         lightTrapList.Remove(lightTrapList[number]);
-        SetLightTrapUI();
+        if (players[Client.instance.myId].GetComponent<PlayerManager>().playerType == PlayerType.MONSTER)
+        {
+            SetLightTrapUI();
+        }
     }
     public void SetLightTrapUI()
     {
