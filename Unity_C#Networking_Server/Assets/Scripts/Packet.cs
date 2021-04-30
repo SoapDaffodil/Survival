@@ -26,6 +26,7 @@ public enum ServerPackets
     projectileExploded, //폭탄 폭발여부
     keyChange,          //키 체인지
     installEMP,         //EMP 설치완료
+    installLightTrap,   //LightTrap 설치완료
     cure,               //플레이어 체력 회복
     //udpTest
 }
@@ -41,6 +42,7 @@ public enum ClientPackets
     playerThrowItem,    //아이템 버리기
     playerGrabItem,     //아이템 들기
     installEMP,         //EMP 설치완료
+    install,            //EMP or LightTrap 설치
     cure,               //플레이어 체력 회복
     hide,               //플레이어 은폐
     skillTeleportation, //스킬 순간이동

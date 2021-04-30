@@ -94,4 +94,44 @@ public class ItemSpawner : MonoBehaviour
         itemModel.enabled = true;
         this.transform.position = _position;
     }
+
+    /// <summary>Install Item 표시</summary>
+    /// <param name="_installPlayer">아이템을 설치한 player</param>
+    /// <param name="_position">아이템 설치 위치</param>
+    /// <param name="_position">아이템 설치 층</param>
+    public void Install(PlayerManager _installPlayer, Vector3 _position, int _floor)
+    {
+        hasItem = true;
+        itemModel.enabled = true;
+        this.transform.position = _position;
+        switch (this.itemType)
+        {
+            case ItemType.EMP:
+                _installPlayer.grabItem = null;
+                _installPlayer.playerItem.item_number2.Remove(this);
+                hasItem = true;
+                itemModel.enabled = hasItem;
+                this.transform.position = _position;
+                if (this.transform.parent != null)
+                {
+                    this.transform.SetParent(null, true);
+                }
+                break;
+            case ItemType.LIGHTTRAP:
+                _installPlayer.grabItem = null;
+                _installPlayer.playerItem.item_number2.Remove(this);
+                GameManager.instance.AddLightTrap(_floor, this);
+                hasItem = true;
+                itemModel.enabled = hasItem;
+                this.transform.position = _position;
+                if (this.transform.parent != null)
+                {
+                    this.transform.SetParent(null, true);
+                }
+                break;
+            default:
+                Debug.Log("설치가능한 아이템이 아닙니다");
+                break;
+        }
+    }
 }

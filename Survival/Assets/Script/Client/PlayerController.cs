@@ -80,7 +80,7 @@ public class PlayerController : MonoBehaviour
                 Gun gun = ((ItemSpawner)(GameManager.players[Client.instance.myId].GetComponent<PlayerManager>().playerItem.item_number1)).GetComponent<Gun>();
                 
 
-                if (GameManager.players[Client.instance.myId].isOnHand == true && transform.GetChild(1).gameObject.GetComponent<Gun>())
+                if (GameManager.players[Client.instance.myId].isOnHand && transform.GetChild(1).gameObject.GetComponent<Gun>())
                 {
                     Debug.Log("장전!");
                     gun.state = Gun.State.Empty;
@@ -183,12 +183,20 @@ public class PlayerController : MonoBehaviour
         if (getKeyDownE)
         {
             getKeyDownE = false;
-
+            MonoBehaviour grabItem = GameManager.players[Client.instance.myId].GetComponent<PlayerManager>().grabItem;
+            if (grabItem != null && (
+                ((ItemSpawner)grabItem).itemType == ItemType.EMP || ((ItemSpawner)grabItem).itemType == ItemType.LIGHTTRAP)
+                )
+            {
+                int _floor = (this.transform.position.y < 10f) ? 1 : 2;
+                ClientSend.Install(this.transform.position, ((ItemSpawner)grabItem).spawnerId, _floor);
+            }
+            /*
             if (GameManager.players[Client.instance.myId].GetComponent<PlayerManager>().playerType == PlayerType.HUMAN)
             {
-                if (GameManager.players[Client.instance.myId].GetComponent<PlayerManager>().grabItem.itemType == ItemType.EMP)
+                if (grabItem != null && ((ItemSpawner)grabItem).itemType == ItemType.EMP)
                 {
-                    EMP emp = (GameManager.players[Client.instance.myId].GetComponent<PlayerManager>().grabItem).GetComponent<EMP>();
+                    EMP emp = grabItem.GetComponent<EMP>();
 
                     if (other.CompareTag("EMPZONE"))
                     {
@@ -226,22 +234,23 @@ public class PlayerController : MonoBehaviour
             }
             else
             {
-                ItemSpawner lightTrap = (ItemSpawner)(GameManager.players[Client.instance.myId].GetComponent<PlayerManager>().playerItem.item_number2[0]);
-                //괴물 LIGHT TRAP 설치
-                lightTrapInstall = InstallLightTrap();
-                StartCoroutine(lightTrapInstall);
-            }
-        }          
-
+                if (grabItem != null && ((ItemSpawner)grabItem).itemType == ItemType.LIGHTTRAP)
+                {
+                    //괴물 LIGHT TRAP 설치
+                    lightTrapInstall = InstallLightTrap(((ItemSpawner)grabItem).spawnerId);
+                    StartCoroutine(lightTrapInstall);
+                }
+            }*/
+        }
     }
-
+    /*
     /// <summary>괴물 Light Trap 설치</summary>
     /// <returns></returns>
-    private IEnumerator InstallLightTrap()
+    private IEnumerator InstallLightTrap(int _spawnerId)
     {
-        //animation실행
+        //animation실행 (1초간 설치)
         yield return new WaitForSeconds(1f);
 
-
-    }
+        ClientSend.InstallLightTrap(this.transform.position, _spawnerId);
+    }*/
 }

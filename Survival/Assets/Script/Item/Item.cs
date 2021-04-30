@@ -13,7 +13,7 @@ public class Item : MonoBehaviour
     #endregion
 
     public Object item_number1;
-    public List<Object> item_number2 = new List<Object>();
+    public List<ItemSpawner> item_number2 = new List<ItemSpawner>();
 
     
     /*

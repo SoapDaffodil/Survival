@@ -146,7 +146,7 @@ public class ClientHandle : MonoBehaviour
 
         GameManager.itemSpawners[_spawnerId].ItemThrow(_position);
         //temp 수정예정 테스트용 test
-        GameManager.instance.AddLightTrap(1, GameManager.itemSpawners[_spawnerId]);
+        //GameManager.instance.AddLightTrap(1, GameManager.itemSpawners[_spawnerId]);
         GameManager.players[_byPlayer].isOnHand = false;
         GameManager.players[_byPlayer].itemCount--;
     }
@@ -181,6 +181,19 @@ public class ClientHandle : MonoBehaviour
         GameManager.itemSpawners[_spawnerId].InstallEMP(_position);
         GameManager.players[_byPlayer].itemCount--;
         //item_number2삭제하기
+    }
+
+    /// <summary>LightTrap 설치</summary>
+    /// <param name="_packet"></param>
+    public static void InstallLightTrap(Packet _packet)
+    {
+        int _spawnerId = _packet.ReadInt();
+        int _byPlayer = _packet.ReadInt();
+        Vector3 _position = _packet.ReadVector3();
+        int _floor = _packet.ReadInt();
+
+        GameManager.itemSpawners[_spawnerId].Install(GameManager.players[_byPlayer], _position, _floor);
+        GameManager.players[_byPlayer].itemCount--;
     }
 
     /// <summary>패킷에 담긴 폭탄 생성정보(ID,position,던진player)를 통해 폭탄생성</summary>

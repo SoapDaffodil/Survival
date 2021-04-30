@@ -106,6 +106,18 @@ public class ServerHandle
         ItemSpawner.spawners[_spawnerId].InstallEMP(Server.clients[_fromClient].player.id, _position);
     }
 
+    /// <summary>LightTrap설치 관련정보 패킷을 통해 처리</summary>
+    /// <param name="_fromClient"></param>
+    /// <param name="_packet"></param>
+    public static void Install(int _fromClient, Packet _packet)
+    {
+        Vector3 _position = _packet.ReadVector3();
+        int _spawnerId = _packet.ReadInt();
+        int _floor = _packet.ReadInt();
+
+        ItemSpawner.spawners[_spawnerId].Install(Server.clients[_fromClient].player.id, _position, _floor);
+    }
+
     /// <summary>플레이어 체력 회복에 관해 패킷을 통해 처리</summary>
     /// <param name="_fromClient"></param>
     /// <param name="_packet"></param>

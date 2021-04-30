@@ -323,6 +323,7 @@ public class Client : MonoBehaviour
             { (int)ServerPackets.projectileExploded, ClientHandle.ProjectileExploded},
             { (int)ServerPackets.keyChange, ClientHandle.KeyChange},
             { (int)ServerPackets.installEMP, ClientHandle.InstallEMP},
+            { (int)ServerPackets.installLightTrap, ClientHandle.InstallLightTrap},
             
             //{ (int)ServerPackets.udpTest, ClientHandle.UDPTest }
         };

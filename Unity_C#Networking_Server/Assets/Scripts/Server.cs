@@ -145,6 +145,7 @@ public class Server
             {(int)ClientPackets.playerThrowItem, ServerHandle.PlayerThrowItem },
             {(int)ClientPackets.playerGrabItem, ServerHandle.PlayerGrabItem },
             {(int)ClientPackets.installEMP, ServerHandle.InstallEMP },
+            {(int)ClientPackets.install, ServerHandle.Install },
             {(int)ClientPackets.cure, ServerHandle.Cure },
             {(int)ClientPackets.hide, ServerHandle.Hide },
             {(int)ClientPackets.skillTeleportation, ServerHandle.SkillTeleportation },

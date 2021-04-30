@@ -145,6 +145,25 @@ public class ClientSend : MonoBehaviour
         }
     }
 
+    /// <summary>LightTrap설치 관련정보 packet TCP전송(한번만 전송하므로 누락이 될지언정 오류가 발생하지는 않음)</summary>
+    /// <param name="_position">플레이어 위치</param>
+    /// <param name="_spawnerId">설치하는 LightTrap ID</param>
+    public static void Install(Vector3 _position, int _spawnerId, int _floor)
+    {
+        using (Packet _packet = new Packet((int)ClientPackets.install))
+        {
+            _packet.Write(_position.x);
+            _packet.Write(0.2f);
+            _packet.Write(_position.z);
+
+            _packet.Write(_spawnerId);
+            _packet.Write(_floor);
+
+
+            SendTCPData(_packet);
+        }
+    }
+
     /// <summary>플레이어 체력 회복 packet TCP전송(한번만 전송하므로 누락이 될지언정 오류가 발생하지는 않음)</summary>
     /// <param name="_hp">플레이어 체력</param>
     public static void Cure(float _hp)

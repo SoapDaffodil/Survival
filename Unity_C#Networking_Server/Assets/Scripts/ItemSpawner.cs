@@ -149,9 +149,49 @@ public class ItemSpawner : MonoBehaviour
     public void InstallEMP(int _byPlayer, Vector3 _position)
     {
         hasItem = true;
-        itemModel.enabled = hasItem;
+        itemModel.enabled = true;
         this.transform.position = _position;
         ServerSend.InstallEMP(spawnerId, _byPlayer, _position);
     }
 
+    /// <summary>LightTrap을 설치정보를 모든 클라이언트에게 전송</summary>
+    /// <param name="_byPlayer">LightTrap을 설치한 플레이어</param>
+    /// <param name="_position">LightTrap을 설치한 위치</param>
+    public void Install(int _byPlayer, Vector3 _position, int _floor)
+    {
+        switch (this.tag)
+        {
+            case "EMP":
+                if (Server.clients[_byPlayer].player.playerType == PlayerType.HUMAN)
+                {
+
+                }
+                else
+                {
+                    ServerSend.Error(_byPlayer, $"player가 설치할 수 없는 아이템입니다");
+                }
+                break;
+            case "LIGHTTRAP":
+                if (Server.clients[_byPlayer].player.playerType == PlayerType.MONSTER)
+                {
+                    lightTrapList.Add(new LightTrapInfo(_floor, this));
+                    hasItem = true;
+                    itemModel.enabled = hasItem;
+                    this.transform.position = _position;
+                    if (this.transform.parent != null)
+                    {
+                        this.transform.SetParent(null, true);
+                    }
+                    ServerSend.InstallLightTrap(spawnerId, _byPlayer, _position, _floor);
+                }
+                else
+                {
+                    ServerSend.Error(_byPlayer, $"player가 설치할 수 없는 아이템입니다");
+                }
+                break;
+            default:
+                ServerSend.Error(_byPlayer, $"설치되는 아이템이 아닙니다 - {this.tag}");
+                break;
+        }
+    }
 }
