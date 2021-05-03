@@ -4,10 +4,11 @@ using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
 
-//uniity에도 똑같이 수정(패킷형식 동일화)
+//client에도 똑같이 수정(패킷형식 동일화)
 /// <summary>서버가 보내는packet이 어떤정보인지 알려주는 역할</summary>
 public enum ServerPackets
 {
+    //검증완료
     welcome = 1,        //접속
     error,              //error 메세지
     spawnPlayer,        //player 스폰
@@ -16,34 +17,45 @@ public enum ServerPackets
     playerDisconnected, //plyaer 연결끊김
     playerHP,           //player hp
     playerRespawned,    //player 리스폰
-    createItemSpawner,  //아이템 생성
     itemSpawned,        //아이템 스폰
     itemPickedUp,       //아이템 획득
     itemThrow,          //아이템 버리기
     itemGrab,           //아이템 들기
+    //검증완료
+
+
     spawnProjectile,    //폭탄 생성
     projectilePosition, //폭탄 위치
     projectileExploded, //폭탄 폭발여부
     keyChange,          //키 체인지
     installEMP,         //EMP 설치완료
+    installLightTrap,   //LightTrap 설치완료
     cure,               //플레이어 체력 회복
-    hide,               //플레이어 은폐 
     //udpTest
 }
 
 /// <summary>클라이언트가 보내는 packet이 어떤정보인지 알려주는 역할</summary>
 public enum ClientPackets
 {
-    welcomeReceived = 1,    //접속
-    playerMovement,         //움직임
-    playerShootBullet,      //총 공격(좌클릭)
-    playerShootBomb,        //폭탄 공격(우클릭)
-    playerGetItem,          //아이템 획득
-    playerThrowItem,        //아이템 버리기
-    playerGrabItem,         //아이템 들기
-    installEMP,             //EMP 설치완료
-    cure,                   //플레이어 체력 회복
-    hide,                   //플레이어 은폐 
+    welcomeReceived = 1,//접속
+    playerMovement,     //움직임
+    playerShootBullet,  //총 공격(좌클릭)
+    playerShootBomb,    //폭탄 공격(우클릭)
+
+
+    //검증완료
+    playerGetItem,      //아이템 획득
+    playerThrowItem,    //아이템 버리기
+    //검증완료
+    playerGrabItem,     //아이템 들기
+    //키누를때 grabItem 이었던것 비활성화, parent해제 해야함 > 서버수정필요
+    
+    
+    installEMP,         //EMP 설치완료
+    install,            //EMP or LightTrap 설치
+    cure,               //플레이어 체력 회복
+    hide,               //플레이어 은폐
+    skillTeleportation, //스킬 순간이동
     // udpTestReceived
 }
 

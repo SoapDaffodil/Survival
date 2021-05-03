@@ -9,6 +9,8 @@ public class PlayerController : MonoBehaviour
     public bool getKeyDownE = false;
     public KeyCode[] input = { KeyCode.W , KeyCode.S , KeyCode.A , KeyCode.D , KeyCode.Space };
 
+    private IEnumerator lightTrapInstall;
+
     private void Start()
     {
         input[0] = KeyCode.W;
@@ -16,6 +18,15 @@ public class PlayerController : MonoBehaviour
         input[2] = KeyCode.A;
         input[3] = KeyCode.D;
         input[4] = KeyCode.Space;
+    }
+
+    private IEnumerator WaitForGetItem()
+    {
+        yield return new WaitForSeconds(0.1f);
+        if (getKeyDownF) {
+            Debug.Log($"주위에 아무것도 없습니다");
+            getKeyDownF = false;
+        }
     }
 
     private void Update()
@@ -34,10 +45,18 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.F))
         {
             getKeyDownF = true;
+            StartCoroutine(WaitForGetItem());
         }
         if (Input.GetKeyDown(KeyCode.G))
         {
-            ClientSend.PlayerThrowItem(GameManager.players[Client.instance.myId].grabItem.gameObject, GameManager.players[Client.instance.myId].transform.position);
+            if (GetComponent<PlayerManager>().grabItem != null)
+            {
+                ClientSend.PlayerThrowItem(GetComponent<PlayerManager>().grabItem, transform.position);
+            }
+            else
+            {
+                Debug.Log($"들고있는 아이템이 없습니다");
+            }
         }
         if (Input.GetKeyDown(KeyCode.M))
         {
@@ -61,24 +80,24 @@ public class PlayerController : MonoBehaviour
         {
             if (this.GetComponent<PlayerManager>().playerItem.item_number1 != null)
             {
-                ClientSend.PlayerGrabItem(((ItemSpawner)(this.GetComponent<PlayerManager>().playerItem.item_number1)).spawnerId, 1);
+                ClientSend.PlayerGrabItem(GetComponent<PlayerManager>().playerItem.item_number1.spawnerId, 1);
             }
         }
         if (Input.GetKeyDown(KeyCode.Alpha2))
         {
             if (this.GetComponent<PlayerManager>().playerItem.item_number2.Count > 0)
             {
-                ClientSend.PlayerGrabItem(((ItemSpawner)(this.GetComponent<PlayerManager>().playerItem.item_number2[0])).spawnerId, 2);
+                ClientSend.PlayerGrabItem(GetComponent<PlayerManager>().playerItem.item_number2[0].spawnerId, 2);
             }
         }
         if (Input.GetKeyDown(KeyCode.R))
         {
             if (GameManager.players[Client.instance.myId].GetComponent<PlayerManager>().playerType == PlayerType.HUMAN)
             {
-                Gun gun = ((ItemSpawner)(GameManager.players[Client.instance.myId].GetComponent<PlayerManager>().playerItem.item_number1)).GetComponent<Gun>();
+                Gun gun = GameManager.players[Client.instance.myId].GetComponent<PlayerManager>().playerItem.item_number1.GetComponent<Gun>();
                 
 
-                if (GameManager.players[Client.instance.myId].isOnHand == true && transform.GetChild(1).gameObject.GetComponent<Gun>())
+                if (GameManager.players[Client.instance.myId].isOnHand && transform.GetChild(1).gameObject.GetComponent<Gun>())
                 {
                     Debug.Log("장전!");
                     gun.state = Gun.State.Empty;
@@ -137,7 +156,6 @@ public class PlayerController : MonoBehaviour
         UIManager.instance.monsterKey[4].text = "점프 :" + input[4].ToString();
     }
 
-
     public void OnTriggerStay(Collider other)
     {
         if (getKeyDownF)
@@ -155,7 +173,6 @@ public class PlayerController : MonoBehaviour
                     ClientSend.PlayerGetItem(other.gameObject);
                 }*/
                 ClientSend.PlayerGetItem(other.gameObject);
-
             }
             //문열기
             else if (other.CompareTag("Door"))
@@ -177,59 +194,83 @@ public class PlayerController : MonoBehaviour
             {
                 ClientSend.Hide(other.gameObject);
             }
+            else
+            {
+                Debug.Log($"주위에 아무것도 없습니다");
+            }
         }
 
-            if (getKeyDownE)
+        if (getKeyDownE)
+        {
+            getKeyDownE = false;
+            ItemSpawner grabItem = GameManager.players[Client.instance.myId].GetComponent<PlayerManager>().grabItem;
+            if (grabItem != null && (
+                grabItem.itemType == ItemType.EMP || grabItem.itemType == ItemType.LIGHTTRAP)
+                )
             {
-                getKeyDownE = false;
-
-                if(GameManager.players[Client.instance.myId].GetComponent<PlayerManager>().playerType == PlayerType.HUMAN)
+                int _floor = (this.transform.position.y < 10f) ? 1 : 2;
+                ClientSend.Install(this.transform.position, grabItem.spawnerId, _floor);
+            }
+            /*
+            if (GameManager.players[Client.instance.myId].GetComponent<PlayerManager>().playerType == PlayerType.HUMAN)
+            {
+                if (grabItem != null && ((ItemSpawner)grabItem).itemType == ItemType.EMP)
                 {
-                    EMP emp = ((ItemSpawner)(GameManager.players[Client.instance.myId].GetComponent<PlayerManager>().playerItem.item_number2[0])).GetComponent<EMP>();
+                    EMP emp = grabItem.GetComponent<EMP>();
 
-                if (emp)
+                    if (other.CompareTag("EMPZONE"))
                     {
-                        if (other.CompareTag("EMPZONE"))
+                        if (emp.isInstalling)
                         {
-                            if (emp.isInstalling)
-                            {
-                                Debug.Log($"emp 설치 취소");
-                             emp.InstallCancle();
-                            }
-                            else
-                            {
-                                emp.isInstalling = true;
-                                emp.gaugeCheck = true;
-                            }
+                            Debug.Log($"emp 설치 취소");
+                            emp.InstallCancle();
                         }
                         else
                         {
-                            //EMP TRAP 설치
-                            if (emp.isInstalling)
-                            {
-                             emp.InstallCancle();
-                            }
-                            else
-                            {
-                                //emp.Install();
-                                emp.isDetectiveMode = true;
-                                emp.isInstalling = true;
-                                emp.gaugeCheck = true;
-
-                            }
+                            emp.isInstalling = true;
+                            emp.gaugeCheck = true;
                         }
                     }
                     else
                     {
-                    Debug.Log("가지고 있는 emp가 없습니다");
+                        //EMP TRAP 설치
+                        if (emp.isInstalling)
+                        {
+                            emp.InstallCancle();
+                        }
+                        else
+                        {
+                            //emp.Install();
+                            emp.isDetectiveMode = true;
+                            emp.isInstalling = true;
+                            emp.gaugeCheck = true;
+                        }
                     }
                 }
                 else
                 {
-                    //괴물 LIGHT TRAP 설치
+                    Debug.Log("가지고 있는 emp가 없습니다");
                 }
             }
-           
-
+            else
+            {
+                if (grabItem != null && ((ItemSpawner)grabItem).itemType == ItemType.LIGHTTRAP)
+                {
+                    //괴물 LIGHT TRAP 설치
+                    lightTrapInstall = InstallLightTrap(((ItemSpawner)grabItem).spawnerId);
+                    StartCoroutine(lightTrapInstall);
+                }
+            }*/
+        }
     }
+    /*
+    /// <summary>괴물 Light Trap 설치</summary>
+    /// <returns></returns>
+    private IEnumerator InstallLightTrap(int _spawnerId)
+    {
+        //animation실행 (1초간 설치)
+        yield return new WaitForSeconds(1f);
+
+        ClientSend.InstallLightTrap(this.transform.position, _spawnerId);
+    }*/
 }

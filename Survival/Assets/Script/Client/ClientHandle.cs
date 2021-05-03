@@ -95,28 +95,16 @@ public class ClientHandle : MonoBehaviour
     }
 
 
-    
-
-    /// <summary>패킷에 담긴 아이템 생성정보(id, position, 아이템존재여부)를 통해 아이템 생성</summary>
-    /// <param name="_packet"></param>
-    public static void CreateItemSpawner(Packet _packet)
-    {
-        int _spawnerId = _packet.ReadInt();
-        Vector3 _spawnerPosition = _packet.ReadVector3();
-        bool _hasItem = _packet.ReadBool();
-        string _tag = _packet.ReadString();
-        ItemType _type = (ItemType)ItemType.Parse(typeof(ItemType), _tag);
-
-        GameManager.instance.CreateItemSpawner(_spawnerId, _spawnerPosition, _hasItem, _type);
-    }
-
     /// <summary>패킷에 담긴 아이템 스폰정보(id) update</summary>
     /// <param name="_packet"></param>
     public static void ItemSpawned(Packet _packet)
     {
         int _spawnerId = _packet.ReadInt();
+        Vector3 _spawnerPosition = _packet.ReadVector3();
+        string _tag = _packet.ReadString();
+        ItemType _type = (ItemType)ItemType.Parse(typeof(ItemType), _tag);
 
-        GameManager.itemSpawners[_spawnerId].ItemSpawned();
+        GameManager.instance.CreateItemSpawner(_spawnerId, _spawnerPosition, _type);
     }
 
     /// <summary>아이템 획득정보 update</summary>
@@ -124,16 +112,10 @@ public class ClientHandle : MonoBehaviour
     public static void ItemPickedUp(Packet _packet)
     {
         int _spawnerId = _packet.ReadInt();
-        int _byPlayer = _packet.ReadInt();
+        int _playerId = _packet.ReadInt();
 
-        //G 버리기 테스트용 temp
-        //GameManager.players[_byPlayer].grabItem = GameManager.itemSpawners[_spawnerId];
-
-        GameManager.instance.SaveItemToPlayer(_spawnerId, _byPlayer);
-
-        GameManager.itemSpawners[_spawnerId].ItemPickedUp();
-        GameManager.instance.SaveItemToPlayer(_spawnerId, _byPlayer);
-        GameManager.players[_byPlayer].itemCount++;
+        GameManager.instance.SaveItemToPlayer(GameManager.itemSpawners[_spawnerId], GameManager.players[_playerId]);
+        GameManager.players[_playerId].itemCount++;
     }
 
     /// <summary>아이템 버리기정보 update</summary>
@@ -143,10 +125,10 @@ public class ClientHandle : MonoBehaviour
         int _spawnerId = _packet.ReadInt();
         int _byPlayer = _packet.ReadInt();
         Vector3 _position = _packet.ReadVector3();
+        string _tag = _packet.ReadString();
+        ItemType _type = (ItemType)ItemType.Parse(typeof(ItemType), _tag);
 
-        GameManager.itemSpawners[_spawnerId].ItemThrow(_position);
-        //temp 수정예정 테스트용 test
-        GameManager.instance.AddLightTrap(1, GameManager.itemSpawners[_spawnerId]);
+        GameManager.itemSpawners[_spawnerId].ItemThrow(_position, _type);
         GameManager.players[_byPlayer].isOnHand = false;
         GameManager.players[_byPlayer].itemCount--;
     }
@@ -159,8 +141,7 @@ public class ClientHandle : MonoBehaviour
         int _byPlayer = _packet.ReadInt();
         Vector3 _position = _packet.ReadVector3();
 
-        GameManager.players[_byPlayer].grabItem = GameManager.itemSpawners[_spawnerId];
-        GameManager.itemSpawners[_spawnerId].ItemGrab(_byPlayer, _position);
+        GameManager.itemSpawners[_spawnerId].ItemGrab(GameManager.players[_byPlayer], _position);
         GameManager.players[_byPlayer].isOnHand = true;
     }
 
@@ -181,6 +162,19 @@ public class ClientHandle : MonoBehaviour
         GameManager.itemSpawners[_spawnerId].InstallEMP(_position);
         GameManager.players[_byPlayer].itemCount--;
         //item_number2삭제하기
+    }
+
+    /// <summary>LightTrap 설치</summary>
+    /// <param name="_packet"></param>
+    public static void InstallLightTrap(Packet _packet)
+    {
+        int _spawnerId = _packet.ReadInt();
+        int _byPlayer = _packet.ReadInt();
+        Vector3 _position = _packet.ReadVector3();
+        int _floor = _packet.ReadInt();
+
+        GameManager.itemSpawners[_spawnerId].Install(GameManager.players[_byPlayer], _position, _floor);
+        GameManager.players[_byPlayer].itemCount--;
     }
 
     /// <summary>패킷에 담긴 폭탄 생성정보(ID,position,던진player)를 통해 폭탄생성</summary>

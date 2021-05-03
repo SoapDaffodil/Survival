@@ -65,26 +65,41 @@ public class ItemSpawner : MonoBehaviour
     }
 
     /// <summary>아이템 버리기 > 맵에 표시O</summary>
-    public void ItemThrow(Vector3 _position)
+    public void ItemThrow(Vector3 _position, ItemType _type)
     {
-        if (this.transform.parent != null)
+        if (transform.parent != null)
         {
-            this.transform.SetParent(null, true);
+            transform.parent.GetComponent<PlayerManager>().grabItem = null;
+            switch (_type)
+            {
+                case ItemType.GUN: case ItemType.DRONE:
+                    transform.parent.GetComponent<PlayerManager>().playerItem.item_number1 = null;
+                    break;
+                case ItemType.EMP: case ItemType.LIGHTTRAP:
+                    transform.parent.GetComponent<PlayerManager>().playerItem.item_number2.Remove(this);
+                    break;
+            }
+            transform.SetParent(null, true);
         }
-        this.transform.position = _position;
+        transform.position = _position;
         hasItem = true;
         itemModel.enabled = true;
     }
 
     /// <summary>아이템 들기</summary>
-    public void ItemGrab(int _byPlayer, Vector3 _position)
+    public void ItemGrab(PlayerManager _byPlayer, Vector3 _position)
     {
-        hasItem = true;
         itemModel.enabled = true;
-        this.transform.position = _position;
-        if (this.transform.parent != GameManager.players[_byPlayer].transform) {
-            this.transform.SetParent(GameManager.players[_byPlayer].transform, true);
+        transform.position = _position;
+        if (transform.parent != _byPlayer.transform) {
+            transform.SetParent(_byPlayer.transform, true);
         }
+        if (_byPlayer.grabItem != null && _byPlayer.grabItem.transform.parent == _byPlayer.transform)
+        {
+            _byPlayer.grabItem.transform.SetParent(null, true);
+            _byPlayer.grabItem.itemModel.enabled = false;
+        }
+        _byPlayer.grabItem = this;
     }
 
     /// <summary>EMPZONE에 EMP 설치하기 > 맵에 표시O</summary>
@@ -93,5 +108,45 @@ public class ItemSpawner : MonoBehaviour
         hasItem = true;
         itemModel.enabled = true;
         this.transform.position = _position;
+    }
+
+    /// <summary>Install Item 표시</summary>
+    /// <param name="_installPlayer">아이템을 설치한 player</param>
+    /// <param name="_position">아이템 설치 위치</param>
+    /// <param name="_position">아이템 설치 층</param>
+    public void Install(PlayerManager _installPlayer, Vector3 _position, int _floor)
+    {
+        hasItem = true;
+        itemModel.enabled = true;
+        this.transform.position = _position;
+        switch (this.itemType)
+        {
+            case ItemType.EMP:
+                _installPlayer.grabItem = null;
+                _installPlayer.playerItem.item_number2.Remove(this);
+                hasItem = true;
+                itemModel.enabled = hasItem;
+                this.transform.position = _position;
+                if (this.transform.parent != null)
+                {
+                    this.transform.SetParent(null, true);
+                }
+                break;
+            case ItemType.LIGHTTRAP:
+                _installPlayer.grabItem = null;
+                _installPlayer.playerItem.item_number2.Remove(this);
+                GameManager.instance.AddLightTrap(_floor, this);
+                hasItem = true;
+                itemModel.enabled = hasItem;
+                this.transform.position = _position;
+                if (this.transform.parent != null)
+                {
+                    this.transform.SetParent(null, true);
+                }
+                break;
+            default:
+                Debug.Log("설치가능한 아이템이 아닙니다");
+                break;
+        }
     }
 }

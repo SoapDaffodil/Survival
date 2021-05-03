@@ -56,7 +56,7 @@ public class Player : MonoBehaviour
     public void FixedUpdate()
     {
         //채력이 0이면 움직이지 못함
-        if(hp <= 0f)
+        if (hp <= 0f)
         {
             return;
         }
@@ -77,9 +77,9 @@ public class Player : MonoBehaviour
         {
             _inputDirection.x += 1;
         }
-
-        Move(_inputDirection);
-
+        if (controller.enabled) {
+            Move(_inputDirection);
+        }
     }
 
     /// <summary>Updates the player input with newly received input.</summary>
@@ -182,7 +182,8 @@ public class Player : MonoBehaviour
             controller.enabled = false;
             transform.position = new Vector3(0f, 25f, 0f);
             ServerSend.PlayerPosition(this);
-            StartCoroutine(Respawn());
+            //리스폰 불필요 > 그냥 사망 게임종료로 수정해야함
+            //StartCoroutine(Respawn());
         }
 
         ServerSend.PlayerHP(this);
@@ -242,10 +243,21 @@ public class Player : MonoBehaviour
         ServerSend.PlayerHP(this);
     }
 
+    /// <summary>은폐</summary>
+    /// <param name="_hidePosition">숨을 포지션</param>
     public void Hide(Vector3 _hidePosition)
     {
-        transform.position = _hidePosition;
+        controller.enabled = false;
+        controller.transform.position = _hidePosition;
+        controller.enabled = true;
+    }
 
-        ServerSend.Hide(this);
+    /// <summary>스킬 순간이동</summary>
+    /// <param name="_target">target 포지션</param>
+    public void Teleportation(Vector3 _target)
+    {
+        controller.enabled = false;
+        controller.transform.position = _target;
+        controller.enabled = true;
     }
 }

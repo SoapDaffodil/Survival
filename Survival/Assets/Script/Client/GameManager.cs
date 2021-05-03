@@ -107,42 +107,44 @@ public class GameManager : MonoBehaviour
     /// <param name="_spawnerId">아이템ID</param>
     /// <param name="_position">아이템 position</param>
     /// <param name="_hasItem">아이템 존재여부</param>
-    public void CreateItemSpawner(int _spawnerId, Vector3 _position, bool _hasItem, ItemType _type)
+    public void CreateItemSpawner(int _spawnerId, Vector3 _position, ItemType _type)
     {
-        GameObject _spawner = Instantiate(itemSpawnerObject[_type], _position, itemSpawnerObject[_type].transform.rotation);
-        _spawner.GetComponent<ItemSpawner>().Initialize(_spawnerId, _hasItem);
-        itemSpawners.Add(_spawnerId, _spawner.GetComponent<ItemSpawner>());
+        ItemSpawner _spawner = (Instantiate(itemSpawnerObject[_type], _position, itemSpawnerObject[_type].transform.rotation)).GetComponent<ItemSpawner>();
+        _spawner.Initialize(_spawnerId, true);
+        _spawner.ItemSpawned();
+        itemSpawners.Add(_spawnerId, _spawner);
     }
 
     /// <summary>플레이어가 먹은 아이템 할당</summary>
     /// <param name="_spawnerId">아이템ID</param>
     /// <param name="_playerId">플레이어ID</param>
-    public void SaveItemToPlayer(int _spawnerId, int _playerId)
+    public void SaveItemToPlayer(ItemSpawner _spawner, PlayerManager _player)
     {
-        switch (players[_playerId].GetComponent<PlayerManager>().playerType)
+        switch (_player.playerType)
         {
             case PlayerType.HUMAN:
-                if (itemSpawners[_spawnerId].itemType == ItemType.GUN)
+                if (_spawner.itemType == ItemType.GUN)
                 {
-                    players[_playerId].GetComponent<PlayerManager>().playerItem.item_number1 = itemSpawners[_spawnerId];
+                    _player.playerItem.item_number1 = _spawner;
                 }
-                else if (itemSpawners[_spawnerId].itemType == ItemType.EMP)
+                else if (_spawner.itemType == ItemType.EMP)
                 {
-                    players[_playerId].GetComponent<PlayerManager>().playerItem.item_number2.Add(itemSpawners[_spawnerId]);
+                    _player.playerItem.item_number2.Add(_spawner);
                 }
                 break;
 
             case PlayerType.MONSTER:
-                if (itemSpawners[_spawnerId].itemType == ItemType.DRONE)
+                if (_spawner.itemType == ItemType.DRONE)
                 {
-                    players[_playerId].GetComponent<PlayerManager>().playerItem.item_number1 = itemSpawners[_spawnerId];
+                    _player.playerItem.item_number1 = _spawner;
                 }
-                else if (itemSpawners[_spawnerId].itemType == ItemType.LIGHTTRAP)
+                else if (_spawner.itemType == ItemType.LIGHTTRAP)
                 {
-                    players[_playerId].GetComponent<PlayerManager>().playerItem.item_number2.Add(itemSpawners[_spawnerId]);
+                    _player.playerItem.item_number2.Add(_spawner);
                 }
                 break;
         }
+        _spawner.ItemPickedUp();
     }
 
 
@@ -159,12 +161,18 @@ public class GameManager : MonoBehaviour
     public void AddLightTrap(int _floor, MonoBehaviour _lightTrap)
     {
         lightTrapList.Add(new LightTrapInfo(_floor, _lightTrap));
-        SetLightTrapUI();
+        if (players[Client.instance.myId].GetComponent<PlayerManager>().playerType == PlayerType.MONSTER)
+        {
+            SetLightTrapUI();
+        }
     }
     public void RemoveLightTrap(int number)
     {
         lightTrapList.Remove(lightTrapList[number]);
-        SetLightTrapUI();
+        if (players[Client.instance.myId].GetComponent<PlayerManager>().playerType == PlayerType.MONSTER)
+        {
+            SetLightTrapUI();
+        }
     }
     public void SetLightTrapUI()
     {

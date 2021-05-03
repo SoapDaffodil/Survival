@@ -136,19 +136,21 @@ public class Server
         }
 
         packetHandlers = new Dictionary<int, PacketHandler>()
-            {
-                {(int)ClientPackets.welcomeReceived, ServerHandle.WelcomeReceived },
-                {(int)ClientPackets.playerMovement, ServerHandle.PlayerMovement },
-                {(int)ClientPackets.playerShootBullet, ServerHandle.PlayerShootBullet },
-                {(int)ClientPackets.playerShootBomb, ServerHandle.PlayerShootBomb },
-                {(int)ClientPackets.playerGetItem, ServerHandle.PlayerGetItem },
-                {(int)ClientPackets.playerThrowItem, ServerHandle.PlayerThrowItem },
-                 {(int)ClientPackets.playerGrabItem, ServerHandle.PlayerGrabItem },
-                {(int)ClientPackets.installEMP, ServerHandle.InstallEMP },
-                {(int)ClientPackets.cure, ServerHandle.Cure },
-                {(int)ClientPackets.hide, ServerHandle.Hide },
-                //{(int)ClientPackets.udpTestReceived, ServerHandle.UDPTestReceived }
-            };
+        {
+            {(int)ClientPackets.welcomeReceived, ServerHandle.WelcomeReceived },
+            {(int)ClientPackets.playerMovement, ServerHandle.PlayerMovement },
+            {(int)ClientPackets.playerShootBullet, ServerHandle.PlayerShootBullet },
+            {(int)ClientPackets.playerShootBomb, ServerHandle.PlayerShootBomb },
+            {(int)ClientPackets.playerGetItem, ServerHandle.PlayerGetItem },
+            {(int)ClientPackets.playerThrowItem, ServerHandle.PlayerThrowItem },
+            {(int)ClientPackets.playerGrabItem, ServerHandle.PlayerGrabItem },
+            {(int)ClientPackets.installEMP, ServerHandle.InstallEMP },
+            {(int)ClientPackets.install, ServerHandle.Install },
+            {(int)ClientPackets.cure, ServerHandle.Cure },
+            {(int)ClientPackets.hide, ServerHandle.Hide },
+            {(int)ClientPackets.skillTeleportation, ServerHandle.SkillTeleportation },
+            //{(int)ClientPackets.udpTestReceived, ServerHandle.UDPTestReceived }
+        };
         Debug.Log("Initialized packets.");
     }
 

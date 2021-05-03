@@ -186,31 +186,34 @@ public class ServerSend
         }
     }
 
-    /// <summary>아이템ID, position, 아이템존재여부 TCP전송</summary>
-    /// <param name="_toClient">수신할 클라이언트</param>
-    /// <param name="_spawnerId">아이템ID</param>
+    /// <summary>스폰될 아이템 TCP전송</summary>
+    /// <param name="_clientId">전송할 client</param>
+    /// <param name="_spawnerId">스폰될 아이템</param>
     /// <param name="_spawnerPosition">아이템 position</param>
-    /// <param name="_hasItem">아이템 존재여부</param>
-    public static void CreateItemSpawner(int _toClient, int _spawnerId, Vector3 _spawnerPosition, bool _hasItem, string _tag)
+    /// <param name="_tag">아이템 종류</param>
+    public static void ItemSpawned(int _clientId, int _spawnerId, Vector3 _spawnerPosition, string _tag)
     {
-        using (Packet _packet = new Packet((int)ServerPackets.createItemSpawner))
+        using (Packet _packet = new Packet((int)ServerPackets.itemSpawned))
         {
             _packet.Write(_spawnerId);
             _packet.Write(_spawnerPosition);
-            _packet.Write(_hasItem);
             _packet.Write(_tag);
 
-            SendTCPData(_toClient, _packet);
+            SendTCPData(_clientId, _packet);
         }
     }
 
     /// <summary>스폰된 아이템 TCP전송</summary>
     /// <param name="_spawnerId">스폰된 아이템</param>
-    public static void ItemSpawned(int _spawnerId)
+    /// <param name="_spawnerPosition">아이템 position</param>
+    /// <param name="_tag">아이템 종류</param>
+    public static void ItemSpawned(int _spawnerId, Vector3 _spawnerPosition, string _tag)
     {
         using (Packet _packet = new Packet((int)ServerPackets.itemSpawned))
         {
             _packet.Write(_spawnerId);
+            _packet.Write(_spawnerPosition);
+            _packet.Write(_tag);
 
             SendTCPDataToAll(_packet);
         }
@@ -234,13 +237,14 @@ public class ServerSend
     /// <param name="_spawnerId">버린 아이템ID</param>
     /// <param name="_byPlayer">아이템을 버린 플레이어</param>
     /// <param name="_position">아이템을 버린 위치</param>
-    public static void ItemThrow(int _spawnerId, int _byPlayer, Vector3 _position)
+    public static void ItemThrow(int _spawnerId, int _byPlayer, Vector3 _position, string _tag)
     {
         using (Packet _packet = new Packet((int)ServerPackets.itemThrow))
         {
             _packet.Write(_spawnerId);
             _packet.Write(_byPlayer);
             _packet.Write(_position);
+            _packet.Write(_tag);
 
             SendTCPDataToAll(_packet);
         }
@@ -317,9 +321,10 @@ public class ServerSend
 
 
     /// <summary>EMP 설치완료</summary>
-    /// /// <param name="_spawnerId">아이템 ID</param>
+    /// <param name="_spawnerId">아이템 ID</param>
     /// <param name="_byPlayer">플레이어 ID</param>
-    /// /// <param name="_position">아이템 포지션</param>
+    /// <param name="_position">아이템 포지션</param>
+    /// <param name="_floor">아이템이 위치한 층</param>
     public static void InstallEMP(int _spawnerId, int _byPlayer, Vector3 _position)
     {
         using (Packet _packet = new Packet((int)ServerPackets.installEMP))
@@ -332,14 +337,20 @@ public class ServerSend
         }
     }
 
-    /// <summary>플레이어 은폐</summary>
-    /// <param name="_player">전송하고싶은 Player</param>
-    public static void Hide(Player _player)
+
+    /// <summary>LightTrap 설치완료</summary>
+    /// <param name="_spawnerId">아이템 ID</param>
+    /// <param name="_byPlayer">플레이어 ID</param>
+    /// <param name="_position">아이템 포지션</param>
+    /// <param name="_floor">아이템이 위치한 층</param>
+    public static void InstallLightTrap(int _spawnerId, int _byPlayer, Vector3 _position, int _floor)
     {
-        using (Packet _packet = new Packet((int)ServerPackets.hide))
+        using (Packet _packet = new Packet((int)ServerPackets.installLightTrap))
         {
-            _packet.Write(_player.id);
-            _packet.Write(_player.transform.position);
+            _packet.Write(_spawnerId);
+            _packet.Write(_byPlayer);
+            _packet.Write(_position);
+            _packet.Write(_floor);
 
             SendTCPDataToAll(_packet);
         }

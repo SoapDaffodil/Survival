@@ -88,7 +88,6 @@ public class ClientSend : MonoBehaviour
     {
         using (Packet _packet = new Packet((int)ClientPackets.playerGetItem))
         {
-            _packet.Write(_item.name);
             _packet.Write(_item.GetComponent<ItemSpawner>().spawnerId);
 
             SendTCPData(_packet);
@@ -98,12 +97,11 @@ public class ClientSend : MonoBehaviour
     /// <summary>아이템 버리기에 대한 packet TCP전송(한번만 전송하므로 누락이 될지언정 오류가 발생하지는 않음)</summary>
     /// <param name="_item">버릴 아이템종류</param>
     /// <param name="_position">버릴위치</param>
-    public static void PlayerThrowItem(GameObject _item, Vector3 _position)
+    public static void PlayerThrowItem(ItemSpawner _item, Vector3 _position)
     {
         using (Packet _packet = new Packet((int)ClientPackets.playerThrowItem))
         {
-            _packet.Write(_item.name);
-            _packet.Write(_item.GetComponent<ItemSpawner>().spawnerId);
+            _packet.Write(_item.spawnerId);
 
             _packet.Write(_position.x);
             _packet.Write(0.5f);
@@ -145,6 +143,25 @@ public class ClientSend : MonoBehaviour
         }
     }
 
+    /// <summary>LightTrap설치 관련정보 packet TCP전송(한번만 전송하므로 누락이 될지언정 오류가 발생하지는 않음)</summary>
+    /// <param name="_position">플레이어 위치</param>
+    /// <param name="_spawnerId">설치하는 LightTrap ID</param>
+    public static void Install(Vector3 _position, int _spawnerId, int _floor)
+    {
+        using (Packet _packet = new Packet((int)ClientPackets.install))
+        {
+            _packet.Write(_position.x);
+            _packet.Write(0.2f);
+            _packet.Write(_position.z);
+
+            _packet.Write(_spawnerId);
+            _packet.Write(_floor);
+
+
+            SendTCPData(_packet);
+        }
+    }
+
     /// <summary>플레이어 체력 회복 packet TCP전송(한번만 전송하므로 누락이 될지언정 오류가 발생하지는 않음)</summary>
     /// <param name="_hp">플레이어 체력</param>
     public static void Cure(float _hp)
@@ -163,14 +180,23 @@ public class ClientSend : MonoBehaviour
     {
         using (Packet _packet = new Packet((int)ClientPackets.hide))
         {
-            _packet.Write(_hidePlace.transform.position.x);
-            _packet.Write(_hidePlace.transform.position.y);
-            _packet.Write(_hidePlace.transform.position.z);
+            _packet.Write(_hidePlace.transform.position);
 
             SendTCPData(_packet);
         }
     }
-}
+
+    /// <summary>플레이어 은폐 packet TCP전송(한번만 전송하므로 누락이 될지언정 오류가 발생하지는 않음)</summary>
+    /// <param name="_hidePlace">은폐하는 오브젝트</param>
+    public static void SkillTeleportation(Vector3 _target)
+    {
+        using (Packet _packet = new Packet((int)ClientPackets.skillTeleportation))
+        {
+            _packet.Write(_target);
+
+            SendTCPData(_packet);
+        }
+    }
 
     /*
     public static void UDPTestReceived()
@@ -182,4 +208,5 @@ public class ClientSend : MonoBehaviour
         }
     }*/
     #endregion
+}
 
