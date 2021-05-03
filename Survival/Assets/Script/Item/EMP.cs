@@ -69,7 +69,7 @@ public  class EMP : MonoBehaviour
                 
                 UIManager.instance.powerSlider.gameObject.SetActive(false);
 
-                ClientSend.InstallEMP(transform.position, ((ItemSpawner)(GameManager.players[Client.instance.myId].GetComponent<PlayerManager>().playerItem.item_number2[0])).gameObject);
+                ClientSend.InstallEMP(transform.position, GameManager.players[Client.instance.myId].GetComponent<PlayerManager>().playerItem.item_number2[0].gameObject);
             }
             else
             {

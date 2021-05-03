@@ -88,7 +88,6 @@ public class ClientSend : MonoBehaviour
     {
         using (Packet _packet = new Packet((int)ClientPackets.playerGetItem))
         {
-            _packet.Write(_item.name);
             _packet.Write(_item.GetComponent<ItemSpawner>().spawnerId);
 
             SendTCPData(_packet);
@@ -98,12 +97,11 @@ public class ClientSend : MonoBehaviour
     /// <summary>아이템 버리기에 대한 packet TCP전송(한번만 전송하므로 누락이 될지언정 오류가 발생하지는 않음)</summary>
     /// <param name="_item">버릴 아이템종류</param>
     /// <param name="_position">버릴위치</param>
-    public static void PlayerThrowItem(GameObject _item, Vector3 _position)
+    public static void PlayerThrowItem(ItemSpawner _item, Vector3 _position)
     {
         using (Packet _packet = new Packet((int)ClientPackets.playerThrowItem))
         {
-            _packet.Write(_item.name);
-            _packet.Write(_item.GetComponent<ItemSpawner>().spawnerId);
+            _packet.Write(_item.spawnerId);
 
             _packet.Write(_position.x);
             _packet.Write(0.5f);

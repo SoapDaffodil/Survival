@@ -65,10 +65,9 @@ public class ServerHandle
     /// <param name="_packet"></param>
     public static void PlayerGetItem(int _fromClient, Packet _packet)
     {
-        string _itemName = _packet.ReadString();
         int _spawnerId = _packet.ReadInt();
 
-        ItemSpawner.spawners[_spawnerId].ItemPickedUp(Server.clients[_fromClient].player.id);
+        ItemSpawner.spawners[_spawnerId].ItemPickedUp(Server.clients[_fromClient].player);
     }
 
     /// <summary>아이템버리기에 관한 패킷을 통해 아이템버리기 처리</summary>
@@ -76,11 +75,10 @@ public class ServerHandle
     /// <param name="_packet"></param>
     public static void PlayerThrowItem(int _fromClient, Packet _packet)
     {
-        string _itemName = _packet.ReadString();
         int _spawnerId = _packet.ReadInt();
         Vector3 _position = _packet.ReadVector3();
 
-        ItemSpawner.spawners[_spawnerId].ItemThrow(Server.clients[_fromClient].player.id, _position);
+        ItemSpawner.spawners[_spawnerId].ItemThrow(Server.clients[_fromClient].player, _position);
     }
 
     /// <summary>아이템들기에 관한 패킷을 통해 아이템들기 처리</summary>
@@ -91,7 +89,7 @@ public class ServerHandle
         int _spawnerId = _packet.ReadInt();
         int _key = _packet.ReadInt();
 
-        ItemSpawner.spawners[_spawnerId].ItemGrab(_spawnerId, Server.clients[_fromClient].player.id, _key);
+        ItemSpawner.spawners[_spawnerId].ItemGrab(Server.clients[_fromClient].player, _key);
     }
 
     /// <summary>EMPZONE에 EMP 설치완료에 관해 패킷을 통해 처리</summary>

@@ -59,27 +59,27 @@ public class ItemSpawner : MonoBehaviour
 
         hasItem = true;
         itemModel.enabled = hasItem;
-        ServerSend.ItemSpawned(spawnerId);
+        ServerSend.ItemSpawned(spawnerId, transform.position, this.tag);
     }
 
     /// <summary>아이템을 먹었다는 정보를 클라이언트에게 전송</summary>
     /// <param name="_byPlayer">아이템을 획득한 플레이어</param>
-    public void ItemPickedUp(int _byPlayer)
+    public void ItemPickedUp(Player _byPlayer)
     {
-        if (Server.clients[_byPlayer].player.AttemptPickupItem())
+        if (_byPlayer.AttemptPickupItem())
         {
-            switch (Server.clients[_byPlayer].player.playerType)
+            switch (_byPlayer.playerType)
             {
                 case PlayerType.HUMAN:
                     if (this.tag == "GUN" || this.tag == "EMP")
                     {
                         hasItem = false;
                         itemModel.enabled = hasItem;
-                        ServerSend.ItemPickedUp(spawnerId, _byPlayer);
+                        ServerSend.ItemPickedUp(spawnerId, _byPlayer.id);
                     }
                     else
                     {
-                        ServerSend.Error(_byPlayer, "It is not your Item");
+                        ServerSend.Error(_byPlayer.id, "It is not your Item");
                     }
                     break;
 
@@ -88,11 +88,11 @@ public class ItemSpawner : MonoBehaviour
                     {
                         hasItem = false;
                         itemModel.enabled = hasItem;
-                        ServerSend.ItemPickedUp(spawnerId, _byPlayer);
+                        ServerSend.ItemPickedUp(spawnerId, _byPlayer.id);
                     }
                     else
                     {
-                        ServerSend.Error(_byPlayer, "It is not your Item");
+                        ServerSend.Error(_byPlayer.id, "It is not your Item");
                     }
                     break;
             }
@@ -103,43 +103,38 @@ public class ItemSpawner : MonoBehaviour
     /// <summary>아이템을 버렸다는 정보를 클라이언트에게 전송</summary>
     /// <param name="_byPlayer">아이템을 획득한 플레이어</param>
     /// <param name="_position">아이템을 버릴 위치</param>
-    public void ItemThrow(int _byPlayer, Vector3 _position)
+    public void ItemThrow(Player _byPlayer, Vector3 _position)
     {
-        if (Server.clients[_byPlayer].player.AttemptThrowItem())
+        hasItem = true;
+        itemModel.enabled = hasItem;
+        this.transform.position = _position;
+        if (this.transform.parent != null)
         {
-            hasItem = true;
-            itemModel.enabled = hasItem;
-            this.transform.position = _position;
-            if (this.transform.parent != null)
-            {
-                this.transform.SetParent(null, true);
-            }
-            ServerSend.ItemThrow(spawnerId, _byPlayer, _position);
+            this.transform.SetParent(null, true);
         }
+        ServerSend.ItemThrow(spawnerId, _byPlayer.id, _position, this.tag);
     }
 
     /// <summary>아이템을 들었다는 정보를 클라이언트에게 전송</summary>
     /// <param name="_byPlayer">아이템을 들 플레이어</param>
     /// <param name="_key">플레이어가 누른 키</param>
-    /// /// <param name="_spawnerId">아이템 id</param>
-    public void ItemGrab(int _spawnerId, int _byPlayer, int _key)
+    public void ItemGrab(Player _byPlayer, int _key)
     {
-        if (!hasItem)
+        if (!itemModel.enabled)
         {
-            Vector3 _itemPosition = Server.clients[_byPlayer].player.transform.position;
+            Vector3 _itemPosition = _byPlayer.transform.position;
             _itemPosition.y = 1f;
-            hasItem = true;
-            itemModel.enabled = hasItem;
+            itemModel.enabled = true;
             this.transform.position = _itemPosition;
-            if (this.transform.parent != Server.clients[_byPlayer].player.transform)
+            if (this.transform.parent != _byPlayer.transform)
             {
-                this.transform.SetParent(Server.clients[_byPlayer].player.transform, true);
+                this.transform.SetParent(_byPlayer.transform, true);
             }
-            ServerSend.ItemGrab(spawnerId, _byPlayer, _itemPosition);
+            ServerSend.ItemGrab(spawnerId, _byPlayer.id, _itemPosition);
         }
         else
         {
-            ServerSend.Error(_byPlayer, "아이템이 이미 활성화 되어있습니다");
+            ServerSend.Error(_byPlayer.id, "아이템이 이미 활성화 되어있습니다");
         }
     }
 

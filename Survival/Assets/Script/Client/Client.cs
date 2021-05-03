@@ -312,8 +312,6 @@ public class Client : MonoBehaviour
             { (int)ServerPackets.playerHP, ClientHandle.PlayerHP},
             { (int)ServerPackets.playerRespawned, ClientHandle.PlayerRespawned},
 
-            
-            { (int)ServerPackets.createItemSpawner, ClientHandle.CreateItemSpawner},
             { (int)ServerPackets.itemSpawned, ClientHandle.ItemSpawned},
             { (int)ServerPackets.itemPickedUp, ClientHandle.ItemPickedUp},
             { (int)ServerPackets.itemThrow, ClientHandle.ItemThrow},

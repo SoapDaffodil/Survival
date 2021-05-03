@@ -237,13 +237,10 @@ public class Client
                 ServerSend.SpawnPlayer(_client.id, player);
             }
         }
-
-        // 아이템정보 전송
-        foreach (ItemSpawner _itemSpawner in ItemSpawner.spawners.Values)
+        foreach (ItemSpawner _item in ItemSpawner.spawners.Values)
         {
-            ServerSend.CreateItemSpawner(id, _itemSpawner.spawnerId, _itemSpawner.transform.position, _itemSpawner.hasItem, _itemSpawner.tag);
+            ServerSend.ItemSpawned(id, _item.spawnerId, _item.transform.position, _item.tag);
         }
-
     }
 
     /// <summary>Disconnects the client and stops all network traffic.</summary>

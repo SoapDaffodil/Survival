@@ -182,7 +182,8 @@ public class Player : MonoBehaviour
             controller.enabled = false;
             transform.position = new Vector3(0f, 25f, 0f);
             ServerSend.PlayerPosition(this);
-            StartCoroutine(Respawn());
+            //리스폰 불필요 > 그냥 사망 게임종료로 수정해야함
+            //StartCoroutine(Respawn());
         }
 
         ServerSend.PlayerHP(this);

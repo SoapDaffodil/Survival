@@ -12,7 +12,7 @@ public class Item : MonoBehaviour
     public static int arrayIndex = 0;
     #endregion
 
-    public Object item_number1;
+    public ItemSpawner item_number1;
     public List<ItemSpawner> item_number2 = new List<ItemSpawner>();
 
     

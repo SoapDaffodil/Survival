@@ -20,6 +20,15 @@ public class PlayerController : MonoBehaviour
         input[4] = KeyCode.Space;
     }
 
+    private IEnumerator WaitForGetItem()
+    {
+        yield return new WaitForSeconds(0.1f);
+        if (getKeyDownF) {
+            Debug.Log($"주위에 아무것도 없습니다");
+            getKeyDownF = false;
+        }
+    }
+
     private void Update()
     {
         //총 발사
@@ -36,10 +45,18 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.F))
         {
             getKeyDownF = true;
+            StartCoroutine(WaitForGetItem());
         }
         if (Input.GetKeyDown(KeyCode.G))
         {
-            ClientSend.PlayerThrowItem(GameManager.players[Client.instance.myId].grabItem.gameObject, GameManager.players[Client.instance.myId].transform.position);
+            if (GetComponent<PlayerManager>().grabItem != null)
+            {
+                ClientSend.PlayerThrowItem(GetComponent<PlayerManager>().grabItem, transform.position);
+            }
+            else
+            {
+                Debug.Log($"들고있는 아이템이 없습니다");
+            }
         }
         if (Input.GetKeyDown(KeyCode.M))
         {
@@ -63,21 +80,21 @@ public class PlayerController : MonoBehaviour
         {
             if (this.GetComponent<PlayerManager>().playerItem.item_number1 != null)
             {
-                ClientSend.PlayerGrabItem(((ItemSpawner)(this.GetComponent<PlayerManager>().playerItem.item_number1)).spawnerId, 1);
+                ClientSend.PlayerGrabItem(GetComponent<PlayerManager>().playerItem.item_number1.spawnerId, 1);
             }
         }
         if (Input.GetKeyDown(KeyCode.Alpha2))
         {
             if (this.GetComponent<PlayerManager>().playerItem.item_number2.Count > 0)
             {
-                ClientSend.PlayerGrabItem(((ItemSpawner)(this.GetComponent<PlayerManager>().playerItem.item_number2[0])).spawnerId, 2);
+                ClientSend.PlayerGrabItem(GetComponent<PlayerManager>().playerItem.item_number2[0].spawnerId, 2);
             }
         }
         if (Input.GetKeyDown(KeyCode.R))
         {
             if (GameManager.players[Client.instance.myId].GetComponent<PlayerManager>().playerType == PlayerType.HUMAN)
             {
-                Gun gun = ((ItemSpawner)(GameManager.players[Client.instance.myId].GetComponent<PlayerManager>().playerItem.item_number1)).GetComponent<Gun>();
+                Gun gun = GameManager.players[Client.instance.myId].GetComponent<PlayerManager>().playerItem.item_number1.GetComponent<Gun>();
                 
 
                 if (GameManager.players[Client.instance.myId].isOnHand && transform.GetChild(1).gameObject.GetComponent<Gun>())
@@ -156,7 +173,6 @@ public class PlayerController : MonoBehaviour
                     ClientSend.PlayerGetItem(other.gameObject);
                 }*/
                 ClientSend.PlayerGetItem(other.gameObject);
-
             }
             //문열기
             else if (other.CompareTag("Door"))
@@ -178,18 +194,22 @@ public class PlayerController : MonoBehaviour
             {
                 ClientSend.Hide(other.gameObject);
             }
+            else
+            {
+                Debug.Log($"주위에 아무것도 없습니다");
+            }
         }
 
         if (getKeyDownE)
         {
             getKeyDownE = false;
-            MonoBehaviour grabItem = GameManager.players[Client.instance.myId].GetComponent<PlayerManager>().grabItem;
+            ItemSpawner grabItem = GameManager.players[Client.instance.myId].GetComponent<PlayerManager>().grabItem;
             if (grabItem != null && (
-                ((ItemSpawner)grabItem).itemType == ItemType.EMP || ((ItemSpawner)grabItem).itemType == ItemType.LIGHTTRAP)
+                grabItem.itemType == ItemType.EMP || grabItem.itemType == ItemType.LIGHTTRAP)
                 )
             {
                 int _floor = (this.transform.position.y < 10f) ? 1 : 2;
-                ClientSend.Install(this.transform.position, ((ItemSpawner)grabItem).spawnerId, _floor);
+                ClientSend.Install(this.transform.position, grabItem.spawnerId, _floor);
             }
             /*
             if (GameManager.players[Client.instance.myId].GetComponent<PlayerManager>().playerType == PlayerType.HUMAN)

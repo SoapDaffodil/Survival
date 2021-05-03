@@ -65,26 +65,41 @@ public class ItemSpawner : MonoBehaviour
     }
 
     /// <summary>아이템 버리기 > 맵에 표시O</summary>
-    public void ItemThrow(Vector3 _position)
+    public void ItemThrow(Vector3 _position, ItemType _type)
     {
-        if (this.transform.parent != null)
+        if (transform.parent != null)
         {
-            this.transform.SetParent(null, true);
+            transform.parent.GetComponent<PlayerManager>().grabItem = null;
+            switch (_type)
+            {
+                case ItemType.GUN: case ItemType.DRONE:
+                    transform.parent.GetComponent<PlayerManager>().playerItem.item_number1 = null;
+                    break;
+                case ItemType.EMP: case ItemType.LIGHTTRAP:
+                    transform.parent.GetComponent<PlayerManager>().playerItem.item_number2.Remove(this);
+                    break;
+            }
+            transform.SetParent(null, true);
         }
-        this.transform.position = _position;
+        transform.position = _position;
         hasItem = true;
         itemModel.enabled = true;
     }
 
     /// <summary>아이템 들기</summary>
-    public void ItemGrab(int _byPlayer, Vector3 _position)
+    public void ItemGrab(PlayerManager _byPlayer, Vector3 _position)
     {
-        hasItem = true;
         itemModel.enabled = true;
-        this.transform.position = _position;
-        if (this.transform.parent != GameManager.players[_byPlayer].transform) {
-            this.transform.SetParent(GameManager.players[_byPlayer].transform, true);
+        transform.position = _position;
+        if (transform.parent != _byPlayer.transform) {
+            transform.SetParent(_byPlayer.transform, true);
         }
+        if (_byPlayer.grabItem != null && _byPlayer.grabItem.transform.parent == _byPlayer.transform)
+        {
+            _byPlayer.grabItem.transform.SetParent(null, true);
+            _byPlayer.grabItem.itemModel.enabled = false;
+        }
+        _byPlayer.grabItem = this;
     }
 
     /// <summary>EMPZONE에 EMP 설치하기 > 맵에 표시O</summary>
