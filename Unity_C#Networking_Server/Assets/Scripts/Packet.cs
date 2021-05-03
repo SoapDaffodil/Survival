@@ -21,6 +21,8 @@ public enum ServerPackets
     itemPickedUp,       //아이템 획득
     itemThrow,          //아이템 버리기
     itemGrab,           //아이템 들기
+
+
     //검증완료
 
 
@@ -31,6 +33,8 @@ public enum ServerPackets
     installEMP,         //EMP 설치완료
     installLightTrap,   //LightTrap 설치완료
     cure,               //플레이어 체력 회복
+    dronePosition,      //드론 position
+    droneRotation,      //드론 rotation
     //udpTest
 }
 
@@ -56,6 +60,7 @@ public enum ClientPackets
     cure,               //플레이어 체력 회복
     hide,               //플레이어 은폐
     skillTeleportation, //스킬 순간이동
+    droneMovement       //드론 움직임
     // udpTestReceived
 }
 

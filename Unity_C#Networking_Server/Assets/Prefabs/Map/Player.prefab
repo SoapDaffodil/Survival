@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 6185226627602286573}
   - component: {fileID: 8335018081037737256}
   - component: {fileID: 5067621479074104107}
+  - component: {fileID: 3225433495398445147}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -48,6 +49,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 0
   username: 
+  playerType: 0
   controller: {fileID: 5067621479074104107}
   shootOrigin: {fileID: 7911999603085095142}
   gravity: -19.62
@@ -75,6 +77,19 @@ CharacterController:
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!65 &3225433495398445147
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3887713562994225130}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &4689248271315487347
 GameObject:

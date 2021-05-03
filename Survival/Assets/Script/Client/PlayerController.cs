@@ -104,6 +104,16 @@ public class PlayerController : MonoBehaviour
                     gun.Reloade();
                 }
             }
+            else
+            {
+                Drone drone = GameManager.players[Client.instance.myId].GetComponent<PlayerManager>().playerItem.item_number1.GetComponent<Drone>();
+
+                if (GameManager.players[Client.instance.myId].isOnHand && transform.GetChild(1).gameObject.GetComponent<Drone>())
+                {
+                    Debug.Log("드론이동!");
+                    drone.Moving();
+                }
+            }
         }
     }
 
@@ -172,6 +182,8 @@ public class PlayerController : MonoBehaviour
                 {
                     ClientSend.PlayerGetItem(other.gameObject);
                 }*/
+
+                Debug.Log("아이템 줍기");
                 ClientSend.PlayerGetItem(other.gameObject);
             }
             //문열기

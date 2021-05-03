@@ -198,6 +198,26 @@ public class ClientSend : MonoBehaviour
         }
     }
 
+    /// <summary>drone 움직임에 대한 packet UDP전송(주기적으로 전송하기때문에 패킷의 끝을 확인해야함)</summary>
+    public static void DroneMovement(bool[] _inputs, GameObject _drone)
+    {
+        using (Packet _packet = new Packet((int)ClientPackets.droneMovement))
+        {
+            _packet.Write(_inputs.Length);
+            foreach (bool _input in _inputs)
+            {
+                _packet.Write(_input);
+            }
+            _packet.Write(_drone.transform.rotation);
+
+            _packet.Write(_drone.GetComponent<ItemSpawner>().spawnerId);
+
+            //주기적으로 보내기때문에 데이터충돌발생확률이 높음 > UDP
+            SendUDPData(_packet);
+        }
+    }
+
+
     /*
     public static void UDPTestReceived()
     {

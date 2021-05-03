@@ -33,18 +33,19 @@ public class M_UseDrone : MonoBehaviour
 
             if(presentItem == drone && Input.GetMouseButton(0))
             {
-                drone.ChargingGauge();
+                //drone.ChargingGauge();
             }
             if(presentItem == drone && Input.GetMouseButtonUp(0))
             {
-                drone.ChargingGauge();
+               // drone.ChargingGauge();
             }
 
+            /*
             if(drone.isGaugeFull == true)
             {
                 ControllDrone();
             }
-
+            */
             if(isFlying == true && Input.GetKeyDown(KeyCode.E))
             {
                 TurnOnLight();
@@ -106,6 +107,6 @@ public class M_UseDrone : MonoBehaviour
 
     void TurnOffLight()
     {
-        drone.OffFlash();
+        //drone.OffFlash();
     }
 }

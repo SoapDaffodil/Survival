@@ -322,6 +322,8 @@ public class Client : MonoBehaviour
             { (int)ServerPackets.keyChange, ClientHandle.KeyChange},
             { (int)ServerPackets.installEMP, ClientHandle.InstallEMP},
             { (int)ServerPackets.installLightTrap, ClientHandle.InstallLightTrap},
+            { (int)ServerPackets.dronePosition, ClientHandle.DronePosition},
+            { (int)ServerPackets.droneRotation, ClientHandle.DroneRotation},
             
             //{ (int)ServerPackets.udpTest, ClientHandle.UDPTest }
         };

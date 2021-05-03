@@ -144,6 +144,24 @@ public class ServerHandle
         Server.clients[_fromClient].player.Teleportation(_packet.ReadVector3());
     }
 
+    /// <summary>드론의 움직임packet을 받아 움직임 처리</summary>
+    /// <param name="_fromClient"></param>
+    /// <param name="_packet"></param>
+    public static void DroneMovement(int _fromClient, Packet _packet)
+    {
+        bool[] _inputs = new bool[_packet.ReadInt()];
+        for (int i = 0; i < _inputs.Length; i++)
+        {
+            _inputs[i] = _packet.ReadBool();
+        }
+        Quaternion _rotation = _packet.ReadQuaternion();
+
+        int _spawnId = _packet.ReadInt();
+
+        ItemSpawner.spawners[_spawnId].GetComponent<Drone>().SetInput(_inputs, _rotation);
+        ItemSpawner.spawners[_spawnId].GetComponent<Drone>().isDroneMoving = true;
+    }
+
     /*
     /// <summary>welcome 잘받았다는 메세지 도착 시 클라이언트ID가 맞는지 확인 후 서버에 출력</summary>
     /// <param name="_fromClient"></param>

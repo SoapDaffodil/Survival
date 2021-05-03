@@ -24,6 +24,8 @@ public class ItemSpawner : MonoBehaviour
     public bool hasItem = false;            //아이템이 존재하는지 체크
     public MeshRenderer itemModel;          //아이템 mesh
 
+
+
     public void Initialize()
     {
         itemModel = GetComponent<MeshRenderer>();
@@ -189,4 +191,6 @@ public class ItemSpawner : MonoBehaviour
                 break;
         }
     }
+
+
 }

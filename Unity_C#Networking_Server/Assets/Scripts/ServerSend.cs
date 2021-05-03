@@ -356,6 +356,32 @@ public class ServerSend
         }
     }
 
+    /// <summary>드론의 위치를 모든 클라이언트에 UDP전송</summary>
+    /// <param name="_drone">드론</param>
+    public static void DronePosition(Drone _drone)
+    {
+        using (Packet _packet = new Packet((int)ServerPackets.dronePosition))
+        {
+            _packet.Write(_drone.GetComponent<ItemSpawner>().spawnerId);
+            _packet.Write(_drone.transform.position);
+
+            SendUDPDataToAll(_packet);
+        }
+    }
+
+    /// <summary>드론의 rotation을 자기자신을 제외한(localplayer에 중복으로 써지는것을 막기위함) 모든 클라이언트에 UDP전송</summary>
+    /// <param name="_player">The player whose rotation to update.</param>
+    public static void DroneRotation(Drone _drone)
+    {
+        using (Packet _packet = new Packet((int)ServerPackets.droneRotation))
+        {
+            _packet.Write(_drone.GetComponent<ItemSpawner>().spawnerId);
+            _packet.Write(_drone.transform.rotation);
+
+            SendUDPDataToAll(_packet);
+        }
+    }
+
     /*
     public static void UDPTest(int _toClient)
     {

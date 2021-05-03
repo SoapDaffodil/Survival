@@ -223,6 +223,26 @@ public class ClientHandle : MonoBehaviour
         GameManager.players[_id].GetComponent<PlayerManager>().Hide(_position);
     }
 
+    /// <summary>드론 position을 담은 패킷을 받음</summary>
+    /// <param name="_packet"></param>
+    public static void DronePosition(Packet _packet)
+    {
+        int _id = _packet.ReadInt();
+        Vector3 _position = _packet.ReadVector3();
+
+        GameManager.itemSpawners[_id].transform.position = _position;
+    }
+
+    /// <summary>드론 Rotation을 담은 패킷을 받음</summary>
+    /// <param name="_packet"></param>
+    public static void DroneRotation(Packet _packet)
+    {
+        int _id = _packet.ReadInt();
+        Quaternion _rotation = _packet.ReadQuaternion();
+
+        GameManager.itemSpawners[_id].transform.rotation = _rotation;
+    }
+
     /*
     /// <summary>서버로 부터 UDPTest data를 받음</summary>
     public static void UDPTest(Packet _packet)

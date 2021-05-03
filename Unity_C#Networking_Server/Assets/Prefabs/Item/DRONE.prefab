@@ -13,6 +13,8 @@ GameObject:
   - component: {fileID: 71573584938816084}
   - component: {fileID: 9050157565957331949}
   - component: {fileID: 6995645067185008688}
+  - component: {fileID: 1568065425128613391}
+  - component: {fileID: 5730280958460938516}
   m_Layer: 0
   m_Name: DRONE
   m_TagString: DRONE
@@ -111,3 +113,35 @@ MonoBehaviour:
   spawnerId: 0
   hasItem: 0
   itemModel: {fileID: 71573584938816084}
+--- !u!143 &1568065425128613391
+CharacterController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2765098290509911380}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Height: 1
+  m_Radius: 0.5
+  m_SlopeLimit: 45
+  m_StepOffset: 0.3
+  m_SkinWidth: 0.08
+  m_MinMoveDistance: 0.001
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &5730280958460938516
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2765098290509911380}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c2f67c874bd686d4099f53efbed7c91a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  controller: {fileID: 1568065425128613391}
+  moveSpeed: 5
