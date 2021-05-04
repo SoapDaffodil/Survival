@@ -147,7 +147,7 @@ public class ItemSpawner : MonoBehaviour
         }
         else
         {
-            ServerSend.Error(_byPlayer.id, $"Is already Grab - {this.tag}");
+            ServerSend.Error(_byPlayer.id, $"It is already Grab - {this.tag}");
         }
     }
 
@@ -175,7 +175,7 @@ public class ItemSpawner : MonoBehaviour
                 }
                 else
                 {
-                    ServerSend.Error(_byPlayer, $"This item is not for installation - {this.tag}");
+                    ServerSend.Error(_byPlayer, $"This item is not your item - {this.tag}");
                 }
                 break;
             case "LIGHTTRAP":
@@ -192,7 +192,7 @@ public class ItemSpawner : MonoBehaviour
                 }
                 else
                 {
-                    ServerSend.Error(_byPlayer, $"This item is not for installation - {this.tag}");
+                    ServerSend.Error(_byPlayer, $"This item is not your item - {this.tag}");
                 }
                 break;
             default:
