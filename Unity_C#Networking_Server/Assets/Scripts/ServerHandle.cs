@@ -158,8 +158,33 @@ public class ServerHandle
 
         int _spawnId = _packet.ReadInt();
 
+        Server.clients[_fromClient].player.controller.enabled = false;
         ItemSpawner.spawners[_spawnId].GetComponent<Drone>().SetInput(_inputs, _rotation);
+        ItemSpawner.spawners[_spawnId].GetComponent<Drone>().controller.enabled = true;
         ItemSpawner.spawners[_spawnId].GetComponent<Drone>().isDroneMoving = true;
+    }
+
+
+    /// <summary>드론의 움직임 멈춤 packet을 받아 움직임 처리</summary>
+    /// <param name="_fromClient"></param>
+    /// <param name="_packet"></param>
+    public static void DroneStop(int _fromClient, Packet _packet)
+    {        
+        int _spawnId = _packet.ReadInt();
+
+        ItemSpawner.spawners[_spawnId].GetComponent<Drone>().controller.enabled = false;
+        ItemSpawner.spawners[_spawnId].GetComponent<Drone>().isDroneMoving = false;
+        Server.clients[_fromClient].player.controller.enabled = true;
+        
+    }
+
+    /// <summary>괴물 이속 증가 packet을 받아 움직임 처리</summary>
+    /// <param name="_fromClient"></param>
+    /// <param name="_packet"></param>
+    public static void SpeedUp(int _fromClient, Packet _packet)
+    {
+        int _playerId = _packet.ReadInt();
+        Server.clients[_fromClient].player.SpeedUp();
     }
 
     /*

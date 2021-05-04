@@ -13,12 +13,14 @@ public class UseFire : MonoBehaviour
 
     void Update()
     {
+        /*
         if (Input.GetKeyDown(KeyCode.Q))
         {
             ItemOnHand();
             fire.Power();
             Debug.Log(fire.state);
         }
+        */
 
     }
 

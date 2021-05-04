@@ -217,6 +217,28 @@ public class ClientSend : MonoBehaviour
         }
     }
 
+    /// <summary>드론 조작 멈춤 packet TCP전송(한번만 전송하므로 누락이 될지언정 오류가 발생하지는 않음)</summary>
+    /// <param name="_drone">은폐하는 오브젝트</param>
+    public static void DroneStop(GameObject _drone)
+    {
+        using (Packet _packet = new Packet((int)ClientPackets.droneStop))
+        {
+            _packet.Write(_drone.GetComponent<ItemSpawner>().spawnerId);
+
+            SendTCPData(_packet);
+        }
+    }
+
+    /// <summary>괴물 이속 증가 packet TCP전송(한번만 전송하므로 누락이 될지언정 오류가 발생하지는 않음)</summary>
+    /// <param name="_player">플레이어</param>
+    public static void SpeedUp(PlayerManager _player)
+    {
+        using (Packet _packet = new Packet((int)ClientPackets.speedUp))
+        {
+            _packet.Write(_player.id);
+            SendTCPData(_packet);
+        }
+    }
 
     /*
     public static void UDPTestReceived()

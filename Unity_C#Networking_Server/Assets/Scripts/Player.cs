@@ -22,8 +22,11 @@ public class Player : MonoBehaviour
     public int itemAmount = 0;              //아이템 소요개수
     public int maxItemAmount = 3;           //아이템 최대소요개수
 
+
     private bool[] inputs;
     private float yVelocity = 0;
+    private float skillTime = 10f;            //스킬 지속 시간
+    private float currentTime = 0f;              //현재 시간
 
     public void Initialize(int _id, string _username)
     {
@@ -260,4 +263,22 @@ public class Player : MonoBehaviour
         controller.transform.position = _target;
         controller.enabled = true;
     }
+
+    public void SpeedUp()
+    {
+        currentTime = Time.time;
+        float skillStart = currentTime;
+        while (currentTime <= skillStart + skillTime)
+        {
+            currentTime += Time.time;
+            moveSpeed = 2.5f;
+            Debug.Log("이속 증가 중");
+        }
+        
+        moveSpeed = 0.16f;
+        Debug.Log("이속 증가 끝");
+               
+        
+    }
+
 }

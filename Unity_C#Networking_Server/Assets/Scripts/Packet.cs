@@ -60,7 +60,9 @@ public enum ClientPackets
     cure,               //플레이어 체력 회복
     hide,               //플레이어 은폐
     skillTeleportation, //스킬 순간이동
-    droneMovement       //드론 움직임
+    droneMovement,       //드론 움직임
+    droneStop,          //드론 멈춤
+    speedUp,            //괴물 이속증가
     // udpTestReceived
 }
 

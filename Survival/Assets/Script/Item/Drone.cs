@@ -22,14 +22,12 @@ public class Drone : MonoBehaviour
    
     public void Moving()
     {
-        droneCam.enabled = true;
         gameObject.transform.parent.GetComponent<Camera>().enabled = false;
         gameObject.transform.parent.GetComponent<PlayerController>().enabled = false;
+        droneCam.enabled = true;       
         isDroneMoving = true;
     }
-
-
-    /*
+  
     private void FixedUpdate()
     {
         if (isDroneMoving)
@@ -46,7 +44,20 @@ public class Drone : MonoBehaviour
             ClientSend.DroneMovement(_inputs, this.gameObject);
         }        
     }
-    */
+
+    private void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.R) && isDroneMoving)
+        {
+            droneCam.enabled = false;
+            isDroneMoving = false;
+            gameObject.transform.parent.GetComponent<Camera>().enabled = true;
+            gameObject.transform.parent.GetComponent<PlayerController>().enabled = true;            
+
+            ClientSend.DroneStop(this.gameObject);
+        }
+    }
+
 
     public void OnFlash()
     {
