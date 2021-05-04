@@ -113,10 +113,11 @@ public class ClientSend : MonoBehaviour
 
     /// <summary>아이템 들기에 대한 packet TCP전송(한번만 전송하므로 누락이 될지언정 오류가 발생하지는 않음)</summary>
     /// <param name="_key">누른 키</param>
-    public static void PlayerGrabItem(int _spawnerId, int _key)
+    public static void PlayerGrabItem(int _grabSpawnerId, int _spawnerId, int _key)
     {
         using (Packet _packet = new Packet((int)ClientPackets.playerGrabItem))
         {
+            _packet.Write(_grabSpawnerId);
             _packet.Write(_spawnerId);
             _packet.Write(_key);
 
