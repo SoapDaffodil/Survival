@@ -23890,7 +23890,9 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Monster
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1907209285817030929, guid: 7e521b1510fc5a74a9047bf3a884ee3a, type: 3}
+    - {fileID: 1907209285817030958, guid: 7e521b1510fc5a74a9047bf3a884ee3a, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 7e521b1510fc5a74a9047bf3a884ee3a, type: 3}
 --- !u!65 &1949358700687843439
 BoxCollider:

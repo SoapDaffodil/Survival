@@ -49,9 +49,9 @@ public class PlayerController : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.G))
         {
-            if (GetComponent<PlayerManager>().grabItem != null)
+            if (this.GetComponent<PlayerManager>().playerItem.grabItem != null)
             {
-                ClientSend.PlayerThrowItem(GetComponent<PlayerManager>().grabItem, transform.position);
+                ClientSend.PlayerThrowItem(this.GetComponent<PlayerManager>().playerItem.grabItem, transform.position);
             }
             else
             {
@@ -80,14 +80,16 @@ public class PlayerController : MonoBehaviour
         {
             if (this.GetComponent<PlayerManager>().playerItem.item_number1 != null)
             {
-                ClientSend.PlayerGrabItem(GetComponent<PlayerManager>().playerItem.item_number1.spawnerId, 1);
+                int _grabItemId = (this.GetComponent<PlayerManager>().playerItem.grabItem != null) ? this.GetComponent<PlayerManager>().playerItem.grabItem.spawnerId : -1;
+                ClientSend.PlayerGrabItem(_grabItemId, this.GetComponent<PlayerManager>().playerItem.item_number1.spawnerId, 1);
             }
         }
         if (Input.GetKeyDown(KeyCode.Alpha2))
         {
             if (this.GetComponent<PlayerManager>().playerItem.item_number2.Count > 0)
             {
-                ClientSend.PlayerGrabItem(GetComponent<PlayerManager>().playerItem.item_number2[0].spawnerId, 2);
+                int _grabItemId = (this.GetComponent<PlayerManager>().playerItem.grabItem != null) ? this.GetComponent<PlayerManager>().playerItem.grabItem.spawnerId : -1;
+                ClientSend.PlayerGrabItem(_grabItemId, this.GetComponent<PlayerManager>().playerItem.item_number2[0].spawnerId, 2);
             }
         }
         if (Input.GetKeyDown(KeyCode.R))
@@ -171,23 +173,8 @@ public class PlayerController : MonoBehaviour
         if (getKeyDownF)
         {
             getKeyDownF = false;
-            //아이템획득
-            if (other.CompareTag("Item"))
-            {
-                /*if (Item.arrayIndex == Item.inventoryBox.Length)
-                {
-                    Debug.Log("아이템 창이 가득 찼습니다");
-                }
-                else
-                {
-                    ClientSend.PlayerGetItem(other.gameObject);
-                }*/
-
-                Debug.Log("아이템 줍기");
-                ClientSend.PlayerGetItem(other.gameObject);
-            }
             //문열기
-            else if (other.CompareTag("Door"))
+            if (other.CompareTag("Door"))
             {
 
                 if (other.gameObject.transform.rotation.y == 0f)
@@ -199,12 +186,39 @@ public class PlayerController : MonoBehaviour
                 {
                     other.gameObject.transform.RotateAround(other.gameObject.transform.GetChild(0).position, Vector3.up, 90f);
                 }
-
             }
             //은폐
             else if (other.CompareTag("Hide"))
             {
                 ClientSend.Hide(other.gameObject);
+            }
+            //아이템획득
+            else if (other.CompareTag("Item"))
+            {
+                if (other.GetComponent<ItemSpawner>().hasItem) {
+                    switch (other.GetComponent<ItemSpawner>().itemType)
+                    {
+                        case ItemType.GUN: case ItemType.DRONE:
+                            if (this.GetComponent<PlayerManager>().playerItem.item_number1 == null)
+                            {
+                                Debug.Log($"아이템 줍기");
+                                ClientSend.PlayerGetItem(other.gameObject);
+                            }
+                            else
+                            {
+                                Debug.Log($"해당 아이템은 1개만 획득할 수 있습니다");
+                            }
+                            break;
+                        default:
+                            Debug.Log("아이템 줍기");
+                            ClientSend.PlayerGetItem(other.gameObject);
+                            break;
+                    }
+                }
+                else
+                {
+                    Debug.Log($"주위에 아무것도 없습니다");
+                }
             }
             else
             {
@@ -215,7 +229,7 @@ public class PlayerController : MonoBehaviour
         if (getKeyDownE)
         {
             getKeyDownE = false;
-            ItemSpawner grabItem = GameManager.players[Client.instance.myId].GetComponent<PlayerManager>().grabItem;
+            ItemSpawner grabItem = GameManager.players[Client.instance.myId].GetComponent<PlayerManager>().playerItem.grabItem;
             if (grabItem != null && (
                 grabItem.itemType == ItemType.EMP || grabItem.itemType == ItemType.LIGHTTRAP)
                 )

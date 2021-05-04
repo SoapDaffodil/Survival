@@ -20,13 +20,18 @@ public class Player : MonoBehaviour
     public float hp;                        //체력
     public float maxHp = 100f;              //최대체력
     public int itemAmount = 0;              //아이템 소요개수
-    public int maxItemAmount = 3;           //아이템 최대소요개수
+    public int maxItemAmount = 100;         //아이템 최대소요개수
 
     private bool[] inputs;
     private float yVelocity = 0;
 
     public void Initialize(int _id, string _username)
     {
+        maxHp = 100f;
+        hp = maxHp;
+        itemAmount = 0;
+        maxItemAmount = 100;
+
         id = _id;
         username = _username;
         string _playerType = "";

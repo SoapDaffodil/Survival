@@ -48,10 +48,9 @@ public enum ClientPackets
     //검증완료
     playerGetItem,      //아이템 획득
     playerThrowItem,    //아이템 버리기
-    //검증완료
     playerGrabItem,     //아이템 들기
-    //키누를때 grabItem 이었던것 비활성화, parent해제 해야함
-                        
+    //검증완료
+
 
 
     installEMP,         //EMP 설치완료
