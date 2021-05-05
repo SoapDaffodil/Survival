@@ -5,26 +5,29 @@ using UnityEngine.UI;
 
 public class Drone : MonoBehaviour
 {
-    private Light flash;
+   // private Light flash;
     private Camera droneCam;
     public bool isDroneMoving = false;
+    private GameObject player;
 
     // Start is called before the first frame update
     void Start()
     {       
-        flash = gameObject.GetComponent<Light>();
+       // flash = gameObject.GetComponent<Light>();
         droneCam = GameObject.Find("DroneCam").GetComponent<Camera>();
 
-        flash.type = LightType.Point;
-        flash.range = 0f;
-        droneCam.enabled = false;
+       // flash.type = LightType.Point;
+       // flash.range = 0f;
+        droneCam.gameObject.SetActive(false);
+        player = GameObject.FindGameObjectWithTag("Player").gameObject;
     }
    
     public void Moving()
     {
-        gameObject.transform.parent.GetComponent<Camera>().enabled = false;
-        gameObject.transform.parent.GetComponent<PlayerController>().enabled = false;
-        droneCam.enabled = true;       
+        player.transform.GetChild(0).GetComponent<Camera>().gameObject.SetActive(false);
+        player.GetComponent<PlayerController>().enabled = false;
+        gameObject.transform.position += new Vector3 (0f, 5f, 0f);
+        droneCam.gameObject.SetActive(true);       
         isDroneMoving = true;
     }
   
@@ -49,18 +52,26 @@ public class Drone : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.R) && isDroneMoving)
         {
-            droneCam.enabled = false;
+            droneCam.gameObject.SetActive(false);
             isDroneMoving = false;
-            gameObject.transform.parent.GetComponent<Camera>().enabled = true;
-            gameObject.transform.parent.GetComponent<PlayerController>().enabled = true;            
+            player.transform.GetChild(0).GetComponent<Camera>().gameObject.SetActive(true);
+            player.GetComponent<PlayerController>().enabled = true;
 
+            gameObject.transform.SetParent(null);
+
+            Debug.Log("드론 멈춤");
             ClientSend.DroneStop(this.gameObject);
+        }
+
+        if(Input.GetKeyDown(KeyCode.C) && isDroneMoving)
+        {
+            // 드론 빛 이동
         }
     }
 
 
     public void OnFlash()
     {
-        flash.range = 8f;
+       // flash.range = 8f;
     }
 }

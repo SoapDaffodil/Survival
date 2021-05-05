@@ -96,7 +96,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94dfbb0723829a54d892cfcc199db977, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 9148487813931248127}
+  verticalRotationObj: {fileID: 853322940755460430}
+  horizontalRotationObj: {fileID: 6611331617352936926}
   sensitivity: 100
   clampAngle: 85
 --- !u!1 &6611331617352936926
@@ -258,7 +259,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 044e793607407634d949a4840e6c1bbe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isDead: 0
 --- !u!114 &9148487813931248127
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -278,8 +278,9 @@ MonoBehaviour:
   itemCount: 0
   model: {fileID: 6611331617352936920}
   grabItem: {fileID: 0}
-  playerItem: {fileID: 0}
   playerType: 0
+  isCuring: 0
+  isOnHand: 0
   controller: {fileID: 0}
 --- !u!114 &6901347970397520823
 MonoBehaviour:

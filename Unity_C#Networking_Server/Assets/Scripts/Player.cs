@@ -25,8 +25,6 @@ public class Player : MonoBehaviour
 
     private bool[] inputs;
     private float yVelocity = 0;
-    private float skillTime = 10f;            //스킬 지속 시간
-    private float currentTime = 0f;              //현재 시간
 
     public void Initialize(int _id, string _username)
     {
@@ -271,18 +269,15 @@ public class Player : MonoBehaviour
 
     public void SpeedUp()
     {
-        currentTime = Time.time;
-        float skillStart = currentTime;
-        while (currentTime <= skillStart + skillTime)
-        {
-            currentTime += Time.time;
-            moveSpeed = 10f * Time.fixedDeltaTime;
-            Debug.Log("이속 증가 중");
-        }
-        
-        moveSpeed = 5f * Time.fixedDeltaTime;
-        Debug.Log("이속 증가 끝");        
-      
+        moveSpeed *= 2;
+        Debug.Log("이속 증가 중");
+        Invoke("SpeedDown", 5f);                 
+    }
+
+    public void SpeedDown()
+    {
+        moveSpeed /= 2;
+        Debug.Log("이속 원상복귀");
     }
 
 }

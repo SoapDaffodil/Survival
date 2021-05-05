@@ -110,7 +110,7 @@ public class PlayerController : MonoBehaviour
             {
                 Drone drone = GameManager.players[Client.instance.myId].GetComponent<PlayerManager>().playerItem.item_number1.GetComponent<Drone>();
 
-                if (GameManager.players[Client.instance.myId].isOnHand && transform.GetChild(1).gameObject.GetComponent<Drone>() && !drone.isDroneMoving)
+                if (GameManager.players[Client.instance.myId].isOnHand && drone.gameObject.GetComponent<Drone>() && !drone.isDroneMoving)
                 {
                     Debug.Log("드론이동!");
                     drone.Moving();
@@ -119,10 +119,9 @@ public class PlayerController : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.Q))
         {
-            if(GameManager.players[Client.instance.myId].GetComponent<PlayerManager>().playerType == PlayerType.HUMAN)
+            if(GameManager.players[Client.instance.myId].GetComponent<PlayerManager>().playerType == PlayerType.MONSTER)
             {
-                //이속 증가
-                Debug.Log("이속 증가");
+
                 ClientSend.SpeedUp(GameManager.players[Client.instance.myId]);
             }
         }

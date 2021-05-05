@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
-    public PlayerManager player;
+    public GameObject verticalRotationObj;
+    public GameObject horizontalRotationObj;
     public float sensitivity = 100f;
     public float clampAngle = 85f;
 
@@ -14,7 +15,7 @@ public class CameraController : MonoBehaviour
     private void Start()
     {
         verticalRotation = transform.localEulerAngles.x;
-        horizontalRotation = player.transform.eulerAngles.y;
+        horizontalRotation = horizontalRotationObj.transform.eulerAngles.y;
     }
 
     private void Update()
@@ -44,7 +45,7 @@ public class CameraController : MonoBehaviour
         verticalRotation = Mathf.Clamp(verticalRotation, -clampAngle, clampAngle);
 
         transform.localRotation = Quaternion.Euler(verticalRotation, 0f, 0f);
-        player.transform.rotation = Quaternion.Euler(0f, horizontalRotation, 0f);
+        horizontalRotationObj.transform.rotation = Quaternion.Euler(0f, horizontalRotation, 0f);
     }
 
     /// <summary>esc를 누르면 마우스커서 on</summary>

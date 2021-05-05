@@ -160,9 +160,9 @@ public class ServerHandle
         int _spawnId = _packet.ReadInt();
 
         Server.clients[_fromClient].player.controller.enabled = false;
-        ItemSpawner.spawners[_spawnId].GetComponent<Drone>().SetInput(_inputs, _rotation);
-        ItemSpawner.spawners[_spawnId].GetComponent<Drone>().controller.enabled = true;
         ItemSpawner.spawners[_spawnId].GetComponent<Drone>().isDroneMoving = true;
+        ItemSpawner.spawners[_spawnId].GetComponent<Drone>().SetInput(_inputs, _rotation);
+        ItemSpawner.spawners[_spawnId].GetComponent<Drone>().controller.enabled = true;        
     }
 
 
