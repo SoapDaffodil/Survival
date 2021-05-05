@@ -271,14 +271,13 @@ public class Player : MonoBehaviour
         while (currentTime <= skillStart + skillTime)
         {
             currentTime += Time.time;
-            moveSpeed = 2.5f;
+            moveSpeed = 10f * Time.fixedDeltaTime;
             Debug.Log("이속 증가 중");
         }
         
-        moveSpeed = 0.16f;
-        Debug.Log("이속 증가 끝");
-               
-        
+        moveSpeed = 5f * Time.fixedDeltaTime;
+        Debug.Log("이속 증가 끝");        
+      
     }
 
 }
