@@ -182,7 +182,7 @@ public class ServerHandle
     /// <summary>괴물 이속 증가 packet을 받아 움직임 처리</summary>
     /// <param name="_fromClient"></param>
     /// <param name="_packet"></param>
-    public static void SpeedUp(int _fromClient, Packet _packet)
+    public static void SkillSpeedUp(int _fromClient, Packet _packet)
     {
         int _playerId = _packet.ReadInt();
         Server.clients[_fromClient].player.SpeedUp();

@@ -10,7 +10,6 @@ public class PlayerManager : MonoBehaviour
     public string username;                 //player 이름
     public float hp;                        //체력
     public float maxHp = 100f;              //최대체력
-    public int itemCount = 0;               //아이템 소요개수
     public MeshRenderer model;
     public ItemSpawner grabItem;            //현재 들고있는 아이템
     public PlayerItem playerItem;           //플레이어의 아이템목록

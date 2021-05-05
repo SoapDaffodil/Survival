@@ -237,14 +237,13 @@ public class ServerSend
     /// <param name="_spawnerId">버린 아이템ID</param>
     /// <param name="_byPlayer">아이템을 버린 플레이어</param>
     /// <param name="_position">아이템을 버린 위치</param>
-    public static void ItemThrow(int _spawnerId, int _byPlayer, Vector3 _position, string _tag)
+    public static void ItemThrow(int _spawnerId, int _byPlayer, Vector3 _position)
     {
         using (Packet _packet = new Packet((int)ServerPackets.itemThrow))
         {
             _packet.Write(_spawnerId);
             _packet.Write(_byPlayer);
             _packet.Write(_position);
-            _packet.Write(_tag);
 
             SendTCPDataToAll(_packet);
         }
@@ -338,17 +337,15 @@ public class ServerSend
     }
 
 
-    /// <summary>LightTrap 설치완료</summary>
+    /// <summary>Trap 설치완료</summary>
     /// <param name="_spawnerId">아이템 ID</param>
-    /// <param name="_byPlayer">플레이어 ID</param>
     /// <param name="_position">아이템 포지션</param>
     /// <param name="_floor">아이템이 위치한 층</param>
-    public static void InstallLightTrap(int _spawnerId, int _byPlayer, Vector3 _position, int _floor)
+    public static void InstallTrap(int _spawnerId, Vector3 _position, int _floor)
     {
-        using (Packet _packet = new Packet((int)ServerPackets.installLightTrap))
+        using (Packet _packet = new Packet((int)ServerPackets.installTrap))
         {
             _packet.Write(_spawnerId);
-            _packet.Write(_byPlayer);
             _packet.Write(_position);
             _packet.Write(_floor);
 

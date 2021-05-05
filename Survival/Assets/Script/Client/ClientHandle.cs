@@ -115,7 +115,6 @@ public class ClientHandle : MonoBehaviour
         int _playerId = _packet.ReadInt();
 
         GameManager.instance.SaveItemToPlayer(GameManager.itemSpawners[_spawnerId], GameManager.players[_playerId]);
-        GameManager.players[_playerId].itemCount++;
     }
 
     /// <summary>아이템 버리기정보 update</summary>
@@ -125,12 +124,9 @@ public class ClientHandle : MonoBehaviour
         int _spawnerId = _packet.ReadInt();
         int _byPlayer = _packet.ReadInt();
         Vector3 _position = _packet.ReadVector3();
-        string _tag = _packet.ReadString();
-        ItemType _type = (ItemType)ItemType.Parse(typeof(ItemType), _tag);
 
-        GameManager.itemSpawners[_spawnerId].ItemThrow(_position, _type);
+        GameManager.itemSpawners[_spawnerId].ItemThrow(_position);
         GameManager.players[_byPlayer].isOnHand = false;
-        GameManager.players[_byPlayer].itemCount--;
     }
 
     /// <summary>아이템 들기정보 update</summary>
@@ -160,21 +156,18 @@ public class ClientHandle : MonoBehaviour
         Vector3 _position = _packet.ReadVector3();
 
         GameManager.itemSpawners[_spawnerId].InstallEMP(_position);
-        GameManager.players[_byPlayer].itemCount--;
         //item_number2삭제하기
     }
 
     /// <summary>LightTrap 설치</summary>
     /// <param name="_packet"></param>
-    public static void InstallLightTrap(Packet _packet)
+    public static void InstallTrap(Packet _packet)
     {
         int _spawnerId = _packet.ReadInt();
-        int _byPlayer = _packet.ReadInt();
         Vector3 _position = _packet.ReadVector3();
         int _floor = _packet.ReadInt();
 
-        GameManager.itemSpawners[_spawnerId].Install(GameManager.players[_byPlayer], _position, _floor);
-        GameManager.players[_byPlayer].itemCount--;
+        GameManager.itemSpawners[_spawnerId].InstallTrap(_position, _floor);
     }
 
     /// <summary>패킷에 담긴 폭탄 생성정보(ID,position,던진player)를 통해 폭탄생성</summary>
@@ -186,7 +179,6 @@ public class ClientHandle : MonoBehaviour
         int _thrownByPlayer = _packet.ReadInt();
 
         GameManager.instance.SpawnProjectile(_projectileId, _position);
-        GameManager.players[_thrownByPlayer].itemCount--;
     }
 
     /// <summary>패킷에 담긴 정보를 통해(position) 폭탄 위치 update</summary>

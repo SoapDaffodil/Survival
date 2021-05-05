@@ -27,9 +27,12 @@ public enum ServerPackets
     spawnProjectile,    //폭탄 생성
     projectilePosition, //폭탄 위치
     projectileExploded, //폭탄 폭발여부
+
+
+
     keyChange,          //키 체인지
     installEMP,         //EMP 설치완료
-    installLightTrap,   //LightTrap 설치완료
+    installTrap,        //EMP or LightTrap 설치완료
     cure,               //플레이어 체력 회복
     dronePosition,      //드론 position
     droneRotation,      //드론 rotation
@@ -60,7 +63,7 @@ public enum ClientPackets
     skillTeleportation, //스킬 순간이동
     droneMovement,      //드론 움직임
     droneStop,          //드론 멈춤
-    speedUp,            //괴물 이속증가
+    skillSpeedUp,       //괴물 이속증가
     // udpTestReceived
 }
 

@@ -151,7 +151,7 @@ public class Server
             {(int)ClientPackets.skillTeleportation, ServerHandle.SkillTeleportation },
             {(int)ClientPackets.droneMovement, ServerHandle.DroneMovement },
             {(int)ClientPackets.droneStop, ServerHandle.DroneStop },
-            {(int)ClientPackets.speedUp, ServerHandle.SpeedUp },
+            {(int)ClientPackets.skillSpeedUp, ServerHandle.SkillSpeedUp },
             //{(int)ClientPackets.udpTestReceived, ServerHandle.UDPTestReceived }
         };
         Debug.Log("Initialized packets.");

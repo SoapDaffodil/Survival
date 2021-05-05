@@ -27,18 +27,29 @@ public class GameManager : MonoBehaviour
     /// <summary>폭탄 프리팹</summary>
     public GameObject projectilePrefab;
 
-
-    /// <summary>LightTrap 리스트</summary>
+    /// <summary>EMPTrap 정보</summary>
+    public struct EMPTrapInfo
+    {
+        public int floor;
+        public MonoBehaviour empTrap;
+        public EMPTrapInfo(int _f, MonoBehaviour _trap)
+        {
+            floor = _f;
+            empTrap = _trap;
+        }
+    }
+    /// <summary>LightTrap 정보</summary>
     public struct LightTrapInfo
     {
         public int floor;
         public MonoBehaviour lightTrap;
-        public LightTrapInfo(int f, MonoBehaviour trap)
+        public LightTrapInfo(int _f, MonoBehaviour _trap)
         {
-            floor = f;
-            lightTrap = trap;
+            floor = _f;
+            lightTrap = _trap;
         }
     }
+    public List<EMPTrapInfo> empTrapList = new List<EMPTrapInfo>();
     public List<LightTrapInfo> lightTrapList = new List<LightTrapInfo>();
 
     private void Awake()
@@ -131,6 +142,14 @@ public class GameManager : MonoBehaviour
                 {
                     _player.playerItem.item_number2.Add(_spawner);
                 }
+                else if (_spawner.itemType == ItemType.BATTERY)
+                {
+                    _player.playerItem.batteryCount += 30;
+                }
+                else
+                {
+                    Debug.Log($"Error - 서버에서 이미 동작하였습니다. 아이템을 먹을 수 없습니다");
+                }
                 break;
 
             case PlayerType.MONSTER:
@@ -141,6 +160,10 @@ public class GameManager : MonoBehaviour
                 else if (_spawner.itemType == ItemType.LIGHTTRAP)
                 {
                     _player.playerItem.item_number2.Add(_spawner);
+                }
+                else
+                {
+                    Debug.Log($"Error - 서버에서 이미 동작하였습니다. 아이템을 먹을 수 없습니다");
                 }
                 break;
         }
@@ -157,7 +180,17 @@ public class GameManager : MonoBehaviour
         _projectile.GetComponent<ProjectileManager>().Initialize(_id);
         projectiles.Add(_id, _projectile.GetComponent<ProjectileManager>());
     }
-    
+
+    /// <summary>EMPTrap 리스트 추가</summary>
+    /// <param name="_floor">설치한 층</param>
+    /// <param name="_EMPTrap">설치한 EMPTrap</param>
+    public void AddEMPTrap(int _floor, MonoBehaviour _EMPTrap)
+    {
+        empTrapList.Add(new EMPTrapInfo(_floor, _EMPTrap));
+    }
+    /// <summary>LightTrap 리스트 추가</summary>
+    /// <param name="_floor">설치한 층</param>
+    /// <param name="_lightTrap">설치한 lightTrap</param>
     public void AddLightTrap(int _floor, MonoBehaviour _lightTrap)
     {
         lightTrapList.Add(new LightTrapInfo(_floor, _lightTrap));

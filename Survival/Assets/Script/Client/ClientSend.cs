@@ -234,7 +234,7 @@ public class ClientSend : MonoBehaviour
     /// <param name="_player">플레이어</param>
     public static void SpeedUp(PlayerManager _player)
     {
-        using (Packet _packet = new Packet((int)ClientPackets.speedUp))
+        using (Packet _packet = new Packet((int)ClientPackets.skillSpeedUp))
         {
             _packet.Write(_player.id);
             SendTCPData(_packet);

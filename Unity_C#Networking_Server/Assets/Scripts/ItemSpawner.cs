@@ -73,7 +73,7 @@ public class ItemSpawner : MonoBehaviour
             switch (_byPlayer.playerType)
             {
                 case PlayerType.HUMAN:
-                    if (this.tag == "GUN" || this.tag == "EMP")
+                    if (this.tag == "GUN" || this.tag == "EMP" || this.tag == "BATTERY")
                     {
                         hasItem = false;
                         itemModel.enabled = false;
@@ -114,7 +114,7 @@ public class ItemSpawner : MonoBehaviour
         {
             this.transform.SetParent(null, true);
         }
-        ServerSend.ItemThrow(spawnerId, _byPlayer.id, _position, this.tag);
+        ServerSend.ItemThrow(spawnerId, _byPlayer.id, _position);
     }
 
     /// <summary>GrabItem 해제</summary>
@@ -179,21 +179,14 @@ public class ItemSpawner : MonoBehaviour
                 }
                 break;
             case "LIGHTTRAP":
-                if (Server.clients[_byPlayer].player.playerType == PlayerType.MONSTER)
+                lightTrapList.Add(new LightTrapInfo(_floor, this));
+                itemModel.enabled = true;
+                this.transform.position = _position;
+                if (this.transform.parent != null)
                 {
-                    lightTrapList.Add(new LightTrapInfo(_floor, this));
-                    itemModel.enabled = true;
-                    this.transform.position = _position;
-                    if (this.transform.parent != null)
-                    {
-                        this.transform.SetParent(null, true);
-                    }
-                    ServerSend.InstallLightTrap(spawnerId, _byPlayer, _position, _floor);
+                    this.transform.SetParent(null, true);
                 }
-                else
-                {
-                    ServerSend.Error(_byPlayer, $"This item is not your item - {this.tag}");
-                }
+                ServerSend.InstallTrap(spawnerId, _position, _floor);
                 break;
             default:
                 ServerSend.Error(_byPlayer, $"This item is not for installation - {this.tag}");

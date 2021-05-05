@@ -49,9 +49,9 @@ public class PlayerController : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.G))
         {
-            if (this.GetComponent<PlayerManager>().playerItem.grabItem != null)
+            if (this.GetComponent<PlayerManager>().playerItem.GrabItem != null)
             {
-                ClientSend.PlayerThrowItem(this.GetComponent<PlayerManager>().playerItem.grabItem, transform.position);
+                ClientSend.PlayerThrowItem(this.GetComponent<PlayerManager>().playerItem.GrabItem, transform.position);
             }
             else
             {
@@ -80,7 +80,7 @@ public class PlayerController : MonoBehaviour
         {
             if (this.GetComponent<PlayerManager>().playerItem.item_number1 != null)
             {
-                int _grabItemId = (this.GetComponent<PlayerManager>().playerItem.grabItem != null) ? this.GetComponent<PlayerManager>().playerItem.grabItem.spawnerId : -1;
+                int _grabItemId = (this.GetComponent<PlayerManager>().playerItem.GrabItem != null) ? this.GetComponent<PlayerManager>().playerItem.GrabItem.spawnerId : -1;
                 ClientSend.PlayerGrabItem(_grabItemId, this.GetComponent<PlayerManager>().playerItem.item_number1.spawnerId, 1);
             }
         }
@@ -88,7 +88,7 @@ public class PlayerController : MonoBehaviour
         {
             if (this.GetComponent<PlayerManager>().playerItem.item_number2.Count > 0)
             {
-                int _grabItemId = (this.GetComponent<PlayerManager>().playerItem.grabItem != null) ? this.GetComponent<PlayerManager>().playerItem.grabItem.spawnerId : -1;
+                int _grabItemId = (this.GetComponent<PlayerManager>().playerItem.GrabItem != null) ? this.GetComponent<PlayerManager>().playerItem.GrabItem.spawnerId : -1;
                 ClientSend.PlayerGrabItem(_grabItemId, this.GetComponent<PlayerManager>().playerItem.item_number2[0].spawnerId, 2);
             }
         }
@@ -238,13 +238,44 @@ public class PlayerController : MonoBehaviour
         if (getKeyDownE)
         {
             getKeyDownE = false;
-            ItemSpawner grabItem = GameManager.players[Client.instance.myId].GetComponent<PlayerManager>().playerItem.grabItem;
-            if (grabItem != null && (
-                grabItem.itemType == ItemType.EMP || grabItem.itemType == ItemType.LIGHTTRAP)
-                )
+            ItemSpawner _grabItem = this.GetComponent<PlayerManager>().playerItem.GrabItem;
+            if (_grabItem != null) {
+                if (_grabItem.itemType == ItemType.EMP && this.GetComponent<PlayerManager>().playerType == PlayerType.HUMAN)
+                {
+                    EMP emp = _grabItem.GetComponent<EMP>();
+
+                    if (other.CompareTag("EMPZONE"))
+                    {
+                        if (emp.isInstalling)
+                        {
+                            Debug.Log($"emp 설치 취소");
+                            emp.InstallCancle();
+                        }
+                        else
+                        {
+                            emp.isInstalling = true;
+                            emp.gaugeCheck = true;
+                        }
+                    }
+                    else
+                    {
+                        int _floor = (this.transform.position.y < 10f) ? 1 : 2;
+                        ClientSend.Install(this.transform.position, _grabItem.spawnerId, _floor);
+                    }
+                }
+                else if (_grabItem.itemType == ItemType.LIGHTTRAP && this.GetComponent<PlayerManager>().playerType == PlayerType.MONSTER)
+                {
+                    int _floor = (this.transform.position.y < 10f) ? 1 : 2;
+                    ClientSend.Install(this.transform.position, _grabItem.spawnerId, _floor);
+                }
+                else
+                {
+                    Debug.Log($"설치할 수 없는 아이템입니다");
+                }
+            }
+            else
             {
-                int _floor = (this.transform.position.y < 10f) ? 1 : 2;
-                ClientSend.Install(this.transform.position, grabItem.spawnerId, _floor);
+                Debug.Log($"아이템을 들고있지 않습니다");
             }
             /*
             if (GameManager.players[Client.instance.myId].GetComponent<PlayerManager>().playerType == PlayerType.HUMAN)

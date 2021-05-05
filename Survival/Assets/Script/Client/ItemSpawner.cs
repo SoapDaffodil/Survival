@@ -5,14 +5,21 @@ using UnityEngine;
 public enum ItemType { GUN, DRONE, EMP, LIGHTTRAP, BATTERY }
 public class PlayerItem
 {
-    public ItemSpawner grabItem;
+    private ItemSpawner grabItem;
     public ItemSpawner item_number1;
     public List<ItemSpawner> item_number2;
+    public int batteryCount;                //남은탄창(HUMAN만 쓰임)
     public PlayerItem()
     {
         grabItem = null;
         item_number1 = null;
         item_number2 = new List<ItemSpawner>();
+        batteryCount = 0;
+    }
+    public ItemSpawner GrabItem
+    {
+        get { return grabItem; }
+        set { grabItem = value; }
     }
 }
 public class ItemSpawner : MonoBehaviour
@@ -77,12 +84,12 @@ public class ItemSpawner : MonoBehaviour
     }
 
     /// <summary>아이템 버리기 > 맵에 표시O</summary>
-    public void ItemThrow(Vector3 _position, ItemType _type)
+    public void ItemThrow(Vector3 _position)
     {
         if (transform.parent != null)
         {
-            transform.parent.GetComponent<PlayerManager>().playerItem.grabItem = null;
-            switch (_type)
+            transform.parent.GetComponent<PlayerManager>().playerItem.GrabItem = null;
+            switch (itemType)
             {
                 case ItemType.GUN: case ItemType.DRONE:
                     transform.parent.GetComponent<PlayerManager>().playerItem.item_number1 = null;
@@ -92,10 +99,14 @@ public class ItemSpawner : MonoBehaviour
                     break;
             }
             transform.SetParent(null, true);
+            transform.position = _position;
+            hasItem = true;
+            itemModel.enabled = true;
         }
-        transform.position = _position;
-        hasItem = true;
-        itemModel.enabled = true;
+        else
+        {
+            Debug.Log($"아이템을 버릴 수 없습니다\nError - 부모오브젝트 {transform.parent}");
+        }
     }
 
     /// <summary>GrabItem 해제</summary>
@@ -113,32 +124,47 @@ public class ItemSpawner : MonoBehaviour
         if (transform.parent != _byPlayer.transform) {
             transform.SetParent(_byPlayer.transform, true);
         }
-        if (_byPlayer.playerItem.grabItem != null && _byPlayer.playerItem.grabItem.transform.parent == _byPlayer.transform)
+        if (_byPlayer.playerItem.GrabItem != null && _byPlayer.playerItem.GrabItem.transform.parent == _byPlayer.transform)
         {
-            _byPlayer.playerItem.grabItem.ItemReleaseGrab();
+            _byPlayer.playerItem.GrabItem.ItemReleaseGrab();
         }
-        _byPlayer.playerItem.grabItem = this;
+        _byPlayer.playerItem.GrabItem = this;
     }
 
     /// <summary>EMPZONE에 EMP 설치하기 > 맵에 표시O</summary>
     public void InstallEMP(Vector3 _position)
     {
-        itemModel.enabled = true;
-        transform.position = _position;
+        ItemThrow(_position);
+        hasItem = false;
     }
 
     /// <summary>Install Item 표시</summary>
     /// <param name="_installPlayer">아이템을 설치한 player</param>
     /// <param name="_position">아이템 설치 위치</param>
     /// <param name="_position">아이템 설치 층</param>
-    public void Install(PlayerManager _installPlayer, Vector3 _position, int _floor)
+    public void InstallTrap(Vector3 _position, int _floor)
     {
+        ItemThrow(_position);
+        hasItem = false;
+        switch (this.itemType)
+        {
+            case ItemType.EMP:
+                GameManager.instance.AddEMPTrap(_floor, this);
+                break;
+            case ItemType.LIGHTTRAP:
+                GameManager.instance.AddLightTrap(_floor, this);
+                break;
+            default:
+                Debug.Log("트랩 아이템이 아닙니다");
+                break;
+        }
+        /*
         itemModel.enabled = true;
         this.transform.position = _position;
         switch (this.itemType)
         {
             case ItemType.EMP:
-                _installPlayer.playerItem.grabItem = null;
+                _installPlayer.playerItem.GrabItem = null;
                 _installPlayer.playerItem.item_number2.Remove(this);
                 itemModel.enabled = true;
                 transform.position = _position;
@@ -148,7 +174,7 @@ public class ItemSpawner : MonoBehaviour
                 }
                 break;
             case ItemType.LIGHTTRAP:
-                _installPlayer.playerItem.grabItem = null;
+                _installPlayer.playerItem.GrabItem = null;
                 _installPlayer.playerItem.item_number2.Remove(this);
                 GameManager.instance.AddLightTrap(_floor, this);
                 itemModel.enabled = true;
@@ -161,6 +187,6 @@ public class ItemSpawner : MonoBehaviour
             default:
                 Debug.Log("설치가능한 아이템이 아닙니다");
                 break;
-        }
+        }*/
     }
 }
