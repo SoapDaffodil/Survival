@@ -86,10 +86,11 @@ public class ServerHandle
     /// <param name="_packet"></param>
     public static void PlayerGrabItem(int _fromClient, Packet _packet)
     {
+        int _grabSpawnerId = _packet.ReadInt();
         int _spawnerId = _packet.ReadInt();
         int _key = _packet.ReadInt();
 
-        ItemSpawner.spawners[_spawnerId].ItemGrab(Server.clients[_fromClient].player, _key);
+        ItemSpawner.spawners[_spawnerId].ItemGrab(_grabSpawnerId, Server.clients[_fromClient].player, _key);
     }
 
     /// <summary>EMPZONE에 EMP 설치완료에 관해 패킷을 통해 처리</summary>

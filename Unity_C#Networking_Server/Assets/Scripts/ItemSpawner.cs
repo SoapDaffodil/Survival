@@ -30,7 +30,7 @@ public class ItemSpawner : MonoBehaviour
     {
         itemModel = GetComponent<MeshRenderer>();
         hasItem = false;
-        itemModel.enabled = hasItem;
+        itemModel.enabled = false;
         spawnerId = nextSpawnerId;
         nextSpawnerId++;
         spawners.Add(spawnerId, this);
@@ -60,7 +60,7 @@ public class ItemSpawner : MonoBehaviour
         yield return new WaitForSeconds(3f);
 
         hasItem = true;
-        itemModel.enabled = hasItem;
+        itemModel.enabled = true;
         ServerSend.ItemSpawned(spawnerId, transform.position, this.tag);
     }
 
@@ -76,7 +76,7 @@ public class ItemSpawner : MonoBehaviour
                     if (this.tag == "GUN" || this.tag == "EMP")
                     {
                         hasItem = false;
-                        itemModel.enabled = hasItem;
+                        itemModel.enabled = false;
                         ServerSend.ItemPickedUp(spawnerId, _byPlayer.id);
                     }
                     else
@@ -89,7 +89,7 @@ public class ItemSpawner : MonoBehaviour
                     if (this.tag == "DRONE" || this.tag == "LIGHTTRAP")
                     {
                         hasItem = false;
-                        itemModel.enabled = hasItem;
+                        itemModel.enabled = false;
                         ServerSend.ItemPickedUp(spawnerId, _byPlayer.id);
                     }
                     else
@@ -108,7 +108,7 @@ public class ItemSpawner : MonoBehaviour
     public void ItemThrow(Player _byPlayer, Vector3 _position)
     {
         hasItem = true;
-        itemModel.enabled = hasItem;
+        itemModel.enabled = true;
         this.transform.position = _position;
         if (this.transform.parent != null)
         {
@@ -117,26 +117,37 @@ public class ItemSpawner : MonoBehaviour
         ServerSend.ItemThrow(spawnerId, _byPlayer.id, _position, this.tag);
     }
 
+    /// <summary>GrabItem 해제</summary>
+    public void ItemReleaseGrab()
+    {
+        transform.SetParent(null, true);
+        itemModel.enabled = false;
+    }
+
     /// <summary>아이템을 들었다는 정보를 클라이언트에게 전송</summary>
     /// <param name="_byPlayer">아이템을 들 플레이어</param>
     /// <param name="_key">플레이어가 누른 키</param>
-    public void ItemGrab(Player _byPlayer, int _key)
+    public void ItemGrab(int _grabSpawnerId, Player _byPlayer, int _key)
     {
         if (!itemModel.enabled)
         {
+            if (_grabSpawnerId != -1) {
+                spawners[_grabSpawnerId].ItemReleaseGrab();
+            }
+
             Vector3 _itemPosition = _byPlayer.transform.position;
             _itemPosition.y = 1f;
             itemModel.enabled = true;
-            this.transform.position = _itemPosition;
-            if (this.transform.parent != _byPlayer.transform)
+            transform.position = _itemPosition;
+            if (transform.parent != _byPlayer.transform)
             {
-                this.transform.SetParent(_byPlayer.transform, true);
+                transform.SetParent(_byPlayer.transform, true);
             }
             ServerSend.ItemGrab(spawnerId, _byPlayer.id, _itemPosition);
         }
         else
         {
-            ServerSend.Error(_byPlayer.id, "아이템이 이미 활성화 되어있습니다");
+            ServerSend.Error(_byPlayer.id, $"It is already Grab - {this.tag}");
         }
     }
 
@@ -145,7 +156,6 @@ public class ItemSpawner : MonoBehaviour
     /// <param name="_position">EMP를 설치한 위치</param>
     public void InstallEMP(int _byPlayer, Vector3 _position)
     {
-        hasItem = true;
         itemModel.enabled = true;
         this.transform.position = _position;
         ServerSend.InstallEMP(spawnerId, _byPlayer, _position);
@@ -165,15 +175,14 @@ public class ItemSpawner : MonoBehaviour
                 }
                 else
                 {
-                    ServerSend.Error(_byPlayer, $"player가 설치할 수 없는 아이템입니다");
+                    ServerSend.Error(_byPlayer, $"This item is not your item - {this.tag}");
                 }
                 break;
             case "LIGHTTRAP":
                 if (Server.clients[_byPlayer].player.playerType == PlayerType.MONSTER)
                 {
                     lightTrapList.Add(new LightTrapInfo(_floor, this));
-                    hasItem = true;
-                    itemModel.enabled = hasItem;
+                    itemModel.enabled = true;
                     this.transform.position = _position;
                     if (this.transform.parent != null)
                     {
@@ -183,14 +192,12 @@ public class ItemSpawner : MonoBehaviour
                 }
                 else
                 {
-                    ServerSend.Error(_byPlayer, $"player가 설치할 수 없는 아이템입니다");
+                    ServerSend.Error(_byPlayer, $"This item is not your item - {this.tag}");
                 }
                 break;
             default:
-                ServerSend.Error(_byPlayer, $"설치되는 아이템이 아닙니다 - {this.tag}");
+                ServerSend.Error(_byPlayer, $"This item is not for installation - {this.tag}");
                 break;
         }
     }
-
-
 }
