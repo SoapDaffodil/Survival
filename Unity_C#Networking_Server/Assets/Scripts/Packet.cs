@@ -8,33 +8,40 @@ using UnityEngine;
 /// <summary>서버가 보내는packet이 어떤정보인지 알려주는 역할</summary>
 public enum ServerPackets
 {
-    //검증완료
     welcome = 1,        //접속
     error,              //error 메세지
+
     spawnPlayer,        //player 스폰
     playerPosition,     //player position
     playerRotation,     //player rotation
     playerDisconnected, //plyaer 연결끊김
     playerHP,           //player hp
     playerRespawned,    //player 리스폰
+
     itemSpawned,        //아이템 스폰
     itemPickedUp,       //아이템 획득
     itemThrow,          //아이템 버리기
     itemGrab,           //아이템 들기
-    //검증완료
 
 
     spawnProjectile,    //폭탄 생성
     projectilePosition, //폭탄 위치
     projectileExploded, //폭탄 폭발여부
-    keyChange,          //키 체인지
+
+
     installEMP,         //EMP 설치완료
-    installLightTrap,   //LightTrap 설치완료
-    cure,               //플레이어 체력 회복
+    installTrap,        //EMP or LightTrap 설치완료
+
+    keyChange,          //키 체인지
+
+
+    //선희
+    cure,               //플레이어 체력 회복 어디에 쓰이지??
     dronePosition,      //드론 position
     droneRotation,      //드론 rotation
     spawnBullet,        //총알 생성
     bulletPosition,     //총알 위치
+    //선희
     //udpTest
 }
 
@@ -43,25 +50,30 @@ public enum ClientPackets
 {
     welcomeReceived = 1,//접속
     playerMovement,     //움직임
+
+
     playerShootBullet,  //총 공격(좌클릭)
     playerShootBomb,    //폭탄 공격(우클릭)
 
 
-    //검증완료
     playerGetItem,      //아이템 획득
     playerThrowItem,    //아이템 버리기
     playerGrabItem,     //아이템 들기
-    //검증완료
-
 
     installEMP,         //EMP 설치완료
     install,            //EMP or LightTrap 설치
+
+
+    //선희
     cure,               //플레이어 체력 회복
     hide,               //플레이어 은폐
-    skillTeleportation, //스킬 순간이동
-    droneMovement,       //드론 움직임
+    droneMovement,      //드론 움직임
     droneStop,          //드론 멈춤
-    speedUp,            //괴물 이속증가
+    skillSpeedUp,       //괴물 이속증가
+    //선희
+
+
+    skillTeleportation, //스킬 순간이동
     // udpTestReceived
 }
 

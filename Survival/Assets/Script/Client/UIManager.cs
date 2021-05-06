@@ -79,6 +79,23 @@ public class UIManager : MonoBehaviour
         }
     }
 
+    public void SetLightTrapUI()
+    {
+        for (int i=0;i< UI_LightTrapList.Length;i++)
+        {
+            if (i >= GameManager.instance.lightTrapList.Count)
+            {
+                UI_LightTrapList[i].SetActive(false);
+                lightTrapUIButton[i].gameObject.SetActive(false);
+                continue;
+            }
+            UI_LightTrapList[i].SetActive(true);
+            lightTrapUIButton[i].gameObject.SetActive(true);
+            UI_LightTrapList[i].transform.position = GameManager.instance.lightTrapList[i].trap.transform.position + position_UI_LightTrap[GameManager.instance.lightTrapList[i].floor - 1];
+            UI_LightTrapList[i].GetComponent<MeshRenderer>().material = material_UI_LightTrap[i];
+        }
+    }
+
     public void SetActiveTrueMonsterKey()
     {
             for (int i = 0; i < monsterKey.Length; i++)
@@ -110,7 +127,7 @@ public class UIManager : MonoBehaviour
             Vector3 target = Vector3.zero;
             try
             {
-                target = GameManager.instance.lightTrapList[buttonNumber - 1].lightTrap.transform.position;
+                target = GameManager.instance.lightTrapList[buttonNumber - 1].trap.transform.position;
             }
             catch
             {

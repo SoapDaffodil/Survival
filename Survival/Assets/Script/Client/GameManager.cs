@@ -26,20 +26,23 @@ public class GameManager : MonoBehaviour
     public Dictionary<ItemType, GameObject> itemSpawnerObject;
     /// <summary>폭탄 프리팹</summary>
     public GameObject projectilePrefab;
-
-
-    /// <summary>LightTrap 리스트</summary>
-    public struct LightTrapInfo
+    /// <summary>Trap 정보</summary>
+    public struct TrapInfo
     {
         public int floor;
-        public MonoBehaviour lightTrap;
-        public LightTrapInfo(int f, MonoBehaviour trap)
+        public ItemSpawner trap;
+        public TrapInfo(int _f, ItemSpawner _trap)
         {
-            floor = f;
-            lightTrap = trap;
+            floor = _f;
+            trap = _trap;
+        }
+        public bool Compare(ItemSpawner _trap)
+        {
+            return (_trap == trap);
         }
     }
-    public List<LightTrapInfo> lightTrapList = new List<LightTrapInfo>();
+    public List<TrapInfo> empTrapList = new List<TrapInfo>();
+    public List<TrapInfo> lightTrapList = new List<TrapInfo>();
 
     private void Awake()
     {
@@ -131,6 +134,14 @@ public class GameManager : MonoBehaviour
                 {
                     _player.playerItem.item_number2.Add(_spawner);
                 }
+                else if (_spawner.itemType == ItemType.BATTERY)
+                {
+                    _player.playerItem.batteryCount += 30;
+                }
+                else
+                {
+                    Debug.Log($"Error - 서버에서 이미 동작하였습니다. 아이템을 먹을 수 없습니다");
+                }
                 break;
 
             case PlayerType.MONSTER:
@@ -141,6 +152,10 @@ public class GameManager : MonoBehaviour
                 else if (_spawner.itemType == ItemType.LIGHTTRAP)
                 {
                     _player.playerItem.item_number2.Add(_spawner);
+                }
+                else
+                {
+                    Debug.Log($"Error - 서버에서 이미 동작하였습니다. 아이템을 먹을 수 없습니다");
                 }
                 break;
         }
@@ -157,26 +172,54 @@ public class GameManager : MonoBehaviour
         _projectile.GetComponent<ProjectileManager>().Initialize(_id);
         projectiles.Add(_id, _projectile.GetComponent<ProjectileManager>());
     }
-    
-    public void AddLightTrap(int _floor, MonoBehaviour _lightTrap)
+
+    /// <summary>EMPTrap 리스트 추가</summary>
+    /// <param name="_floor">설치한 층</param>
+    /// <param name="_EMPTrap">설치한 EMPTrap</param>
+    public void AddEMPTrap(int _floor, ItemSpawner _EMPTrap)
     {
-        lightTrapList.Add(new LightTrapInfo(_floor, _lightTrap));
+        empTrapList.Add(new TrapInfo(_floor, _EMPTrap));
+    }
+    //RemoveLigthTrap 의 매개변수와 비교하여 더 나은걸로 할 예정
+    public void RemoveEMPTrap(ItemSpawner _trap)
+    {
+        foreach (TrapInfo _info in empTrapList)
+        {
+            if (_info.Compare(_trap)) {
+                /*ItemSpawner usedTrap = _info.trap;
+                Destroy(usedTrap.gameObject);*/
+
+                empTrapList.Remove(_info);
+                break;
+            }
+        }
+    }
+    /// <summary>LightTrap 리스트 추가</summary>
+    /// <param name="_floor">설치한 층</param>
+    /// <param name="_lightTrap">설치한 lightTrap</param>
+    public void AddLightTrap(int _floor, ItemSpawner _lightTrap)
+    {
+        lightTrapList.Add(new TrapInfo(_floor, _lightTrap));
         if (players[Client.instance.myId].GetComponent<PlayerManager>().playerType == PlayerType.MONSTER)
         {
-            SetLightTrapUI();
+            UIManager.instance.SetLightTrapUI();
         }
     }
     public void RemoveLightTrap(int number)
     {
+        /*ItemSpawner usedTrap = lightTrapList[number].trap;
+        Destroy(usedTrap.gameObject);*/
+
         lightTrapList.Remove(lightTrapList[number]);
         if (players[Client.instance.myId].GetComponent<PlayerManager>().playerType == PlayerType.MONSTER)
         {
-            SetLightTrapUI();
+            UIManager.instance.SetLightTrapUI();
         }
     }
+    /* UIManager로 이식중
     public void SetLightTrapUI()
     {
-        for (int i=0;i< UIManager.instance.UI_LightTrapList.Length;i++)
+        for (int i = 0; i < UIManager.instance.UI_LightTrapList.Length; i++)
         {
             if (i >= lightTrapList.Count)
             {
@@ -189,8 +232,5 @@ public class GameManager : MonoBehaviour
             UIManager.instance.UI_LightTrapList[i].transform.position = lightTrapList[i].lightTrap.transform.position + UIManager.instance.position_UI_LightTrap[lightTrapList[i].floor - 1];
             UIManager.instance.UI_LightTrapList[i].GetComponent<MeshRenderer>().material = UIManager.instance.material_UI_LightTrap[i];
         }
-    }
-
-
-
+    }*/
 }

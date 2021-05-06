@@ -93,19 +93,7 @@ public class ServerHandle
         ItemSpawner.spawners[_spawnerId].ItemGrab(_grabSpawnerId, Server.clients[_fromClient].player, _key);
     }
 
-    /// <summary>EMPZONE에 EMP 설치완료에 관해 패킷을 통해 처리</summary>
-    /// <summary>EMP 설치완료에 관해 패킷을 통해 처리</summary>
-    /// <param name="_fromClient"></param>
-    /// <param name="_packet"></param>
-    public static void InstallEMP(int _fromClient, Packet _packet)
-    {
-       Vector3 _position = _packet.ReadVector3();
-       int _spawnerId = _packet.ReadInt();
-
-        ItemSpawner.spawners[_spawnerId].InstallEMP(Server.clients[_fromClient].player.id, _position);
-    }
-
-    /// <summary>LightTrap설치 관련정보 패킷을 통해 처리</summary>
+    /// <summary>설치 관련정보 패킷을 통해 처리</summary>
     /// <param name="_fromClient"></param>
     /// <param name="_packet"></param>
     public static void Install(int _fromClient, Packet _packet)
@@ -115,6 +103,18 @@ public class ServerHandle
         int _floor = _packet.ReadInt();
 
         ItemSpawner.spawners[_spawnerId].Install(Server.clients[_fromClient].player.id, _position, _floor);
+    }
+
+    /// <summary>EMPZONE에 EMP 설치완료에 관해 패킷을 통해 처리</summary>
+    /// <summary>EMP 설치완료에 관해 패킷을 통해 처리</summary>
+    /// <param name="_fromClient"></param>
+    /// <param name="_packet"></param>
+    public static void InstallEMP(int _fromClient, Packet _packet)
+    {
+       Vector3 _position = _packet.ReadVector3();
+       int _spawnerId = _packet.ReadInt();
+
+        ItemSpawner.spawners[_spawnerId].InstallEMP(_position);
     }
 
     /// <summary>플레이어 체력 회복에 관해 패킷을 통해 처리</summary>
@@ -182,7 +182,7 @@ public class ServerHandle
     /// <summary>괴물 이속 증가 packet을 받아 움직임 처리</summary>
     /// <param name="_fromClient"></param>
     /// <param name="_packet"></param>
-    public static void SpeedUp(int _fromClient, Packet _packet)
+    public static void SkillSpeedUp(int _fromClient, Packet _packet)
     {
         int _playerId = _packet.ReadInt();
         Server.clients[_fromClient].player.SpeedUp();

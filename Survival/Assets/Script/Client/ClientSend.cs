@@ -129,7 +129,7 @@ public class ClientSend : MonoBehaviour
     /// <summary>설치한 EMP packet TCP전송(한번만 전송하므로 누락이 될지언정 오류가 발생하지는 않음)</summary>
     /// <param name="_position">플레이어 위치</param>
     /// <param name="_emp">설치하는 emp</param>
-    public static void InstallEMP(Vector3 _position, GameObject _emp)
+    public static void InstallEMP(Vector3 _position, ItemSpawner _emp)
     {
         using (Packet _packet = new Packet((int)ClientPackets.installEMP))
         {
@@ -137,7 +137,7 @@ public class ClientSend : MonoBehaviour
             _packet.Write(0.5f);
             _packet.Write(_position.z);
 
-            _packet.Write(_emp.GetComponent<ItemSpawner>().spawnerId);
+            _packet.Write(_emp.spawnerId);
             
 
             SendTCPData(_packet);
@@ -234,7 +234,7 @@ public class ClientSend : MonoBehaviour
     /// <param name="_player">플레이어</param>
     public static void SpeedUp(PlayerManager _player)
     {
-        using (Packet _packet = new Packet((int)ClientPackets.speedUp))
+        using (Packet _packet = new Packet((int)ClientPackets.skillSpeedUp))
         {
             _packet.Write(_player.id);
             SendTCPData(_packet);

@@ -6,17 +6,18 @@ public class ItemSpawner : MonoBehaviour
 {
     /// <summary>아이템을 저장할 Dictionary</summary>
     public static Dictionary<int, ItemSpawner> spawners = new Dictionary<int, ItemSpawner>();
-    public struct LightTrapInfo
+    public struct TrapInfo
     {
         public int floor;
-        public MonoBehaviour lightTrap;
-        public LightTrapInfo(int f, MonoBehaviour trap)
+        public ItemSpawner lightTrap;
+        public TrapInfo(int f, ItemSpawner trap)
         {
             floor = f;
             lightTrap = trap;
         }
     }
-    public List<LightTrapInfo> lightTrapList = new List<LightTrapInfo>();
+    public static List<TrapInfo> empTrapList = new List<TrapInfo>();
+    public static List<TrapInfo> lightTrapList = new List<TrapInfo>();
 
     private static int nextSpawnerId = 1;   //다음으로 스폰될 아이템의 ID
 
@@ -73,7 +74,7 @@ public class ItemSpawner : MonoBehaviour
             switch (_byPlayer.playerType)
             {
                 case PlayerType.HUMAN:
-                    if (this.tag == "GUN" || this.tag == "EMP")
+                    if (this.tag == "GUN" || this.tag == "EMP" || this.tag == "BATTERY")
                     {
                         hasItem = false;
                         itemModel.enabled = false;
@@ -114,7 +115,7 @@ public class ItemSpawner : MonoBehaviour
         {
             this.transform.SetParent(null, true);
         }
-        ServerSend.ItemThrow(spawnerId, _byPlayer.id, _position, this.tag);
+        ServerSend.ItemThrow(spawnerId, _byPlayer.id, _position);
     }
 
     /// <summary>GrabItem 해제</summary>
@@ -150,54 +151,47 @@ public class ItemSpawner : MonoBehaviour
             ServerSend.Error(_byPlayer.id, $"It is already Grab - {this.tag}");
         }
     }
-
-    /// <summary>EMPZONE에 EMP를 설치했다는 정보를 모든 클라이언트에게 전송</summary>
-    /// <param name="_byPlayer">EMP를 설치한 플레이어</param>
-    /// <param name="_position">EMP를 설치한 위치</param>
-    public void InstallEMP(int _byPlayer, Vector3 _position)
-    {
-        itemModel.enabled = true;
-        this.transform.position = _position;
-        ServerSend.InstallEMP(spawnerId, _byPlayer, _position);
-    }
-
-    /// <summary>LightTrap을 설치정보를 모든 클라이언트에게 전송</summary>
-    /// <param name="_byPlayer">LightTrap을 설치한 플레이어</param>
-    /// <param name="_position">LightTrap을 설치한 위치</param>
+    
+    /// <summary>설치정보를 모든 클라이언트에게 전송</summary>
+    /// <param name="_byPlayer">설치한 플레이어</param>
+    /// <param name="_position">설치한 위치</param>
     public void Install(int _byPlayer, Vector3 _position, int _floor)
     {
         switch (this.tag)
         {
             case "EMP":
-                if (Server.clients[_byPlayer].player.playerType == PlayerType.HUMAN)
+                empTrapList.Add(new TrapInfo(_floor, this));
+                this.transform.position = _position;
+                if (this.transform.parent != null)
                 {
-
+                    this.transform.SetParent(null, true);
                 }
-                else
-                {
-                    ServerSend.Error(_byPlayer, $"This item is not your item - {this.tag}");
-                }
+                ServerSend.InstallTrap(spawnerId, _position, _floor);
                 break;
             case "LIGHTTRAP":
-                if (Server.clients[_byPlayer].player.playerType == PlayerType.MONSTER)
+                lightTrapList.Add(new TrapInfo(_floor, this));
+                itemModel.enabled = true;
+                this.transform.position = _position;
+                if (this.transform.parent != null)
                 {
-                    lightTrapList.Add(new LightTrapInfo(_floor, this));
-                    itemModel.enabled = true;
-                    this.transform.position = _position;
-                    if (this.transform.parent != null)
-                    {
-                        this.transform.SetParent(null, true);
-                    }
-                    ServerSend.InstallLightTrap(spawnerId, _byPlayer, _position, _floor);
+                    this.transform.SetParent(null, true);
                 }
-                else
-                {
-                    ServerSend.Error(_byPlayer, $"This item is not your item - {this.tag}");
-                }
+                ServerSend.InstallTrap(spawnerId, _position, _floor);
                 break;
             default:
                 ServerSend.Error(_byPlayer, $"This item is not for installation - {this.tag}");
                 break;
         }
     }
+
+    /// <summary>EMPZONE에 EMP를 설치했다는 정보를 모든 클라이언트에게 전송</summary>
+    /// <param name="_byPlayer">EMP를 설치한 플레이어</param>
+    /// <param name="_position">EMP를 설치한 위치</param>
+    public void InstallEMP(Vector3 _position)
+    {
+        itemModel.enabled = true;
+        this.transform.position = _position;
+        ServerSend.InstallEMP(spawnerId, _position);
+    }
+
 }
