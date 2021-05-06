@@ -33,6 +33,8 @@ public enum ServerPackets
     cure,               //플레이어 체력 회복
     dronePosition,      //드론 position
     droneRotation,      //드론 rotation
+    spawnBullet,        //총알 생성
+    bulletPosition,     //총알 위치
     //udpTest
 }
 

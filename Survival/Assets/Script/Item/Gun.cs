@@ -37,7 +37,7 @@ public class Gun : MonoBehaviour
         UIManager.instance.bulletAmoutText = GameObject.Find("Bullet Amount").GetComponent<Text>();
     }
 
-    public void Reloade()
+    public bool Reloade()
     {
         state = State.Reloading;
 
@@ -45,6 +45,7 @@ public class Gun : MonoBehaviour
         {
             Debug.Log("충전이 이미 된 상태입니다");
             state = State.Ready;
+            return false;
         }
         else if(batteryAmount == 0)
         {
@@ -67,6 +68,8 @@ public class Gun : MonoBehaviour
         Debug.Log("현재 탄창에 있는 총알 : " + currentBettery * 30);
         state = State.Ready;
         Debug.Log("장전 완료");
+
+        return true;
 
     }
 

@@ -382,6 +382,35 @@ public class ServerSend
         }
     }
 
+    /// <summary>총알 생성 TCP전송</summary>
+    /// <param name="_bullet">총알</param>
+    /// <param name="_thrownByPlayer">폭탄을 던진 player</param>
+    public static void SpawnBullet(Bullet _bullet, int _thrownByPlayer)
+    {
+        using (Packet _packet = new Packet((int)ServerPackets.spawnBullet))
+        {
+            _packet.Write(_bullet.id);
+            _packet.Write(_bullet.transform.position);
+            _packet.Write(_thrownByPlayer);
+
+            SendTCPDataToAll(_packet);
+        }
+    }
+
+    /// <summary>총알 위치 UDP전송(여러번 반복전송)</summary>
+    /// <param name="_bullet">총알</param>
+    public static void BulletPosition(Bullet _bullet)
+    {
+        using (Packet _packet = new Packet((int)ServerPackets.bulletPosition))
+        {
+            _packet.Write(_bullet.id);
+            _packet.Write(_bullet.transform.position);
+
+            SendUDPDataToAll(_packet);
+        }
+    }
+
+
     /*
     public static void UDPTest(int _toClient)
     {

@@ -60,6 +60,8 @@ MonoBehaviour:
   maxHp: 100
   itemAmount: 0
   maxItemAmount: 3
+  bulletPrefab: {fileID: 5315525968081290493, guid: e92621a07e3fa2e4c9ab37c816cdcafc, type: 3}
+  firePower: 5
 --- !u!143 &5067621479074104107
 CharacterController:
   m_ObjectHideFlags: 0

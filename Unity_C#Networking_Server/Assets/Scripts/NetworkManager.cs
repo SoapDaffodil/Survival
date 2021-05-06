@@ -8,6 +8,7 @@ public class NetworkManager : MonoBehaviour
 
     public GameObject playerPrefab;
     public GameObject projectilePrefab;
+    public GameObject bulletPrefab;
 
     // Start is called before the first frame update
     /// <summary>이미 존재하는지 체크</summary>
@@ -51,5 +52,13 @@ public class NetworkManager : MonoBehaviour
     public Projectile InstantiateProjectile(Transform _shootOrigin)
     {
         return Instantiate(projectilePrefab, _shootOrigin.position + _shootOrigin.forward * 0.7f, Quaternion.identity).GetComponent<Projectile>();
+    }
+
+    /// <summary>총알 초기화</summary>
+    /// <param name="_shootOrigin"></param>
+    /// <returns></returns>
+    public Bullet InstantiateBullet(Transform _shootOrigin)
+    {
+        return Instantiate(bulletPrefab, _shootOrigin.position + _shootOrigin.forward * 0.7f, Quaternion.identity).GetComponent<Bullet>();
     }
 }

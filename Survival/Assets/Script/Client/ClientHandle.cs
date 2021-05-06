@@ -244,6 +244,34 @@ public class ClientHandle : MonoBehaviour
     }
 
     /*
+    /// <summary>패킷에 담긴 폭탄 생성정보(ID,position,던진player)를 통해 폭탄생성</summary>
+    /// <param name="_packet"></param>
+    public static void SpawnBullet(Packet _packet)
+    {
+        int _bulletId = _packet.ReadInt();
+        Vector3 _position = _packet.ReadVector3();
+        int _thrownByPlayer = _packet.ReadInt();
+
+        GameManager.instance.SpawnBullet(_bulletId, _position);
+        GameManager.players[_thrownByPlayer].itemCount--;
+    }
+
+    /// <summary>패킷에 담긴 정보를 통해(position) 폭탄 위치 update</summary>
+    /// <param name="_packet"></param>
+    public static void BulletPosition(Packet _packet)
+    {
+        int _bulletId = _packet.ReadInt();
+        Vector3 _position = _packet.ReadVector3();
+
+        //dictionary에 id가 같은 폭탄이 있는지 확인 후 position update
+        if (GameManager.bullets.TryGetValue(_bulletId, out BulletManager _bullet))
+        {
+            _bullet.transform.position = _position;
+        }
+    }
+    */
+
+    /*
     /// <summary>서버로 부터 UDPTest data를 받음</summary>
     public static void UDPTest(Packet _packet)
     {

@@ -31,15 +31,23 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        //총 발사
+        //총 발사_ 총알이 나가서 실제로 때리게 
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
-            ClientSend.PlayerShootBullet(camTransform.forward);
+            if (GameManager.players[Client.instance.myId].GetComponent<PlayerManager>().playerType == PlayerType.HUMAN)
+            {
+                ClientSend.PlayerShootBullet(camTransform.forward);
+            }
+            
         }
-        //탄 발사
+        //탄 발사_ 배터리 먹으면 30 / 한 번 쏘면 5개 소비
         if (Input.GetKeyDown(KeyCode.Mouse1))
         {
-            ClientSend.PlayerShootBomb(camTransform.forward);
+            if(GameManager.players[Client.instance.myId].GetComponent<PlayerManager>().playerType == PlayerType.HUMAN)
+            {
+                ClientSend.PlayerShootBomb(camTransform.forward);
+            }
+            
         }
         //상호작용(아이템획득, 문열기, 은폐 등
         if (Input.GetKeyDown(KeyCode.F))

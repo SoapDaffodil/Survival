@@ -26,6 +26,8 @@ public class Player : MonoBehaviour
     private bool[] inputs;
     private float yVelocity = 0;
 
+    public float firePower = 600f;            //총 발사 파워
+
     public void Initialize(int _id, string _username)
     {
         maxHp = 100f;
@@ -136,6 +138,9 @@ public class Player : MonoBehaviour
                 return;
             }
 
+            NetworkManager.instance.InstantiateBullet(shootOrigin).Initialize(_viewDirection, firePower, id);
+
+            /*
             if (Physics.Raycast(shootOrigin.position, _viewDirection, out RaycastHit _hit, 25f))
             {
                 if (_hit.collider.CompareTag("Player"))
@@ -143,6 +148,8 @@ public class Player : MonoBehaviour
                     _hit.collider.GetComponent<Player>().TakeDamage(50f);
                 }
             }
+            */
+            
         }
         else {
             if (Physics.Raycast(shootOrigin.position, _viewDirection, out RaycastHit _hit, 25f))
@@ -150,6 +157,7 @@ public class Player : MonoBehaviour
                 if (_hit.collider.CompareTag("Player"))
                 {
                     _hit.collider.GetComponent<Player>().KeyChange();
+                    Debug.Log($"명중 : {_hit.collider.name}");
                 }
             }
         }
