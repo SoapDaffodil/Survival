@@ -34,6 +34,24 @@ public class ItemSpawner : MonoBehaviour
 
     public ItemType itemType;               //이 아이템이 무엇인가
 
+    /// <summary>Trap 정보</summary>
+    public struct TrapInfo
+    {
+        public int floor;
+        public ItemSpawner trap;
+        public TrapInfo(int _f, ItemSpawner _trap)
+        {
+            floor = _f;
+            trap = _trap;
+        }
+        public bool Compare(ItemSpawner _trap)
+        {
+            return (_trap == trap);
+        }
+    }
+    public static List<TrapInfo> empTrapList = new List<TrapInfo>();
+    public static List<TrapInfo> lightTrapList = new List<TrapInfo>();
+
     public void Start()
     {
         itemModel = this.GetComponent<MeshRenderer>();
@@ -60,11 +78,11 @@ public class ItemSpawner : MonoBehaviour
     /// <summary>아이템초기화</summary>
     /// <param name="_spawnerId">아이템ID</param>
     /// <param name="_hasItem">아이템 존재여부</param>
-    public void Initialize(int _spawnerId, bool _hasItem)
+    public void Initialize(int _spawnerId, bool _hasItem, bool _modelEnabled)
     {
         spawnerId = _spawnerId;
         hasItem = _hasItem;
-        itemModel.enabled = _hasItem;
+        itemModel.enabled = _modelEnabled;
 
         basePosition = transform.position;
     }

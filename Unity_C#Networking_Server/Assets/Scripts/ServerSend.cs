@@ -188,16 +188,30 @@ public class ServerSend
 
     /// <summary>스폰될 아이템 TCP전송</summary>
     /// <param name="_clientId">전송할 client</param>
-    /// <param name="_spawnerId">스폰될 아이템</param>
-    /// <param name="_spawnerPosition">아이템 position</param>
-    /// <param name="_tag">아이템 종류</param>
-    public static void ItemSpawned(int _clientId, int _spawnerId, Vector3 _spawnerPosition, string _tag)
+    /// <param name="_item">스폰될 아이템</param>
+    public static void ItemSpawned(int _clientId, ItemSpawner _item)
     {
         using (Packet _packet = new Packet((int)ServerPackets.itemSpawned))
         {
+            _packet.Write(_item.spawnerId);
+            _packet.Write(_item.transform.position);
+            _packet.Write(_item.tag);
+            _packet.Write(_item.hasItem);
+            _packet.Write(_item.itemModel.enabled);
+
+            SendTCPData(_clientId, _packet);
+        }
+    }
+
+    /// <summary>Trap 아이템 TCP전송</summary>
+    /// <param name="_clientId">전송할 client</param>
+    /// <param name="_item">Trap 아이템</param>
+    public static void ItemSetTrap(int _clientId, int _spawnerId, int _floor)
+    {
+        using (Packet _packet = new Packet((int)ServerPackets.itemSetTrap))
+        {
             _packet.Write(_spawnerId);
-            _packet.Write(_spawnerPosition);
-            _packet.Write(_tag);
+            _packet.Write(_floor);
 
             SendTCPData(_clientId, _packet);
         }

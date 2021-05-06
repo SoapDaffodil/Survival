@@ -239,7 +239,15 @@ public class Client
         }
         foreach (ItemSpawner _item in ItemSpawner.spawners.Values)
         {
-            ServerSend.ItemSpawned(id, _item.spawnerId, _item.transform.position, _item.tag);
+            ServerSend.ItemSpawned(id, _item);
+        }
+        foreach (ItemSpawner.TrapInfo _item in ItemSpawner.empTrapList)
+        {
+            ServerSend.ItemSetTrap(id, _item.trap.spawnerId, _item.floor);
+        }
+        foreach (ItemSpawner.TrapInfo _item in ItemSpawner.lightTrapList)
+        {
+            ServerSend.ItemSetTrap(id, _item.trap.spawnerId, _item.floor);
         }
     }
 

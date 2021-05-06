@@ -104,7 +104,20 @@ public class ClientHandle : MonoBehaviour
         string _tag = _packet.ReadString();
         ItemType _type = (ItemType)ItemType.Parse(typeof(ItemType), _tag);
 
-        GameManager.instance.CreateItemSpawner(_spawnerId, _spawnerPosition, _type);
+        bool _hasItem = _packet.ReadBool();
+        bool _modelEnabled = _packet.ReadBool();
+
+        GameManager.instance.CreateItemSpawner(_spawnerId, _spawnerPosition, _type, _hasItem, _modelEnabled);
+    }
+
+    /// <summary>패킷에 담긴 trap 아이템정보 세팅</summary>
+    /// <param name="_packet"></param>
+    public static void ItemSetTrap(Packet _packet)
+    {
+        int _spawnerId = _packet.ReadInt();
+        int _floor = _packet.ReadInt();
+
+        GameManager.instance.SetTrap(_spawnerId, _floor);
     }
 
     /// <summary>아이템 획득정보 update</summary>
@@ -144,9 +157,9 @@ public class ClientHandle : MonoBehaviour
     public static void KeyChange(Packet _packet)
     {
         // 패킷에서 받아오는 정보
-        int _byPlayer = _packet.ReadInt();
+        int _plaerId = _packet.ReadInt();
         
-        GameManager.players[_byPlayer].GetComponent<PlayerController>().KeyChange();
+        GameManager.players[_plaerId].GetComponent<PlayerController>().KeyChange();
     }
 
     public static void InstallEMP(Packet _packet)

@@ -19,6 +19,7 @@ public enum ServerPackets
     playerRespawned,    //player 리스폰
 
     itemSpawned,        //아이템 스폰
+    itemSetTrap,        //trap 아이템 세팅
     itemPickedUp,       //아이템 획득
     itemThrow,          //아이템 버리기
     itemGrab,           //아이템 들기

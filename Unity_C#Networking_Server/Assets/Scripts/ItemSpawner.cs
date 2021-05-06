@@ -9,11 +9,11 @@ public class ItemSpawner : MonoBehaviour
     public struct TrapInfo
     {
         public int floor;
-        public ItemSpawner lightTrap;
-        public TrapInfo(int f, ItemSpawner trap)
+        public ItemSpawner trap;
+        public TrapInfo(int _f, ItemSpawner _trap)
         {
-            floor = f;
-            lightTrap = trap;
+            floor = _f;
+            trap = _trap;
         }
     }
     public static List<TrapInfo> empTrapList = new List<TrapInfo>();

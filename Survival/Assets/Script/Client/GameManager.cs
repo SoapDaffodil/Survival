@@ -12,9 +12,7 @@ public class GameManager : MonoBehaviour
     public static Dictionary<int, PlayerManager> players = new Dictionary<int, PlayerManager>();            //모든플레이어정보 저장
     public static Dictionary<int, ItemSpawner> itemSpawners = new Dictionary<int, ItemSpawner>();           //모든아이템정보 저장
     public static Dictionary<int, ProjectileManager> projectiles = new Dictionary<int, ProjectileManager>();//모든 폭탄정보 저장
-                                                                                                      //public static Dictionary<int, EnemyManager> enemies = new Dictionary<int, EnemyManager>();
-    /// <summary>자신이 사람인지 몬스터인지 판단</summary>
-    public static bool character_human;
+                                          
     /// <summary>자신 player 프리팹</summary>
     public GameObject localPlayerPrefab;
     /// <summary>다른 player 프리팹</summary>
@@ -26,24 +24,6 @@ public class GameManager : MonoBehaviour
     public Dictionary<ItemType, GameObject> itemSpawnerObject;
     /// <summary>폭탄 프리팹</summary>
     public GameObject projectilePrefab;
-    /// <summary>Trap 정보</summary>
-    public struct TrapInfo
-    {
-        public int floor;
-        public ItemSpawner trap;
-        public TrapInfo(int _f, ItemSpawner _trap)
-        {
-            floor = _f;
-            trap = _trap;
-        }
-        public bool Compare(ItemSpawner _trap)
-        {
-            return (_trap == trap);
-        }
-    }
-    public List<TrapInfo> empTrapList = new List<TrapInfo>();
-    public List<TrapInfo> lightTrapList = new List<TrapInfo>();
-
     private void Awake()
     {
         if (instance == null)
@@ -92,30 +72,30 @@ public class GameManager : MonoBehaviour
         */
         _player.GetComponent<PlayerManager>().Initialize(_id, _username);
         players.Add(_id, _player.GetComponent<PlayerManager>());
-        if (_id.ToString() == UIManager.instance.usernameField.text)
-        {
-            switch (UIManager.instance.usernameField.text)
-            {
-                case "0": case "monster": case "Monster":
-                    players[_id].playerType = PlayerType.MONSTER;
-                    break;
-                case "1": case "human": case "Human":
-                    players[_id].playerType = PlayerType.HUMAN;
-                    break;
-            }
-        }
     }
     
     /// <summary>아이템 생성(아이템 초기화 및 dictionary 추가)</summary>
     /// <param name="_spawnerId">아이템ID</param>
     /// <param name="_position">아이템 position</param>
     /// <param name="_hasItem">아이템 존재여부</param>
-    public void CreateItemSpawner(int _spawnerId, Vector3 _position, ItemType _type)
+    public void CreateItemSpawner(int _spawnerId, Vector3 _position, ItemType _type, bool _hasItem, bool _modelEnabled)
     {
         ItemSpawner _spawner = (Instantiate(itemSpawnerObject[_type], _position, itemSpawnerObject[_type].transform.rotation)).GetComponent<ItemSpawner>();
-        _spawner.Initialize(_spawnerId, true);
-        _spawner.ItemSpawned();
+        _spawner.Initialize(_spawnerId, _hasItem, _modelEnabled);
         itemSpawners.Add(_spawnerId, _spawner);
+    }
+    public void SetTrap(int _spawnerId, int _floor)
+    {
+        ItemSpawner _trap = itemSpawners[_spawnerId];
+        switch (_trap.itemType)
+        {
+            case ItemType.EMP:
+                ItemSpawner.empTrapList.Add(new ItemSpawner.TrapInfo(_floor, _trap));
+                break;
+            case ItemType.LIGHTTRAP:
+                ItemSpawner.empTrapList.Add(new ItemSpawner.TrapInfo(_floor, _trap));
+                break;
+        }
     }
 
     /// <summary>플레이어가 먹은 아이템 할당</summary>
@@ -178,18 +158,18 @@ public class GameManager : MonoBehaviour
     /// <param name="_EMPTrap">설치한 EMPTrap</param>
     public void AddEMPTrap(int _floor, ItemSpawner _EMPTrap)
     {
-        empTrapList.Add(new TrapInfo(_floor, _EMPTrap));
+        ItemSpawner.empTrapList.Add(new ItemSpawner.TrapInfo(_floor, _EMPTrap));
     }
     //RemoveLigthTrap 의 매개변수와 비교하여 더 나은걸로 할 예정
     public void RemoveEMPTrap(ItemSpawner _trap)
     {
-        foreach (TrapInfo _info in empTrapList)
+        foreach (ItemSpawner.TrapInfo _info in ItemSpawner.empTrapList)
         {
             if (_info.Compare(_trap)) {
                 /*ItemSpawner usedTrap = _info.trap;
                 Destroy(usedTrap.gameObject);*/
 
-                empTrapList.Remove(_info);
+                ItemSpawner.empTrapList.Remove(_info);
                 break;
             }
         }
@@ -199,7 +179,7 @@ public class GameManager : MonoBehaviour
     /// <param name="_lightTrap">설치한 lightTrap</param>
     public void AddLightTrap(int _floor, ItemSpawner _lightTrap)
     {
-        lightTrapList.Add(new TrapInfo(_floor, _lightTrap));
+        ItemSpawner.lightTrapList.Add(new ItemSpawner.TrapInfo(_floor, _lightTrap));
         if (players[Client.instance.myId].GetComponent<PlayerManager>().playerType == PlayerType.MONSTER)
         {
             UIManager.instance.SetLightTrapUI();
@@ -210,7 +190,7 @@ public class GameManager : MonoBehaviour
         /*ItemSpawner usedTrap = lightTrapList[number].trap;
         Destroy(usedTrap.gameObject);*/
 
-        lightTrapList.Remove(lightTrapList[number]);
+        ItemSpawner.lightTrapList.Remove(ItemSpawner.lightTrapList[number]);
         if (players[Client.instance.myId].GetComponent<PlayerManager>().playerType == PlayerType.MONSTER)
         {
             UIManager.instance.SetLightTrapUI();

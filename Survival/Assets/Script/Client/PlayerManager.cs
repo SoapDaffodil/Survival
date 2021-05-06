@@ -36,8 +36,17 @@ public class PlayerManager : MonoBehaviour
     public void Initialize(int _id, string _username)
     {
         id = _id;
-        username = _username;
         hp = maxHp;
+        username = _username;
+        switch (_username)
+        {
+            case "0": case "monster": case "Monster":
+                playerType = PlayerType.MONSTER;
+                break;
+            case "1": case "human": case "Human":
+                playerType = PlayerType.HUMAN;
+                break;
+        }
     }
 
     /// <summary>HP 세팅</summary>

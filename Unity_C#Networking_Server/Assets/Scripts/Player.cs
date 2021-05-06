@@ -156,8 +156,12 @@ public class Player : MonoBehaviour
             {
                 if (_hit.collider.CompareTag("Player"))
                 {
-                    _hit.collider.GetComponent<Player>().KeyChange();
-                    Debug.Log($"명중 : {_hit.collider.name}");
+                    Player _player = _hit.collider.GetComponent<Player>();
+                    if (_player != this && _player.playerType == PlayerType.MONSTER)
+                    {
+                        ServerSend.KeyChange(id);
+                        Debug.Log($"명중 : {_hit.collider.name}");
+                    }
                 }
             }
         }
@@ -201,12 +205,6 @@ public class Player : MonoBehaviour
         }
 
         ServerSend.PlayerHP(this);
-    }
-
-    /// <summary>클라이언트에 KeyChange 전송</summary>
-    public void KeyChange()
-    {
-        ServerSend.KeyChange(id);
     }
 
     /// <summary>리스폰</summary>

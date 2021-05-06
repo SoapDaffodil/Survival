@@ -68,7 +68,7 @@ public class UIManager : MonoBehaviour
         if (usernameField.text == "0" || usernameField.text == "monster" || usernameField.text == "Monster" ||
             usernameField.text == "1" || usernameField.text == "human" || usernameField.text == "Human") {
             startMenu.SetActive(false);
-            SetActiveFalseMonsterKey();
+            SetActiveMonsterKey(false);
             usernameField.interactable = false;
             Client.instance.ConnectToServer();
         }
@@ -83,7 +83,7 @@ public class UIManager : MonoBehaviour
     {
         for (int i=0;i< UI_LightTrapList.Length;i++)
         {
-            if (i >= GameManager.instance.lightTrapList.Count)
+            if (i >= ItemSpawner.lightTrapList.Count)
             {
                 UI_LightTrapList[i].SetActive(false);
                 lightTrapUIButton[i].gameObject.SetActive(false);
@@ -91,24 +91,16 @@ public class UIManager : MonoBehaviour
             }
             UI_LightTrapList[i].SetActive(true);
             lightTrapUIButton[i].gameObject.SetActive(true);
-            UI_LightTrapList[i].transform.position = GameManager.instance.lightTrapList[i].trap.transform.position + position_UI_LightTrap[GameManager.instance.lightTrapList[i].floor - 1];
+            UI_LightTrapList[i].transform.position = ItemSpawner.lightTrapList[i].trap.transform.position + position_UI_LightTrap[ItemSpawner.lightTrapList[i].floor - 1];
             UI_LightTrapList[i].GetComponent<MeshRenderer>().material = material_UI_LightTrap[i];
         }
     }
 
-    public void SetActiveTrueMonsterKey()
-    {
-            for (int i = 0; i < monsterKey.Length; i++)
-            {
-                monsterKey[i].gameObject.SetActive(true);
-            }       
-    }
-
-    public void SetActiveFalseMonsterKey()
+    public void SetActiveMonsterKey(bool _active)
     {
         for (int i = 0; i < monsterKey.Length; i++)
         {
-            monsterKey[i].gameObject.SetActive(false);
+            monsterKey[i].gameObject.SetActive(_active);
         }
     }
     
@@ -117,7 +109,7 @@ public class UIManager : MonoBehaviour
     {
         Button clickedButton = UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject.GetComponent<Button>();
         int buttonNumber = System.Int32.Parse(clickedButton.GetComponentInChildren<Text>().text);
-        if (GameManager.instance.lightTrapList.Count < buttonNumber)
+        if (ItemSpawner.lightTrapList.Count < buttonNumber)
         {
             Debug.Log($"{buttonNumber}번째 LightTrap이 없습니다");
             return;
@@ -127,7 +119,7 @@ public class UIManager : MonoBehaviour
             Vector3 target = Vector3.zero;
             try
             {
-                target = GameManager.instance.lightTrapList[buttonNumber - 1].trap.transform.position;
+                target = ItemSpawner.lightTrapList[buttonNumber - 1].trap.transform.position;
             }
             catch
             {

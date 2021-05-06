@@ -30,17 +30,6 @@ public class ClientSend : MonoBehaviour
 
             SendTCPData(_packet);
         }
-        switch (UIManager.instance.usernameField.text)
-        {
-            case "0": case "monster": case "Monster":
-                GameManager.character_human = false;
-                UIManager.instance.SetActiveTrueMonsterKey();
-                break;
-            case "1": case "human": case "Human":
-                GameManager.character_human = true;
-                UIManager.instance.SetActiveFalseMonsterKey();
-                break;
-        }
     }
     /// <summary>player 움직임에 대한 packet UDP전송(주기적으로 전송하기때문에 패킷의 끝을 확인해야함)</summary>
     public static void PlayerMovement(bool[] _inputs)
