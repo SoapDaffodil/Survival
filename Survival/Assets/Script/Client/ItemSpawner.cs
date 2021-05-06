@@ -136,6 +136,7 @@ public class ItemSpawner : MonoBehaviour
     {
         ItemThrow(_position);
         hasItem = false;
+        Debug.Log($"EMP Zone 설치완료");
     }
 
     /// <summary>Install Item 표시</summary>
@@ -150,9 +151,11 @@ public class ItemSpawner : MonoBehaviour
         {
             case ItemType.EMP:
                 GameManager.instance.AddEMPTrap(_floor, this);
+                Debug.Log($"EMPTrap 설치완료");
                 break;
             case ItemType.LIGHTTRAP:
                 GameManager.instance.AddLightTrap(_floor, this);
+                Debug.Log($"LightTrap 설치완료");
                 break;
             default:
                 Debug.Log("트랩 아이템이 아닙니다");

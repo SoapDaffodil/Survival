@@ -152,11 +152,9 @@ public class ClientHandle : MonoBehaviour
     public static void InstallEMP(Packet _packet)
     {
         int _spawnerId = _packet.ReadInt();
-        int _byPlayer = _packet.ReadInt();
         Vector3 _position = _packet.ReadVector3();
 
         GameManager.itemSpawners[_spawnerId].InstallEMP(_position);
-        //item_number2삭제하기
     }
 
     /// <summary>LightTrap 설치</summary>

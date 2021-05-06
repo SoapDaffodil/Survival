@@ -305,6 +305,7 @@ public class Client : MonoBehaviour
         {
             { (int)ServerPackets.welcome, ClientHandle.Welcome },
             { (int)ServerPackets.error, ClientHandle.Error },
+
             { (int)ServerPackets.spawnPlayer, ClientHandle.SpawnPlayer},
             { (int)ServerPackets.playerPosition, ClientHandle.PlayerPosition},
             { (int)ServerPackets.playerRotation, ClientHandle.PlayerRotation},
@@ -316,12 +317,14 @@ public class Client : MonoBehaviour
             { (int)ServerPackets.itemPickedUp, ClientHandle.ItemPickedUp},
             { (int)ServerPackets.itemThrow, ClientHandle.ItemThrow},
             { (int)ServerPackets.itemGrab, ClientHandle.ItemGrab},
+
             { (int)ServerPackets.spawnProjectile, ClientHandle.SpawnProjectile},
             { (int)ServerPackets.projectilePosition, ClientHandle.ProjectilePosition},
             { (int)ServerPackets.projectileExploded, ClientHandle.ProjectileExploded},
-            { (int)ServerPackets.keyChange, ClientHandle.KeyChange},
+            
             { (int)ServerPackets.installEMP, ClientHandle.InstallEMP},
             { (int)ServerPackets.installTrap, ClientHandle.InstallTrap},
+            { (int)ServerPackets.keyChange, ClientHandle.KeyChange},
             //cure??
             { (int)ServerPackets.dronePosition, ClientHandle.DronePosition},
             { (int)ServerPackets.droneRotation, ClientHandle.DroneRotation},

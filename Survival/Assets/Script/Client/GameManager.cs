@@ -26,31 +26,23 @@ public class GameManager : MonoBehaviour
     public Dictionary<ItemType, GameObject> itemSpawnerObject;
     /// <summary>폭탄 프리팹</summary>
     public GameObject projectilePrefab;
-
-    /// <summary>EMPTrap 정보</summary>
-    public struct EMPTrapInfo
+    /// <summary>Trap 정보</summary>
+    public struct TrapInfo
     {
         public int floor;
-        public MonoBehaviour empTrap;
-        public EMPTrapInfo(int _f, MonoBehaviour _trap)
+        public ItemSpawner trap;
+        public TrapInfo(int _f, ItemSpawner _trap)
         {
             floor = _f;
-            empTrap = _trap;
+            trap = _trap;
         }
-    }
-    /// <summary>LightTrap 정보</summary>
-    public struct LightTrapInfo
-    {
-        public int floor;
-        public MonoBehaviour lightTrap;
-        public LightTrapInfo(int _f, MonoBehaviour _trap)
+        public bool Compare(ItemSpawner _trap)
         {
-            floor = _f;
-            lightTrap = _trap;
+            return (_trap == trap);
         }
     }
-    public List<EMPTrapInfo> empTrapList = new List<EMPTrapInfo>();
-    public List<LightTrapInfo> lightTrapList = new List<LightTrapInfo>();
+    public List<TrapInfo> empTrapList = new List<TrapInfo>();
+    public List<TrapInfo> lightTrapList = new List<TrapInfo>();
 
     private void Awake()
     {
@@ -184,32 +176,50 @@ public class GameManager : MonoBehaviour
     /// <summary>EMPTrap 리스트 추가</summary>
     /// <param name="_floor">설치한 층</param>
     /// <param name="_EMPTrap">설치한 EMPTrap</param>
-    public void AddEMPTrap(int _floor, MonoBehaviour _EMPTrap)
+    public void AddEMPTrap(int _floor, ItemSpawner _EMPTrap)
     {
-        empTrapList.Add(new EMPTrapInfo(_floor, _EMPTrap));
+        empTrapList.Add(new TrapInfo(_floor, _EMPTrap));
+    }
+    //RemoveLigthTrap 의 매개변수와 비교하여 더 나은걸로 할 예정
+    public void RemoveEMPTrap(ItemSpawner _trap)
+    {
+        foreach (TrapInfo _info in empTrapList)
+        {
+            if (_info.Compare(_trap)) {
+                /*ItemSpawner usedTrap = _info.trap;
+                Destroy(usedTrap.gameObject);*/
+
+                empTrapList.Remove(_info);
+                break;
+            }
+        }
     }
     /// <summary>LightTrap 리스트 추가</summary>
     /// <param name="_floor">설치한 층</param>
     /// <param name="_lightTrap">설치한 lightTrap</param>
-    public void AddLightTrap(int _floor, MonoBehaviour _lightTrap)
+    public void AddLightTrap(int _floor, ItemSpawner _lightTrap)
     {
-        lightTrapList.Add(new LightTrapInfo(_floor, _lightTrap));
+        lightTrapList.Add(new TrapInfo(_floor, _lightTrap));
         if (players[Client.instance.myId].GetComponent<PlayerManager>().playerType == PlayerType.MONSTER)
         {
-            SetLightTrapUI();
+            UIManager.instance.SetLightTrapUI();
         }
     }
     public void RemoveLightTrap(int number)
     {
+        /*ItemSpawner usedTrap = lightTrapList[number].trap;
+        Destroy(usedTrap.gameObject);*/
+
         lightTrapList.Remove(lightTrapList[number]);
         if (players[Client.instance.myId].GetComponent<PlayerManager>().playerType == PlayerType.MONSTER)
         {
-            SetLightTrapUI();
+            UIManager.instance.SetLightTrapUI();
         }
     }
+    /* UIManager로 이식중
     public void SetLightTrapUI()
     {
-        for (int i=0;i< UIManager.instance.UI_LightTrapList.Length;i++)
+        for (int i = 0; i < UIManager.instance.UI_LightTrapList.Length; i++)
         {
             if (i >= lightTrapList.Count)
             {
@@ -222,8 +232,5 @@ public class GameManager : MonoBehaviour
             UIManager.instance.UI_LightTrapList[i].transform.position = lightTrapList[i].lightTrap.transform.position + UIManager.instance.position_UI_LightTrap[lightTrapList[i].floor - 1];
             UIManager.instance.UI_LightTrapList[i].GetComponent<MeshRenderer>().material = UIManager.instance.material_UI_LightTrap[i];
         }
-    }
-
-
-
+    }*/
 }
