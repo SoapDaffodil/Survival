@@ -9,7 +9,16 @@ public class UIManager : MonoBehaviour
 
     public GameObject startMenu;
     public PlayerType playerType;
-    public Sprite[] buttonImage;
+    public Sprite[] startButtonImage;
+
+    public Image[] HPBarUI;
+    public Sprite[] HPBarImage;
+    public Image[] itemImageUI;
+    public Image[] skillImageUI;
+    public Sprite[] itemGrayImage;
+    public Sprite[] skillGrayImage;
+    public Sprite[] itemImage;
+    public Sprite[] skillImage;
 
 
     /// <summary>EMP설치게이지</summary>
@@ -71,12 +80,12 @@ public class UIManager : MonoBehaviour
         if (button.name == "0" || button.name == "monster"
             || button.name == "Monster" || button.name == "MONSTER")
         {
-            button.image.sprite = buttonImage[((int)PlayerType.MONSTER / 2) + 2];
+            button.image.sprite = startButtonImage[((int)PlayerType.MONSTER * 2) + 1];
         }
         else if (button.name == "1" || button.name == "human"
             || button.name == "Human" || button.name == "HUMAN")
         {
-            button.image.sprite = buttonImage[((int)PlayerType.HUMAN / 2) + 2];
+            button.image.sprite = startButtonImage[((int)PlayerType.HUMAN * 2) + 1];
         }
     }
 
@@ -88,12 +97,12 @@ public class UIManager : MonoBehaviour
         if (button.name == "0" || button.name == "monster"
             || button.name == "Monster" || button.name == "MONSTER")
         {
-            button.image.sprite = buttonImage[((int)PlayerType.MONSTER / 2)];
+            button.image.sprite = startButtonImage[((int)PlayerType.MONSTER * 2)];
         }
         else if (button.name == "1" || button.name == "human"
             || button.name == "Human" || button.name == "HUMAN")
         {
-            button.image.sprite = buttonImage[((int)PlayerType.HUMAN / 2)];
+            button.image.sprite = startButtonImage[((int)PlayerType.HUMAN * 2)];
         }
     }
 
