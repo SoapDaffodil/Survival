@@ -70,7 +70,6 @@ public class Gun : MonoBehaviour
         Debug.Log("장전 완료");
 
         return true;
-
     }
 
     public void Fire(Vector3 startPosition, Vector3 direction)

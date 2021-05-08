@@ -8,7 +8,8 @@ public class UIManager : MonoBehaviour
     public static UIManager instance;
 
     public GameObject startMenu;
-    public InputField usernameField;
+    public PlayerType playerType;
+    public Sprite[] buttonImage;
 
 
     /// <summary>EMP설치게이지</summary>
@@ -62,9 +63,44 @@ public class UIManager : MonoBehaviour
         map.SetActive(mapActive);
     }
 
+    /// <summary>버튼에 커서가 들어오면 실행</summary>
+    public void PointerEnter()
+    {
+        Button button = UnityEngine.EventSystems.EventSystem.current.GetComponent<Button>();
+
+        if (button.name == "0" || button.name == "monster"
+            || button.name == "Monster" || button.name == "MONSTER")
+        {
+            button.image.sprite = buttonImage[((int)PlayerType.MONSTER / 2) + 2];
+        }
+        else if (button.name == "1" || button.name == "human"
+            || button.name == "Human" || button.name == "HUMAN")
+        {
+            button.image.sprite = buttonImage[((int)PlayerType.HUMAN / 2) + 2];
+        }
+    }
+
+    /// <summary>버튼에 커서가 빠져나가면 실행</summary>
+    public void PointerExit()
+    {
+        Button button = UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject.GetComponent<Button>();
+
+        if (button.name == "0" || button.name == "monster"
+            || button.name == "Monster" || button.name == "MONSTER")
+        {
+            button.image.sprite = buttonImage[((int)PlayerType.MONSTER / 2)];
+        }
+        else if (button.name == "1" || button.name == "human"
+            || button.name == "Human" || button.name == "HUMAN")
+        {
+            button.image.sprite = buttonImage[((int)PlayerType.HUMAN / 2)];
+        }
+    }
+
     /// <summary>연결을 시작하면 UI숨기고 client를 server에 연결</summary>
     public void ConnectToServer()
     {
+        /*
         if (usernameField.text == "0" || usernameField.text == "monster" || usernameField.text == "Monster" ||
             usernameField.text == "1" || usernameField.text == "human" || usernameField.text == "Human") {
             startMenu.SetActive(false);
@@ -76,6 +112,25 @@ public class UIManager : MonoBehaviour
         {
             usernameField.text = "";
             usernameField.placeholder.GetComponent<Text>().text = "올바른 캐릭터를 입력해주세요\n(0: human, 1: monster)";
+        }
+        */
+        Button clickedButton = UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject.GetComponent<Button>();
+        
+        if (clickedButton.name == "0" || clickedButton.name == "monster"
+            || clickedButton.name == "Monster" || clickedButton.name == "MONSTER")
+        {
+            playerType = PlayerType.MONSTER;
+            startMenu.SetActive(false);
+            SetActiveMonsterKey(false);
+            Client.instance.ConnectToServer();
+        }
+        else if (clickedButton.name == "1" || clickedButton.name == "human"
+            || clickedButton.name == "Human" || clickedButton.name == "HUMAN")
+        {
+            playerType = PlayerType.HUMAN;
+            startMenu.SetActive(false);
+            SetActiveMonsterKey(false);
+            Client.instance.ConnectToServer();
         }
     }
 

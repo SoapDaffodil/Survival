@@ -15,7 +15,6 @@ GameObject:
   - component: {fileID: 3406075731991387020}
   - component: {fileID: 3406075731991387059}
   - component: {fileID: 5842147077173192032}
-  - component: {fileID: 7174290568974085586}
   - component: {fileID: 1857049174974336716}
   m_Layer: 8
   m_Name: DRONE
@@ -162,19 +161,6 @@ MonoBehaviour:
   itemRotationSpeed: 50
   itemBobSpeed: 2
   itemType: 0
---- !u!114 &7174290568974085586
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3406075731991387058}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e88b96338623451428b3b2eeffd188e5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  fireDistance: 100
 --- !u!114 &1857049174974336716
 MonoBehaviour:
   m_ObjectHideFlags: 0

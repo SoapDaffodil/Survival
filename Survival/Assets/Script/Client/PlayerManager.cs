@@ -15,7 +15,6 @@ public class PlayerManager : MonoBehaviour
     public PlayerItem playerItem;           //플레이어의 아이템목록
     public PlayerType playerType;           //플레이어의 타입(괴물, 인간)
     public bool isCuring = false;           //플레이어 치료 중
-    public bool isOnHand = false;           //플레이어가 아이템을 들고 있는지
 
     public PlayerController controller;
 
@@ -40,10 +39,10 @@ public class PlayerManager : MonoBehaviour
         username = _username;
         switch (_username)
         {
-            case "0": case "monster": case "Monster":
+            case "0": case "monster": case "Monster": case "MONSTER":
                 playerType = PlayerType.MONSTER;
                 break;
-            case "1": case "human": case "Human":
+            case "1": case "human": case "Human": case "HUMAN":
                 playerType = PlayerType.HUMAN;
                 break;
         }

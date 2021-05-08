@@ -102,34 +102,63 @@ public class PlayerController : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.R))
         {
-            if (GameManager.players[Client.instance.myId].GetComponent<PlayerManager>().playerType == PlayerType.HUMAN)
+            ItemSpawner _grabItem = null;
+            switch (this.GetComponent<PlayerManager>().playerType)
             {
-                Gun gun = GameManager.players[Client.instance.myId].GetComponent<PlayerManager>().playerItem.item_number1.GetComponent<Gun>();
+                case PlayerType.HUMAN:
+                    _grabItem = this.GetComponent<PlayerManager>().playerItem.GrabItem;
+                    if (_grabItem != null && _grabItem.itemType == ItemType.GUN)
+                    {
+                        Debug.Log($"장전!");
+                        _grabItem.GetComponent<Gun>().state = Gun.State.Empty;
+                        _grabItem.GetComponent<Gun>().Reloade();
+                    }
+                    else
+                    {
+                        Debug.Log($"총을 들어주세요");
+                    }
+                    /*
+                    Gun gun = GameManager.players[Client.instance.myId].GetComponent<PlayerManager>().playerItem.item_number1.GetComponent<Gun>();
                 
 
-                if (GameManager.players[Client.instance.myId].isOnHand && transform.GetChild(1).gameObject.GetComponent<Gun>())
-                {
-                    Debug.Log("장전!");
-                    gun.state = Gun.State.Empty;
-                    gun.Reloade();
-                }
-            }
-            else
-            {
-                Drone drone = GameManager.players[Client.instance.myId].GetComponent<PlayerManager>().playerItem.item_number1.GetComponent<Drone>();
+                    if (this.GetComponent<PlayerManager>().playerItem.GrabItem != null && transform.GetChild(1).gameObject.GetComponent<Gun>())
+                    {
+                        Debug.Log("장전!");
+                        gun.state = Gun.State.Empty;
+                        gun.Reloade();
+                    }
+                    */
+                    break;
+                case PlayerType.MONSTER:
+                    _grabItem = this.GetComponent<PlayerManager>().playerItem.GrabItem;
+                    if (_grabItem != null && _grabItem.itemType == ItemType.DRONE)
+                    {
+                        if (_grabItem.GetComponent<Drone>().isDroneMoving)
+                        {
+                            Debug.Log($"드론이동!");
+                            _grabItem.GetComponent<Drone>().Moving();
+                        }
+                    }
+                    else
+                    {
+                        Debug.Log($"드론을 들어주세요");
+                    }
+                    /*Drone drone = GameManager.players[Client.instance.myId].GetComponent<PlayerManager>().playerItem.item_number1.GetComponent<Drone>();
 
-                if (GameManager.players[Client.instance.myId].isOnHand && drone.gameObject.GetComponent<Drone>() && !drone.isDroneMoving)
-                {
-                    Debug.Log("드론이동!");
-                    drone.Moving();
-                }
+                    if (this.GetComponent<PlayerManager>().playerItem.GrabItem != null && drone.gameObject.GetComponent<Drone>() && !drone.isDroneMoving)
+                    {
+                        Debug.Log($"드론이동!");
+                        drone.Moving();
+                    }*/
+                    break;
+                default:
+                    break;
             }
         }
         if (Input.GetKeyDown(KeyCode.Q))
         {
-            if(GameManager.players[Client.instance.myId].GetComponent<PlayerManager>().playerType == PlayerType.MONSTER)
+            if(this.GetComponent<PlayerManager>().playerType == PlayerType.MONSTER)
             {
-
                 ClientSend.SpeedUp(GameManager.players[Client.instance.myId]);
             }
         }
