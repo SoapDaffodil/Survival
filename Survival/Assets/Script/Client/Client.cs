@@ -329,6 +329,10 @@ public class Client : MonoBehaviour
             //cure??
             { (int)ServerPackets.dronePosition, ClientHandle.DronePosition},
             { (int)ServerPackets.droneRotation, ClientHandle.DroneRotation},
+
+            { (int)ServerPackets.spawnBullet, ClientHandle.SpawnBullet},
+            { (int)ServerPackets.bulletPosition, ClientHandle.BulletPosition},
+            { (int)ServerPackets.bulletCrush, ClientHandle.BulletCrush},
             
             //{ (int)ServerPackets.udpTest, ClientHandle.UDPTest }
         };

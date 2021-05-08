@@ -13,16 +13,17 @@ public class Gun : MonoBehaviour
     public State state { get;  set; }
     private int damage = 50;
     public float fireDistance = 100f;
-    private int batteryAmount; // 가지고 있는 총 배터리 수
+    private int bulletAmount; // 가지고 있는 총 배터리 수
     private int currentBettery = 0; // 현재 탄창에 들어 있는 배터리 수
-    private int batteryCapacity = 5; // 탄창 용량
-    private int currentBullet = 0;  // 현재 탄창에 있는 총알 수 
+    private int bulletCapacity = 30; // 탄창 용량
+    public int currentBullet = 0;  // 현재 탄창에 있는 총알 수 
 
     private float fireTime = 0.3f; // 총알 발사 사이 시간 간격
     private float lastFireTime; // 총을 마지막으로 쏜 시간
 
     private void Start()
     {
+        /* 삭제
         if (currentBettery == 0)
         {
             Debug.Log("배터리가 없습니다");
@@ -32,6 +33,7 @@ public class Gun : MonoBehaviour
         {
             state = State.Ready;
         }
+        */
 
         UIManager.instance.currentBulletText = GameObject.Find("Current Bullet").GetComponent<Text>();
         UIManager.instance.bulletAmoutText = GameObject.Find("Bullet Amount").GetComponent<Text>();
@@ -40,32 +42,33 @@ public class Gun : MonoBehaviour
     public bool Reloade()
     {
         state = State.Reloading;
+        bulletAmount = GameManager.players[Client.instance.myId].GetComponent<PlayerManager>().playerItem.batteryCount;
+        currentBettery = currentBullet / 30;
 
-        if (currentBettery >= batteryCapacity)
+        if (currentBullet >= bulletCapacity)
         {
             Debug.Log("충전이 이미 된 상태입니다");
             state = State.Ready;
             return false;
         }
-        else if(batteryAmount == 0)
+        else if(bulletAmount == 0)
         {
             Debug.Log("충전 가능한 배터리가 없습니다!");
         }
 
-        Debug.Log("현재 탄창에 있는 배터리 : " + currentBettery);
-        Debug.Log("가지고 있는 총 총알 : " + batteryAmount * 30);
+        Debug.Log("현재 탄창에 있는 총알 : " + currentBettery);
+        Debug.Log("가지고 있는 총 총알 : " + bulletAmount);
 
-        int chargeCapacity = batteryCapacity - currentBettery;
-        int chargeBettery = Mathf.Clamp(batteryAmount, 0, chargeCapacity);
-        currentBettery = Mathf.Clamp(batteryAmount + currentBettery, 0, batteryCapacity);
-        batteryAmount = batteryAmount - chargeBettery;
+        int chargeCapacity = bulletCapacity - currentBullet;
+        int chargeBullet = Mathf.Clamp(bulletAmount, 0, chargeCapacity);
+        currentBullet = Mathf.Clamp(bulletAmount + currentBettery, 0, bulletCapacity);
+        bulletAmount = bulletAmount - chargeBullet;
 
-        currentBullet = currentBettery * 30;
         UIManager.instance.currentBulletText.text = string.Format(" {0:} ", currentBullet);
-        UIManager.instance.bulletAmoutText.text = string.Format(" {0:} ", batteryAmount * 30);
+        UIManager.instance.bulletAmoutText.text = string.Format(" {0:} ", bulletAmount * 30);
 
-        Debug.Log("충전 된 총알 : " + chargeBettery * 30);
-        Debug.Log("현재 탄창에 있는 총알 : " + currentBettery * 30);
+        Debug.Log("충전 된 총알 : " + chargeBullet);
+        Debug.Log("현재 탄창에 있는 총알 : " + bulletAmount);
         state = State.Ready;
         Debug.Log("장전 완료");
 
@@ -73,6 +76,7 @@ public class Gun : MonoBehaviour
 
     }
 
+    /* 삭제
     public void Fire(Vector3 startPosition, Vector3 direction)
     {
 
@@ -87,7 +91,7 @@ public class Gun : MonoBehaviour
                 var target = hit.collider.gameObject.GetComponent<IDamagable>();  //ToDo : 공격 받았을 때, 데미지를 받을 수 있는 오브젝트면...
                 target.ApplyDamage(damage);
                 hitPosition = hit.point;
-                */
+                
             }
 
             lastFireTime = Time.time;
@@ -107,18 +111,18 @@ public class Gun : MonoBehaviour
                 state = State.Empty;
                 Debug.Log("배터리가 없습니다");
             }
-
+        
         }
     }
-
+    */
     public void CheckBettery()
     {
         for (int i = 0; i < Item.arrayIndex; i++)
         {
             if (Item.myItem[i].name == "Battery")
             {
-                batteryAmount += 1;
-                Debug.Log("bettery Amount : " + batteryAmount);
+                //batteryAmount += 1;
+               // Debug.Log("bettery Amount : " + batteryAmount);
             }
         }
     }

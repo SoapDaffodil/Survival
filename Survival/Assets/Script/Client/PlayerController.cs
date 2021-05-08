@@ -32,19 +32,23 @@ public class PlayerController : MonoBehaviour
     private void Update()
     {
         //총 발사_ 총알이 나가서 실제로 때리게 
-        if (Input.GetKeyDown(KeyCode.Mouse0))
+        if (Input.GetKeyDown(KeyCode.Mouse0) && GameManager.players[Client.instance.myId].GetComponent<PlayerManager>().playerItem.item_number1.GetComponent<Gun>() != null)
         {
-            if (GameManager.players[Client.instance.myId].GetComponent<PlayerManager>().playerType == PlayerType.HUMAN)
+            if(GameManager.players[Client.instance.myId].GetComponent<PlayerManager>().playerItem.item_number1.GetComponent<Gun>().currentBullet != 0)
             {
-                ClientSend.PlayerShootBullet(camTransform.forward);
-            }
-            
+                if (GameManager.players[Client.instance.myId].GetComponent<PlayerManager>().playerType == PlayerType.HUMAN)
+                {
+                    Debug.Log("총 쏘기");
+                    ClientSend.PlayerShootBullet(camTransform.forward);
+                }
+            }                     
         }
         //탄 발사_ 배터리 먹으면 30 / 한 번 쏘면 5개 소비
         if (Input.GetKeyDown(KeyCode.Mouse1))
         {
             if(GameManager.players[Client.instance.myId].GetComponent<PlayerManager>().playerType == PlayerType.HUMAN)
             {
+                Debug.Log("유도탄 쏘기");
                 ClientSend.PlayerShootBomb(camTransform.forward);
             }
             

@@ -21,7 +21,8 @@ public class Bullet : MonoBehaviour
 
         ServerSend.SpawnBullet(this, thrownByPlayer);
 
-        rigidBody.AddForce(initialForce);
+        //rigidBody.AddForce(initialForce);
+        rigidBody.velocity = initialForce;
     }
 
     private void FixedUpdate()
@@ -33,12 +34,18 @@ public class Bullet : MonoBehaviour
     /// <param name="collision"></param>
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Player"))
+        ServerSend.BulletCrush(this);
+
+        if (collision.gameObject.GetComponent<Player>() != null)
         {
-            collision.gameObject.GetComponent<Player>().TakeDamage(damage);
-            bullets.Remove(id);
-            Destroy(this.gameObject);
-        }
+            if (collision.gameObject.GetComponent<Player>().playerType == PlayerType.MONSTER)
+            {                
+                collision.gameObject.GetComponent<Player>().TakeDamage(damage);                                           
+            }
+        }        
+        bullets.Remove(id);
+        Destroy(this.gameObject);
+
     }
 
     /// <summary>초기 발사상태</summary>

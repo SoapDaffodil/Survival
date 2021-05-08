@@ -42,6 +42,7 @@ public enum ServerPackets
     droneRotation,      //드론 rotation
     spawnBullet,        //총알 생성
     bulletPosition,     //총알 위치
+    bulletCrush,         //총알 충돌
     //선희
     //udpTest
 }

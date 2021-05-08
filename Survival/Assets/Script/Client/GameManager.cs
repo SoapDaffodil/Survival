@@ -12,7 +12,8 @@ public class GameManager : MonoBehaviour
     public static Dictionary<int, PlayerManager> players = new Dictionary<int, PlayerManager>();            //모든플레이어정보 저장
     public static Dictionary<int, ItemSpawner> itemSpawners = new Dictionary<int, ItemSpawner>();           //모든아이템정보 저장
     public static Dictionary<int, ProjectileManager> projectiles = new Dictionary<int, ProjectileManager>();//모든 폭탄정보 저장
-                                          
+    public static Dictionary<int, BulletManager> bullets = new Dictionary<int, BulletManager>();            //모든 총알 정보 저장
+
     /// <summary>자신 player 프리팹</summary>
     public GameObject localPlayerPrefab;
     /// <summary>다른 player 프리팹</summary>
@@ -24,6 +25,8 @@ public class GameManager : MonoBehaviour
     public Dictionary<ItemType, GameObject> itemSpawnerObject;
     /// <summary>폭탄 프리팹</summary>
     public GameObject projectilePrefab;
+    /// <summary>총알 프리팹</summary>
+    public GameObject bulletPrefab;
     private void Awake()
     {
         if (instance == null)
@@ -151,6 +154,16 @@ public class GameManager : MonoBehaviour
         GameObject _projectile = Instantiate(projectilePrefab, _position, Quaternion.identity);
         _projectile.GetComponent<ProjectileManager>().Initialize(_id);
         projectiles.Add(_id, _projectile.GetComponent<ProjectileManager>());
+    }
+
+    /// <summary>총알 생성</summary>
+    /// <param name="_id">총알 ID</param>
+    /// <param name="_position">총알 position</param>
+    public void SpawnBullet(int _id, Vector3 _position)
+    {
+        GameObject _bullet = Instantiate(bulletPrefab, _position, Quaternion.identity);
+        _bullet.GetComponent<BulletManager>().Initialize(_id);
+        bullets.Add(_id, _bullet.GetComponent<BulletManager>());
     }
 
     /// <summary>EMPTrap 리스트 추가</summary>

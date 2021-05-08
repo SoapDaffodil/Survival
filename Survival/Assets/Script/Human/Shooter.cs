@@ -44,7 +44,7 @@ public class Shooter : MonoBehaviour
     {
         if(gun != null)
         {
-            gun.Fire(fireTransform.position, aimPoint - fireTransform.position);
+            //gun.Fire(fireTransform.position, aimPoint - fireTransform.position);
         }
        
     }

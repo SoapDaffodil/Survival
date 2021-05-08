@@ -420,6 +420,18 @@ public class ServerSend
         }
     }
 
+    /// <summary>총알 충돌 TCP전송</summary>
+    /// <param name="_bullet">총알</param>
+    public static void BulletCrush(Bullet _bullet)
+    {
+        using (Packet _packet = new Packet((int)ServerPackets.bulletCrush))
+        {
+            _packet.Write(_bullet.id);
+
+            SendTCPDataToAll(_packet);
+        }
+    }
+
 
     /*
     public static void UDPTest(int _toClient)

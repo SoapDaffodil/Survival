@@ -40,6 +40,9 @@ public enum ServerPackets
     cure,               //플레이어 체력 회복 어디에 쓰이지??
     dronePosition,      //드론 position
     droneRotation,      //드론 rotation
+    spawnBullet,        //총알 생성
+    bulletPosition,     //총알 위치
+    bulletCrush,         //총알 충돌
     //선희
     //udpTest
 }

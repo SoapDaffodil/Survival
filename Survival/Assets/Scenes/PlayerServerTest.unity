@@ -4153,6 +4153,7 @@ MonoBehaviour:
   - {fileID: 3406075731991387058, guid: 9edaa52c66ba94e45827b96182394341, type: 3}
   - {fileID: 2824943518711138377, guid: 1fe57f78570cad146b3dc790d4968431, type: 3}
   projectilePrefab: {fileID: 2765098290509911380, guid: 219c8f2c4324a7b43a7032a782e54193, type: 3}
+  bulletPrefab: {fileID: 622916127743353293, guid: 83c0f8aba69c4c540a4a87c8af57c75e, type: 3}
 --- !u!4 &475494750
 Transform:
   m_ObjectHideFlags: 0

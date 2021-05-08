@@ -211,7 +211,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerPrefab: {fileID: 3887713562994225130, guid: a0e4f63372c63014595c41a4d265557d, type: 3}
   projectilePrefab: {fileID: 2765098290509911380, guid: 9322829a1b4eced43a24d8e37c5fae33, type: 3}
-  bulletPrefab: {fileID: 5315525968081290493, guid: e92621a07e3fa2e4c9ab37c816cdcafc, type: 3}
+  bulletPrefab: {fileID: 2635459629071000434, guid: e92621a07e3fa2e4c9ab37c816cdcafc, type: 3}
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0

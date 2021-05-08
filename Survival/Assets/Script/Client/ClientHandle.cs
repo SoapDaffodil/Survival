@@ -246,8 +246,8 @@ public class ClientHandle : MonoBehaviour
         GameManager.itemSpawners[_id].transform.rotation = _rotation;
     }
 
-    /*
-    /// <summary>패킷에 담긴 폭탄 생성정보(ID,position,던진player)를 통해 폭탄생성</summary>
+    
+    /// <summary>패킷에 담긴 총알 생성정보(ID,position,던진player)를 통해 폭탄생성</summary>
     /// <param name="_packet"></param>
     public static void SpawnBullet(Packet _packet)
     {
@@ -256,23 +256,32 @@ public class ClientHandle : MonoBehaviour
         int _thrownByPlayer = _packet.ReadInt();
 
         GameManager.instance.SpawnBullet(_bulletId, _position);
-        GameManager.players[_thrownByPlayer].itemCount--;
+        GameManager.players[_thrownByPlayer].playerItem.batteryCount--;
+        UIManager.instance.currentBulletText.text = string.Format(" {0:} ", GameManager.players[_thrownByPlayer].playerItem.batteryCount);
     }
 
-    /// <summary>패킷에 담긴 정보를 통해(position) 폭탄 위치 update</summary>
+    /// <summary>패킷에 담긴 정보를 통해(position) 총알 위치 update</summary>
     /// <param name="_packet"></param>
     public static void BulletPosition(Packet _packet)
     {
         int _bulletId = _packet.ReadInt();
         Vector3 _position = _packet.ReadVector3();
 
-        //dictionary에 id가 같은 폭탄이 있는지 확인 후 position update
+        //dictionary에 id가 같은 총알이 있는지 확인 후 position update
         if (GameManager.bullets.TryGetValue(_bulletId, out BulletManager _bullet))
         {
             _bullet.transform.position = _position;
         }
     }
-    */
+
+    /// <summary>패킷에 담긴 정보(id)를 통해 총알 충돌</summary>
+    /// <param name="_packet"></param>
+    public static void BulletCrush(Packet _packet)
+    {
+        int _bulletId = _packet.ReadInt();
+
+        GameManager.bullets[_bulletId].Crush();
+    }
 
     /*
     /// <summary>서버로 부터 UDPTest data를 받음</summary>
