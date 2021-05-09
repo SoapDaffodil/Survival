@@ -176,11 +176,11 @@ public class Player : MonoBehaviour
             return;
         }
 
-        if (itemAmount > 0)
-        {
-            itemAmount--;
+        //if (itemAmount > 0)
+       // {
+            //itemAmount--;
             NetworkManager.instance.InstantiateProjectile(shootOrigin).Initialize(_viewDirection, throwForce, id);
-        }
+       // }
     }
 
     /// <summary>damage 적용 후 클라이언트에 전송</summary>

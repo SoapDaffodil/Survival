@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class Shooter : MonoBehaviour
 {
+    /* 삭제
     public Transform fireTransform;
     private Vector3 aimPoint;
     public Gun gun;
@@ -67,7 +68,7 @@ public class Shooter : MonoBehaviour
         if (Physics.Raycast(ray, out hit, gun.fireDistance))
         {
             aimPoint = hit.point;
-        }*/
+        
     }
-
+    }*/
 }

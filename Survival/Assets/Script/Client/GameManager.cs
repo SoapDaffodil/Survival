@@ -119,7 +119,7 @@ public class GameManager : MonoBehaviour
                 }
                 else if (_spawner.itemType == ItemType.BATTERY)
                 {
-                    _player.playerItem.batteryCount += 30;
+                    _player.playerItem.batteryCount += 30;                   
                 }
                 else
                 {

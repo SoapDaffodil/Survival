@@ -190,6 +190,8 @@ public class ClientHandle : MonoBehaviour
         int _thrownByPlayer = _packet.ReadInt();
 
         GameManager.instance.SpawnProjectile(_projectileId, _position);
+        GameManager.players[_thrownByPlayer].playerItem.item_number1.GetComponent<Gun>().currentBattery -= 5;
+        UIManager.instance.currentBulletText.text = string.Format(" {0:} ", GameManager.players[_thrownByPlayer].playerItem.item_number1.GetComponent<Gun>().currentBattery);
     }
 
     /// <summary>패킷에 담긴 정보를 통해(position) 폭탄 위치 update</summary>
@@ -213,7 +215,10 @@ public class ClientHandle : MonoBehaviour
         int _projectileId = _packet.ReadInt();
         Vector3 _position = _packet.ReadVector3();
 
-        GameManager.projectiles[_projectileId].Explode(_position);
+        if (GameManager.projectiles.ContainsKey(_projectileId))
+        {
+            GameManager.projectiles[_projectileId].Explode(_position);
+        }       
     }
 
     /// <summary>플레이어 은폐</summary>
@@ -247,7 +252,7 @@ public class ClientHandle : MonoBehaviour
     }
 
     
-    /// <summary>패킷에 담긴 총알 생성정보(ID,position,던진player)를 통해 폭탄생성</summary>
+    /// <summary>패킷에 담긴 총알 생성정보(ID,position,던진player)를 통해 총알 생성</summary>
     /// <param name="_packet"></param>
     public static void SpawnBullet(Packet _packet)
     {
@@ -256,8 +261,8 @@ public class ClientHandle : MonoBehaviour
         int _thrownByPlayer = _packet.ReadInt();
 
         GameManager.instance.SpawnBullet(_bulletId, _position);
-        GameManager.players[_thrownByPlayer].playerItem.batteryCount--;
-        UIManager.instance.currentBulletText.text = string.Format(" {0:} ", GameManager.players[_thrownByPlayer].playerItem.batteryCount);
+        GameManager.players[_thrownByPlayer].playerItem.item_number1.GetComponent<Gun>().currentBattery--;
+        UIManager.instance.currentBulletText.text = string.Format(" {0:} ", GameManager.players[_thrownByPlayer].playerItem.item_number1.GetComponent<Gun>().currentBattery);
     }
 
     /// <summary>패킷에 담긴 정보를 통해(position) 총알 위치 update</summary>
@@ -280,7 +285,11 @@ public class ClientHandle : MonoBehaviour
     {
         int _bulletId = _packet.ReadInt();
 
-        GameManager.bullets[_bulletId].Crush();
+        if(GameManager.bullets.ContainsKey(_bulletId))
+        {
+            GameManager.bullets[_bulletId].Crush();
+        }
+        
     }
 
     /*

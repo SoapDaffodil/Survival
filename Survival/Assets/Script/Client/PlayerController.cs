@@ -31,27 +31,25 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        //총 발사_ 총알이 나가서 실제로 때리게 
-        if (Input.GetKeyDown(KeyCode.Mouse0) && GameManager.players[Client.instance.myId].GetComponent<PlayerManager>().playerItem.item_number1.GetComponent<Gun>() != null)
+        if (Input.GetKeyDown(KeyCode.Mouse0))
         {
-            if(GameManager.players[Client.instance.myId].GetComponent<PlayerManager>().playerItem.item_number1.GetComponent<Gun>().currentBullet != 0)
+            if(GameManager.players[Client.instance.myId].GetComponent<PlayerManager>().playerType == PlayerType.HUMAN && GameManager.players[Client.instance.myId].GetComponent<PlayerManager>().playerItem.item_number1 != null)
             {
-                if (GameManager.players[Client.instance.myId].GetComponent<PlayerManager>().playerType == PlayerType.HUMAN)
+                if (GameManager.players[Client.instance.myId].GetComponent<PlayerManager>().playerItem.item_number1.GetComponent<Gun>().currentBattery != 0)
                 {
-                    Debug.Log("총 쏘기");
                     ClientSend.PlayerShootBullet(camTransform.forward);
                 }
-            }                     
+            }                       
         }
-        //탄 발사_ 배터리 먹으면 30 / 한 번 쏘면 5개 소비
         if (Input.GetKeyDown(KeyCode.Mouse1))
         {
-            if(GameManager.players[Client.instance.myId].GetComponent<PlayerManager>().playerType == PlayerType.HUMAN)
+            if (GameManager.players[Client.instance.myId].GetComponent<PlayerManager>().playerType == PlayerType.HUMAN && GameManager.players[Client.instance.myId].GetComponent<PlayerManager>().playerItem.item_number1 != null)
             {
-                Debug.Log("유도탄 쏘기");
-                ClientSend.PlayerShootBomb(camTransform.forward);
-            }
-            
+                if (GameManager.players[Client.instance.myId].GetComponent<PlayerManager>().playerItem.item_number1.GetComponent<Gun>().currentBattery >= 5)
+                {
+                    ClientSend.PlayerShootBomb(camTransform.forward);
+                }
+            }            
         }
         //상호작용(아이템획득, 문열기, 은폐 등
         if (Input.GetKeyDown(KeyCode.F))
@@ -113,8 +111,6 @@ public class PlayerController : MonoBehaviour
 
                 if (GameManager.players[Client.instance.myId].isOnHand && transform.GetChild(1).gameObject.GetComponent<Gun>())
                 {
-                    Debug.Log("장전!");
-                    gun.state = Gun.State.Empty;
                     gun.Reloade();
                 }
             }

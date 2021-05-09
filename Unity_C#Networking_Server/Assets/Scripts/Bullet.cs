@@ -21,8 +21,7 @@ public class Bullet : MonoBehaviour
 
         ServerSend.SpawnBullet(this, thrownByPlayer);
 
-        //rigidBody.AddForce(initialForce);
-        rigidBody.velocity = initialForce;
+       rigidBody.velocity = initialForce;
     }
 
     private void FixedUpdate()
