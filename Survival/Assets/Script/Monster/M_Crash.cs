@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class M_Crash : MonoBehaviour
 {
+    /* 삭제
     private float speed = 2f;
     private float lastTime;
     private float coolTime = 5f;
@@ -25,4 +26,6 @@ public class M_Crash : MonoBehaviour
             
         }
     }
+
+    */
 }

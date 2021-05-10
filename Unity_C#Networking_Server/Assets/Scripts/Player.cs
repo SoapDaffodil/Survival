@@ -127,31 +127,34 @@ public class Player : MonoBehaviour
         ServerSend.PlayerRotation(this);
     }
 
-    /// <summary>Physics.Raycast 를 통해 총알방향의 hit판정</summary>
+    /// <summary>실제 총알을 통해 총알방향의 hit판정</summary>
     /// /// <param name="_viewDirection">총알의 방향</param>
     public void Shoot(Vector3 _viewDirection, bool _EMPInstallFinished)
     {
-        if (_EMPInstallFinished)
-        {
+        //if (_EMPInstallFinished)
+        //{
             if (hp <= 0f)
             {
                 return;
             }
 
-            NetworkManager.instance.InstantiateBullet(shootOrigin).Initialize(_viewDirection, firePower, id);
+            NetworkManager.instance.InstantiateBullet(shootOrigin).Initialize(_viewDirection, firePower, id, _EMPInstallFinished);
 
-            /*
-            if (Physics.Raycast(shootOrigin.position, _viewDirection, out RaycastHit _hit, 25f))
+        /*
+        if (Physics.Raycast(shootOrigin.position, _viewDirection, out RaycastHit _hit, 25f))
+        {
+            if (_hit.collider.CompareTag("Player"))
             {
-                if (_hit.collider.CompareTag("Player"))
-                {
-                    _hit.collider.GetComponent<Player>().TakeDamage(50f);
-                }
+                _hit.collider.GetComponent<Player>().TakeDamage(50f);
             }
-            */
-            
         }
-        else {
+        */
+
+        // }
+        /*
+        else 
+        {
+
             if (Physics.Raycast(shootOrigin.position, _viewDirection, out RaycastHit _hit, 25f))
             {
                 if (_hit.collider.CompareTag("Player"))
@@ -164,7 +167,8 @@ public class Player : MonoBehaviour
                     }
                 }
             }
-        }
+            */
+        //}
     }
 
     /// <summary>투척</summary>

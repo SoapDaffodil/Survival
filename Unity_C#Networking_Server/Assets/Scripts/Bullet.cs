@@ -12,6 +12,7 @@ public class Bullet : MonoBehaviour
     public int thrownByPlayer;
     public Vector3 initialForce;            //발사벡터
     public float damage = 50f;             //총 데미지
+    public bool EMPisInstalled;
 
     private void Start()
     {
@@ -36,10 +37,16 @@ public class Bullet : MonoBehaviour
         ServerSend.BulletCrush(this);
 
         if (collision.gameObject.GetComponent<Player>() != null)
-        {
-            if (collision.gameObject.GetComponent<Player>().playerType == PlayerType.MONSTER)
+        { 
+        if (collision.gameObject.GetComponent<Player>().playerType == PlayerType.MONSTER && EMPisInstalled)
             {                
-                collision.gameObject.GetComponent<Player>().TakeDamage(damage);                                           
+                collision.gameObject.GetComponent<Player>().TakeDamage(damage);
+                Debug.Log($"명중 : {collision.gameObject.name}");
+            }
+            if(collision.gameObject.GetComponent<Player>().playerType == PlayerType.MONSTER && !EMPisInstalled)
+            {
+                ServerSend.KeyChange(collision.gameObject.GetComponent<Player>().id);
+                Debug.Log($"키체인지 명중 : {collision.gameObject.name}");
             }
         }        
         bullets.Remove(id);
@@ -51,9 +58,10 @@ public class Bullet : MonoBehaviour
     /// <param name="_initialMovementDirection">초기 방향</param>
     /// <param name="_initialForceStrength">초기 세기</param>
     /// <param name="_thrownByPlayer">발사한 사람</param>
-    public void Initialize(Vector3 _initialMovementDirection, float _initialForceStrength, int _thrownByPlayer)
+    public void Initialize(Vector3 _initialMovementDirection, float _initialForceStrength, int _thrownByPlayer, bool _EMPisInstalled)
     {
         initialForce = _initialMovementDirection * _initialForceStrength;
         thrownByPlayer = _thrownByPlayer;
+        EMPisInstalled = _EMPisInstalled;
     }    
 }

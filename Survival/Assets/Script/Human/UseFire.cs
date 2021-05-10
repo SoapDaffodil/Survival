@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class UseFire : MonoBehaviour
 {
+    /* 삭제
     private Fire fire;
 
     private void Start()
@@ -13,19 +14,21 @@ public class UseFire : MonoBehaviour
 
     void Update()
     {
-        /*
+        
         if (Input.GetKeyDown(KeyCode.Q))
         {
             ItemOnHand();
             fire.Power();
             Debug.Log(fire.state);
         }
-        */
+        
 
-    }
+}
 
-    void ItemOnHand()
+void ItemOnHand()
     {
         fire.transform.position = transform.position + new Vector3(-0.7f, 0f, 0f);
     }
+
+    */
 }

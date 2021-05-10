@@ -20,7 +20,7 @@ public class MonsterController : MonoBehaviour
 
 
 
-    /*
+    /* 삭제
     // Update is called once per frame
     void Update()
     {

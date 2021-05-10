@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class M_UseDrone : MonoBehaviour
 {
+
+    /* 삭제
     public Drone drone;
     private Drone presentItem;
     private Camera droneCam;
@@ -40,12 +42,12 @@ public class M_UseDrone : MonoBehaviour
                // drone.ChargingGauge();
             }
 
-            /*
+            
             if(drone.isGaugeFull == true)
             {
                 ControllDrone();
             }
-            */
+            
             if(isFlying == true && Input.GetKeyDown(KeyCode.E))
             {
                 TurnOnLight();
@@ -109,4 +111,6 @@ public class M_UseDrone : MonoBehaviour
     {
         //drone.OffFlash();
     }
+
+  */
 }

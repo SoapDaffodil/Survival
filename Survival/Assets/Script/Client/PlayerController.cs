@@ -33,21 +33,34 @@ public class PlayerController : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
-            if(GameManager.players[Client.instance.myId].GetComponent<PlayerManager>().playerType == PlayerType.HUMAN && GameManager.players[Client.instance.myId].GetComponent<PlayerManager>().playerItem.item_number1 != null)
+            ItemSpawner _grabItem = this.GetComponent<PlayerManager>().playerItem.GrabItem;
+
+            if(_grabItem != null)
             {
-                if (GameManager.players[Client.instance.myId].GetComponent<PlayerManager>().playerItem.item_number1.GetComponent<Gun>().currentBattery != 0)
+                if (this.GetComponent<PlayerManager>().playerType == PlayerType.HUMAN && _grabItem.itemType == ItemType.GUN)
                 {
-                    ClientSend.PlayerShootBullet(camTransform.forward);
+                    Gun gun = _grabItem.GetComponent<Gun>();
+                    if (gun.currentBattery != 0)
+                    {
+                        ClientSend.PlayerShootBullet(camTransform.forward);
+                    }
                 }
-            }                       
+            }
+                                   
         }
         if (Input.GetKeyDown(KeyCode.Mouse1))
         {
-            if (GameManager.players[Client.instance.myId].GetComponent<PlayerManager>().playerType == PlayerType.HUMAN && GameManager.players[Client.instance.myId].GetComponent<PlayerManager>().playerItem.item_number1 != null)
+            ItemSpawner _grabItem = this.GetComponent<PlayerManager>().playerItem.GrabItem;
+
+            if (_grabItem != null)
             {
-                if (GameManager.players[Client.instance.myId].GetComponent<PlayerManager>().playerItem.item_number1.GetComponent<Gun>().currentBattery >= 5)
+                if (this.GetComponent<PlayerManager>().playerType == PlayerType.HUMAN && _grabItem.itemType == ItemType.GUN)
                 {
-                    ClientSend.PlayerShootBomb(camTransform.forward);
+                    Gun gun = _grabItem.GetComponent<Gun>();
+                    if (gun.currentBattery >= 5)
+                    {
+                        ClientSend.PlayerShootBomb(camTransform.forward);
+                    }
                 }
             }            
         }
@@ -104,26 +117,25 @@ public class PlayerController : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.R))
         {
-            if (GameManager.players[Client.instance.myId].GetComponent<PlayerManager>().playerType == PlayerType.HUMAN)
+            ItemSpawner _grabItem = this.GetComponent<PlayerManager>().playerItem.GrabItem;
+            if(_grabItem != null)
             {
-                Gun gun = GameManager.players[Client.instance.myId].GetComponent<PlayerManager>().playerItem.item_number1.GetComponent<Gun>();
-                
-
-                if (GameManager.players[Client.instance.myId].isOnHand && transform.GetChild(1).gameObject.GetComponent<Gun>())
+                if (_grabItem.itemType == ItemType.GUN && this.GetComponent<PlayerManager>().playerType == PlayerType.HUMAN)
                 {
+                    Gun gun = _grabItem.GetComponent<Gun>();
                     gun.Reloade();
                 }
-            }
-            else
-            {
-                Drone drone = GameManager.players[Client.instance.myId].GetComponent<PlayerManager>().playerItem.item_number1.GetComponent<Drone>();
-
-                if (GameManager.players[Client.instance.myId].isOnHand && drone.gameObject.GetComponent<Drone>() && !drone.isDroneMoving)
+                if (_grabItem.itemType == ItemType.DRONE && this.GetComponent<PlayerManager>().playerType == PlayerType.MONSTER)
                 {
-                    Debug.Log("드론이동!");
-                    drone.Moving();
+                    Drone drone = _grabItem.GetComponent<Drone>();
+
+                    if (!drone.isDroneMoving)
+                    {
+                        drone.Moving();
+                    }
                 }
             }
+            
         }
         if (Input.GetKeyDown(KeyCode.Q))
         {
@@ -253,6 +265,7 @@ public class PlayerController : MonoBehaviour
 
                     if (other.CompareTag("EMPZONE"))
                     {
+                        Debug.Log($"지금은 : {other.gameObject.name}");
                         if (emp.isInstalling)
                         {
                             Debug.Log($"emp 설치 취소");

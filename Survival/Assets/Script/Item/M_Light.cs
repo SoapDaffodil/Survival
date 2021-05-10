@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class M_Light : MonoBehaviour
 {
+    /* 게이지바 통해서 설치 안할거면 삭제
     private float minGauge = 15f;
     private float maxGauge = 45f;
     private float chargingTime = 2f;
@@ -92,6 +93,7 @@ public class M_Light : MonoBehaviour
             Debug.Log("light 가 없습니다");
         }
     }
+    */
 }
 
 

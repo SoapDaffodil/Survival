@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Fire : MonoBehaviour
 {
+    /* 삭제
    public enum State
     {
         On, Off
@@ -42,4 +43,5 @@ public class Fire : MonoBehaviour
             state = State.Off;
         }
     }
+    */
 }

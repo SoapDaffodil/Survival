@@ -4,11 +4,13 @@ using UnityEngine;
 
 public class UseLight : MonoBehaviour
 {
+    /* 삭제
     public  M_Light light;
 
     // Update is called once per frame
     void Update()
     {
+        
         if(light != null)
         {
             if (Input.GetKeyDown(KeyCode.Alpha1))
@@ -17,17 +19,17 @@ public class UseLight : MonoBehaviour
             }
             else if (Input.GetKey(KeyCode.E))
             {
-                light.CheckLight();
-                light.Install();
+                //light.CheckLight();
+                //light.Install();
             }
             else if (Input.GetKeyUp(KeyCode.E))
             {
-                light.Install();
+                //light.Install();
             }
             
             if(light.finished == true)
             {
-                light.finished = false;               
+                //light.finished = false;               
             }
         }
     }
@@ -45,4 +47,5 @@ public class UseLight : MonoBehaviour
             light.transform.SetParent(transform);
         }
     }
+        */
 }

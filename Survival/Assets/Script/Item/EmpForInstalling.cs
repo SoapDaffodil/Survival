@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class EmpForInstalling : EMP
 {
     
-    /*
+    /* 삭제
     public override void Install()
     {
         throw new System.NotImplementedException();
