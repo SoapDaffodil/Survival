@@ -45,6 +45,7 @@ public class GameManager : MonoBehaviour
             { ItemType.LIGHTTRAP, itemSpawnerPrefab[3] },
             { ItemType.BATTERY, itemSpawnerPrefab[4] },
         };
+        EMPInstallFinished = false;
     }
 
 
@@ -59,6 +60,21 @@ public class GameManager : MonoBehaviour
         if (_id == Client.instance.myId)
         {//현재 클라이언트의 플레이어인경우
             _player = Instantiate(localPlayerPrefab, _position, _rotation);
+            for (int i = 0; i < UIManager.instance.itemImageUI.Length; i++)
+            {
+                UIManager.instance.itemImageUI[i].sprite = UIManager.instance.itemImage[
+                    (int)UIManager.instance.playerType * UIManager.instance.itemImageUI.Length + i];
+                UIManager.instance.skillImageUI[i].sprite = UIManager.instance.skillImage[
+                    (int)UIManager.instance.playerType * UIManager.instance.itemImageUI.Length + i];
+            }
+            if (!EMPInstallFinished && UIManager.instance.playerType == PlayerType.MONSTER)
+            {
+                UIManager.instance.HPBarUI[0].sprite = UIManager.instance.HPBarImage[0];
+            }
+            else
+            {
+                UIManager.instance.HPBarUI[0].sprite = UIManager.instance.HPBarImage[1];
+            }
         }
         else
         {//다른 크라이언트의 플레이어인경우

@@ -139,7 +139,6 @@ public class ClientHandle : MonoBehaviour
         Vector3 _position = _packet.ReadVector3();
 
         GameManager.itemSpawners[_spawnerId].ItemThrow(_position);
-        GameManager.players[_byPlayer].isOnHand = false;
     }
 
     /// <summary>아이템 들기정보 update</summary>
@@ -151,7 +150,6 @@ public class ClientHandle : MonoBehaviour
         Vector3 _position = _packet.ReadVector3();
 
         GameManager.itemSpawners[_spawnerId].ItemGrab(GameManager.players[_byPlayer], _position);
-        GameManager.players[_byPlayer].isOnHand = true;
     }
 
     public static void KeyChange(Packet _packet)

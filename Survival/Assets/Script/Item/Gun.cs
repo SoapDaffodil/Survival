@@ -44,7 +44,6 @@ public class Gun : MonoBehaviour
         UIManager.instance.bulletAmoutText.text = string.Format(" {0:} ", batteryAmount);
 
         return true;
-
     }
 }
 

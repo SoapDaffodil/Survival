@@ -118,30 +118,41 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.R))
         {
             ItemSpawner _grabItem = this.GetComponent<PlayerManager>().playerItem.GrabItem;
-            if(_grabItem != null)
+            switch (this.GetComponent<PlayerManager>().playerType)
             {
-                if (_grabItem.itemType == ItemType.GUN && this.GetComponent<PlayerManager>().playerType == PlayerType.HUMAN)
-                {
-                    Gun gun = _grabItem.GetComponent<Gun>();
-                    gun.Reloade();
-                }
-                if (_grabItem.itemType == ItemType.DRONE && this.GetComponent<PlayerManager>().playerType == PlayerType.MONSTER)
-                {
-                    Drone drone = _grabItem.GetComponent<Drone>();
-
-                    if (!drone.isDroneMoving)
+                case PlayerType.HUMAN:
+                    if (_grabItem != null && _grabItem.itemType == ItemType.GUN)
                     {
-                        drone.Moving();
+                        Debug.Log($"장전!");
+                        _grabItem.GetComponent<Gun>().Reloade();
                     }
-                }
+                    else
+                    {
+                        Debug.Log($"총을 들어주세요");
+                    }
+                    break;
+                case PlayerType.MONSTER:
+                    if (_grabItem != null && _grabItem.itemType == ItemType.DRONE)
+                    {
+                        if (!_grabItem.GetComponent<Drone>().isDroneMoving)
+                        {
+                            Debug.Log($"드론이동!");
+                            _grabItem.GetComponent<Drone>().Moving();
+                        }
+                    }
+                    else
+                    {
+                        Debug.Log($"드론을 들어주세요");
+                    }
+                    break;
+                default:
+                    break;
             }
-            
         }
         if (Input.GetKeyDown(KeyCode.Q))
         {
-            if(GameManager.players[Client.instance.myId].GetComponent<PlayerManager>().playerType == PlayerType.MONSTER)
+            if(this.GetComponent<PlayerManager>().playerType == PlayerType.MONSTER)
             {
-
                 ClientSend.SpeedUp(GameManager.players[Client.instance.myId]);
             }
         }
@@ -204,12 +215,10 @@ public class PlayerController : MonoBehaviour
             //문열기
             if (other.CompareTag("Door"))
             {
-
                 if (other.gameObject.transform.rotation.y == 0f)
                 {
                     other.gameObject.transform.RotateAround(other.gameObject.transform.GetChild(0).position, Vector3.up, -90f);
                 }
-
                 else
                 {
                     other.gameObject.transform.RotateAround(other.gameObject.transform.GetChild(0).position, Vector3.up, 90f);
@@ -297,56 +306,6 @@ public class PlayerController : MonoBehaviour
             {
                 Debug.Log($"아이템을 들고있지 않습니다");
             }
-            /*
-            if (GameManager.players[Client.instance.myId].GetComponent<PlayerManager>().playerType == PlayerType.HUMAN)
-            {
-                if (grabItem != null && ((ItemSpawner)grabItem).itemType == ItemType.EMP)
-                {
-                    EMP emp = grabItem.GetComponent<EMP>();
-
-                    if (other.CompareTag("EMPZONE"))
-                    {
-                        if (emp.isInstalling)
-                        {
-                            Debug.Log($"emp 설치 취소");
-                            emp.InstallCancle();
-                        }
-                        else
-                        {
-                            emp.isInstalling = true;
-                            emp.gaugeCheck = true;
-                        }
-                    }
-                    else
-                    {
-                        //EMP TRAP 설치
-                        if (emp.isInstalling)
-                        {
-                            emp.InstallCancle();
-                        }
-                        else
-                        {
-                            //emp.Install();
-                            emp.isDetectiveMode = true;
-                            emp.isInstalling = true;
-                            emp.gaugeCheck = true;
-                        }
-                    }
-                }
-                else
-                {
-                    Debug.Log("가지고 있는 emp가 없습니다");
-                }
-            }
-            else
-            {
-                if (grabItem != null && ((ItemSpawner)grabItem).itemType == ItemType.LIGHTTRAP)
-                {
-                    //괴물 LIGHT TRAP 설치
-                    lightTrapInstall = InstallLightTrap(((ItemSpawner)grabItem).spawnerId);
-                    StartCoroutine(lightTrapInstall);
-                }
-            }*/
         }
     }
     /*

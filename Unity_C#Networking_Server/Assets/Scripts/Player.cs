@@ -38,12 +38,12 @@ public class Player : MonoBehaviour
         id = _id;
         username = _username;
         string _playerType = "";
-        switch (_username)
+        switch (username)
         {
-            case "0": case "monster": case "Monster":
+            case "0": case "monster": case "Monster": case "MONSTER":
                 _playerType = "MONSTER";
                 break;
-            case "1":  case "human": case "Human":
+            case "1":  case "human": case "Human": case "HUMAN":
                 _playerType = "HUMAN";
                 break;
         }
