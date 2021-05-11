@@ -153,6 +153,7 @@ public class Server
             { (int)ClientPackets.cure, ServerHandle.Cure },
             {(int)ClientPackets.hide, ServerHandle.Hide },
             {(int)ClientPackets.skillTeleportation, ServerHandle.SkillTeleportation },
+            {(int)ClientPackets.skillDrone, ServerHandle.SkillDrone },
             {(int)ClientPackets.droneMovement, ServerHandle.DroneMovement },
             {(int)ClientPackets.droneStop, ServerHandle.DroneStop },
             {(int)ClientPackets.skillSpeedUp, ServerHandle.SkillSpeedUp },

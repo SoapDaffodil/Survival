@@ -63,29 +63,30 @@ public class Player : MonoBehaviour
     /// <summary>Processes player input and moves the player.</summary>
     public void FixedUpdate()
     {
-        //채력이 0이면 움직이지 못함
-        if (hp <= 0f)
+        if (controller.enabled)
         {
-            return;
-        }
-        Vector2 _inputDirection = Vector2.zero;
-        if (inputs[0])
-        {
-            _inputDirection.y += 1;
-        }
-        if (inputs[1])
-        {
-            _inputDirection.y -= 1;
-        }
-        if (inputs[2])
-        {
-            _inputDirection.x -= 1;
-        }
-        if (inputs[3])
-        {
-            _inputDirection.x += 1;
-        }
-        if (controller.enabled) {
+            //채력이 0이면 움직이지 못함
+            if (hp <= 0f)
+            {
+                return;
+            }
+            Vector2 _inputDirection = Vector2.zero;
+            if (inputs[0])
+            {
+                _inputDirection.y += 1;
+            }
+            if (inputs[1])
+            {
+                _inputDirection.y -= 1;
+            }
+            if (inputs[2])
+            {
+                _inputDirection.x -= 1;
+            }
+            if (inputs[3])
+            {
+                _inputDirection.x += 1;
+            }
             Move(_inputDirection);
         }
     }
@@ -274,6 +275,13 @@ public class Player : MonoBehaviour
     {
         controller.enabled = false;
         controller.transform.position = _target;
+        if (this.GetComponentInChildren<Drone>() != null && this.GetComponentInChildren<Drone>().controller.enabled)
+        {
+            Drone _drone = this.GetComponentInChildren<Drone>();
+            _drone.transform.SetParent(null, true);
+            controller.transform.rotation = _drone.transform.rotation;
+            Destroy(_drone.gameObject, 1f);
+        }
         controller.enabled = true;
     }
 

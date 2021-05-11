@@ -115,7 +115,7 @@ public class PlayerController : MonoBehaviour
                 ClientSend.PlayerGrabItem(_grabItemId, this.GetComponent<PlayerManager>().playerItem.item_number2[0].spawnerId, 2);
             }
         }
-        if (Input.GetKeyDown(KeyCode.R))
+        if (Input.GetKeyUp(KeyCode.R))
         {
             ItemSpawner _grabItem = this.GetComponent<PlayerManager>().playerItem.GrabItem;
             switch (this.GetComponent<PlayerManager>().playerType)
@@ -134,11 +134,7 @@ public class PlayerController : MonoBehaviour
                 case PlayerType.MONSTER:
                     if (_grabItem != null && _grabItem.itemType == ItemType.DRONE)
                     {
-                        if (!_grabItem.GetComponent<Drone>().isDroneMoving)
-                        {
-                            Debug.Log($"드론이동!");
-                            _grabItem.GetComponent<Drone>().Moving();
-                        }
+                        ClientSend.SkillDrone(_grabItem.spawnerId);
                     }
                     else
                     {

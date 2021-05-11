@@ -155,9 +155,9 @@ public class ClientHandle : MonoBehaviour
     public static void KeyChange(Packet _packet)
     {
         // 패킷에서 받아오는 정보
-        int _plaerId = _packet.ReadInt();
+        int _playerId = _packet.ReadInt();
         
-        GameManager.players[_plaerId].GetComponent<PlayerController>().KeyChange();
+        GameManager.players[_playerId].GetComponent<PlayerController>().KeyChange();
     }
 
     public static void InstallEMP(Packet _packet)
@@ -219,6 +219,7 @@ public class ClientHandle : MonoBehaviour
         }       
     }
 
+    /*
     /// <summary>플레이어 은폐</summary>
     /// <param name="_packet"></param>
     public static void Hide(Packet _packet)
@@ -227,6 +228,14 @@ public class ClientHandle : MonoBehaviour
         Vector3 _position = _packet.ReadVector3();
 
         GameManager.players[_id].GetComponent<PlayerManager>().Hide(_position);
+    }
+    */
+    public static void DroneEnabled(Packet _packet)
+    {
+        int _playerId = _packet.ReadInt();
+
+        Debug.Log($"드론이동!");
+        GameManager.players[_playerId].playerItem.GrabItem.GetComponent<Drone>().Moving();
     }
 
     /// <summary>드론 position을 담은 패킷을 받음</summary>

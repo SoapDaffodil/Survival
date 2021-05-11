@@ -141,7 +141,21 @@ public class ServerHandle
     /// <param name="_packet"></param>
     public static void SkillTeleportation(int _fromClient, Packet _packet)
     {
-        Server.clients[_fromClient].player.Teleportation(_packet.ReadVector3());
+        Vector3 _targetPosition = _packet.ReadVector3();
+        Server.clients[_fromClient].player.Teleportation(_targetPosition);
+    }
+
+    /// <summary>드론 활성화 스킬</summary>
+    /// <param name="_fromClient"></param>
+    /// <param name="_packet"></param>
+    public static void SkillDrone(int _fromClient, Packet _packet)
+    {
+        int _spawnerId = _packet.ReadInt();
+
+        Server.clients[_fromClient].player.controller.enabled = false;
+        ItemSpawner.spawners[_spawnerId].GetComponent<Drone>().controller.enabled = true;
+
+        ServerSend.DroneEnabled(_fromClient);
     }
 
     /// <summary>드론의 움직임packet을 받아 움직임 처리</summary>
@@ -157,11 +171,8 @@ public class ServerHandle
         Quaternion _rotation = _packet.ReadQuaternion();
 
         int _spawnId = _packet.ReadInt();
-
-        Server.clients[_fromClient].player.controller.enabled = false;
-        ItemSpawner.spawners[_spawnId].GetComponent<Drone>().isDroneMoving = true;
+        
         ItemSpawner.spawners[_spawnId].GetComponent<Drone>().SetInput(_inputs, _rotation);
-        ItemSpawner.spawners[_spawnId].GetComponent<Drone>().controller.enabled = true;        
     }
 
 
@@ -173,7 +184,6 @@ public class ServerHandle
         int _spawnId = _packet.ReadInt();
 
         ItemSpawner.spawners[_spawnId].GetComponent<Drone>().controller.enabled = false;
-        ItemSpawner.spawners[_spawnId].GetComponent<Drone>().isDroneMoving = false;
         Server.clients[_fromClient].player.controller.enabled = true;
         
     }

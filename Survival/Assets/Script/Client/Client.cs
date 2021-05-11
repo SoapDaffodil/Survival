@@ -327,6 +327,7 @@ public class Client : MonoBehaviour
             { (int)ServerPackets.installTrap, ClientHandle.InstallTrap},
             { (int)ServerPackets.keyChange, ClientHandle.KeyChange},
             //cure??
+            { (int)ServerPackets.droneEnabled, ClientHandle.DroneEnabled},
             { (int)ServerPackets.dronePosition, ClientHandle.DronePosition},
             { (int)ServerPackets.droneRotation, ClientHandle.DroneRotation},
 

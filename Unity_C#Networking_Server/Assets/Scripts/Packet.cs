@@ -38,11 +38,12 @@ public enum ServerPackets
 
     //선희
     cure,               //플레이어 체력 회복 어디에 쓰이지??
+    droneEnabled,       //드론 활성화
     dronePosition,      //드론 position
     droneRotation,      //드론 rotation
     spawnBullet,        //총알 생성
     bulletPosition,     //총알 위치
-    bulletCrush,         //총알 충돌
+    bulletCrush,        //총알 충돌
     //선희
     //udpTest
 }
@@ -76,6 +77,7 @@ public enum ClientPackets
 
 
     skillTeleportation, //스킬 순간이동
+    skillDrone,         //드론 활성화
     // udpTestReceived
 }
 

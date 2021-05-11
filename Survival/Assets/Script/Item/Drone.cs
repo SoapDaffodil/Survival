@@ -43,12 +43,14 @@ public class Drone : MonoBehaviour
                 isDroneMoving = false;
                 PlayerController _player = this.transform.parent.GetComponent<PlayerController>();
                 transform.SetParent(null, true);
+                ClientSend.SkillTeleportation(this.transform.position);
+
                 droneCam.gameObject.SetActive(false);
-                _player.transform.position = this.transform.position;
-                _player.transform.rotation = this.transform.rotation;
                 _player.enabled = true;
                 _player.camTransform.gameObject.SetActive(true);
-                Destroy(this, 1f);
+                _player.GetComponent<PlayerManager>().playerItem.item_number1 = null;
+                _player.GetComponent<PlayerManager>().playerItem.GrabItem = null;
+                Destroy(this.gameObject, 2f);
             }
         }
     }
@@ -80,8 +82,8 @@ public class Drone : MonoBehaviour
             bool[] _inputs = new bool[]
             {
             Input.GetKey(KeyCode.W),
-            Input.GetKey(KeyCode.A),
             Input.GetKey(KeyCode.S),
+            Input.GetKey(KeyCode.A),
             Input.GetKey(KeyCode.D),
             Input.GetKey(KeyCode.Space),
             };

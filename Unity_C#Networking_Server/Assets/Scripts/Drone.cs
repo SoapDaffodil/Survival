@@ -16,7 +16,7 @@ public class Drone : MonoBehaviour
     /// <summary>Processes player input and moves the player.</summary>
     public void FixedUpdate()
     {
-        if(isDroneMoving)
+        if(controller.enabled)
         {
             Vector2 _inputDirection = Vector2.zero;
             if (inputs[0])
@@ -35,10 +35,7 @@ public class Drone : MonoBehaviour
             {
                 _inputDirection.x += 1;
             }
-            if (controller.enabled)
-            {
-                Move(_inputDirection);
-            }
+            Move(_inputDirection);
         }
         
     }
