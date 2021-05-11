@@ -59,6 +59,17 @@ public class ClientSend : MonoBehaviour
         }
     }
 
+    /// <summary>괴물 공격에 대한 packet TCP전송(공격할 때 한번만 전송하므로 누락이 될지언정 오류가 발생하지는 않음)</summary>
+    public static void MonsterAttack (Vector3 _facing)
+    {
+        using (Packet _packet = new Packet((int)ClientPackets.monsterAttack))
+        {
+            _packet.Write(_facing);
+
+            SendTCPData(_packet);
+        }
+    }
+
     /// <summary>아이템 버리기에 대한 packet TCP전송(한번만 전송하므로 누락이 될지언정 오류가 발생하지는 않음)</summary>
     /// <param name="_facing">버릴 위치</param>
     public static void PlayerShootBomb(Vector3 _facing)

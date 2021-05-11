@@ -87,16 +87,15 @@ public  class EMP : MonoBehaviour
         isInstalling = false;
     }
 
-    public void OnTriggerStay(Collider other)
+    public void OnTriggerEnter(Collider other)
     {
         if (isDetectiveMode)
         {
-            gameObject.GetComponent<SphereCollider>().radius = 5f;
-            gameObject.GetComponent<SphereCollider>().isTrigger = true;
 
-            if (other.GetComponent<PlayerManager>().playerType == PlayerType.MONSTER)
+          if (other.GetComponent<PlayerManager>().playerType == PlayerType.HUMAN)
             {
-                Debug.Log($"몬스터가 접근하고 있는 중입니다.");
+                Debug.Log("키체인지");
+                other.GetComponent<PlayerController>().KeyChange();
             }
         }
     }

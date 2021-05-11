@@ -156,6 +156,7 @@ public class Server
             {(int)ClientPackets.droneMovement, ServerHandle.DroneMovement },
             {(int)ClientPackets.droneStop, ServerHandle.DroneStop },
             {(int)ClientPackets.skillSpeedUp, ServerHandle.SkillSpeedUp },
+            {(int)ClientPackets.mossterAttack, ServerHandle.MonsterAttack },
             //{(int)ClientPackets.udpTestReceived, ServerHandle.UDPTestReceived }
         };
         Debug.Log("Initialized packets.");

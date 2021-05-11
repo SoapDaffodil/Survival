@@ -147,6 +147,12 @@ public class ItemSpawner : MonoBehaviour
             _byPlayer.playerItem.GrabItem.ItemReleaseGrab();
         }
         _byPlayer.playerItem.GrabItem = this;
+
+        if(_byPlayer.playerItem.GrabItem.itemType == ItemType.GUN)
+        {
+            UIManager.instance.currentBulletText.text = "0";
+            UIManager.instance.bulletAmoutText.text = "0";
+        }
     }
 
     /// <summary>EMPZONE에 EMP 설치하기 > 맵에 표시O</summary>
@@ -165,14 +171,20 @@ public class ItemSpawner : MonoBehaviour
     {
         ItemThrow(_position);
         hasItem = false;
+        gameObject.GetComponent<SphereCollider>().radius = 5f;
+        gameObject.GetComponent<SphereCollider>().isTrigger = true;
+
         switch (this.itemType)
         {
             case ItemType.EMP:
                 GameManager.instance.AddEMPTrap(_floor, this);
+                this.gameObject.GetComponent<EMP>().isDetectiveMode = true;
                 Debug.Log($"EMPTrap 설치완료");
                 break;
             case ItemType.LIGHTTRAP:
                 GameManager.instance.AddLightTrap(_floor, this);
+                this.gameObject.GetComponent<LightTrap>().isDetectiveMode = true;
+                this.gameObject.GetComponent<LightTrap>().trapId = this.gameObject.GetComponent<ItemSpawner>().spawnerId;
                 Debug.Log($"LightTrap 설치완료");
                 break;
             default:

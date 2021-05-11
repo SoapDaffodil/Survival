@@ -43,6 +43,7 @@ public enum ServerPackets
     spawnBullet,        //총알 생성
     bulletPosition,     //총알 위치
     bulletCrush,         //총알 충돌
+    monsterAttackTrue,  //괴물 공격 성공
     //선희
     //udpTest
 }
@@ -72,6 +73,7 @@ public enum ClientPackets
     droneMovement,      //드론 움직임
     droneStop,          //드론 멈춤
     skillSpeedUp,       //괴물 이속증가
+    mossterAttack,      //괴물 공격
     //선희
 
 

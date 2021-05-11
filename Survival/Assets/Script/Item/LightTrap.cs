@@ -3,8 +3,28 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class M_Light : MonoBehaviour
+public class LightTrap : MonoBehaviour
 {
+    public bool isDetectiveMode = false;
+    public int trapId = 0;
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(isDetectiveMode)
+        {
+            if(other.GetComponent<PlayerManager>().playerType == PlayerType.HUMAN)
+            {               
+                for(int i = 0; i < ItemSpawner.lightTrapList.Count; i++)
+                {
+                    if(trapId == ItemSpawner.lightTrapList[i].trap.spawnerId)
+                    {
+                        Debug.Log($"인간이 {i}번 LightTrap에서 감지 되었습니다");
+                    }
+                }
+                
+            }
+        }
+    }
     /* 게이지바 통해서 설치 안할거면 삭제
     private float minGauge = 15f;
     private float maxGauge = 45f;

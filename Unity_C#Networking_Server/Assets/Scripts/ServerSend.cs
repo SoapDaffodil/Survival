@@ -432,6 +432,20 @@ public class ServerSend
         }
     }
 
+    /// <summary>괴물 공격 성공 TCP전송</summary>
+    /// /// <param name="_playerID">괴물 플레이어 id</param>
+    /// <param name="_isMonsterAttack">괴물 공격 성공 여부</param>
+    public static void MonsterAttackTrue(int _playerID, bool _isMonsterAttack)
+    {
+        using (Packet _packet = new Packet((int)ServerPackets.monsterAttackTrue))
+        {
+            _packet.Write(_playerID);
+            _packet.Write(_isMonsterAttack);
+
+            SendTCPData(_playerID, _packet);
+        }
+    }
+
 
     /*
     public static void UDPTest(int _toClient)
