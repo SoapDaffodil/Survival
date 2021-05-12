@@ -15239,6 +15239,15 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 74c5bac13095c7748b03d9543391d785, type: 3}
   - {fileID: 21300000, guid: 97fc9292a9062494abe0fae845c5c487, type: 3}
   - {fileID: 21300000, guid: e1445a43e12b34f4b922b5eb831b097b, type: 3}
+  coolTimeBackGroundImage:
+  - {fileID: 1660084314}
+  - {fileID: 112609841}
+  - {fileID: 371502458}
+  coolTimeText:
+  - {fileID: 213844023}
+  - {fileID: 1175043870}
+  - {fileID: 1017355336}
+  seconds: 10
   powerSlider: {fileID: 297016382}
   currentBulletText: {fileID: 228212856}
   bulletAmoutText: {fileID: 1453117023}

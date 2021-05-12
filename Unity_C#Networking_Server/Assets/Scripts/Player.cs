@@ -196,14 +196,12 @@ public class Player : MonoBehaviour
                     Debug.Log($"공격 맞음 : {_hit.collider.gameObject.name}");
                     hitPlayer.TakeDamage(50f);
                     hitPlayer.moveSpeed *= 2;
-                    Invoke("SpeedDown", 2f);
-
-                    this.gameObject.GetComponent<Player>().controller.enabled = false;
-                    Invoke("EndStun", 2f);
-                    //스킬 비활성화
-                    ServerSend.MonsterAttackTrue(id, isMonsterAttack);
-
+                    Invoke("SpeedDown", 2f);                 
                 }
+                this.gameObject.GetComponent<Player>().controller.enabled = false;
+                Invoke("EndStun", 2f);
+                //스킬 비활성화
+                ServerSend.MonsterAttackTrue(id, isMonsterAttack);
             }
             
         }
@@ -337,6 +335,6 @@ public class Player : MonoBehaviour
 
     public void EndStun()
     {
-        controller.enabled = true;
+       controller.enabled = true;
     }
 }

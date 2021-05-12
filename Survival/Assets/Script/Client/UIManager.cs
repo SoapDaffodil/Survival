@@ -20,6 +20,9 @@ public class UIManager : MonoBehaviour
     public Sprite[] itemImage;
     public Sprite[] skillImage;
 
+    public Image[] coolTimeBackGroundImage;
+    public Text[] coolTimeText;
+    public float seconds = 10f;
 
     /// <summary>EMP설치게이지</summary>
     [Tooltip("EMP설치게이지")]
@@ -53,6 +56,8 @@ public class UIManager : MonoBehaviour
     [Tooltip("플레이어 체력 회복 게이지")]
     public Slider hpSlider;
 
+
+
     public GameObject[] UI_LightTrapList;
     public Material[] material_UI_LightTrap;
     public Vector3[] position_UI_LightTrap = { new Vector3(-100, 0, 0), new Vector3(-200, 0, 0) };
@@ -70,6 +75,22 @@ public class UIManager : MonoBehaviour
             Destroy(this);
         }
         map.SetActive(mapActive);
+    }
+
+    private void Update()
+    {
+        if(GameObject.FindWithTag("Player") != null)
+        {
+            if (GameManager.players[Client.instance.myId].playerType == PlayerType.MONSTER && GameManager.players[Client.instance.myId].isMonsterAttack)
+            {
+                if (seconds > 0)
+                {
+                    seconds -= Time.deltaTime;
+                    Debug.Log(seconds);
+                }
+                MonsterSkillUIControll(seconds);
+            }
+        }
     }
 
     /// <summary>버튼에 커서가 들어오면 실행</summary>
@@ -192,5 +213,25 @@ public class UIManager : MonoBehaviour
             }
             ClientSend.SkillTeleportation(target);
         }
+    }
+
+    /// <summary>괴물 공격 성공시 스킬 비활성화</summary>
+    public void MonsterSkillUIControll(float seconds)
+    {
+        for(int i = 0; i < coolTimeBackGroundImage.Length; i++)
+        {
+            coolTimeBackGroundImage[i].gameObject.SetActive(true);
+            coolTimeText[i].gameObject.SetActive(true);
+
+            coolTimeText[i].text = string.Format("{0:F0}", seconds);
+
+            if(seconds <= 0)
+            {
+                coolTimeBackGroundImage[i].gameObject.SetActive(false);
+                coolTimeText[i].gameObject.SetActive(false);
+                GameManager.players[Client.instance.myId].isMonsterAttack = false;
+            }
+        }
+
     }
 }

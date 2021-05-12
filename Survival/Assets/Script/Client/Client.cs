@@ -11,6 +11,7 @@ public class Client : MonoBehaviour
     public static Client instance;
     public static int dataBufferSize = 4096;
 
+    //public string ip;
     public string ip = "127.0.0.1";
     public int port = 26950;
     public int myId = 0;
@@ -33,6 +34,8 @@ public class Client : MonoBehaviour
             ip = "127.0.0.1";
             port = 80;
             instance = this;
+            //ip = "172.20.10.4";
+           // port = 80;
         }
         else if(instance != this)
         {
