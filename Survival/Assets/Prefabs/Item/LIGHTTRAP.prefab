@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 3406075731991387022}
   - component: {fileID: 3406075731991387021}
   - component: {fileID: 5842147077173192032}
-  - component: {fileID: 7174290568974085586}
+  - component: {fileID: 6371418611078736868}
   m_Layer: 8
   m_Name: LIGHTTRAP
   m_TagString: Item
@@ -115,7 +115,7 @@ MonoBehaviour:
   itemRotationSpeed: 50
   itemBobSpeed: 2
   itemType: 0
---- !u!114 &7174290568974085586
+--- !u!114 &6371418611078736868
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -124,8 +124,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 3406075731991387058}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e88b96338623451428b3b2eeffd188e5, type: 3}
+  m_Script: {fileID: 11500000, guid: d854667b846a0b24eaa9fef7c06529d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  batteryAmount: 0
-  currentBattery: 0
+  isDetectiveMode: 0
+  trapId: 0

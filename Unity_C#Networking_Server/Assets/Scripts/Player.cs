@@ -28,6 +28,9 @@ public class Player : MonoBehaviour
 
     public float firePower = 600f;            //총 발사 파워
 
+    public bool isMonsterAttack = false;
+    private Vector3 viewPoint;
+
     public void Initialize(int _id, string _username)
     {
         maxHp = 100f;
@@ -91,6 +94,10 @@ public class Player : MonoBehaviour
         }
     }
 
+    private void Update()
+    {
+        Debug.DrawRay(this.gameObject.transform.position, viewPoint * 3f, Color.green);
+    }
     /// <summary>Updates the player input with newly received input.</summary>
     /// <param name="_inputs">The new key inputs.</param>
     /// <param name="_rotation">The new rotation.</param>
@@ -170,6 +177,36 @@ public class Player : MonoBehaviour
             }
             */
         //}
+    }
+
+    /// <summary>괴물 공격</summary>
+    /// <param name="_viewDirection"> 괴물 공격 방향 </param>
+    public void MonsterAttack(Vector3 _viewDirection)
+    {
+        viewPoint = _viewDirection;
+        if(Physics.Raycast(transform.position, _viewDirection, out RaycastHit _hit, 3f))
+        {
+            if(_hit.collider.GetComponent<Player>() != null)
+            {
+                Player hitPlayer = _hit.collider.GetComponent<Player>();
+                if (hitPlayer.playerType == PlayerType.HUMAN)
+                {
+                    isMonsterAttack = true;
+
+                    Debug.Log($"공격 맞음 : {_hit.collider.gameObject.name}");
+                    hitPlayer.TakeDamage(50f);
+                    hitPlayer.moveSpeed *= 2;
+                    Invoke("SpeedDown", 2f);
+
+                    this.gameObject.GetComponent<Player>().controller.enabled = false;
+                    Invoke("EndStun", 2f);
+                    //스킬 비활성화
+                    ServerSend.MonsterAttackTrue(id, isMonsterAttack);
+
+                }
+            }
+            
+        }
     }
 
     /// <summary>투척</summary>
@@ -298,4 +335,8 @@ public class Player : MonoBehaviour
         Debug.Log("이속 원상복귀");
     }
 
+    public void EndStun()
+    {
+        controller.enabled = true;
+    }
 }

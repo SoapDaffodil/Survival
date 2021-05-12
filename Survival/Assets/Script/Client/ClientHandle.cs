@@ -299,6 +299,17 @@ public class ClientHandle : MonoBehaviour
         
     }
 
+    /// <summary> 괴물 공격 성공시 처리</summary>
+    /// <param name="_packet"></param>
+    public static void MonsterAttackTrue(Packet _packet)
+    {
+        int _playerID = _packet.ReadInt();
+        bool _isMonsterAttack = _packet.ReadBool();
+
+        GameManager.players[_playerID].isMonsterAttack = _isMonsterAttack;
+
+    }
+
     /*
     /// <summary>서버로 부터 UDPTest data를 받음</summary>
     public static void UDPTest(Packet _packet)

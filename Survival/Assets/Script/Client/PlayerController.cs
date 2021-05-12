@@ -33,19 +33,25 @@ public class PlayerController : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
-            ItemSpawner _grabItem = this.GetComponent<PlayerManager>().playerItem.GrabItem;
-
-            if(_grabItem != null)
+            if(this.GetComponent<PlayerManager>().playerType == PlayerType.HUMAN)
             {
-                if (this.GetComponent<PlayerManager>().playerType == PlayerType.HUMAN && _grabItem.itemType == ItemType.GUN)
+                ItemSpawner _grabItem = this.GetComponent<PlayerManager>().playerItem.GrabItem;
+
+                if (_grabItem != null && _grabItem.itemType == ItemType.GUN)
                 {
                     Gun gun = _grabItem.GetComponent<Gun>();
                     if (gun.currentBattery != 0)
                     {
                         ClientSend.PlayerShootBullet(camTransform.forward);
-                    }
+                    }                  
                 }
             }
+            else
+            {
+                Debug.Log("몬스터 공격!");
+                ClientSend.MonsterAttack(camTransform.forward);
+            }
+            
                                    
         }
         if (Input.GetKeyDown(KeyCode.Mouse1))
@@ -105,6 +111,8 @@ public class PlayerController : MonoBehaviour
             {
                 int _grabItemId = (this.GetComponent<PlayerManager>().playerItem.GrabItem != null) ? this.GetComponent<PlayerManager>().playerItem.GrabItem.spawnerId : -1;
                 ClientSend.PlayerGrabItem(_grabItemId, this.GetComponent<PlayerManager>().playerItem.item_number1.spawnerId, 1);
+
+
             }
         }
         if (Input.GetKeyDown(KeyCode.Alpha2))

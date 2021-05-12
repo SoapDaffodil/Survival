@@ -49,6 +49,16 @@ public class ServerHandle
         Server.clients[_fromClient].player.Shoot(_shootDirection, _EMPInstallFinished);
     }
 
+    /// <summary>괴물 공격에 대한 패킷을 통해 shoot 처리</summary>
+    /// <param name="_fromClient"></param>
+    /// <param name="_packet"></param>
+    public static void MonsterAttack(int _fromClient, Packet _packet)
+    {
+        Vector3 _shootDirection = _packet.ReadVector3();
+
+        Server.clients[_fromClient].player.MonsterAttack(_shootDirection);
+    }
+
     /// <summary>투척에 대한 패킷을 통해 아이템버리는 것 처리</summary>
     /// <param name="_fromClient"></param>
     /// <param name="_packet"></param>
