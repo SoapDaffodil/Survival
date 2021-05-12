@@ -15,9 +15,9 @@ public class GameManager : MonoBehaviour
     public static Dictionary<int, BulletManager> bullets = new Dictionary<int, BulletManager>();            //모든 총알 정보 저장
 
     /// <summary>자신 player 프리팹</summary>
-    public GameObject localPlayerPrefab;
+    public GameObject[] localPlayerPrefab;
     /// <summary>다른 player 프리팹</summary>
-    public GameObject otherPlayerPrefab;
+    public GameObject[] otherPlayerPrefab;
     [Tooltip("[0] : monster, [1] : human 모델링 메쉬")]
     public Mesh[] playerMesh = new Mesh[2];
     /// <summary>아이템 프리팹</summary>
@@ -54,12 +54,20 @@ public class GameManager : MonoBehaviour
     /// <param name="_name">The player's name.</param>
     /// <param name="_position">The player's starting position.</param>
     /// <param name="_rotation">The player's starting rotation.</param>
-    public void SpawnPlayer(int _id, string _username, Vector3 _position, Quaternion _rotation)
+    public void SpawnPlayer(int _id, int _userType, Vector3 _position, Quaternion _rotation)
     {
-        GameObject _player;
+        GameObject _player = null;
         if (_id == Client.instance.myId)
         {//현재 클라이언트의 플레이어인경우
-            _player = Instantiate(localPlayerPrefab, _position, _rotation);
+            switch (_userType)
+            {
+                case (int)PlayerType.MONSTER:
+                    _player = Instantiate(localPlayerPrefab[(int)PlayerType.MONSTER], _position, _rotation);
+                    break;
+                case (int)PlayerType.HUMAN:
+                    _player = Instantiate(localPlayerPrefab[(int)PlayerType.HUMAN], _position, _rotation);
+                    break;
+            }
             for (int i = 0; i < UIManager.instance.itemImageUI.Length; i++)
             {
                 UIManager.instance.itemImageUI[i].sprite = UIManager.instance.itemImage[
@@ -78,7 +86,15 @@ public class GameManager : MonoBehaviour
         }
         else
         {//다른 크라이언트의 플레이어인경우
-            _player = Instantiate(otherPlayerPrefab, _position, _rotation);
+            switch (_userType)
+            {
+                case (int)PlayerType.MONSTER:
+                    _player = Instantiate(otherPlayerPrefab[(int)PlayerType.MONSTER], _position, _rotation);
+                    break;
+                case (int)PlayerType.HUMAN:
+                    _player = Instantiate(otherPlayerPrefab[(int)PlayerType.HUMAN], _position, _rotation);
+                    break;
+            }
         }
         /*
         if (character_human) {
@@ -89,7 +105,7 @@ public class GameManager : MonoBehaviour
             _player.GetComponent<MeshFilter>().mesh = playerMesh[0];        //모델링 적용시 사용 수정예정
         }
         */
-        _player.GetComponent<PlayerManager>().Initialize(_id, _username);
+        _player.GetComponent<PlayerManager>().Initialize(_id, _userType);
         players.Add(_id, _player.GetComponent<PlayerManager>());
     }
     

@@ -114,7 +114,7 @@ public class ServerSend
         using (Packet _packet = new Packet((int)ServerPackets.spawnPlayer))
         {
             _packet.Write(_player.id);
-            _packet.Write(_player.username);
+            _packet.Write((int)_player.playerType);
             _packet.Write(_player.transform.position);
             _packet.Write(_player.transform.rotation);
 

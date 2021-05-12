@@ -29,6 +29,9 @@ public class Client : MonoBehaviour
     {
         if(instance == null)
         {
+            //ip = "172.20.10.4";
+            ip = "127.0.0.1";
+            port = 80;
             instance = this;
         }
         else if(instance != this)
@@ -77,6 +80,8 @@ public class Client : MonoBehaviour
             };
 
             receiveBuffer = new byte[dataBufferSize];
+
+            //socket.Connect(new IPEndPoint(IPAddress.Parse(instance.ip), instance.port));
             socket.BeginConnect(instance.ip, instance.port, ConnectCallback, socket);
         }
 

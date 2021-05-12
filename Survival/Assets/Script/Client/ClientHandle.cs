@@ -31,11 +31,11 @@ public class ClientHandle : MonoBehaviour
     public static void SpawnPlayer(Packet _packet)
     {
         int _id = _packet.ReadInt();
-        string _username = _packet.ReadString();
+        int _userType = _packet.ReadInt();
         Vector3 _position = _packet.ReadVector3();
         Quaternion _rotation = _packet.ReadQuaternion();
 
-        GameManager.instance.SpawnPlayer(_id, _username, _position, _rotation);
+        GameManager.instance.SpawnPlayer(_id, _userType, _position, _rotation);
     }
     /// <summary>player position을 담은 패킷을 받음</summary>
     /// <param name="_packet"></param>

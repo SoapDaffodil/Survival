@@ -33,17 +33,17 @@ public class PlayerManager : MonoBehaviour
         }
     }
 
-    public void Initialize(int _id, string _username)
+    public void Initialize(int _id, int _username)
     {
         id = _id;
         hp = maxHp;
-        username = _username;
+        username = _username.ToString();
         switch (_username)
         {
-            case "0": case "monster": case "Monster": case "MONSTER":
+            case (int)PlayerType.MONSTER:
                 playerType = PlayerType.MONSTER;
                 break;
-            case "1": case "human": case "Human": case "HUMAN":
+            case (int)PlayerType.HUMAN:
                 playerType = PlayerType.HUMAN;
                 break;
         }
