@@ -15,7 +15,7 @@ public class PlayerManager : MonoBehaviour
     public PlayerItem playerItem;           //플레이어의 아이템목록
     public PlayerType playerType;           //플레이어의 타입(괴물, 인간)
     public bool isCuring = false;           //플레이어 치료 중
-    public bool isMonsterAttack = false;
+    public bool isMonsterAttack = false;    //괴물 공격 성공
 
     public PlayerController controller;
 

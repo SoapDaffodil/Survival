@@ -11,6 +11,9 @@ public class PlayerController : MonoBehaviour
 
     private IEnumerator lightTrapInstall;
 
+    public List<Collider> colliders = new List<Collider>();
+    Collider myCollider;
+
     private void Start()
     {
         input[0] = KeyCode.W;
@@ -140,7 +143,7 @@ public class PlayerController : MonoBehaviour
                     }
                     break;
                 case PlayerType.MONSTER:
-                    if (_grabItem != null && _grabItem.itemType == ItemType.DRONE)
+                    if (_grabItem != null && _grabItem.itemType == ItemType.DRONE && !this.GetComponent<PlayerManager>().isMonsterAttack)
                     {
                         ClientSend.SkillDrone(_grabItem.spawnerId);
                     }
@@ -155,7 +158,7 @@ public class PlayerController : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.Q))
         {
-            if(this.GetComponent<PlayerManager>().playerType == PlayerType.MONSTER)
+            if(this.GetComponent<PlayerManager>().playerType == PlayerType.MONSTER && !this.GetComponent<PlayerManager>().isMonsterAttack)
             {
                 ClientSend.SpeedUp(GameManager.players[Client.instance.myId]);
             }
@@ -213,9 +216,39 @@ public class PlayerController : MonoBehaviour
 
     public void OnTriggerStay(Collider other)
     {
+        /* 고민고민.. ToDo : 콜라이더가 겹칠 때 처리
+        for (int i = 0; i < colliders.Count; i++)
+        {
+            Debug.Log("포문");
+            if (i != 0)
+            {
+                if (colliders[i] != colliders[i - 1])
+                {
+                    colliders.Add(other);
+                    Debug.Log("콜라이더리스트에 추가");
+                }
+            }
+            else
+            {
+                colliders.Add(other);
+                Debug.Log("콜라이더리스트에 추가");
+            }
+        }
+
+        if(colliders.Find(x => x.tag == "Item") != null)
+        {
+            Debug.Log($"감지된 콜라이더 : {colliders.Find(x => x.tag == "Item").name}");
+
+            myCollider = colliders.Find(x => x.tag == "Item");
+           Debug.Log($"가져온 콜라이더 : {myCollider.name}");
+
+        }
+        */
+        
         if (getKeyDownF)
         {
             getKeyDownF = false;
+
             //문열기
             if (other.CompareTag("Door"))
             {
@@ -234,9 +267,10 @@ public class PlayerController : MonoBehaviour
                 ClientSend.Hide(other.gameObject);
             }
             //아이템획득
-            else if (other.CompareTag("Item"))
+            else if (myCollider.CompareTag("Item"))
             {
-                if (other.GetComponent<ItemSpawner>().hasItem) {
+                if (other.GetComponent<ItemSpawner>().hasItem) 
+                {
                     switch (other.GetComponent<ItemSpawner>().itemType)
                     {
                         case ItemType.GUN: case ItemType.DRONE:
@@ -298,8 +332,11 @@ public class PlayerController : MonoBehaviour
                 }
                 else if (_grabItem.itemType == ItemType.LIGHTTRAP && this.GetComponent<PlayerManager>().playerType == PlayerType.MONSTER)
                 {
-                    int _floor = (this.transform.position.y < 10f) ? 1 : 2;
-                    ClientSend.Install(this.transform.position, _grabItem.spawnerId, _floor);
+                    if(!this.GetComponent<PlayerManager>().isMonsterAttack)
+                    {
+                        int _floor = (this.transform.position.y < 10f) ? 1 : 2;
+                        ClientSend.Install(this.transform.position, _grabItem.spawnerId, _floor);
+                    }                    
                 }
                 else
                 {
