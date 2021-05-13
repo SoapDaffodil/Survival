@@ -48,6 +48,11 @@ public class GameManager : MonoBehaviour
         EMPInstallFinished = false;
     }
 
+    private void Start()
+    {
+        ClientSend.WelcomeReceived();
+    }
+
 
     /// <summary>Spawns a player.</summary>
     /// <param name="_id">The player's ID.</param>

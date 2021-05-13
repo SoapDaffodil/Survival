@@ -13,11 +13,14 @@ public class ClientHandle : MonoBehaviour
 
         Debug.Log($"Message from server: {_msg}");
         Client.instance.myId = _myId;
-        ClientSend.WelcomeReceived();
+        //ClientSend.WelcomeReceived();
 
         ///Client.instance.tcp.socket.Client : 클라이언트의 소켓
         ///클라이언트의 소켓의 endpoint의 포트를 통해 udp 인스턴스에 연결
         Client.instance.udp.Connect(((IPEndPoint)Client.instance.tcp.socket.Client.LocalEndPoint).Port);
+
+        Client.instance.SceneLoad();
+        //UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetSceneByName("PlayerServerTest"));
     }
 
     /// <summary>서버로 부터 welcome data를 받음</summary>

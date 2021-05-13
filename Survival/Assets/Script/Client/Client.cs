@@ -24,6 +24,24 @@ public class Client : MonoBehaviour
     /// <summary>패킷단위로 data를 저장할 곳</summary>
     private static Dictionary<int, PacketHandler> packetHandlers;
 
+    public void SceneLoad()
+    {
+        StartCoroutine("LoadScene");
+    }
+    IEnumerator LoadScene()
+    {
+        DontDestroyOnLoad(Client.instance.gameObject);
+
+        AsyncOperation asyncLoad = UnityEngine.SceneManagement.SceneManager.LoadSceneAsync(1, UnityEngine.SceneManagement.LoadSceneMode.Additive);
+
+        while (!asyncLoad.isDone)
+        {
+            yield return null;
+        }
+
+        UnityEngine.SceneManagement.SceneManager.MoveGameObjectToScene(Client.instance.gameObject, UnityEngine.SceneManagement.SceneManager.GetSceneByBuildIndex(1));
+    }
+
     // Start is called before the first frame update
     /// <summary>이미 존재하는지 체크</summary>
     private void Awake()
