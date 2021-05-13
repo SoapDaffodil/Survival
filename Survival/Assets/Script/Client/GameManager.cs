@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour
     public static GameManager instance;
     /// <summary>emp존 설치완료여부 판단</summary>
     public static bool EMPInstallFinished = false;
+    public int empCount = 0;                //EMPZONE에 설치된 EMP 갯수
 
     public static Dictionary<int, PlayerManager> players = new Dictionary<int, PlayerManager>();            //모든플레이어정보 저장
     public static Dictionary<int, ItemSpawner> itemSpawners = new Dictionary<int, ItemSpawner>();           //모든아이템정보 저장
@@ -46,6 +47,7 @@ public class GameManager : MonoBehaviour
             { ItemType.BATTERY, itemSpawnerPrefab[4] },
         };
         EMPInstallFinished = false;
+        empCount = 0;
     }
 
     private void Start()
@@ -245,6 +247,22 @@ public class GameManager : MonoBehaviour
         {
             UIManager.instance.SetLightTrapUI();
         }
+    }
+
+    public void MonsterColorHpBar()
+    {
+        EMPInstallFinished = true;
+        
+        for(int i = 1; i <= players.Count; i++)
+        {
+            if(players[i].playerType == PlayerType.MONSTER)
+            {
+                UIManager.instance.HPBarUI[0].sprite = UIManager.instance.HPBarImage[1];
+                Debug.Log($"UI 바뀐 플레이어 : {players[i].gameObject.name}");
+            }
+        }
+
+        
     }
     /* UIManager로 이식중
     public void SetLightTrapUI()

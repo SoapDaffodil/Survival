@@ -215,36 +215,7 @@ public class PlayerController : MonoBehaviour
     }
 
     public void OnTriggerStay(Collider other)
-    {
-        /* 고민고민.. ToDo : 콜라이더가 겹칠 때 처리
-        for (int i = 0; i < colliders.Count; i++)
-        {
-            Debug.Log("포문");
-            if (i != 0)
-            {
-                if (colliders[i] != colliders[i - 1])
-                {
-                    colliders.Add(other);
-                    Debug.Log("콜라이더리스트에 추가");
-                }
-            }
-            else
-            {
-                colliders.Add(other);
-                Debug.Log("콜라이더리스트에 추가");
-            }
-        }
-
-        if(colliders.Find(x => x.tag == "Item") != null)
-        {
-            Debug.Log($"감지된 콜라이더 : {colliders.Find(x => x.tag == "Item").name}");
-
-            myCollider = colliders.Find(x => x.tag == "Item");
-           Debug.Log($"가져온 콜라이더 : {myCollider.name}");
-
-        }
-        */
-        
+    {      
         if (getKeyDownF)
         {
             getKeyDownF = false;
@@ -267,7 +238,7 @@ public class PlayerController : MonoBehaviour
                 ClientSend.Hide(other.gameObject);
             }
             //아이템획득
-            else if (myCollider.CompareTag("Item"))
+            else if (other.CompareTag("Item"))
             {
                 if (other.GetComponent<ItemSpawner>().hasItem) 
                 {

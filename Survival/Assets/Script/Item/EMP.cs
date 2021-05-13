@@ -92,7 +92,7 @@ public  class EMP : MonoBehaviour
         if (isDetectiveMode)
         {
 
-          if (other.GetComponent<PlayerManager>().playerType == PlayerType.HUMAN)
+          if (other.GetComponent<PlayerManager>().playerType == PlayerType.MONSTER)
             {
                 Debug.Log("키체인지");
                 other.GetComponent<PlayerController>().KeyChange();
