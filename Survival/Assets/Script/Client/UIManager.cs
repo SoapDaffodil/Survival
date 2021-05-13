@@ -232,6 +232,5 @@ public class UIManager : MonoBehaviour
                 GameManager.players[Client.instance.myId].isMonsterAttack = false;
             }
         }
-
     }
 }

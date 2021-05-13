@@ -161,6 +161,12 @@ public class ItemSpawner : MonoBehaviour
         ItemThrow(_position);
         hasItem = false;
         Debug.Log($"EMP Zone 설치완료");
+        Debug.Log($"empCount : {GameManager.instance.empCount}");
+
+        if (GameManager.instance.empCount == 2)
+        {
+            GameManager.instance.MonsterColorHpBar();
+        }
     }
 
     /// <summary>Install Item 표시</summary>

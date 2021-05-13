@@ -165,7 +165,8 @@ public class ClientHandle : MonoBehaviour
         int _spawnerId = _packet.ReadInt();
         Vector3 _position = _packet.ReadVector3();
 
-        GameManager.itemSpawners[_spawnerId].InstallEMP(_position);
+        GameManager.instance.empCount++;
+        GameManager.itemSpawners[_spawnerId].InstallEMP(_position);        
     }
 
     /// <summary>LightTrap 설치</summary>
