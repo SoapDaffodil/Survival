@@ -19,6 +19,22 @@ public class ServerHandle
         {
             Debug.Log($"Player \"{_username}\" (ID: {_fromClient}) has assumed the wrong client ID({_clientIdCheck})!");
         }
+        // TODO: send
+    }
+
+    /// <summary>게임시작</summary>
+    /// <param name="_fromClient"></param>
+    /// <param name="_packet"></param>
+    public static void GameStart(int _fromClient, Packet _packet)
+    {
+        int _clientIdCheck = _packet.ReadInt();
+        string _username = _packet.ReadString();
+
+        Debug.Log($"{Server.clients[_fromClient].tcp.socket.Client.RemoteEndPoint} connected successfully and is now player {_fromClient}.");
+        if (_fromClient != _clientIdCheck)
+        {
+            Debug.Log($"Player \"{_username}\" (ID: {_fromClient}) has assumed the wrong client ID({_clientIdCheck})!");
+        }
         Server.clients[_fromClient].SendIntoGame(_username);
         // TODO: send
     }
@@ -52,11 +68,11 @@ public class ServerHandle
     /// <summary>괴물 공격에 대한 패킷을 통해 shoot 처리</summary>
     /// <param name="_fromClient"></param>
     /// <param name="_packet"></param>
-    public static void MonsterAttack(int _fromClient, Packet _packet)
+    public static void CreatureAttack(int _fromClient, Packet _packet)
     {
         Vector3 _shootDirection = _packet.ReadVector3();
 
-        Server.clients[_fromClient].player.MonsterAttack(_shootDirection);
+        Server.clients[_fromClient].player.CreatureAttack(_shootDirection);
     }
 
     /// <summary>투척에 대한 패킷을 통해 아이템버리는 것 처리</summary>

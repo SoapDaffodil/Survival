@@ -22,7 +22,7 @@ public class EmpTrap : MonoBehaviour
             gameObject.GetComponent<SphereCollider>().isTrigger = true;
         }
 
-        if (other.CompareTag("Monster"))
+        if (other.CompareTag("Creature"))
         {
             Debug.Log("몬스터가 감지 되었습니다");
         }

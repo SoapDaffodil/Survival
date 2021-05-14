@@ -38,12 +38,12 @@ public class Bullet : MonoBehaviour
 
         if (collision.gameObject.GetComponent<Player>() != null)
         { 
-        if (collision.gameObject.GetComponent<Player>().playerType == PlayerType.MONSTER && EMPisInstalled)
+        if (collision.gameObject.GetComponent<Player>().playerType == PlayerType.CREATURE && EMPisInstalled)
             {                
                 collision.gameObject.GetComponent<Player>().TakeDamage(damage);
                 Debug.Log($"명중 : {collision.gameObject.name}");
             }
-            if(collision.gameObject.GetComponent<Player>().playerType == PlayerType.MONSTER && !EMPisInstalled)
+            if(collision.gameObject.GetComponent<Player>().playerType == PlayerType.CREATURE && !EMPisInstalled)
             {
                 ServerSend.KeyChange(collision.gameObject.GetComponent<Player>().id);
                 Debug.Log($"키체인지 명중 : {collision.gameObject.name}");

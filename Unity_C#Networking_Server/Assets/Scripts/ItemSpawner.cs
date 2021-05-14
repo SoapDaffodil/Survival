@@ -86,7 +86,7 @@ public class ItemSpawner : MonoBehaviour
                     }
                     break;
 
-                case PlayerType.MONSTER:
+                case PlayerType.CREATURE:
                     if (this.tag == "DRONE" || this.tag == "LIGHTTRAP")
                     {
                         hasItem = false;

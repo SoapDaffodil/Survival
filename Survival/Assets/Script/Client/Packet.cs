@@ -52,6 +52,7 @@ public enum ServerPackets
 public enum ClientPackets
 {
     welcomeReceived = 1,//접속
+    gameStart,          //게임시작
     playerMovement,     //움직임
 
 
@@ -73,7 +74,7 @@ public enum ClientPackets
     droneMovement,      //드론 움직임
     droneStop,          //드론 멈춤
     skillSpeedUp,       //괴물 이속증가
-    monsterAttack,      //괴물 공격
+    creatureAttack,      //괴물 공격
     //선희
 
 

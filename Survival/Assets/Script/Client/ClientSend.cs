@@ -26,11 +26,24 @@ public class ClientSend : MonoBehaviour
         using (Packet _packet = new Packet((int)ClientPackets.welcomeReceived))
         {
             _packet.Write(Client.instance.myId);
-            _packet.Write(UIManager.instance.playerType.ToString());
+            _packet.Write(Client.playerType.ToString());
 
             SendTCPData(_packet);
         }
     }
+
+    /// <summary>welcome메세지를 받고난 후 동작하는 함수 (잘 받았다고 서버로 전송)</summary>
+    public static void GameStart()
+    {
+        using (Packet _packet = new Packet((int)ClientPackets.gameStart))
+        {
+            _packet.Write(Client.instance.myId);
+            _packet.Write(Client.playerType.ToString());
+
+            SendTCPData(_packet);
+        }
+    }
+
     /// <summary>player 움직임에 대한 packet UDP전송(주기적으로 전송하기때문에 패킷의 끝을 확인해야함)</summary>
     public static void PlayerMovement(bool[] _inputs)
     {
@@ -60,9 +73,9 @@ public class ClientSend : MonoBehaviour
     }
 
     /// <summary>괴물 공격에 대한 packet TCP전송(공격할 때 한번만 전송하므로 누락이 될지언정 오류가 발생하지는 않음)</summary>
-    public static void MonsterAttack (Vector3 _facing)
+    public static void CreatureAttack (Vector3 _facing)
     {
-        using (Packet _packet = new Packet((int)ClientPackets.monsterAttack))
+        using (Packet _packet = new Packet((int)ClientPackets.creatureAttack))
         {
             _packet.Write(_facing);
 

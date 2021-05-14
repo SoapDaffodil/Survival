@@ -9,8 +9,9 @@ using System;
 public class Client : MonoBehaviour
 {
     public static Client instance;
+    public static PlayerType playerType;
     public static int dataBufferSize = 4096;
-
+    
     //public string ip;
     public string ip = "127.0.0.1";
     public int port = 26950;
@@ -24,6 +25,7 @@ public class Client : MonoBehaviour
     /// <summary>패킷단위로 data를 저장할 곳</summary>
     private static Dictionary<int, PacketHandler> packetHandlers;
 
+    /*
     public void SceneLoad()
     {
         StartCoroutine("LoadScene");
@@ -40,7 +42,9 @@ public class Client : MonoBehaviour
         }
 
         UnityEngine.SceneManagement.SceneManager.MoveGameObjectToScene(Client.instance.gameObject, UnityEngine.SceneManagement.SceneManager.GetSceneByBuildIndex(1));
-    }
+        UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetSceneByBuildIndex(1).name);
+        //UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetSceneByBuildIndex(1).name);
+    }*/
 
     // Start is called before the first frame update
     /// <summary>이미 존재하는지 체크</summary>
@@ -73,6 +77,7 @@ public class Client : MonoBehaviour
             tcp = new TCP();
             udp = new UDP();
         }
+        Client.instance.ConnectToServer();
     }
 
     /// <summary>client 데이터초기화 후 server에 연결</summary>

@@ -52,7 +52,7 @@ public class PlayerController : MonoBehaviour
             else
             {
                 Debug.Log("몬스터 공격!");
-                ClientSend.MonsterAttack(camTransform.forward);
+                ClientSend.CreatureAttack(camTransform.forward);
             }
             
                                    
@@ -142,8 +142,8 @@ public class PlayerController : MonoBehaviour
                         Debug.Log($"총을 들어주세요");
                     }
                     break;
-                case PlayerType.MONSTER:
-                    if (_grabItem != null && _grabItem.itemType == ItemType.DRONE && !this.GetComponent<PlayerManager>().isMonsterAttack)
+                case PlayerType.CREATURE:
+                    if (_grabItem != null && _grabItem.itemType == ItemType.DRONE && !this.GetComponent<PlayerManager>().isCreatureAttack)
                     {
                         ClientSend.SkillDrone(_grabItem.spawnerId);
                     }
@@ -158,7 +158,7 @@ public class PlayerController : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.Q))
         {
-            if(this.GetComponent<PlayerManager>().playerType == PlayerType.MONSTER && !this.GetComponent<PlayerManager>().isMonsterAttack)
+            if(this.GetComponent<PlayerManager>().playerType == PlayerType.CREATURE && !this.GetComponent<PlayerManager>().isCreatureAttack)
             {
                 ClientSend.SpeedUp(GameManager.players[Client.instance.myId]);
             }
@@ -207,11 +207,11 @@ public class PlayerController : MonoBehaviour
         input = changeInput;
 
 
-        UIManager.instance.monsterKey[0].text = "전진 :" + input[0].ToString();
-        UIManager.instance.monsterKey[1].text = "왼쪽 :" + input[1].ToString();
-        UIManager.instance.monsterKey[2].text = "뒤로 :" + input[2].ToString();
-        UIManager.instance.monsterKey[3].text = "오른쪽 :" + input[3].ToString();
-        UIManager.instance.monsterKey[4].text = "점프 :" + input[4].ToString();
+        UIManager.instance.creatureKey[0].text = "전진 :" + input[0].ToString();
+        UIManager.instance.creatureKey[1].text = "왼쪽 :" + input[1].ToString();
+        UIManager.instance.creatureKey[2].text = "뒤로 :" + input[2].ToString();
+        UIManager.instance.creatureKey[3].text = "오른쪽 :" + input[3].ToString();
+        UIManager.instance.creatureKey[4].text = "점프 :" + input[4].ToString();
     }
 
     public void OnTriggerStay(Collider other)
@@ -301,9 +301,9 @@ public class PlayerController : MonoBehaviour
                         ClientSend.Install(this.transform.position, _grabItem.spawnerId, _floor);
                     }
                 }
-                else if (_grabItem.itemType == ItemType.LIGHTTRAP && this.GetComponent<PlayerManager>().playerType == PlayerType.MONSTER)
+                else if (_grabItem.itemType == ItemType.LIGHTTRAP && this.GetComponent<PlayerManager>().playerType == PlayerType.CREATURE)
                 {
-                    if(!this.GetComponent<PlayerManager>().isMonsterAttack)
+                    if(!this.GetComponent<PlayerManager>().isCreatureAttack)
                     {
                         int _floor = (this.transform.position.y < 10f) ? 1 : 2;
                         ClientSend.Install(this.transform.position, _grabItem.spawnerId, _floor);

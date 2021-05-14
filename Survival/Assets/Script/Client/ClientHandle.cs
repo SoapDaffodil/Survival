@@ -19,7 +19,7 @@ public class ClientHandle : MonoBehaviour
         ///클라이언트의 소켓의 endpoint의 포트를 통해 udp 인스턴스에 연결
         Client.instance.udp.Connect(((IPEndPoint)Client.instance.tcp.socket.Client.LocalEndPoint).Port);
 
-        Client.instance.SceneLoad();
+        ClientSend.GameStart();
         //UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetSceneByName("PlayerServerTest"));
     }
 
@@ -305,12 +305,12 @@ public class ClientHandle : MonoBehaviour
 
     /// <summary> 괴물 공격 성공시 처리</summary>
     /// <param name="_packet"></param>
-    public static void MonsterAttackTrue(Packet _packet)
+    public static void CreatureAttackTrue(Packet _packet)
     {
         int _playerID = _packet.ReadInt();
-        bool _isMonsterAttack = _packet.ReadBool();
+        bool _isCreatureAttack = _packet.ReadBool();
 
-        GameManager.players[_playerID].isMonsterAttack = _isMonsterAttack;
+        GameManager.players[_playerID].isCreatureAttack = _isCreatureAttack;
 
     }
 

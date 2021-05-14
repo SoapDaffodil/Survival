@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum PlayerType { MONSTER, HUMAN }
+public enum PlayerType { CREATURE, HUMAN }
 
 public class PlayerManager : MonoBehaviour
 {
@@ -15,7 +15,7 @@ public class PlayerManager : MonoBehaviour
     public PlayerItem playerItem;           //플레이어의 아이템목록
     public PlayerType playerType;           //플레이어의 타입(괴물, 인간)
     public bool isCuring = false;           //플레이어 치료 중
-    public bool isMonsterAttack = false;    //괴물 공격 성공
+    public bool isCreatureAttack = false;    //괴물 공격 성공
 
     public PlayerController controller;
 
@@ -40,8 +40,8 @@ public class PlayerManager : MonoBehaviour
         username = _username.ToString();
         switch (_username)
         {
-            case (int)PlayerType.MONSTER:
-                playerType = PlayerType.MONSTER;
+            case (int)PlayerType.CREATURE:
+                playerType = PlayerType.CREATURE;
                 break;
             case (int)PlayerType.HUMAN:
                 playerType = PlayerType.HUMAN;

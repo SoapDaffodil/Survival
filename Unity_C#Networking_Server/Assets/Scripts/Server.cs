@@ -139,6 +139,7 @@ public class Server
         {
             {(int)ClientPackets.welcomeReceived, ServerHandle.WelcomeReceived },
 
+            { (int)ClientPackets.gameStart, ServerHandle.GameStart },
             { (int)ClientPackets.playerMovement, ServerHandle.PlayerMovement },
             {(int)ClientPackets.playerShootBullet, ServerHandle.PlayerShootBullet },
             {(int)ClientPackets.playerShootBomb, ServerHandle.PlayerShootBomb },
@@ -157,7 +158,7 @@ public class Server
             {(int)ClientPackets.droneMovement, ServerHandle.DroneMovement },
             {(int)ClientPackets.droneStop, ServerHandle.DroneStop },
             {(int)ClientPackets.skillSpeedUp, ServerHandle.SkillSpeedUp },
-            {(int)ClientPackets.mossterAttack, ServerHandle.MonsterAttack },
+            {(int)ClientPackets.mossterAttack, ServerHandle.CreatureAttack },
             //{(int)ClientPackets.udpTestReceived, ServerHandle.UDPTestReceived }
         };
         Debug.Log("Initialized packets.");

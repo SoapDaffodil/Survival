@@ -444,13 +444,13 @@ public class ServerSend
 
     /// <summary>괴물 공격 성공 TCP전송</summary>
     /// /// <param name="_playerID">괴물 플레이어 id</param>
-    /// <param name="_isMonsterAttack">괴물 공격 성공 여부</param>
-    public static void MonsterAttackTrue(int _playerID, bool _isMonsterAttack)
+    /// <param name="_isCreatureAttack">괴물 공격 성공 여부</param>
+    public static void CreatureAttackTrue(int _playerID, bool _isCreatureAttack)
     {
-        using (Packet _packet = new Packet((int)ServerPackets.monsterAttackTrue))
+        using (Packet _packet = new Packet((int)ServerPackets.creatureAttackTrue))
         {
             _packet.Write(_playerID);
-            _packet.Write(_isMonsterAttack);
+            _packet.Write(_isCreatureAttack);
 
             SendTCPData(_playerID, _packet);
         }

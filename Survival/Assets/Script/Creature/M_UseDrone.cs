@@ -10,14 +10,14 @@ public class M_UseDrone : MonoBehaviour
     public Drone drone;
     private Drone presentItem;
     private Camera droneCam;
-    private Camera monsterCam;
+    private Camera creatureCam;
     private bool isFlying = false;
 
     private void Start()
     {
         droneCam = GameObject.Find("DroneCam").GetComponent<Camera>();
-        monsterCam = GameObject.Find("Monster Camera").GetComponent<Camera>();
-        monsterCam.enabled = true;
+        creatureCam = GameObject.Find("Creature Camera").GetComponent<Camera>();
+        creatureCam.enabled = true;
         droneCam.enabled = false;
     }
 
@@ -76,7 +76,7 @@ public class M_UseDrone : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0) && !isFlying)
         {
-            monsterCam.enabled = false;
+            creatureCam.enabled = false;
             droneCam.enabled = true;
             drone.transform.SetParent(null);
             drone.transform.position += new Vector3(0f, 5f, 0f);
@@ -89,7 +89,7 @@ public class M_UseDrone : MonoBehaviour
 
         else if(isFlying && Input.GetMouseButtonDown(0))
         {
-            monsterCam.enabled = true;
+            creatureCam.enabled = true;
             droneCam.enabled = false;
             drone.transform.SetParent(transform);
             drone.transform.position -= new Vector3(0f, 5f, 0f);

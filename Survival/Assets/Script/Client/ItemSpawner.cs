@@ -165,7 +165,7 @@ public class ItemSpawner : MonoBehaviour
 
         if (GameManager.instance.empCount == 2)
         {
-            GameManager.instance.MonsterColorHpBar();
+            GameManager.instance.CreatureColorHpBar();
         }
     }
 

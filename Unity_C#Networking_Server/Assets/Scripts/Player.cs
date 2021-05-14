@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum PlayerType { MONSTER, HUMAN }
+public enum PlayerType { CREATURE, HUMAN }
 
 public class Player : MonoBehaviour
 {
@@ -28,7 +28,7 @@ public class Player : MonoBehaviour
 
     public float firePower = 600f;            //총 발사 파워
 
-    public bool isMonsterAttack = false;
+    public bool isCreatureAttack = false;
     private Vector3 viewPoint;
 
     public void Initialize(int _id, string _username)
@@ -43,8 +43,8 @@ public class Player : MonoBehaviour
         string _playerType = "";
         switch (username)
         {
-            case "0": case "monster": case "Monster": case "MONSTER":
-                _playerType = "MONSTER";
+            case "0": case "creature": case "Creature": case "CREATURE":
+                _playerType = "CREATURE";
                 break;
             case "1":  case "human": case "Human": case "HUMAN":
                 _playerType = "HUMAN";
@@ -168,7 +168,7 @@ public class Player : MonoBehaviour
                 if (_hit.collider.CompareTag("Player"))
                 {
                     Player _player = _hit.collider.GetComponent<Player>();
-                    if (_player != this && _player.playerType == PlayerType.MONSTER)
+                    if (_player != this && _player.playerType == PlayerType.CREATURE)
                     {
                         ServerSend.KeyChange(id);
                         Debug.Log($"명중 : {_hit.collider.name}");
@@ -181,7 +181,7 @@ public class Player : MonoBehaviour
 
     /// <summary>괴물 공격</summary>
     /// <param name="_viewDirection"> 괴물 공격 방향 </param>
-    public void MonsterAttack(Vector3 _viewDirection)
+    public void CreatureAttack(Vector3 _viewDirection)
     {
         viewPoint = _viewDirection;
         if(Physics.Raycast(transform.position, _viewDirection, out RaycastHit _hit, 3f))
@@ -191,7 +191,7 @@ public class Player : MonoBehaviour
                 Player hitPlayer = _hit.collider.GetComponent<Player>();
                 if (hitPlayer.playerType == PlayerType.HUMAN)
                 {
-                    isMonsterAttack = true;
+                    isCreatureAttack = true;
 
                     Debug.Log($"공격 맞음 : {_hit.collider.gameObject.name}");
                     hitPlayer.TakeDamage(50f);
@@ -201,7 +201,7 @@ public class Player : MonoBehaviour
                 this.gameObject.GetComponent<Player>().controller.enabled = false;
                 Invoke("EndStun", 2f);
                 //스킬 비활성화
-                ServerSend.MonsterAttackTrue(id, isMonsterAttack);
+                ServerSend.CreatureAttackTrue(id, isCreatureAttack);
             }
             
         }

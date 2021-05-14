@@ -44,7 +44,7 @@ public enum ServerPackets
     spawnBullet,        //총알 생성
     bulletPosition,     //총알 위치
     bulletCrush,         //총알 충돌
-    monsterAttackTrue,  //괴물 공격 성공
+    creatureAttackTrue,  //괴물 공격 성공
     //선희
     //udpTest
 }
@@ -53,6 +53,7 @@ public enum ServerPackets
 public enum ClientPackets
 {
     welcomeReceived = 1,//접속
+    gameStart,          //게임시작
     playerMovement,     //움직임
 
 

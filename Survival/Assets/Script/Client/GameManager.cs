@@ -19,7 +19,7 @@ public class GameManager : MonoBehaviour
     public GameObject[] localPlayerPrefab;
     /// <summary>다른 player 프리팹</summary>
     public GameObject[] otherPlayerPrefab;
-    [Tooltip("[0] : monster, [1] : human 모델링 메쉬")]
+    [Tooltip("[0] : creature, [1] : human 모델링 메쉬")]
     public Mesh[] playerMesh = new Mesh[2];
     /// <summary>아이템 프리팹</summary>
     public GameObject[] itemSpawnerPrefab;
@@ -52,13 +52,23 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        ClientSend.WelcomeReceived();
+        UIManager.instance.startMenu.SetActive(false);
+        switch (Client.playerType)
+        {
+            case PlayerType.CREATURE:
+                UIManager.instance.CreatureUI.SetActive(true);
+                UIManager.instance.HumanUI.SetActive(false);
+                break;
+            case PlayerType.HUMAN:
+                UIManager.instance.CreatureUI.SetActive(false);
+                UIManager.instance.HumanUI.SetActive(true);
+                break;
+        }
     }
-
 
     /// <summary>Spawns a player.</summary>
     /// <param name="_id">The player's ID.</param>
-    /// <param name="_name">The player's name.</param>
+    /// <param name="_userType">The player's type.</param>
     /// <param name="_position">The player's starting position.</param>
     /// <param name="_rotation">The player's starting rotation.</param>
     public void SpawnPlayer(int _id, int _userType, Vector3 _position, Quaternion _rotation)
@@ -68,8 +78,8 @@ public class GameManager : MonoBehaviour
         {//현재 클라이언트의 플레이어인경우
             switch (_userType)
             {
-                case (int)PlayerType.MONSTER:
-                    _player = Instantiate(localPlayerPrefab[(int)PlayerType.MONSTER], _position, _rotation);
+                case (int)PlayerType.CREATURE:
+                    _player = Instantiate(localPlayerPrefab[(int)PlayerType.CREATURE], _position, _rotation);
                     break;
                 case (int)PlayerType.HUMAN:
                     _player = Instantiate(localPlayerPrefab[(int)PlayerType.HUMAN], _position, _rotation);
@@ -78,11 +88,11 @@ public class GameManager : MonoBehaviour
             for (int i = 0; i < UIManager.instance.itemImageUI.Length; i++)
             {
                 UIManager.instance.itemImageUI[i].sprite = UIManager.instance.itemImage[
-                    (int)UIManager.instance.playerType * UIManager.instance.itemImageUI.Length + i];
+                    (int)Client.playerType * UIManager.instance.itemImageUI.Length + i];
                 UIManager.instance.skillImageUI[i].sprite = UIManager.instance.skillImage[
-                    (int)UIManager.instance.playerType * UIManager.instance.itemImageUI.Length + i];
+                    (int)Client.playerType * UIManager.instance.itemImageUI.Length + i];
             }
-            if (!EMPInstallFinished && UIManager.instance.playerType == PlayerType.MONSTER)
+            if (!EMPInstallFinished && Client.playerType == PlayerType.CREATURE)
             {
                 UIManager.instance.HPBarUI[0].sprite = UIManager.instance.HPBarImage[0];
             }
@@ -95,23 +105,14 @@ public class GameManager : MonoBehaviour
         {//다른 크라이언트의 플레이어인경우
             switch (_userType)
             {
-                case (int)PlayerType.MONSTER:
-                    _player = Instantiate(otherPlayerPrefab[(int)PlayerType.MONSTER], _position, _rotation);
+                case (int)PlayerType.CREATURE:
+                    _player = Instantiate(otherPlayerPrefab[(int)PlayerType.CREATURE], _position, _rotation);
                     break;
                 case (int)PlayerType.HUMAN:
                     _player = Instantiate(otherPlayerPrefab[(int)PlayerType.HUMAN], _position, _rotation);
                     break;
             }
         }
-        /*
-        if (character_human) {
-            _player.GetComponent<MeshFilter>().mesh = playerMesh[1];        //모델링 적용시 사용 수정예정
-        }
-        else
-        {
-            _player.GetComponent<MeshFilter>().mesh = playerMesh[0];        //모델링 적용시 사용 수정예정
-        }
-        */
         _player.GetComponent<PlayerManager>().Initialize(_id, _userType);
         players.Add(_id, _player.GetComponent<PlayerManager>());
     }
@@ -166,7 +167,7 @@ public class GameManager : MonoBehaviour
                 }
                 break;
 
-            case PlayerType.MONSTER:
+            case PlayerType.CREATURE:
                 if (_spawner.itemType == ItemType.DRONE)
                 {
                     _player.playerItem.item_number1 = _spawner;
@@ -232,7 +233,7 @@ public class GameManager : MonoBehaviour
     public void AddLightTrap(int _floor, ItemSpawner _lightTrap)
     {
         ItemSpawner.lightTrapList.Add(new ItemSpawner.TrapInfo(_floor, _lightTrap));
-        if (players[Client.instance.myId].GetComponent<PlayerManager>().playerType == PlayerType.MONSTER)
+        if (players[Client.instance.myId].GetComponent<PlayerManager>().playerType == PlayerType.CREATURE)
         {
             UIManager.instance.SetLightTrapUI();
         }
@@ -243,19 +244,19 @@ public class GameManager : MonoBehaviour
         Destroy(usedTrap.gameObject);*/
 
         ItemSpawner.lightTrapList.Remove(ItemSpawner.lightTrapList[number]);
-        if (players[Client.instance.myId].GetComponent<PlayerManager>().playerType == PlayerType.MONSTER)
+        if (players[Client.instance.myId].GetComponent<PlayerManager>().playerType == PlayerType.CREATURE)
         {
             UIManager.instance.SetLightTrapUI();
         }
     }
 
-    public void MonsterColorHpBar()
+    public void CreatureColorHpBar()
     {
         EMPInstallFinished = true;
         
         for(int i = 1; i <= players.Count; i++)
         {
-            if(players[i].playerType == PlayerType.MONSTER)
+            if(players[i].playerType == PlayerType.CREATURE)
             {
                 UIManager.instance.HPBarUI[0].sprite = UIManager.instance.HPBarImage[1];
                 Debug.Log($"UI 바뀐 플레이어 : {players[i].gameObject.name}");

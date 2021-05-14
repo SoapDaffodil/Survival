@@ -7,26 +7,25 @@ public class UIManager : MonoBehaviour
 {
     public static UIManager instance;
 
-    public GameObject startMenu;
-    public PlayerType playerType;
+    public GameObject startMenu;//지울예정(StartScene으로 이전)
     public Sprite[] startButtonImage;
 
+    public GameObject HumanUI;
+    public GameObject CreatureUI;
+
     public Image[] HPBarUI;
-    public Sprite[] HPBarImage;
     public Image[] itemImageUI;
     public Image[] skillImageUI;
-    public Sprite[] itemGrayImage;
-    public Sprite[] skillGrayImage;
-    public Sprite[] itemImage;
-    public Sprite[] skillImage;
-
     public Image[] coolTimeBackGroundImage;
     public Text[] coolTimeText;
-    public float seconds = 10f;
 
     /// <summary>EMP설치게이지</summary>
     [Tooltip("EMP설치게이지")]
     public Slider powerSlider;
+
+    /// <summary>플레이어 체력 회복 게이지</summary>
+    [Tooltip("플레이어 체력 회복 게이지")]
+    public Slider hpSlider;
 
     /// <summary>현재 쏠 수 있는 탄수</summary>
     [Tooltip("현재 쏠 수 있는 탄수")]
@@ -35,7 +34,7 @@ public class UIManager : MonoBehaviour
     /// <summary>장전가능한 탄 수</summary>
     [Tooltip("장전가능한 탄 수")]
     public Text bulletAmoutText;
-    
+
     /// <summary>1층 맵 플레이어위치</summary>
     [Tooltip("1층 맵 플레이어위치")]
     public GameObject fisrtFloorPlayer;
@@ -50,15 +49,18 @@ public class UIManager : MonoBehaviour
 
     /// <summary>몬스터의 현재 키배치</summary>
     [Tooltip("몬스터의 현재 키배치")]
-    public Text[] monsterKey;
-
-    /// <summary>플레이어 체력 회복 게이지</summary>
-    [Tooltip("플레이어 체력 회복 게이지")]
-    public Slider hpSlider;
-
-
+    public Text[] creatureKey;
 
     public GameObject[] UI_LightTrapList;
+
+    public Sprite[] HPBarImage;
+    public Sprite[] itemGrayImage;
+    public Sprite[] skillGrayImage;
+    public Sprite[] itemImage;
+    public Sprite[] skillImage;
+    
+    public float seconds = 10f;
+
     public Material[] material_UI_LightTrap;
     public Vector3[] position_UI_LightTrap = { new Vector3(-100, 0, 0), new Vector3(-200, 0, 0) };
 
@@ -81,14 +83,14 @@ public class UIManager : MonoBehaviour
     {
         if(GameObject.FindWithTag("Player") != null)
         {
-            if (GameManager.players[Client.instance.myId].playerType == PlayerType.MONSTER && GameManager.players[Client.instance.myId].isMonsterAttack)
+            if (GameManager.players[Client.instance.myId].playerType == PlayerType.CREATURE && GameManager.players[Client.instance.myId].isCreatureAttack)
             {
                 if (seconds > 0)
                 {
                     seconds -= Time.deltaTime;
                     Debug.Log(seconds);
                 }
-                MonsterSkillUIControll(seconds);
+                CreatureSkillUIControll(seconds);
             }
         }
     }
@@ -98,10 +100,10 @@ public class UIManager : MonoBehaviour
     {
         Button button = UnityEngine.EventSystems.EventSystem.current.GetComponent<Button>();
 
-        if (button.name == "0" || button.name == "monster"
-            || button.name == "Monster" || button.name == "MONSTER")
+        if (button.name == "0" || button.name == "creature"
+            || button.name == "Creature" || button.name == "CREATURE")
         {
-            button.image.sprite = startButtonImage[((int)PlayerType.MONSTER * 2) + 1];
+            button.image.sprite = startButtonImage[((int)PlayerType.CREATURE * 2) + 1];
         }
         else if (button.name == "1" || button.name == "human"
             || button.name == "Human" || button.name == "HUMAN")
@@ -115,10 +117,10 @@ public class UIManager : MonoBehaviour
     {
         Button button = UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject.GetComponent<Button>();
 
-        if (button.name == "0" || button.name == "monster"
-            || button.name == "Monster" || button.name == "MONSTER")
+        if (button.name == "0" || button.name == "creature"
+            || button.name == "Creature" || button.name == "CREATURE")
         {
-            button.image.sprite = startButtonImage[((int)PlayerType.MONSTER * 2)];
+            button.image.sprite = startButtonImage[((int)PlayerType.CREATURE * 2)];
         }
         else if (button.name == "1" || button.name == "human"
             || button.name == "Human" || button.name == "HUMAN")
@@ -131,35 +133,35 @@ public class UIManager : MonoBehaviour
     public void ConnectToServer()
     {
         /*
-        if (usernameField.text == "0" || usernameField.text == "monster" || usernameField.text == "Monster" ||
+        if (usernameField.text == "0" || usernameField.text == "creature" || usernameField.text == "Creature" ||
             usernameField.text == "1" || usernameField.text == "human" || usernameField.text == "Human") {
             startMenu.SetActive(false);
-            SetActiveMonsterKey(false);
+            SetActiveCreatureKey(false);
             usernameField.interactable = false;
             Client.instance.ConnectToServer();
         }
         else
         {
             usernameField.text = "";
-            usernameField.placeholder.GetComponent<Text>().text = "올바른 캐릭터를 입력해주세요\n(0: human, 1: monster)";
+            usernameField.placeholder.GetComponent<Text>().text = "올바른 캐릭터를 입력해주세요\n(0: human, 1: creature)";
         }
         */
         Button clickedButton = UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject.GetComponent<Button>();
         
-        if (clickedButton.name == "0" || clickedButton.name == "monster"
-            || clickedButton.name == "Monster" || clickedButton.name == "MONSTER")
+        if (clickedButton.name == "0" || clickedButton.name == "creature"
+            || clickedButton.name == "Creature" || clickedButton.name == "CREATURE")
         {
-            playerType = PlayerType.MONSTER;
+            Client.playerType = PlayerType.CREATURE;
             startMenu.SetActive(false);
-            SetActiveMonsterKey(false);
+            SetActiveCreatureKey(false);
             Client.instance.ConnectToServer();
         }
         else if (clickedButton.name == "1" || clickedButton.name == "human"
             || clickedButton.name == "Human" || clickedButton.name == "HUMAN")
         {
-            playerType = PlayerType.HUMAN;
+            Client.playerType = PlayerType.HUMAN;
             startMenu.SetActive(false);
-            SetActiveMonsterKey(false);
+            SetActiveCreatureKey(false);
             Client.instance.ConnectToServer();
         }
     }
@@ -181,11 +183,11 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    public void SetActiveMonsterKey(bool _active)
+    public void SetActiveCreatureKey(bool _active)
     {
-        for (int i = 0; i < monsterKey.Length; i++)
+        for (int i = 0; i < creatureKey.Length; i++)
         {
-            monsterKey[i].gameObject.SetActive(_active);
+            creatureKey[i].gameObject.SetActive(_active);
         }
     }
     
@@ -216,7 +218,7 @@ public class UIManager : MonoBehaviour
     }
 
     /// <summary>괴물 공격 성공시 스킬 비활성화</summary>
-    public void MonsterSkillUIControll(float seconds)
+    public void CreatureSkillUIControll(float seconds)
     {
         for(int i = 0; i < coolTimeBackGroundImage.Length; i++)
         {
@@ -229,7 +231,7 @@ public class UIManager : MonoBehaviour
             {
                 coolTimeBackGroundImage[i].gameObject.SetActive(false);
                 coolTimeText[i].gameObject.SetActive(false);
-                GameManager.players[Client.instance.myId].isMonsterAttack = false;
+                GameManager.players[Client.instance.myId].isCreatureAttack = false;
             }
         }
     }
