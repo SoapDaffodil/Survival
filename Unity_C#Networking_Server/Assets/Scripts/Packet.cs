@@ -37,7 +37,7 @@ public enum ServerPackets
 
 
     //선희
-    cure,               //플레이어 체력 회복 어디에 쓰이지??
+    cure,               //플레이어 체력 회복 어디에 쓰이지?? -> 삭제해도 됨
     droneEnabled,       //드론 활성화
     droneEnabledFalse,  //드론 비활성화
     dronePosition,      //드론 position

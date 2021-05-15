@@ -38,7 +38,7 @@ public class Bullet : MonoBehaviour
 
         if (collision.gameObject.GetComponent<Player>() != null)
         { 
-        if (collision.gameObject.GetComponent<Player>().playerType == PlayerType.MONSTER && EMPisInstalled)
+            if (collision.gameObject.GetComponent<Player>().playerType == PlayerType.MONSTER && EMPisInstalled)
             {                
                 collision.gameObject.GetComponent<Player>().TakeDamage(damage);
                 Debug.Log($"명중 : {collision.gameObject.name}");
