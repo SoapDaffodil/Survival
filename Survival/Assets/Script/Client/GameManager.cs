@@ -80,15 +80,18 @@ public class GameManager : MonoBehaviour
             {
                 case (int)PlayerType.CREATURE:
                     _player = Instantiate(localPlayerPrefab[(int)PlayerType.CREATURE], _position, _rotation);
+                    UIManager.instance.itemImageUI[UIManager.instance.itemImageUI.Length-1].gameObject.SetActive(false);
                     break;
                 case (int)PlayerType.HUMAN:
                     _player = Instantiate(localPlayerPrefab[(int)PlayerType.HUMAN], _position, _rotation);
+                    UIManager.instance.skillImageUI[UIManager.instance.skillImageUI.Length-1].gameObject.SetActive(false);
                     break;
             }
             for (int i = 0; i < UIManager.instance.itemImageUI.Length; i++)
             {
                 UIManager.instance.itemImageUI[i].sprite = UIManager.instance.itemImage[
                     (int)Client.playerType * UIManager.instance.itemImageUI.Length + i];
+                UIManager.instance.itemCountText[i].text = "0";
                 UIManager.instance.skillImageUI[i].sprite = UIManager.instance.skillImage[
                     (int)Client.playerType * UIManager.instance.itemImageUI.Length + i];
             }

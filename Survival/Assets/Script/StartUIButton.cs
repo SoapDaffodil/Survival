@@ -58,6 +58,5 @@ public class StartUIButton : MonoBehaviour
             Client.playerType = PlayerType.HUMAN;
         }
         UnityEngine.SceneManagement.SceneManager.LoadScene("Play");
-        //UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetSceneByBuildIndex(1).name);
     }
 }

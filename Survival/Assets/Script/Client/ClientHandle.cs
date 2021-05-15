@@ -19,8 +19,8 @@ public class ClientHandle : MonoBehaviour
         ///클라이언트의 소켓의 endpoint의 포트를 통해 udp 인스턴스에 연결
         Client.instance.udp.Connect(((IPEndPoint)Client.instance.tcp.socket.Client.LocalEndPoint).Port);
 
+        ClientSend.WelcomeReceived();
         ClientSend.GameStart();
-        //UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetSceneByName("PlayerServerTest"));
     }
 
     /// <summary>서버로 부터 welcome data를 받음</summary>

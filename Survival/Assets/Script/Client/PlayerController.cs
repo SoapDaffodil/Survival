@@ -203,15 +203,9 @@ public class PlayerController : MonoBehaviour
         for (int i = 0; i < input.Length; i++)
         {
             changeInput[i] = input[random[i]];
+            UIManager.instance.creatureKey[i].text = changeInput[i].ToString();
         }
         input = changeInput;
-
-
-        UIManager.instance.creatureKey[0].text = "전진 :" + input[0].ToString();
-        UIManager.instance.creatureKey[1].text = "왼쪽 :" + input[1].ToString();
-        UIManager.instance.creatureKey[2].text = "뒤로 :" + input[2].ToString();
-        UIManager.instance.creatureKey[3].text = "오른쪽 :" + input[3].ToString();
-        UIManager.instance.creatureKey[4].text = "점프 :" + input[4].ToString();
     }
 
     public void OnTriggerStay(Collider other)

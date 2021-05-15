@@ -15,6 +15,7 @@ public class UIManager : MonoBehaviour
 
     public Image[] HPBarUI;
     public Image[] itemImageUI;
+    public Text[] itemCountText;
     public Image[] skillImageUI;
     public Image[] coolTimeBackGroundImage;
     public Text[] coolTimeText;
