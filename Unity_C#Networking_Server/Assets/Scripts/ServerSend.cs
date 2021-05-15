@@ -376,6 +376,17 @@ public class ServerSend
         }
     }
 
+    /// <summary>드론 비활성화 정보를 클라이언트에 TCP전송</summary>
+    public static void DroneEnabledFalse(int _playerID)
+    {
+        using (Packet _packet = new Packet((int)ServerPackets.droneEnabledFalse))
+        {
+            _packet.Write(_playerID);
+
+            SendTCPData(_playerID, _packet);
+        }
+    }
+
     /// <summary>드론의 위치를 모든 클라이언트에 UDP전송</summary>
     /// <param name="_drone">드론</param>
     public static void DronePosition(Drone _drone)

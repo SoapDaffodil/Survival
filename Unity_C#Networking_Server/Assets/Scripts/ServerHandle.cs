@@ -194,7 +194,9 @@ public class ServerHandle
         int _spawnId = _packet.ReadInt();
 
         ItemSpawner.spawners[_spawnId].GetComponent<Drone>().controller.enabled = false;
-        Server.clients[_fromClient].player.controller.enabled = true;        
+        Server.clients[_fromClient].player.controller.enabled = true;
+
+        ServerSend.DroneEnabledFalse(_fromClient);
     }
 
     /// <summary>괴물 이속 증가 packet을 받아 움직임 처리</summary>

@@ -149,7 +149,11 @@ public class PlayerController : MonoBehaviour
                     break;
                 case PlayerType.MONSTER:
                     if (_grabItem != null && _grabItem.itemType == ItemType.DRONE && !this.GetComponent<PlayerManager>().isMonsterAttack)
-                    {                          
+                    {
+                        if(_grabItem.transform.parent == null)
+                        {
+                            _grabItem.transform.SetParent(gameObject.transform);
+                        }
                         ClientSend.SkillDrone(_grabItem.spawnerId);
                     }
                     else

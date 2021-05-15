@@ -23,15 +23,7 @@ public class Drone : MonoBehaviour
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.R) && isDroneMoving)
-        {
-            isDroneMoving = false;
-            droneCam.gameObject.SetActive(false);
-            this.transform.parent.GetChild(0).GetComponent<Camera>().gameObject.SetActive(true);
-            this.transform.parent.GetComponent<PlayerController>().enabled = true;
-
-            transform.SetParent(null, true);
-
-            Debug.Log("드론 멈춤");
+        {           
             ClientSend.DroneStop(this.gameObject);
         }
 
@@ -73,6 +65,16 @@ public class Drone : MonoBehaviour
         gameObject.transform.position += new Vector3 (0f, 5f, 0f);
         droneCam.gameObject.SetActive(true);       
         isDroneMoving = true;*/
+    }
+
+    public void Stop()
+    {
+        isDroneMoving = false;
+        droneCam.gameObject.SetActive(false);
+        this.transform.parent.GetChild(0).GetComponent<Camera>().gameObject.SetActive(true);
+        this.transform.parent.GetComponent<PlayerController>().enabled = true;
+
+        transform.SetParent(null, true);
     }
   
     private void FixedUpdate()
