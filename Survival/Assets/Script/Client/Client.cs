@@ -54,7 +54,7 @@ public class Client : MonoBehaviour
         {
             //ip = "172.20.10.4";
             ip = "127.0.0.1";
-            port = 80;
+            //port = 80;
             instance = this;
             //ip = "172.20.10.4";
            // port = 80;
@@ -359,6 +359,7 @@ public class Client : MonoBehaviour
             { (int)ServerPackets.keyChange, ClientHandle.KeyChange},
             //cure??
             { (int)ServerPackets.droneEnabled, ClientHandle.DroneEnabled},
+            { (int)ServerPackets.droneEnabledFalse, ClientHandle.DroneEnabledFalse},
             { (int)ServerPackets.dronePosition, ClientHandle.DronePosition},
             { (int)ServerPackets.droneRotation, ClientHandle.DroneRotation},
 

@@ -14,6 +14,7 @@ public class Projectile : MonoBehaviour
     public Vector3 initialForce;            //발사벡터
     public float explosionRadius = 1.5f;    //폭발범위
     public float explosionDamage = 75f;     //폭발데미지
+    public bool EMPInstallFinished;         //EMPZone에 emp 설치 완료
 
     private void Start()
     {
@@ -36,17 +37,28 @@ public class Projectile : MonoBehaviour
     /// <param name="collision"></param>
     private void OnCollisionEnter(Collision collision)
     {
-        Explode();
+        if(collision.gameObject.GetComponent<Player>() != null)
+        {
+            if (collision.gameObject.GetComponent<Player>().playerType == PlayerType.CREATURE && EMPInstallFinished)
+            {
+                Explode();
+            }
+            if (collision.gameObject.GetComponent<Player>().playerType == PlayerType.CREATURE && !EMPInstallFinished)
+            {
+                Debug.Log("괴물이 데미지를 입지 않습니다!");
+            }
+        }        
     }
 
     /// <summary>초기 발사상태</summary>
     /// <param name="_initialMovementDirection">초기 방향</param>
     /// <param name="_initialForceStrength">초기 세기</param>
     /// <param name="_thrownByPlayer">발사한 사람</param>
-    public void Initialize(Vector3 _initialMovementDirection, float _initialForceStrength, int _thrownByPlayer)
+    public void Initialize(Vector3 _initialMovementDirection, float _initialForceStrength, int _thrownByPlayer, bool _EMPInstallFinished)
     {
         initialForce = _initialMovementDirection * _initialForceStrength;
         thrownByPlayer = _thrownByPlayer;
+        EMPInstallFinished = _EMPInstallFinished;
     }
 
     /// <summary>폭발</summary>

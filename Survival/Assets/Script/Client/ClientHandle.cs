@@ -242,6 +242,14 @@ public class ClientHandle : MonoBehaviour
         GameManager.players[_playerId].playerItem.GrabItem.GetComponent<Drone>().Moving();
     }
 
+    public static void DroneEnabledFalse(Packet _packet)
+    {
+        int _playerId = _packet.ReadInt();
+
+        Debug.Log($"드론멈춤!");
+        GameManager.players[_playerId].playerItem.GrabItem.GetComponent<Drone>().Stop();
+    }
+
     /// <summary>드론 position을 담은 패킷을 받음</summary>
     /// <param name="_packet"></param>
     public static void DronePosition(Packet _packet)

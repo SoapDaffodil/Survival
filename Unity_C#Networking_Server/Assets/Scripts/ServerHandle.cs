@@ -81,8 +81,9 @@ public class ServerHandle
     public static void PlayerShootBomb(int _fromClient, Packet _packet)
     {
         Vector3 _throwDirection = _packet.ReadVector3();
+        bool _EMPInstallFinished = _packet.ReadBool();
 
-        Server.clients[_fromClient].player.ThrowItem(_throwDirection);
+        Server.clients[_fromClient].player.ThrowItem(_throwDirection, _EMPInstallFinished);
     }
 
     /// <summary>아이템획득에 관한 패킷을 통해 아이템획득 처리</summary>
@@ -211,7 +212,8 @@ public class ServerHandle
 
         ItemSpawner.spawners[_spawnId].GetComponent<Drone>().controller.enabled = false;
         Server.clients[_fromClient].player.controller.enabled = true;
-        
+
+        ServerSend.DroneEnabledFalse(_fromClient);
     }
 
     /// <summary>괴물 이속 증가 packet을 받아 움직임 처리</summary>
