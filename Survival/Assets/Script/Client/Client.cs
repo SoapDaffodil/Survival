@@ -50,7 +50,7 @@ public class Client : MonoBehaviour
         {
             //ip = "172.20.10.4";
             ip = "127.0.0.1";
-            port = 80;
+            //port = 80;
             instance = this;
             //ip = "172.20.10.4";
            // port = 80;

@@ -11,8 +11,8 @@ public class PlayerController : MonoBehaviour
 
     private IEnumerator lightTrapInstall;
 
-    public List<Collider> colliders = new List<Collider>();
-    Collider myCollider;
+    private bool isInEMPZone = false;
+    private bool isInHideZone = false;
 
     private void Start()
     {
@@ -23,12 +23,16 @@ public class PlayerController : MonoBehaviour
         input[4] = KeyCode.Space;
     }
 
-    private IEnumerator WaitForGetItem()
+    private IEnumerator WaitForMilliSec()
     {
         yield return new WaitForSeconds(0.1f);
         if (getKeyDownF) {
             Debug.Log($"주위에 아무것도 없습니다");
             getKeyDownF = false;
+        }
+        if (getKeyDownE) {
+            Debug.Log($"주위에 아무것도 없습니다");
+            getKeyDownE = false;
         }
     }
 
@@ -77,7 +81,7 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.F))
         {
             getKeyDownF = true;
-            StartCoroutine(WaitForGetItem());
+            StartCoroutine(WaitForMilliSec());
         }
         if (Input.GetKeyDown(KeyCode.G))
         {
@@ -102,6 +106,7 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.E))
         {
             getKeyDownE = true;
+            StartCoroutine(WaitForMilliSec());
         }
         if (Input.GetKeyDown(KeyCode.C))
         {
@@ -144,7 +149,7 @@ public class PlayerController : MonoBehaviour
                     break;
                 case PlayerType.MONSTER:
                     if (_grabItem != null && _grabItem.itemType == ItemType.DRONE && !this.GetComponent<PlayerManager>().isMonsterAttack)
-                    {
+                    {                          
                         ClientSend.SkillDrone(_grabItem.spawnerId);
                     }
                     else
@@ -214,12 +219,26 @@ public class PlayerController : MonoBehaviour
         UIManager.instance.monsterKey[4].text = "점프 :" + input[4].ToString();
     }
 
+    public void OnTriggerEnter(Collider other)
+    {
+        if(other.CompareTag("EMPZONE"))
+        {
+            isInEMPZone = true;
+            Debug.Log($"isINEMPZone : {isInEMPZone}");
+        }    
+        if(other.CompareTag("HIDEZONE"))
+        {
+            isInHideZone = true;
+            Debug.Log($"isInHideZone : {isInHideZone}");
+        }
+    }
+
     public void OnTriggerStay(Collider other)
-    {      
+    {
+        Debug.Log($"현재 콜라이더 : {other.name}");
         if (getKeyDownF)
         {
             getKeyDownF = false;
-
             //문열기
             if (other.CompareTag("Door"))
             {
@@ -233,12 +252,12 @@ public class PlayerController : MonoBehaviour
                 }
             }
             //은폐
-            else if (other.CompareTag("Hide"))
+            if (isInHideZone)
             {
                 ClientSend.Hide(other.gameObject);
             }
             //아이템획득
-            else if (other.CompareTag("Item"))
+            if (other.CompareTag("Item"))
             {
                 if (other.GetComponent<ItemSpawner>().hasItem) 
                 {
@@ -274,6 +293,7 @@ public class PlayerController : MonoBehaviour
 
         if (getKeyDownE)
         {
+            Debug.Log($"현재 콜라이더 : {other.name}");
             getKeyDownE = false;
             ItemSpawner _grabItem = this.GetComponent<PlayerManager>().playerItem.GrabItem;
             if (_grabItem != null) {
@@ -281,8 +301,8 @@ public class PlayerController : MonoBehaviour
                 {
                     EMP emp = _grabItem.GetComponent<EMP>();
 
-                    if (other.CompareTag("EMPZONE"))
-                    {
+                    if (isInEMPZone)
+                    {                        
                         Debug.Log($"지금은 : {other.gameObject.name}");
                         if (emp.isInstalling)
                         {
@@ -294,7 +314,7 @@ public class PlayerController : MonoBehaviour
                             emp.isInstalling = true;
                             emp.gaugeCheck = true;
                         }
-                    }
+                    }                   
                     else
                     {
                         int _floor = (this.transform.position.y < 10f) ? 1 : 2;
@@ -318,6 +338,20 @@ public class PlayerController : MonoBehaviour
             {
                 Debug.Log($"아이템을 들고있지 않습니다");
             }
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if(other.CompareTag("EMPZONE"))
+        {
+            isInEMPZone = false;
+            Debug.Log($"isINEMPZone : {isInEMPZone}");
+        }
+        if(other.CompareTag("HIDEZONE"))
+        {
+            isInHideZone = false;
+            Debug.Log($"isInHideZone : {isInHideZone}");
         }
     }
     /*
