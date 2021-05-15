@@ -9,9 +9,10 @@ TagManager:
   - Door
   - Monster
   - CureZone
-  - Hide
   - Map
   - EMPZONE
+  - HIDEZONE
+  - Rope
   layers:
   - Default
   - TransparentFX

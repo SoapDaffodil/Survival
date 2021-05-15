@@ -216,6 +216,9 @@ public class Client
         //플레이어에따라 수정해야함(인간, 괴물 프리팹으로)
         player = NetworkManager.instance.InstantiatePlayer();
         player.Initialize(id, _playerName);
+        player.controller.enabled = false;
+        player.transform.position = player.transform.position + new Vector3(0f, 2f, 0f);
+        player.controller.enabled = true;
 
         // 이미 연결된 다른 클라이언트들의 정보를 새로운 클라이언트에 전송
         foreach (Client _client in Server.clients.Values)

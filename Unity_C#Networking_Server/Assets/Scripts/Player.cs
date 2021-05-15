@@ -14,8 +14,8 @@ public class Player : MonoBehaviour
     public CharacterController controller;  //player의 컨트롤러
     public Transform shootOrigin;           //총알방향
     public float gravity = -9.81f;          //중력가속도
-    public float moveSpeed = 5f;            //움직임속도
-    public float jumpSpeed = 5f;            //점프속도
+    public float moveSpeed = 10f;            //움직임속도
+    public float jumpSpeed = 10f;            //점프속도
     public float throwForce = 600f;         //폭탄 던지기속도
     public float hp;                        //체력
     public float maxHp = 100f;              //최대체력
@@ -37,6 +37,9 @@ public class Player : MonoBehaviour
         hp = maxHp;
         itemAmount = 0;
         maxItemAmount = 100;
+
+        moveSpeed = 10f;
+        jumpSpeed = 10f;
 
         id = _id;
         username = _username;
