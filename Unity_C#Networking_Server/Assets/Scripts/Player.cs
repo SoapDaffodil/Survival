@@ -212,7 +212,7 @@ public class Player : MonoBehaviour
 
     /// <summary>투척</summary>
     /// <param name="_viewDirection"></param>
-    public void ThrowItem(Vector3 _viewDirection, bool _EMPInstallFinished)
+    public void ThrowItem(Vector3 _viewDirection)
     {
         if (hp <= 0f)
         {
@@ -222,7 +222,7 @@ public class Player : MonoBehaviour
         //if (itemAmount > 0)
        // {
             //itemAmount--;
-            NetworkManager.instance.InstantiateProjectile(shootOrigin).Initialize(_viewDirection, throwForce, id, _EMPInstallFinished);
+            NetworkManager.instance.InstantiateProjectile(shootOrigin).Initialize(_viewDirection, throwForce, id);
        // }
     }
 

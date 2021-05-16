@@ -11,7 +11,7 @@ public class Bullet : MonoBehaviour
     public Rigidbody rigidBody;
     public int thrownByPlayer;
     public Vector3 initialForce;            //발사벡터
-    public float damage = 50f;             //총 데미지
+    public float damage = 5f;             //총 데미지
     public bool EMPisInstalled;
 
     private void Start()
@@ -42,11 +42,6 @@ public class Bullet : MonoBehaviour
             {                
                 collision.gameObject.GetComponent<Player>().TakeDamage(damage);
                 Debug.Log($"명중 : {collision.gameObject.name}");
-            }
-            if(collision.gameObject.GetComponent<Player>().playerType == PlayerType.CREATURE && !EMPisInstalled)
-            {
-                ServerSend.KeyChange(collision.gameObject.GetComponent<Player>().id);
-                Debug.Log($"키체인지 명중 : {collision.gameObject.name}");
             }
         }        
         bullets.Remove(id);

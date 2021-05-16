@@ -90,7 +90,6 @@ public class ClientSend : MonoBehaviour
         using (Packet _packet = new Packet((int)ClientPackets.playerShootBomb))
         {
             _packet.Write(_facing);
-            _packet.Write(GameManager.EMPInstallFinished);
 
             SendTCPData(_packet);
         }

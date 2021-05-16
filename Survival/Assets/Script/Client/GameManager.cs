@@ -58,6 +58,7 @@ public class GameManager : MonoBehaviour
             case PlayerType.CREATURE:
                 UIManager.instance.CreatureUI.SetActive(true);
                 UIManager.instance.HumanUI.SetActive(false);
+                UIManager.instance.HPGuage.gameObject.SetActive(true);
                 break;
             case PlayerType.HUMAN:
                 UIManager.instance.CreatureUI.SetActive(false);
@@ -97,7 +98,7 @@ public class GameManager : MonoBehaviour
             }
             if (!EMPInstallFinished && Client.playerType == PlayerType.CREATURE)
             {
-                UIManager.instance.HPBarUI[0].sprite = UIManager.instance.HPBarImage[0];
+                UIManager.instance.HPBarUI[0].sprite = UIManager.instance.HPBarImage[1];
             }
             else
             {
@@ -262,6 +263,7 @@ public class GameManager : MonoBehaviour
             if(players[i].playerType == PlayerType.CREATURE)
             {
                 UIManager.instance.HPBarUI[0].sprite = UIManager.instance.HPBarImage[1];
+                UIManager.instance.HPGuage.gameObject.SetActive(true);
                 Debug.Log($"UI 바뀐 플레이어 : {players[i].gameObject.name}");
             }
         }

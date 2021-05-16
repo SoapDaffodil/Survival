@@ -55,6 +55,18 @@ public class PlayerManager : MonoBehaviour
     {
         hp = _health;
         Debug.Log($"플레이어 체력 : {GameManager.players[Client.instance.myId].hp}");
+        RectTransform hpGuage = UIManager.instance.HPGuage.GetComponent<RectTransform>();
+
+        if(playerType == PlayerType.HUMAN)
+        {
+            hpGuage.sizeDelta = new Vector2(hpGuage.rect.width - 180, hpGuage.rect.height);
+        }
+        else
+        {
+            hpGuage.sizeDelta = new Vector2(hpGuage.rect.width - 18, hpGuage.rect.height);
+        }
+        
+
         //HP가 0이 되면 죽음
         if (hp <= 0f)
         {

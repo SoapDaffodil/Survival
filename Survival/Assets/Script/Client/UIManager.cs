@@ -52,6 +52,10 @@ public class UIManager : MonoBehaviour
     [Tooltip("몬스터의 현재 키배치")]
     public Text[] creatureKey;
 
+    /// <summary>플레이어 체력 게이지</summary>
+    [Tooltip("플레이어 체력 게이지")]
+    public Image HPGuage;
+
     public GameObject[] UI_LightTrapList;
 
     public Sprite[] HPBarImage;
