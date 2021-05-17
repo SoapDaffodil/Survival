@@ -125,12 +125,14 @@ public class ServerSend
 
     /// <summary>플레이어의 위치를 모든 클라이언트에 UDP전송</summary>
     /// <param name="_player">The player whose position to update.</param>
-    public static void PlayerPosition(Player _player)
+    public static void PlayerPosition(Player _player, bool _walk, bool _run)
     {
         using (Packet _packet = new Packet((int)ServerPackets.playerPosition))
         {
             _packet.Write(_player.id);
             _packet.Write(_player.transform.position);
+            _packet.Write(_walk);
+            _packet.Write(_run);
 
             SendUDPDataToAll(_packet);
         }

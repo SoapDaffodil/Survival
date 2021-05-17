@@ -28,6 +28,8 @@ public class GameManager : MonoBehaviour
     public GameObject projectilePrefab;
     /// <summary>총알 프리팹</summary>
     public GameObject bulletPrefab;
+    //[Tooltip("Animation 목록")]
+    //public AnimationClip[] playerAnimation;
     private void Awake()
     {
         if (instance == null)

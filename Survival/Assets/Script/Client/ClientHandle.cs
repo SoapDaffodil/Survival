@@ -46,10 +46,23 @@ public class ClientHandle : MonoBehaviour
     {
         int _id = _packet.ReadInt();
         Vector3 _position = _packet.ReadVector3();
+        bool _walk = _packet.ReadBool();
+        bool _run = _packet.ReadBool();
 
         if (GameManager.players.TryGetValue(_id, out PlayerManager _player))
         {
             _player.transform.position = _position;
+            /*if (_player.grabItem.itemType == ItemType.GUN)
+            {
+                _player.animator.SetBool("GunWalk", _walk);
+                _player.animator.SetBool("GunRun", _run);
+            }
+            else
+            {
+                _player.animator.SetBool("Walk", _walk);
+                _player.animator.SetBool("Run", _run);
+            }*/
+            _player.animator.SetBool("GunWalk", _walk);
             if (_id == Client.instance.myId) {
                 UIManager.instance.fisrtFloorPlayer.transform.position = _position + new Vector3(-100, 0, 0);
             }

@@ -93,7 +93,7 @@ public class Player : MonoBehaviour
             {
                 _inputDirection.x += 1;
             }
-            Move(_inputDirection);
+            Move(_inputDirection, (inputs[0] || inputs[1] || inputs[2] || inputs[3]), false);
         }
     }
 
@@ -112,7 +112,8 @@ public class Player : MonoBehaviour
 
     /// <summary>받은 데이터를 통해 플레이어의 움직임을 계산(점프 포함)</summary>
     /// <param name="_inputDirection"></param>
-    private void Move(Vector2 _inputDirection)
+    /// <param name="_move"></param>
+    private void Move(Vector2 _inputDirection, bool _walk, bool _run)
     {
         /*Vector3 _forward = Vector3.Transform(new Vector3(0, 0, 1), rotation);
         //cross : 벡터외적 y축과 forward방향을 외적하면 오른쪽방향의 벡터가 나옴
@@ -134,7 +135,7 @@ public class Player : MonoBehaviour
         _moveDirection.y = yVelocity;
         controller.Move(_moveDirection);
 
-        ServerSend.PlayerPosition(this);
+        ServerSend.PlayerPosition(this, _walk, _run);
         ServerSend.PlayerRotation(this);
     }
 
@@ -242,7 +243,7 @@ public class Player : MonoBehaviour
             hp = 0f;
             controller.enabled = false;
             transform.position = new Vector3(0f, 25f, 0f);
-            ServerSend.PlayerPosition(this);
+            ServerSend.PlayerPosition(this, false, false);
             //리스폰 불필요 > 그냥 사망 게임종료로 수정해야함
             //StartCoroutine(Respawn());
         }

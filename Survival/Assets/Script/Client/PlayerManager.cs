@@ -4,6 +4,31 @@ using UnityEngine;
 
 public enum PlayerType { CREATURE, HUMAN }
 
+public enum PlayerAnimation
+{
+    humanDieAnimation,
+    humanGunStandAnimation,
+    humanGunHitReactionAnimation,
+    humanGunWalkingAnimation,
+    humanHealingAnimation,
+    humanHitReactionAnimation,
+    humanInstallAnimation,
+    humanPoseGunStand,
+    humanPoseSit,
+    humanPoseStand,
+    humanRopeAnimation,
+    humanSneakWalkAnimation,
+    creatureAttackAnimation,
+    creatureDieAnimation,
+    creatureHitReactionAnimation,
+    creatureInstallAnimation,
+    creaturePoseSit,
+    creatureRunAnimation,
+    creatureStandAnimation,
+    creatureTeleportationAnimation,
+    creatureWalkAnimation,
+}
+
 public class PlayerManager : MonoBehaviour
 {
     public int id;
@@ -18,11 +43,15 @@ public class PlayerManager : MonoBehaviour
     public bool isCreatureAttack = false;    //괴물 공격 성공
 
     public PlayerController controller;
+    public Animator animator;
+
+    //public Dictionary<int, Animation> animationUse;
 
     public void Start()
     {
         controller = GetComponentInChildren<PlayerController>();
         playerItem = new PlayerItem();
+        animator = this.GetComponent<Animator>();
     }
 
     public void FixedUpdate()
@@ -47,7 +76,18 @@ public class PlayerManager : MonoBehaviour
                 playerType = PlayerType.HUMAN;
                 break;
         }
+        //InitializeAnimationData();
     }
+    /*
+    private void InitializeAnimationData()
+    {
+        animationUse = new Dictionary<int, Animation>();
+        for(int i = 0; i < GameManager.instance.playerAnimation.Length; i++)
+        {
+            animationUse.Add((int)(PlayerAnimation)PlayerAnimation.Parse(typeof(PlayerAnimation), GameManager.instance.playerAnimation[i].name), GameManager.instance.playerAnimation[i]);
+        }
+        Debug.Log("Initialized Animation.");
+    }*/
 
     /// <summary>HP 세팅</summary>
     /// <param name="_health"></param>

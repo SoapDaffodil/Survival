@@ -18,7 +18,7 @@ GameObject:
   - component: {fileID: 4830645790061921965}
   - component: {fileID: 9148487813931248127}
   m_Layer: 0
-  m_Name: Monster_other
+  m_Name: Creature_other
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -45,7 +45,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6611331617352936926}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: 8205922433266370587, guid: 93203ba575750b54eb98bad854263d3a, type: 3}
 --- !u!23 &6611331617352936920
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -174,5 +174,6 @@ MonoBehaviour:
   grabItem: {fileID: 0}
   playerType: 0
   isCuring: 0
-  isMonsterAttack: 0
+  isCreatureAttack: 0
   controller: {fileID: 0}
+  animator: {fileID: 0}
