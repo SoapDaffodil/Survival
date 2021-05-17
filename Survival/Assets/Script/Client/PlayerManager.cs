@@ -53,17 +53,21 @@ public class PlayerManager : MonoBehaviour
     /// <param name="_health"></param>
     public void SetHealth(float _health)
     {
+        float currentHp = hp;
         hp = _health;
-        Debug.Log($"플레이어 체력 : {GameManager.players[Client.instance.myId].hp}");
-        RectTransform hpGuage = UIManager.instance.HPGuage.GetComponent<RectTransform>();
-
-        if(playerType == PlayerType.HUMAN)
+        
+        
+        if(playerType == PlayerType.CREATURE)
         {
-            hpGuage.sizeDelta = new Vector2(hpGuage.rect.width - 180, hpGuage.rect.height);
+            UIManager.instance.HPGuage[(int) PlayerType.CREATURE].value -= (currentHp - hp);
+            Debug.Log($"플레이어 : {playerType}   체력 : {GameManager.players[Client.instance.myId].hp}");
+            Debug.Log($"감소한 체력 : {currentHp - hp}");
         }
         else
         {
-            hpGuage.sizeDelta = new Vector2(hpGuage.rect.width - 18, hpGuage.rect.height);
+            UIManager.instance.HPGuage[(int)PlayerType.HUMAN].value -= (currentHp - hp);
+            Debug.Log($"플레이어 : {playerType}   체력 : {GameManager.players[Client.instance.myId].hp}");
+            Debug.Log($"감소한 체력 : {currentHp - hp}");
         }
         
 

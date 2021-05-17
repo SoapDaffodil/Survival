@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
+    public enum TextColor {GRAY, MINT};
+    public Color[] textColor = {new Color(0.49f, 0.49f, 0.49f) , new Color(0f, 0.87f, 1f)};
     public static UIManager instance;
 
     public GameObject startMenu;//지울예정(StartScene으로 이전)
@@ -52,9 +54,7 @@ public class UIManager : MonoBehaviour
     [Tooltip("몬스터의 현재 키배치")]
     public Text[] creatureKey;
 
-    /// <summary>플레이어 체력 게이지</summary>
-    [Tooltip("플레이어 체력 게이지")]
-    public Image HPGuage;
+    public Slider[] HPGuage;
 
     public GameObject[] UI_LightTrapList;
 
@@ -63,6 +63,7 @@ public class UIManager : MonoBehaviour
     public Sprite[] skillGrayImage;
     public Sprite[] itemImage;
     public Sprite[] skillImage;
+   
     
     public float seconds = 10f;
 

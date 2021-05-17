@@ -14,8 +14,8 @@ public class Gun : MonoBehaviour
 
     private void Start()
     {
-        UIManager.instance.currentBulletText = GameObject.Find("Current Bullet").GetComponent<Text>();
-        UIManager.instance.bulletAmoutText = GameObject.Find("Bullet Amount").GetComponent<Text>();
+        //UIManager.instance.currentBulletText = GameObject.Find("Current Bullet").GetComponent<Text>();
+        //UIManager.instance.bulletAmoutText = GameObject.Find("Bullet Amount").GetComponent<Text>();
     }
 
     public bool Reloade()

@@ -19,6 +19,7 @@ public class Bullet : MonoBehaviour
         id = nextBullet;
         nextBullet++;
         bullets.Add(id, this);
+        damage = 5f;
 
         ServerSend.SpawnBullet(this, thrownByPlayer);
 
@@ -41,7 +42,8 @@ public class Bullet : MonoBehaviour
             if (collision.gameObject.GetComponent<Player>().playerType == PlayerType.CREATURE && EMPisInstalled)
             {                
                 collision.gameObject.GetComponent<Player>().TakeDamage(damage);
-                Debug.Log($"명중 : {collision.gameObject.name}");
+                Debug.Log($"명중 : {collision.gameObject.GetComponent<Player>().playerType}");
+                Debug.Log($"명중 데미지 : {damage}");
             }
         }        
         bullets.Remove(id);

@@ -14,7 +14,7 @@ public class PlayerItem
         grabItem = null;
         item_number1 = null;
         item_number2 = new List<ItemSpawner>();
-        batteryCount = 30;
+        batteryCount = 0;
     }
     public ItemSpawner GrabItem
     {
