@@ -14,6 +14,9 @@ public class PlayerController : MonoBehaviour
     private bool isInEMPZone = false;
     private bool isInHideZone = false;
 
+    public float stepRate = 3f;
+    public float nextTimeToStep;
+
     private void Start()
     {
         input[0] = KeyCode.W;
@@ -49,6 +52,7 @@ public class PlayerController : MonoBehaviour
                     Gun gun = _grabItem.GetComponent<Gun>();
                     if (gun.currentBattery != 0)
                     {
+                        gun.normalGunSound.PlayOneShot(gun.normalGunSound.clip);
                         ClientSend.PlayerShootBullet(camTransform.forward);
                     }                  
                 }
@@ -72,6 +76,7 @@ public class PlayerController : MonoBehaviour
                     Gun gun = _grabItem.GetComponent<Gun>();
                     if (gun.currentBattery >= 5)
                     {
+                        gun.empGunSound.PlayOneShot(gun.empGunSound.clip);
                         ClientSend.PlayerShootBomb(camTransform.forward);
                     }
                 }
@@ -106,6 +111,13 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.E))
         {
             getKeyDownE = true;
+            if(this.GetComponent<PlayerManager>().playerItem.GrabItem != null)
+            {
+                if(this.GetComponent<PlayerManager>().playerItem.GrabItem.itemType == ItemType.EMP || this.GetComponent<PlayerManager>().playerItem.GrabItem.itemType == ItemType.LIGHTTRAP)
+                {
+                    this.GetComponent<PlayerManager>().playerItem.GrabItem.GetComponent<SphereCollider>().enabled = true;
+                }
+            }
             StartCoroutine(WaitForMilliSec());
         }
         if (Input.GetKeyDown(KeyCode.C))
@@ -176,7 +188,7 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        SendInputToServer();
+        SendInputToServer();       
     }
 
     /// <summary>Sends player input to the server.</summary>
@@ -315,6 +327,7 @@ public class PlayerController : MonoBehaviour
                     }                   
                     else
                     {
+                        emp.empSound.Play();
                         int _floor = (this.transform.position.y < 10f) ? 1 : 2;
                         ClientSend.Install(this.transform.position, _grabItem.spawnerId, _floor);
                     }

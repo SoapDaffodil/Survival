@@ -17,6 +17,10 @@ public class PlayerManager : MonoBehaviour
     public bool isCuring = false;           //플레이어 치료 중
     public bool isCreatureAttack = false;    //괴물 공격 성공
 
+    public AudioClip footStepSound;
+    public AudioClip busurukSound;
+    public AudioClip creatureAttackSound;
+
     public PlayerController controller;
 
     public void Start()

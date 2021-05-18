@@ -366,6 +366,7 @@ public class Client : MonoBehaviour
             { (int)ServerPackets.spawnBullet, ClientHandle.SpawnBullet},
             { (int)ServerPackets.bulletPosition, ClientHandle.BulletPosition},
             { (int)ServerPackets.bulletCrush, ClientHandle.BulletCrush},
+            { (int)ServerPackets.creatureAttackTrue, ClientHandle.CreatureAttackTrue},
             
             //{ (int)ServerPackets.udpTest, ClientHandle.UDPTest }
         };

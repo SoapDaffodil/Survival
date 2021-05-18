@@ -22,7 +22,7 @@ public  class EMP : MonoBehaviour
     public bool gaugeCheck = false;
     public bool isDetectiveMode = false;
 
-
+    public AudioSource empSound;
 
     private void Start()
     {
@@ -60,6 +60,7 @@ public  class EMP : MonoBehaviour
             {
                 currenGauge += currenGauge * chargingTime * Time.deltaTime;
                 UIManager.instance.powerSlider.value = currenGauge;
+                empSound.Play();
             }
 
             if (currenGauge >= maxGauge)

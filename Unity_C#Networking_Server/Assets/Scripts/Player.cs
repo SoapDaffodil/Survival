@@ -339,5 +339,6 @@ public class Player : MonoBehaviour
     public void EndStun()
     {
        controller.enabled = true;
+       Debug.Log("괴물 스턴 종료");
     }
 }

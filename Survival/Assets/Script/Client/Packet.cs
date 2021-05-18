@@ -45,6 +45,7 @@ public enum ServerPackets
     spawnBullet,        //총알 생성
     bulletPosition,     //총알 위치
     bulletCrush,         //총알 충돌
+    creatureAttackTrue, //괴물 공격 성공
     //선희
     //udpTest
 }

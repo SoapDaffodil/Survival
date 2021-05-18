@@ -9,7 +9,8 @@ public class Drone : MonoBehaviour
     private Camera droneCam;
     public bool isDroneMoving = false;
 
-    // Start is called before the first frame update
+    public AudioSource droneMovingSound;
+    public AudioSource droneTeleportSound;
     void Start()
     {       
        // flash = gameObject.GetComponent<Light>();
@@ -36,6 +37,7 @@ public class Drone : MonoBehaviour
                 PlayerController _player = this.transform.parent.GetComponent<PlayerController>();
                 transform.SetParent(null, true);
                 ClientSend.SkillTeleportation(this.transform.position);
+                droneTeleportSound.Play();
 
                 droneCam.gameObject.SetActive(false);
                 _player.enabled = true;
@@ -54,7 +56,7 @@ public class Drone : MonoBehaviour
             this.transform.parent.GetComponent<PlayerController>().camTransform.gameObject.SetActive(false);
             this.transform.position += new Vector3(0f, 5f, 0f);
             droneCam.gameObject.SetActive(true);
-            isDroneMoving = true;
+            isDroneMoving = true;            
         }
         else
         {
@@ -90,6 +92,14 @@ public class Drone : MonoBehaviour
             Input.GetKey(KeyCode.Space),
             };
 
+            for(int i = 0; i < _inputs.Length; i++)
+            {
+                if(_inputs[i] == true)
+                {
+                    droneMovingSound.Play();
+                }
+            }
+            
             ClientSend.DroneMovement(_inputs, this.gameObject);
         }        
     }
