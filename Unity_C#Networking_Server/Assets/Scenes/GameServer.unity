@@ -209,7 +209,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4de2c5d2d7ec1f046ac1d7ff9febf061, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerPrefab: {fileID: 3887713562994225130, guid: a0e4f63372c63014595c41a4d265557d, type: 3}
+  creaturePrefab: {fileID: 4197835119811303310, guid: 821821595d2851346b24d7f24fb2baa6, type: 3}
+  humanPrefab: {fileID: 6976398587419429565, guid: 8555c00250c762f4a85638b8dd5a1c0d, type: 3}
   projectilePrefab: {fileID: 2765098290509911380, guid: 9322829a1b4eced43a24d8e37c5fae33, type: 3}
   bulletPrefab: {fileID: 2635459629071000434, guid: e92621a07e3fa2e4c9ab37c816cdcafc, type: 3}
 --- !u!1 &705507993
@@ -1418,6 +1419,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3731694759248848412, guid: 19657fcd166439d4a8f5790337e6eb13, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3863591400030270385, guid: 19657fcd166439d4a8f5790337e6eb13, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5957085270634920846, guid: 19657fcd166439d4a8f5790337e6eb13, type: 3}
       propertyPath: m_RootOrder
       value: 3

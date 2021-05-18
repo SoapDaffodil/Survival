@@ -36,7 +36,7 @@ public class PlayerManager : MonoBehaviour
     public float hp;                        //체력
     public float maxHp = 100f;              //최대체력
     public MeshRenderer model;
-    public ItemSpawner grabItem;            //현재 들고있는 아이템
+    //public ItemSpawner grabitem;            //현재 들고있는 아이템
     public PlayerItem playerItem;           //플레이어의 아이템목록
     public PlayerType playerType;           //플레이어의 타입(괴물, 인간)
     public bool isCuring = false;           //플레이어 치료 중

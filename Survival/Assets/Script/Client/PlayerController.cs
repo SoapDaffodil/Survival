@@ -7,7 +7,7 @@ public class PlayerController : MonoBehaviour
     public Transform camTransform;
     public bool getKeyDownF = false;
     public bool getKeyDownE = false;
-    public KeyCode[] input = { KeyCode.W , KeyCode.S , KeyCode.A , KeyCode.D , KeyCode.Space };
+    public KeyCode[] input = { KeyCode.W , KeyCode.S , KeyCode.A , KeyCode.D , KeyCode.Space, KeyCode.LeftShift, KeyCode.LeftControl };
 
     private IEnumerator lightTrapInstall;
 
@@ -16,11 +16,15 @@ public class PlayerController : MonoBehaviour
 
     private void Start()
     {
+        input = new KeyCode[8];
         input[0] = KeyCode.W;
         input[1] = KeyCode.S;
         input[2] = KeyCode.A;
         input[3] = KeyCode.D;
         input[4] = KeyCode.Space;
+        input[5] = KeyCode.LeftShift;
+        input[6] = KeyCode.LeftControl;
+        input[7] = KeyCode.Mouse0;
     }
 
     private IEnumerator WaitForMilliSec()
@@ -108,9 +112,10 @@ public class PlayerController : MonoBehaviour
             getKeyDownE = true;
             StartCoroutine(WaitForMilliSec());
         }
-        if (Input.GetKeyDown(KeyCode.C))
+        if (Input.GetKeyDown(KeyCode.C) && this.GetComponent<PlayerManager>().playerType == PlayerType.HUMAN)
         {
             GameManager.players[Client.instance.myId].isCuring = true;
+            ClientSend.SkillCure(true);
         }
 
         if (Input.GetKeyDown(KeyCode.Alpha1))
@@ -182,13 +187,10 @@ public class PlayerController : MonoBehaviour
     /// <summary>Sends player input to the server.</summary>
     private void SendInputToServer()
     {
-        bool[] _inputs = new bool[]
+        bool[] _inputs = new bool[input.Length];
+        for(int i=0;i< _inputs.Length;i++)
         {
-            Input.GetKey(input[0]),
-            Input.GetKey(input[1]),
-            Input.GetKey(input[2]),
-            Input.GetKey(input[3]),
-            Input.GetKey(input[4])
+            _inputs[i] = Input.GetKey(input[i]);
         };
 
         ClientSend.PlayerMovement(_inputs);
@@ -196,23 +198,28 @@ public class PlayerController : MonoBehaviour
 
     public void KeyChange()
     {
+        int changeSize = 5;
         KeyCode[] changeInput = new KeyCode[input.Length];
         int[] index = new int[input.Length];
         int[] random = new int[input.Length];
-        for (int i = 0; i < input.Length; i++)
+        for (int i = 0; i < changeSize; i++)
         {
             index[i] = i;
         }
-        for (int i = input.Length; i > 0; i--)
+        for (int i = changeSize; i > 0; i--)
         {
             int value = Random.Range(0, i - 1);
             random[i - 1] = index[value];
             index[value] = index[i - 1];
         }
-        for (int i = 0; i < input.Length; i++)
+        for (int i = 0; i < changeSize; i++)
         {
             changeInput[i] = input[random[i]];
             UIManager.instance.creatureKey[i].text = changeInput[i].ToString();
+        }
+        for (int i = changeSize; i < input.Length; i++)
+        {
+            changeInput[i] = input[i];
         }
         input = changeInput;
     }

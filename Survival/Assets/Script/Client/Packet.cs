@@ -14,6 +14,8 @@ public enum ServerPackets
     spawnPlayer,        //player 스폰
     playerPosition,     //player position
     playerRotation,     //player rotation
+    playerSit,          //player 앉기
+    playerAttack,       //player 공격
     playerDisconnected, //plyaer 연결끊김
     playerHP,           //player hp
     playerRespawned,    //player 리스폰
@@ -44,9 +46,12 @@ public enum ServerPackets
     droneRotation,      //드론 rotation
     spawnBullet,        //총알 생성
     bulletPosition,     //총알 위치
-    bulletCrush,         //총알 충돌
+    bulletCrush,        //총알 충돌
+    creatureAttackTrue, //괴물 공격 성공
     //선희
     //udpTest
+
+    motionCure,         //치료중
 }
 
 /// <summary>클라이언트가 보내는 packet이 어떤정보인지 알려주는 역할</summary>
@@ -78,7 +83,7 @@ public enum ClientPackets
     creatureAttack,      //괴물 공격
     //선희
 
-
+    skillCure,          //스킬 치료
     skillTeleportation, //스킬 순간이동
     skillDrone,         //드론 활성화
     // udpTestReceived

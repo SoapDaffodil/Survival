@@ -52,17 +52,11 @@ public class ClientHandle : MonoBehaviour
         if (GameManager.players.TryGetValue(_id, out PlayerManager _player))
         {
             _player.transform.position = _position;
-            /*if (_player.grabItem.itemType == ItemType.GUN)
-            {
-                _player.animator.SetBool("GunWalk", _walk);
-                _player.animator.SetBool("GunRun", _run);
-            }
-            else
-            {
-                _player.animator.SetBool("Walk", _walk);
-                _player.animator.SetBool("Run", _run);
-            }*/
-            _player.animator.SetBool("GunWalk", _walk);
+            _player.animator.SetBool("Walk", _walk);
+            _player.animator.SetBool("Run", _run);
+            _player.animator.SetBool("Stand", !_walk && !_run);
+            Debug.Log($"walk : {_player.animator.GetBool("Walk")}, run : {_player.animator.GetBool("Run")}, stand : {!_player.animator.GetBool("Walk") && !_player.animator.GetBool("Run")}");
+
             if (_id == Client.instance.myId) {
                 UIManager.instance.fisrtFloorPlayer.transform.position = _position + new Vector3(-100, 0, 0);
             }
@@ -78,6 +72,32 @@ public class ClientHandle : MonoBehaviour
         if (GameManager.players.TryGetValue(_id, out PlayerManager _player))
         {
             _player.transform.rotation = _rotation;
+        }
+    }
+
+    /// <summary>player 앉기 정보를 담은 패킷을 받음</summary>
+    /// <param name="_packet"></param>
+    public static void PlayerSit(Packet _packet)
+    {
+        int _id = _packet.ReadInt();
+        bool _sit = _packet.ReadBool();
+
+        if (GameManager.players.TryGetValue(_id, out PlayerManager _player))
+        {
+            _player.animator.SetBool("Sit", _sit);
+        }
+    }
+
+    /// <summary>player 공격 정보를 담은 패킷을 받음</summary>
+    /// <param name="_packet"></param>
+    public static void PlayerAttack(Packet _packet)
+    {
+        int _id = _packet.ReadInt();
+        bool _attack = _packet.ReadBool();
+
+        if (GameManager.players.TryGetValue(_id, out PlayerManager _player))
+        {
+            _player.animator.SetBool("Attack", _attack);
         }
     }
 
@@ -176,6 +196,17 @@ public class ClientHandle : MonoBehaviour
         GameManager.players[_playerId].GetComponent<PlayerController>().KeyChange();
     }
 
+    public static void MotionCure(Packet _packet)
+    {
+        int _id = _packet.ReadInt();
+        bool _cure = _packet.ReadBool();
+
+        if (GameManager.players.TryGetValue(_id, out PlayerManager _player))
+        {
+            _player.animator.SetBool("Cure", _cure);
+            Debug.Log($"cure : {_player.animator.GetBool("Cure")}");
+        }
+    }
     public static void InstallEMP(Packet _packet)
     {
         int _spawnerId = _packet.ReadInt();

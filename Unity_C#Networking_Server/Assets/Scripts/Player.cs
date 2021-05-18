@@ -31,32 +31,22 @@ public class Player : MonoBehaviour
     public bool isCreatureAttack = false;
     private Vector3 viewPoint;
 
-    public void Initialize(int _id, string _username)
+    public void Initialize(int _id, PlayerType _playerType)
     {
         maxHp = 100f;
         hp = maxHp;
         itemAmount = 0;
         maxItemAmount = 100;
 
-        moveSpeed = 10f;
+        moveSpeed = 1f;
         jumpSpeed = 10f;
 
         id = _id;
-        username = _username;
-        string _playerType = "";
-        switch (username)
-        {
-            case "0": case "creature": case "Creature": case "CREATURE":
-                _playerType = "CREATURE";
-                break;
-            case "1":  case "human": case "Human": case "HUMAN":
-                _playerType = "HUMAN";
-                break;
-        }
-        playerType = (PlayerType)PlayerType.Parse(typeof(PlayerType), _playerType);
+        
+        playerType = _playerType;
         hp = maxHp;
 
-        inputs = new bool[5];
+        inputs = new bool[8];
     }
 
     private void Start()
@@ -93,7 +83,7 @@ public class Player : MonoBehaviour
             {
                 _inputDirection.x += 1;
             }
-            Move(_inputDirection, (inputs[0] || inputs[1] || inputs[2] || inputs[3]), false);
+            Move(_inputDirection, (inputs[0] || inputs[1] || inputs[2] || inputs[3]), inputs[5], inputs[6], inputs[7]);
         }
     }
 
@@ -113,7 +103,7 @@ public class Player : MonoBehaviour
     /// <summary>받은 데이터를 통해 플레이어의 움직임을 계산(점프 포함)</summary>
     /// <param name="_inputDirection"></param>
     /// <param name="_move"></param>
-    private void Move(Vector2 _inputDirection, bool _walk, bool _run)
+    private void Move(Vector2 _inputDirection, bool _walk, bool _run, bool _sit, bool _attack)
     {
         /*Vector3 _forward = Vector3.Transform(new Vector3(0, 0, 1), rotation);
         //cross : 벡터외적 y축과 forward방향을 외적하면 오른쪽방향의 벡터가 나옴
@@ -135,6 +125,20 @@ public class Player : MonoBehaviour
         _moveDirection.y = yVelocity;
         controller.Move(_moveDirection);
 
+        if (_run)
+        {
+            moveSpeed = 0.5f;
+        }
+        else if(_sit)
+        {
+            moveSpeed = 0.125f;
+        }
+        else
+        {
+            moveSpeed = 0.25f;
+        }
+        ServerSend.PlayerSit(this.id, _sit);
+        ServerSend.PlayerAttack(this.id, _attack);
         ServerSend.PlayerPosition(this, _walk, _run);
         ServerSend.PlayerRotation(this);
     }

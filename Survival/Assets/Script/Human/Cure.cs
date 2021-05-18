@@ -53,6 +53,7 @@ public class Cure : MonoBehaviour
 
                 Debug.Log($"플레이어 체력 : {GameManager.players[Client.instance.myId].GetComponent<PlayerManager>().hp}");
                 ClientSend.Cure(GameManager.players[Client.instance.myId].GetComponent<PlayerManager>().hp);
+                ClientSend.SkillCure(false);
             }
         }
     }

@@ -9,6 +9,6 @@ EditorBuildSettings:
     path: Assets/Scenes/Start.unity
     guid: fe96dd5b99e01ee43a389ef7149abebf
   - enabled: 1
-    path: Assets/Scenes/Play.unity
-    guid: 46c3502a62bf9b94aa433f942a072dc6
+    path: Assets/Scenes/MinhoAnimationTest.unity
+    guid: 8710179ba41360c4ab733e0f6452c002
   m_configObjects: {}

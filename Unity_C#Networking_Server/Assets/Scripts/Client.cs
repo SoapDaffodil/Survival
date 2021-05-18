@@ -214,8 +214,18 @@ public class Client
     public void SendIntoGame(string _playerName)
     {
         //플레이어에따라 수정해야함(인간, 괴물 프리팹으로)
-        player = NetworkManager.instance.InstantiatePlayer();
-        player.Initialize(id, _playerName);
+        PlayerType _playerType = new PlayerType();
+        switch (_playerName)
+        {
+            case "0": case "creature": case "Creature": case "CREATURE":
+                _playerType = (PlayerType)PlayerType.Parse(typeof(PlayerType), "CREATURE");
+                break;
+            case "1": case "human": case "Human": case "HUMAN":
+                _playerType = (PlayerType)PlayerType.Parse(typeof(PlayerType), "HUMAN");
+                break;
+        }
+        player = NetworkManager.instance.InstantiatePlayer(_playerType);
+        player.Initialize(id, _playerType);
         player.controller.enabled = false;
         player.transform.position = player.transform.position + new Vector3(0f, 2f, 0f);
         player.controller.enabled = true;

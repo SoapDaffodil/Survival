@@ -203,6 +203,18 @@ public class ClientSend : MonoBehaviour
 
     /// <summary>순간이동 packet TCP전송(한번만 전송하므로 누락이 될지언정 오류가 발생하지는 않음)</summary>
     /// <param name="_target">이동할 위치</param>
+    public static void SkillCure(bool _cure)
+    {
+        using (Packet _packet = new Packet((int)ClientPackets.skillCure))
+        {
+            _packet.Write(_cure);
+
+            SendTCPData(_packet);
+        }
+    }
+
+    /// <summary>순간이동 packet TCP전송(한번만 전송하므로 누락이 될지언정 오류가 발생하지는 않음)</summary>
+    /// <param name="_target">이동할 위치</param>
     public static void SkillTeleportation(Vector3 _target)
     {
         using (Packet _packet = new Packet((int)ClientPackets.skillTeleportation))

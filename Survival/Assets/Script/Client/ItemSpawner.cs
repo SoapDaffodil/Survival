@@ -5,21 +5,21 @@ using UnityEngine;
 public enum ItemType { GUN, DRONE, EMP, LIGHTTRAP, BATTERY }
 public class PlayerItem
 {
-    private ItemSpawner grabItem;
+    private ItemSpawner grabitem;
     public ItemSpawner item_number1;
     public List<ItemSpawner> item_number2;
     public int batteryCount;                //남은탄창(HUMAN만 쓰임)
     public PlayerItem()
     {
-        grabItem = null;
+        grabitem = null;
         item_number1 = null;
         item_number2 = new List<ItemSpawner>();
         batteryCount = 0;
     }
     public ItemSpawner GrabItem
     {
-        get { return grabItem; }
-        set { grabItem = value; }
+        get { return grabitem; }
+        set { grabitem = value; }
     }
 }
 public class ItemSpawner : MonoBehaviour
@@ -111,6 +111,7 @@ public class ItemSpawner : MonoBehaviour
             {
                 case ItemType.GUN: case ItemType.DRONE:
                     transform.parent.GetComponent<PlayerManager>().playerItem.item_number1 = null;
+                    transform.parent.GetComponent<PlayerManager>().animator.SetBool("Gun", false);
                     break;
                 case ItemType.EMP: case ItemType.LIGHTTRAP:
                     transform.parent.GetComponent<PlayerManager>().playerItem.item_number2.Remove(this);
@@ -152,6 +153,11 @@ public class ItemSpawner : MonoBehaviour
         {
             UIManager.instance.currentBulletText.text = "0";
             UIManager.instance.bulletAmoutText.text = "0";
+            _byPlayer.animator.SetBool("Gun", true);
+        }
+        else if (_byPlayer.playerType == PlayerType.HUMAN)
+        {
+            _byPlayer.animator.SetBool("Gun", false);
         }
     }
 

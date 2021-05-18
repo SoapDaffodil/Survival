@@ -163,6 +163,15 @@ public class ServerHandle
         Server.clients[_fromClient].player.Hide(_hidePosition);
     }
 
+    /// <summary>치료 스킬</summary>
+    /// <param name="_fromClient"></param>
+    /// <param name="_packet"></param>
+    public static void SkillCure(int _fromClient, Packet _packet)
+    {
+        bool _cure = _packet.ReadBool();
+        ServerSend.MotionCure(_fromClient, _cure);
+    }
+
     /// <summary>순간이동 스킬</summary>
     /// <param name="_fromClient"></param>
     /// <param name="_packet"></param>

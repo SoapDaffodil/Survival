@@ -193,5 +193,4 @@ public class ItemSpawner : MonoBehaviour
         this.transform.position = _position;
         ServerSend.InstallEMP(spawnerId, _position);
     }
-
 }

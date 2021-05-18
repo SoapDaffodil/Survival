@@ -6,7 +6,8 @@ public class NetworkManager : MonoBehaviour
 {
     public static NetworkManager instance;
 
-    public GameObject playerPrefab;
+    public GameObject creaturePrefab;
+    public GameObject humanPrefab;
     public GameObject projectilePrefab;
     public GameObject bulletPrefab;
 
@@ -41,9 +42,18 @@ public class NetworkManager : MonoBehaviour
 
     /// <summary>player 초기화</summary>
     /// <returns></returns>
-    public Player InstantiatePlayer()
+    public Player InstantiatePlayer(PlayerType _playerType)
     {
-        return Instantiate(playerPrefab, new Vector3(0f, 0.5f, 0f), Quaternion.identity).GetComponent<Player>();
+        switch (_playerType)
+        {
+            case PlayerType.CREATURE:
+                return Instantiate(creaturePrefab, new Vector3(0f, 0.5f, 0f), Quaternion.identity).GetComponent<Player>();
+            case PlayerType.HUMAN:
+                return Instantiate(humanPrefab, new Vector3(0f, 0.5f, 0f), Quaternion.identity).GetComponent<Player>();
+            default:
+                Debug.Log($"잘못된 플레이어 타입입니다 - playerType : {_playerType}");
+                return null;
+        }
     }
 
     /// <summary>폭탄 초기화</summary>
