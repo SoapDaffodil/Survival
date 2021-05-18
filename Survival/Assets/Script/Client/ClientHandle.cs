@@ -57,9 +57,31 @@ public class ClientHandle : MonoBehaviour
             _player.animator.SetBool("Stand", !_walk && !_run);
             Debug.Log($"walk : {_player.animator.GetBool("Walk")}, run : {_player.animator.GetBool("Run")}, stand : {!_player.animator.GetBool("Walk") && !_player.animator.GetBool("Run")}");
 
-            if (_id == Client.instance.myId) {
+            if (_id == Client.instance.myId)
+            {
                 UIManager.instance.fisrtFloorPlayer.transform.position = _position + new Vector3(-100, 0, 0);
+
+                if (_player.GetComponent<AudioSource>().clip != _player.footStepSound)
+                {
+                    if ((_player.GetComponent<AudioSource>().clip == _player.footStepSound &&  _player.GetComponent<AudioSource>().isPlaying) && !_walk && !_run)
+                    {
+                        _player.GetComponent<AudioSource>().Stop();
+                    }
+                    else if (_run && (_player.GetComponent<AudioSource>().clip == _player.footStepSound &&  !_player.GetComponent<AudioSource>().isPlaying))
+                    {
+                        _player.GetComponent<AudioSource>().clip = _player.footStepSound;
+                        _player.GetComponent<AudioSource>().pitch = 1f;
+                        _player.GetComponent<AudioSource>().Play();
+                    }
+                    else if (_walk && (_player.GetComponent<AudioSource>().clip == _player.footStepSound && !_player.GetComponent<AudioSource>().isPlaying))
+                    {
+                        _player.GetComponent<AudioSource>().clip = _player.footStepSound;
+                        _player.GetComponent<AudioSource>().pitch = 0.5f;
+                        _player.GetComponent<AudioSource>().Play();
+                    }
+                }
             }
+
         }
     }
     /// <summary>player Rotation을 담은 패킷을 받음</summary>

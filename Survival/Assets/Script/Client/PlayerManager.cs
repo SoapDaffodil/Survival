@@ -42,6 +42,10 @@ public class PlayerManager : MonoBehaviour
     public bool isCuring = false;           //플레이어 치료 중
     public bool isCreatureAttack = false;    //괴물 공격 성공
 
+    public AudioClip footStepSound;
+    public AudioClip busurukSound;
+    public AudioClip creatureAttackSound;
+
     public PlayerController controller;
     public Animator animator;
 
@@ -93,8 +97,24 @@ public class PlayerManager : MonoBehaviour
     /// <param name="_health"></param>
     public void SetHealth(float _health)
     {
+        float currentHp = hp;
         hp = _health;
-        Debug.Log($"플레이어 체력 : {GameManager.players[Client.instance.myId].hp}");
+        
+        
+        if(playerType == PlayerType.CREATURE)
+        {
+            UIManager.instance.HPGuage[(int) PlayerType.CREATURE].value -= (currentHp - hp);
+            Debug.Log($"플레이어 : {playerType}   체력 : {GameManager.players[Client.instance.myId].hp}");
+            Debug.Log($"감소한 체력 : {currentHp - hp}");
+        }
+        else
+        {
+            UIManager.instance.HPGuage[(int)PlayerType.HUMAN].value -= (currentHp - hp);
+            Debug.Log($"플레이어 : {playerType}   체력 : {GameManager.players[Client.instance.myId].hp}");
+            Debug.Log($"감소한 체력 : {currentHp - hp}");
+        }
+        
+
         //HP가 0이 되면 죽음
         if (hp <= 0f)
         {

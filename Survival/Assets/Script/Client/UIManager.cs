@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
+    public enum TextColor {GRAY, MINT};
+    public Color[] textColor = {new Color(0.49f, 0.49f, 0.49f) , new Color(0f, 0.87f, 1f)};
     public static UIManager instance;
 
     public GameObject startMenu;//지울예정(StartScene으로 이전)
@@ -52,6 +54,8 @@ public class UIManager : MonoBehaviour
     [Tooltip("몬스터의 현재 키배치")]
     public Text[] creatureKey;
 
+    public Slider[] HPGuage;
+
     public GameObject[] UI_LightTrapList;
 
     public Sprite[] HPBarImage;
@@ -59,6 +63,7 @@ public class UIManager : MonoBehaviour
     public Sprite[] skillGrayImage;
     public Sprite[] itemImage;
     public Sprite[] skillImage;
+   
     
     public float seconds = 10f;
 
@@ -90,8 +95,13 @@ public class UIManager : MonoBehaviour
                 {
                     seconds -= Time.deltaTime;
                     Debug.Log(seconds);
+                    CreatureSkillUIControll(seconds);
                 }
-                CreatureSkillUIControll(seconds);
+                else
+                {
+                    seconds = 10f;
+                }
+                
             }
         }
     }
@@ -219,21 +229,22 @@ public class UIManager : MonoBehaviour
     }
 
     /// <summary>괴물 공격 성공시 스킬 비활성화</summary>
-    public void CreatureSkillUIControll(float seconds)
+    public void CreatureSkillUIControll(float second)
     {
         for(int i = 0; i < coolTimeBackGroundImage.Length; i++)
         {
             coolTimeBackGroundImage[i].gameObject.SetActive(true);
             coolTimeText[i].gameObject.SetActive(true);
 
-            coolTimeText[i].text = string.Format("{0:F0}", seconds);
+            coolTimeText[i].text = string.Format("{0:F0}", second);
 
-            if(seconds <= 0)
+            if(second <= 0)
             {
                 coolTimeBackGroundImage[i].gameObject.SetActive(false);
                 coolTimeText[i].gameObject.SetActive(false);
                 GameManager.players[Client.instance.myId].isCreatureAttack = false;
             }
         }
+        
     }
 }

@@ -10,17 +10,22 @@ public class Gun : MonoBehaviour
     private int batteryCapacity = 30; // 탄창 용량
 
     //private float fireTime = 0.3f; // 총알 발사 사이 시간 간격
-   // private float lastFireTime; // 총을 마지막으로 쏜 시간
+    // private float lastFireTime; // 총을 마지막으로 쏜 시간
+
+    public AudioSource normalGunSound;
+    public AudioSource empGunSound;
+    public AudioSource reloadSound;
 
     private void Start()
     {
-        UIManager.instance.currentBulletText = GameObject.Find("Current Bullet").GetComponent<Text>();
-        UIManager.instance.bulletAmoutText = GameObject.Find("Bullet Amount").GetComponent<Text>();
+        //UIManager.instance.currentBulletText = GameObject.Find("Current Bullet").GetComponent<Text>();
+        //UIManager.instance.bulletAmoutText = GameObject.Find("Bullet Amount").GetComponent<Text>();
     }
 
     public bool Reloade()
     {
         batteryAmount = GameManager.players[Client.instance.myId].GetComponent<PlayerManager>().playerItem.batteryCount;
+        reloadSound.PlayOneShot(reloadSound.clip);
 
         if (currentBattery >= batteryCapacity)
         {
@@ -42,6 +47,7 @@ public class Gun : MonoBehaviour
 
         UIManager.instance.currentBulletText.text = string.Format(" {0:} ", currentBattery);
         UIManager.instance.bulletAmoutText.text = string.Format(" {0:} ", batteryAmount);
+        UIManager.instance.itemCountText[2].text = (batteryAmount / 30).ToString();
 
         return true;
     }

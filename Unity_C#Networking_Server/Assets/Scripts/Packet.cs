@@ -80,7 +80,7 @@ public enum ClientPackets
     droneMovement,      //드론 움직임
     droneStop,          //드론 멈춤
     skillSpeedUp,       //괴물 이속증가
-    mossterAttack,      //괴물 공격
+    creatureAttack,      //괴물 공격
     //선희
 
     skillCure,          //스킬 치료

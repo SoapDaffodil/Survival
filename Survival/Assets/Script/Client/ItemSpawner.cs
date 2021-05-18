@@ -106,15 +106,24 @@ public class ItemSpawner : MonoBehaviour
     {
         if (transform.parent != null)
         {
+            transform.parent.GetComponent<PlayerManager>().playerItem.GrabItem.GetComponent<SphereCollider>().enabled = true;
             transform.parent.GetComponent<PlayerManager>().playerItem.GrabItem = null;
             switch (itemType)
             {
                 case ItemType.GUN: case ItemType.DRONE:
                     transform.parent.GetComponent<PlayerManager>().playerItem.item_number1 = null;
                     transform.parent.GetComponent<PlayerManager>().animator.SetBool("Gun", false);
+                    UIManager.instance.itemCountText[0].text = "0";
+                    UIManager.instance.itemCountText[0].color = UIManager.instance.textColor[(int)UIManager.TextColor.GRAY];
                     break;
                 case ItemType.EMP: case ItemType.LIGHTTRAP:
                     transform.parent.GetComponent<PlayerManager>().playerItem.item_number2.Remove(this);
+                    UIManager.instance.itemCountText[1].text = transform.parent.GetComponent<PlayerManager>().playerItem.item_number2.Count.ToString();
+                    if(transform.parent.GetComponent<PlayerManager>().playerItem.item_number2.Count == 0)
+                    {
+                        UIManager.instance.itemCountText[1].color = UIManager.instance.textColor[(int)UIManager.TextColor.GRAY];
+                    }
+                    
                     break;
             }
             transform.SetParent(null, true);
@@ -142,6 +151,7 @@ public class ItemSpawner : MonoBehaviour
         transform.position = _position;
         if (transform.parent != _byPlayer.transform) {
             transform.SetParent(_byPlayer.transform, true);
+            gameObject.GetComponent<SphereCollider>().enabled = false;
         }
         if (_byPlayer.playerItem.GrabItem != null && _byPlayer.playerItem.GrabItem.transform.parent == _byPlayer.transform)
         {

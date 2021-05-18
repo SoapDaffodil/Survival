@@ -39,13 +39,9 @@ public class Projectile : MonoBehaviour
     {
         if(collision.gameObject.GetComponent<Player>() != null)
         {
-            if (collision.gameObject.GetComponent<Player>().playerType == PlayerType.CREATURE && EMPInstallFinished)
+            if (collision.gameObject.GetComponent<Player>().playerType == PlayerType.CREATURE)
             {
                 Explode();
-            }
-            if (collision.gameObject.GetComponent<Player>().playerType == PlayerType.CREATURE && !EMPInstallFinished)
-            {
-                Debug.Log("괴물이 데미지를 입지 않습니다!");
             }
         }        
     }
@@ -54,11 +50,10 @@ public class Projectile : MonoBehaviour
     /// <param name="_initialMovementDirection">초기 방향</param>
     /// <param name="_initialForceStrength">초기 세기</param>
     /// <param name="_thrownByPlayer">발사한 사람</param>
-    public void Initialize(Vector3 _initialMovementDirection, float _initialForceStrength, int _thrownByPlayer, bool _EMPInstallFinished)
+    public void Initialize(Vector3 _initialMovementDirection, float _initialForceStrength, int _thrownByPlayer)
     {
         initialForce = _initialMovementDirection * _initialForceStrength;
         thrownByPlayer = _thrownByPlayer;
-        EMPInstallFinished = _EMPInstallFinished;
     }
 
     /// <summary>폭발</summary>
@@ -71,7 +66,8 @@ public class Projectile : MonoBehaviour
         {
             if (_collider.CompareTag("Player"))
             {
-                _collider.GetComponent<Player>().TakeDamage(explosionDamage);
+                //_collider.GetComponent<Player>().TakeDamage(explosionDamage);
+                ServerSend.KeyChange(_collider.gameObject.GetComponent<Player>().id);
             }
         }
 

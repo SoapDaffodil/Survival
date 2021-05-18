@@ -368,8 +368,8 @@ public class Client : MonoBehaviour
             { (int)ServerPackets.spawnBullet, ClientHandle.SpawnBullet},
             { (int)ServerPackets.bulletPosition, ClientHandle.BulletPosition},
             { (int)ServerPackets.bulletCrush, ClientHandle.BulletCrush},
-
             { (int)ServerPackets.motionCure, ClientHandle.MotionCure},
+            { (int)ServerPackets.creatureAttackTrue, ClientHandle.CreatureAttackTrue},
             //{ (int)ServerPackets.udpTest, ClientHandle.UDPTest }
         };
         Debug.Log("Initialized packets.");

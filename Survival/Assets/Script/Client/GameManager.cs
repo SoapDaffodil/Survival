@@ -83,10 +83,13 @@ public class GameManager : MonoBehaviour
                 case (int)PlayerType.CREATURE:
                     _player = Instantiate(localPlayerPrefab[(int)PlayerType.CREATURE], _position, _rotation);
                     UIManager.instance.itemImageUI[UIManager.instance.itemImageUI.Length-1].gameObject.SetActive(false);
+                    UIManager.instance.HPGuage[(int)PlayerType.HUMAN].gameObject.SetActive(false);
                     break;
                 case (int)PlayerType.HUMAN:
                     _player = Instantiate(localPlayerPrefab[(int)PlayerType.HUMAN], _position, _rotation);
                     UIManager.instance.skillImageUI[UIManager.instance.skillImageUI.Length-1].gameObject.SetActive(false);
+                    UIManager.instance.HPGuage[(int)PlayerType.HUMAN].gameObject.SetActive(true);
+                    UIManager.instance.HPGuage[(int)PlayerType.CREATURE].gameObject.SetActive(false);
                     break;
             }
             for (int i = 0; i < UIManager.instance.itemImageUI.Length; i++)
@@ -97,9 +100,11 @@ public class GameManager : MonoBehaviour
                 UIManager.instance.skillImageUI[i].sprite = UIManager.instance.skillImage[
                     (int)Client.playerType * UIManager.instance.itemImageUI.Length + i];
             }
+
             if (!EMPInstallFinished && Client.playerType == PlayerType.CREATURE)
             {
                 UIManager.instance.HPBarUI[0].sprite = UIManager.instance.HPBarImage[0];
+                UIManager.instance.HPGuage[(int)PlayerType.CREATURE].gameObject.SetActive(false);
             }
             else
             {
@@ -157,14 +162,20 @@ public class GameManager : MonoBehaviour
                 if (_spawner.itemType == ItemType.GUN)
                 {
                     _player.playerItem.item_number1 = _spawner;
+                    UIManager.instance.itemCountText[0].text = "1";
+                    UIManager.instance.itemCountText[0].color = UIManager.instance.textColor[(int)UIManager.TextColor.MINT];
                 }
                 else if (_spawner.itemType == ItemType.EMP)
                 {
                     _player.playerItem.item_number2.Add(_spawner);
+                    UIManager.instance.itemCountText[1].text = _player.playerItem.item_number2.Count.ToString();
+                    UIManager.instance.itemCountText[1].color = UIManager.instance.textColor[(int)UIManager.TextColor.MINT];
                 }
                 else if (_spawner.itemType == ItemType.BATTERY)
-                {
-                    _player.playerItem.batteryCount += 30;                   
+                {                    
+                    _player.playerItem.batteryCount += 30;
+                    UIManager.instance.itemCountText[2].text = (_player.playerItem.batteryCount / 30).ToString();
+                    UIManager.instance.itemCountText[2].color = UIManager.instance.textColor[(int)UIManager.TextColor.MINT];
                 }
                 else
                 {
@@ -176,10 +187,14 @@ public class GameManager : MonoBehaviour
                 if (_spawner.itemType == ItemType.DRONE)
                 {
                     _player.playerItem.item_number1 = _spawner;
+                    UIManager.instance.itemCountText[0].text = "1";
+                    UIManager.instance.itemCountText[0].color = UIManager.instance.textColor[(int)UIManager.TextColor.MINT];
                 }
                 else if (_spawner.itemType == ItemType.LIGHTTRAP)
                 {
                     _player.playerItem.item_number2.Add(_spawner);
+                    UIManager.instance.itemCountText[1].text = _player.playerItem.item_number2.Count.ToString();
+                    UIManager.instance.itemCountText[1].color = UIManager.instance.textColor[(int)UIManager.TextColor.MINT];
                 }
                 else
                 {
@@ -264,6 +279,7 @@ public class GameManager : MonoBehaviour
             if(players[i].playerType == PlayerType.CREATURE)
             {
                 UIManager.instance.HPBarUI[0].sprite = UIManager.instance.HPBarImage[1];
+                UIManager.instance.HPGuage[(int)PlayerType.CREATURE].gameObject.SetActive(true);
                 Debug.Log($"UI 바뀐 플레이어 : {players[i].gameObject.name}");
             }
         }
