@@ -381,12 +381,13 @@ public class ServerSend
     /// <param name="_spawnerId">아이템 ID</param>
     /// <param name="_byPlayer">플레이어 ID</param>
     /// <param name="_position">아이템 포지션</param>
-    public static void InstallEMP(int _spawnerId, Vector3 _position)
+    public static void InstallEMP(int _spawnerId, Vector3 _position, int _byPlayer)
     {
         using (Packet _packet = new Packet((int)ServerPackets.installEMP))
         {
             _packet.Write(_spawnerId);
             _packet.Write(_position);
+            _packet.Write(_byPlayer);
 
             SendTCPDataToAll(_packet);
         }
@@ -397,13 +398,14 @@ public class ServerSend
     /// <param name="_spawnerId">아이템 ID</param>
     /// <param name="_position">아이템 포지션</param>
     /// <param name="_floor">아이템이 위치한 층</param>
-    public static void InstallTrap(int _spawnerId, Vector3 _position, int _floor)
+    public static void InstallTrap(int _spawnerId, Vector3 _position, int _floor, int _byPlayer)
     {
         using (Packet _packet = new Packet((int)ServerPackets.installTrap))
         {
             _packet.Write(_spawnerId);
             _packet.Write(_position);
             _packet.Write(_floor);
+            _packet.Write(_byPlayer);
 
             SendTCPDataToAll(_packet);
         }

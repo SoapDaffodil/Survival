@@ -89,7 +89,7 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
-        Debug.DrawRay(this.gameObject.transform.position, viewPoint * 3f, Color.green);
+        Debug.DrawRay(shootOrigin.position + shootOrigin.forward * 0.7f, viewPoint * 3f, Color.green);
     }
     /// <summary>Updates the player input with newly received input.</summary>
     /// <param name="_inputs">The new key inputs.</param>
@@ -192,10 +192,11 @@ public class Player : MonoBehaviour
     public void CreatureAttack(Vector3 _viewDirection)
     {
         viewPoint = _viewDirection;
-        if(Physics.Raycast(transform.position, _viewDirection, out RaycastHit _hit, 3f))
+        if(Physics.Raycast(shootOrigin.position + shootOrigin.forward * 0.7f, _viewDirection, out RaycastHit _hit, 10f))
         {
             if(_hit.collider.GetComponent<Player>() != null)
             {
+                Debug.Log($"레이에 맞은 플레이어 : {_hit.collider.gameObject.name}");
                 Player hitPlayer = _hit.collider.GetComponent<Player>();
                 if (hitPlayer.playerType == PlayerType.HUMAN)
                 {
@@ -204,12 +205,14 @@ public class Player : MonoBehaviour
                     Debug.Log($"공격 맞음 : {_hit.collider.gameObject.name}");
                     hitPlayer.TakeDamage(50f);
                     hitPlayer.moveSpeed *= 2;
-                    Invoke("SpeedDown", 2f);                 
+                    Invoke("SpeedDown", 2f);
+
+                    this.gameObject.GetComponent<Player>().controller.enabled = false;
+                    Invoke("EndStun", 2f);
+                    //스킬 비활성화
+                    ServerSend.CreatureAttackTrue(id, isCreatureAttack);
                 }
-                this.gameObject.GetComponent<Player>().controller.enabled = false;
-                Invoke("EndStun", 2f);
-                //스킬 비활성화
-                ServerSend.CreatureAttackTrue(id, isCreatureAttack);
+                
             }
             
         }

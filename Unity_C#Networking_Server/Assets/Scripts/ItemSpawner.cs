@@ -166,7 +166,7 @@ public class ItemSpawner : MonoBehaviour
                 {
                     this.transform.SetParent(null, true);
                 }
-                ServerSend.InstallTrap(spawnerId, _position, _floor);
+                ServerSend.InstallTrap(spawnerId, _position, _floor, _byPlayer);
                 break;
             case "LIGHTTRAP":
                 lightTrapList.Add(new TrapInfo(_floor, this));
@@ -176,7 +176,7 @@ public class ItemSpawner : MonoBehaviour
                 {
                     this.transform.SetParent(null, true);
                 }
-                ServerSend.InstallTrap(spawnerId, _position, _floor);
+                ServerSend.InstallTrap(spawnerId, _position, _floor, _byPlayer);
                 break;
             default:
                 ServerSend.Error(_byPlayer, $"This item is not for installation - {this.tag}");
@@ -191,6 +191,6 @@ public class ItemSpawner : MonoBehaviour
     {
         itemModel.enabled = true;
         this.transform.position = _position;
-        ServerSend.InstallEMP(spawnerId, _position);
+        ServerSend.InstallEMP(spawnerId, _position, this.transform.parent.GetComponent<Player>().id);
     }
 }

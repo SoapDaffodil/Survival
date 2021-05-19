@@ -6,14 +6,14 @@ using UnityEngine.UI;
 public  class EMP : MonoBehaviour
 {
 
-    protected float minGauge = 15f;
-    protected float maxGauge = 45f;
+    protected float minGauge = 1f;
+    protected float maxGauge = 100f;
     protected float chargingTime;
     protected Slider powerSlider;
 
 
     protected float currenGauge;
-    protected float chargingSpeed;
+    public float chargingSpeed;
     public  bool finished;
     protected int empAmount = 0;
 
@@ -22,17 +22,14 @@ public  class EMP : MonoBehaviour
     public bool gaugeCheck = false;
     public bool isDetectiveMode = false;
 
-    public AudioSource empSound;
 
     private void Start()
     {
-        chargingSpeed = 2f;
         isInstalling = false;
         gaugeCheck = false;
         isDetectiveMode = false;
 
         //UIManager.instance.powerSlider = GameObject.Find("Power Slider").GetComponent<Slider>();       
-        chargingTime = (maxGauge - minGauge)/100 * chargingSpeed;
 
         if (UIManager.instance.powerSlider != null)
         {
@@ -53,14 +50,14 @@ public  class EMP : MonoBehaviour
     {
         if (isInstalling && gaugeCheck)
         {
+            chargingTime = (maxGauge - minGauge) / 100 * chargingSpeed;
             gaugeCheck = false;
             UIManager.instance.powerSlider.gameObject.SetActive(true);
 
             if (currenGauge < maxGauge)
             {
-                currenGauge += currenGauge * chargingTime * Time.deltaTime;
-                UIManager.instance.powerSlider.value = currenGauge;
-                empSound.Play();
+                currenGauge +=  chargingTime * Time.deltaTime;
+                UIManager.instance.powerSlider.value = currenGauge;                
             }
 
             if (currenGauge >= maxGauge)
@@ -70,7 +67,16 @@ public  class EMP : MonoBehaviour
                 
                 UIManager.instance.powerSlider.gameObject.SetActive(false);
 
-                ClientSend.InstallEMP(transform.position, GameManager.players[Client.instance.myId].GetComponent<PlayerManager>().playerItem.item_number2[0]);
+                if(transform.parent.GetComponent<PlayerController>().isInEMPZone)
+                {
+                    ClientSend.InstallEMP(transform.position, GameManager.players[Client.instance.myId].GetComponent<PlayerManager>().playerItem.GrabItem);
+                }
+                else
+                {
+                    int _floor = (this.transform.parent.position.y < 10f) ? 1 : 2;
+                    ClientSend.Install(this.transform.position, GameManager.players[Client.instance.myId].GetComponent<PlayerManager>().playerItem.GrabItem.spawnerId, _floor);
+                }
+                
             }
             else
             {
@@ -92,11 +98,13 @@ public  class EMP : MonoBehaviour
     {
         if (isDetectiveMode)
         {
-
-          if (other.GetComponent<PlayerManager>().playerType == PlayerType.CREATURE)
+            for(int i = 1; i <= GameManager.players.Count; i++)
             {
-                Debug.Log("키체인지");
-                other.GetComponent<PlayerController>().KeyChange();
+                if(GameManager.players[i].playerType == PlayerType.CREATURE)
+                {
+                    Debug.Log("키체인지");
+                    other.GetComponent<PlayerController>().KeyChange();
+                }
             }
         }
     }

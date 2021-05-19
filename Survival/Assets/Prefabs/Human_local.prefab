@@ -1279,8 +1279,9 @@ MonoBehaviour:
   playerType: 1
   isCuring: 0
   isCreatureAttack: 0
-  footStepSound: {fileID: 0}
-  busurukSound: {fileID: 0}
+  isInstalling: 0
+  footStepSound: {fileID: 8300000, guid: 77b320a841ea3ed4ea065efc2b1cd43a, type: 3}
+  busurukSound: {fileID: 8300000, guid: 8cca37822680c4e42a9a14d956db4ed1, type: 3}
   creatureAttackSound: {fileID: 0}
   controller: {fileID: 8428234678857526169}
   animator: {fileID: 8490614590202701464}
@@ -1300,8 +1301,8 @@ MonoBehaviour:
   getKeyDownF: 0
   getKeyDownE: 0
   input: 7700000073000000610000006400000020000000
-  stepRate: 3
-  nextTimeToStep: 0
+  fireRate: 3
+  nextTimeToFire: 0
 --- !u!82 &7370655868352678137
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1312,10 +1313,10 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 846b96090c272f24c9aba61601885e23, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 77b320a841ea3ed4ea065efc2b1cd43a, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.5
-  m_Pitch: 0.5
+  m_Volume: 1
+  m_Pitch: 1.5
   Loop: 0
   Mute: 0
   Spatialize: 0
