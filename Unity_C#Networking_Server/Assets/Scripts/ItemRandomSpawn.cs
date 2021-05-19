@@ -6,16 +6,25 @@ public class ItemRandomSpawn : MonoBehaviour
 {
     public GameObject[] itemPrefabs;
     public Transform[] itemSpawnTransform;
-    private static int[] randomCount = { 0, 1, 2, 3, 4, 0, 1, 2, 3, 4 };
+    private static List<int> randomCount = new List<int>();
     // Start is called before the first frame update
     void Awake()
-    {
-        if (randomCount.Length != itemSpawnTransform.Length)
+    {   //gun, drone, emp, lighttrap, battery
+        int[] itemCount = { 6, 6, 18, 18, 18 };
+        for (int i=0;i<itemCount.Length;i++)
+        {
+            for (int j = 0; j < itemCount[i]; j++)
+            {
+                randomCount.Add(i);
+            }
+        }
+        itemSpawnTransform = GetComponentsInChildren<Transform>();
+        if (randomCount.Count != itemSpawnTransform.Length)
         {
             Debug.Log($"아이템 위치의 수와 아이템의 수가 맞지 않습니다");
             return;
         }
-        for(int i = randomCount.Length; i > 0; i--)
+        for(int i = randomCount.Count; i > 0; i--)
         {
             int itemNumber = Random.Range(0, i - 1);
             Instantiate(itemPrefabs[randomCount[itemNumber]], itemSpawnTransform[itemNumber].position, itemSpawnTransform[itemNumber].rotation).GetComponent<ItemSpawner>().Initialize();
