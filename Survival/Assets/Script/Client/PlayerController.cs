@@ -11,11 +11,11 @@ public class PlayerController : MonoBehaviour
 
     private IEnumerator lightTrapInstall;
 
-    private bool isInEMPZone = false;
+    public bool isInEMPZone = false;
     private bool isInHideZone = false;
 
-    public float stepRate = 3f;
-    public float nextTimeToStep;
+    public float fireRate = 3f;
+    public float nextTimeToFire;
 
     private void Start()
     {
@@ -45,8 +45,27 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
+        if(Input.GetKey(KeyCode.Mouse0))
+        {
+            if (this.GetComponent<PlayerManager>().playerType == PlayerType.HUMAN)
+            {
+                ItemSpawner _grabItem = this.GetComponent<PlayerManager>().playerItem.GrabItem;
+
+                if (_grabItem != null && _grabItem.itemType == ItemType.GUN)
+                {
+                    Gun gun = _grabItem.GetComponent<Gun>();
+                    if (gun.currentBattery != 0 && Time.time >= nextTimeToFire)
+                    {
+                        nextTimeToFire = Time.time + 1 / fireRate;
+                        gun.GetComponent<AudioSource>().PlayOneShot(gun.normalGunSound);
+                        ClientSend.PlayerShootBullet(camTransform.forward);
+                    }
+                }
+            }
+        }
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
+            /*
             if(this.GetComponent<PlayerManager>().playerType == PlayerType.HUMAN)
             {
                 ItemSpawner _grabItem = this.GetComponent<PlayerManager>().playerItem.GrabItem;
@@ -61,9 +80,11 @@ public class PlayerController : MonoBehaviour
                     }                  
                 }
             }
-            else
+            */
+            if(this.GetComponent<PlayerManager>().playerType == PlayerType.CREATURE)
             {
                 Debug.Log("몬스터 공격!");
+                this.GetComponent<PlayerManager>().GetComponent<AudioSource>().PlayOneShot(this.GetComponent<PlayerManager>().creatureAttackSound);
                 ClientSend.CreatureAttack(camTransform.forward);
             }
             
@@ -80,7 +101,7 @@ public class PlayerController : MonoBehaviour
                     Gun gun = _grabItem.GetComponent<Gun>();
                     if (gun.currentBattery >= 5)
                     {
-                        gun.empGunSound.PlayOneShot(gun.empGunSound.clip);
+                        gun.GetComponent<AudioSource>().PlayOneShot(gun.empGunSound);
                         ClientSend.PlayerShootBomb(camTransform.forward);
                     }
                 }
@@ -126,8 +147,16 @@ public class PlayerController : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.C) && this.GetComponent<PlayerManager>().playerType == PlayerType.HUMAN)
         {
-            GameManager.players[Client.instance.myId].isCuring = true;
-            ClientSend.SkillCure(true);
+            if(this.GetComponent<PlayerManager>().hp < this.GetComponent<PlayerManager>().maxHp)
+            {
+                GameManager.players[Client.instance.myId].isCuring = true;
+                ClientSend.SkillCure(true);
+            }
+            else
+            {
+                Debug.Log("체력이 가득 차 있습니다!");
+            }
+            
         }
 
         if (Input.GetKeyDown(KeyCode.Alpha1))
@@ -319,24 +348,31 @@ public class PlayerController : MonoBehaviour
                     EMP emp = _grabItem.GetComponent<EMP>();
 
                     if (isInEMPZone)
-                    {                        
+                    {
+                        emp.chargingSpeed = 15f;
                         Debug.Log($"지금은 : {other.gameObject.name}");
                         if (emp.isInstalling)
                         {
                             Debug.Log($"emp 설치 취소");
                             emp.InstallCancle();
+                            this.GetComponent<PlayerManager>().isInstalling = false;
+                            this.GetComponent<PlayerManager>().PlayerInstallingSound(this.GetComponent<PlayerManager>().isInstalling);
                         }
                         else
                         {
                             emp.isInstalling = true;
                             emp.gaugeCheck = true;
+                            this.GetComponent<PlayerManager>().isInstalling = true;
+                            this.GetComponent<PlayerManager>().PlayerInstallingSound(this.GetComponent<PlayerManager>().isInstalling);
                         }
                     }                   
                     else
                     {
-                        emp.empSound.Play();
-                        int _floor = (this.transform.position.y < 10f) ? 1 : 2;
-                        ClientSend.Install(this.transform.position, _grabItem.spawnerId, _floor);
+                        emp.chargingSpeed = 40f;
+                        emp.isInstalling = true;
+                        emp.gaugeCheck = true;
+                        this.GetComponent<PlayerManager>().isInstalling = true;
+                        this.GetComponent<PlayerManager>().PlayerInstallingSound(this.GetComponent<PlayerManager>().isInstalling);
                     }
                 }
                 else if (_grabItem.itemType == ItemType.LIGHTTRAP && this.GetComponent<PlayerManager>().playerType == PlayerType.CREATURE)
@@ -344,6 +380,8 @@ public class PlayerController : MonoBehaviour
                     if(!this.GetComponent<PlayerManager>().isCreatureAttack)
                     {
                         int _floor = (this.transform.position.y < 10f) ? 1 : 2;
+                        this.GetComponent<PlayerManager>().isInstalling = true;
+                        this.GetComponent<PlayerManager>().PlayerInstallingSound(this.GetComponent<PlayerManager>().isInstalling);
                         ClientSend.Install(this.transform.position, _grabItem.spawnerId, _floor);
                     }                    
                 }

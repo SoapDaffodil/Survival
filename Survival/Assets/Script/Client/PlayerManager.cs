@@ -41,6 +41,7 @@ public class PlayerManager : MonoBehaviour
     public PlayerType playerType;           //플레이어의 타입(괴물, 인간)
     public bool isCuring = false;           //플레이어 치료 중
     public bool isCreatureAttack = false;    //괴물 공격 성공
+    public bool isInstalling = false;       //설치 오브젝트 설치중
 
     public AudioClip footStepSound;
     public AudioClip busurukSound;
@@ -142,6 +143,37 @@ public class PlayerManager : MonoBehaviour
         
         Debug.Log($"은폐 위치 : {_position}");
         Debug.Log("은폐");
+    }
+
+    public void PlayerInstallingSound(bool _isInstalling)
+    {
+        if(this.GetComponent<AudioSource>().clip != null && _isInstalling)
+        {
+            if(this.GetComponent<AudioSource>().clip != busurukSound)
+            {
+                this.GetComponent<AudioSource>().clip = busurukSound;
+            }
+            Debug.Log($"설치 소리 클립 : {this.GetComponent<AudioSource>().clip.name}");
+            if( (this.GetComponent<AudioSource>().clip == busurukSound && this.GetComponent<AudioSource>().isPlaying) 
+                || this.GetComponent<AudioSource>().clip != busurukSound)
+            {
+                this.GetComponent<AudioSource>().Stop();
+                Debug.Log("소리 멈춤");
+            }
+            else if( (this.GetComponent<AudioSource>().clip == busurukSound && !this.GetComponent<AudioSource>().isPlaying) 
+                || this.GetComponent<AudioSource>().clip != busurukSound)
+            {
+                this.GetComponent<AudioSource>().clip = busurukSound;
+                this.GetComponent<AudioSource>().pitch = 3f;
+                this.GetComponent<AudioSource>().Play();
+                Debug.Log("소리 재생");
+            }
+        }
+        if(this.GetComponent<AudioSource>().clip != null && !_isInstalling)
+        {
+            this.GetComponent<AudioSource>().Stop();
+            Debug.Log("소리 멈춤");
+        }
     }
 
 }

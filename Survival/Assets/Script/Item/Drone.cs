@@ -9,8 +9,8 @@ public class Drone : MonoBehaviour
     private Camera droneCam;
     public bool isDroneMoving = false;
 
-    public AudioSource droneMovingSound;
-    public AudioSource droneTeleportSound;
+    public AudioClip droneMovingSound;
+    public AudioClip droneTeleportSound;
     void Start()
     {       
        // flash = gameObject.GetComponent<Light>();
@@ -37,7 +37,7 @@ public class Drone : MonoBehaviour
                 PlayerController _player = this.transform.parent.GetComponent<PlayerController>();
                 transform.SetParent(null, true);
                 ClientSend.SkillTeleportation(this.transform.position);
-                droneTeleportSound.Play();
+                this.GetComponent<AudioSource>().PlayOneShot(droneTeleportSound);
 
                 droneCam.gameObject.SetActive(false);
                 _player.enabled = true;
@@ -90,16 +90,7 @@ public class Drone : MonoBehaviour
             Input.GetKey(KeyCode.A),
             Input.GetKey(KeyCode.D),
             Input.GetKey(KeyCode.Space),
-            };
-
-            for(int i = 0; i < _inputs.Length; i++)
-            {
-                if(_inputs[i] == true)
-                {
-                    droneMovingSound.Play();
-                }
-            }
-            
+            };            
             ClientSend.DroneMovement(_inputs, this.gameObject);
         }        
     }

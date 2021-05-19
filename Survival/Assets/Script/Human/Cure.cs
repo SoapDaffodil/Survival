@@ -8,15 +8,15 @@ public class Cure : MonoBehaviour
     //private int hp = 1;
     //public bool isDead = false;
     private Slider hpSlider;
-    private float minGauge = 15f;
-    private float maxGauge = 45f;
+    private float minGauge = 1f;
+    private float maxGauge = 100f;
     private float currenGauge;
     private float chargingSpeed;
     private float chargingTime = 3f;
 
     private void Start()
     {
-        chargingSpeed = 2f;
+        chargingSpeed = 10f;
         chargingTime = (maxGauge - minGauge) / 100 * chargingSpeed;
         currenGauge = minGauge;
 
@@ -40,21 +40,56 @@ public class Cure : MonoBehaviour
         {
             UIManager.instance.hpSlider.gameObject.SetActive(true);
 
-            if(currenGauge < maxGauge)
+            if (currenGauge < maxGauge)
             {
-                currenGauge += currenGauge * chargingTime * Time.deltaTime;
+                currenGauge += chargingTime * Time.deltaTime;
                 UIManager.instance.hpSlider.value = currenGauge;
+
+                if (this.GetComponent<AudioSource>().clip != null && this.GetComponent<PlayerManager>().playerType == PlayerType.HUMAN)
+                {
+                    if (this.GetComponent<AudioSource>().clip != this.GetComponent<PlayerManager>().busurukSound)
+                    {
+                        this.GetComponent<AudioSource>().clip = this.GetComponent<PlayerManager>().busurukSound;
+                    }
+                    Debug.Log($"플레이어 치료 소리 : {this.GetComponent<AudioSource>().clip.name}");
+
+                    if ((this.GetComponent<AudioSource>().clip == this.GetComponent<PlayerManager>().busurukSound && !this.GetComponent<AudioSource>().isPlaying)
+                        || this.GetComponent<AudioSource>().clip != this.GetComponent<PlayerManager>().busurukSound)
+                    {
+                        this.GetComponent<AudioSource>().clip = this.GetComponent<PlayerManager>().busurukSound;
+                        this.GetComponent<AudioSource>().pitch = 3f;
+                        this.GetComponent<AudioSource>().Play();
+                        Debug.Log("소리 재생");
+                    }
+                }
             }
-            else if(currenGauge >= maxGauge)
+            else if (currenGauge >= maxGauge)
             {
                 GameManager.players[Client.instance.myId].GetComponent<PlayerManager>().isCuring = false;
                 currenGauge = maxGauge;
                 UIManager.instance.hpSlider.gameObject.SetActive(false);
-                UIManager.instance.HPGuage[(int) PlayerType.HUMAN].value += 50;
-                
+                UIManager.instance.HPGuage[(int)PlayerType.HUMAN].value += 50;
+
                 Debug.Log($"플레이어 체력 : {GameManager.players[Client.instance.myId].GetComponent<PlayerManager>().hp}");
                 ClientSend.Cure(GameManager.players[Client.instance.myId].GetComponent<PlayerManager>().hp);
                 ClientSend.SkillCure(false);
+                currenGauge = minGauge;
+                UIManager.instance.hpSlider.value = currenGauge;
+
+                if (this.GetComponent<AudioSource>().clip != null && this.GetComponent<PlayerManager>().playerType == PlayerType.HUMAN)
+                {
+                    if (this.GetComponent<AudioSource>().clip != this.GetComponent<PlayerManager>().busurukSound)
+                    {
+                        this.GetComponent<AudioSource>().clip = this.GetComponent<PlayerManager>().busurukSound;
+                    }
+                    Debug.Log($"플레이어 치료 소리 : {this.GetComponent<AudioSource>().clip.name}");
+                    if ((this.GetComponent<AudioSource>().clip == this.GetComponent<PlayerManager>().busurukSound && this.GetComponent<AudioSource>().isPlaying)
+                        || this.GetComponent<AudioSource>().clip != this.GetComponent<PlayerManager>().busurukSound)
+                    {
+                        this.GetComponent<AudioSource>().Stop();
+                        Debug.Log("소리 멈춤");
+                    }
+                }
             }
         }
     }

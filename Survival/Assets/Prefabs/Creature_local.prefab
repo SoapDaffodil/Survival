@@ -201,9 +201,10 @@ MonoBehaviour:
   playerType: 0
   isCuring: 0
   isCreatureAttack: 0
+  isInstalling: 0
   footStepSound: {fileID: 0}
   busurukSound: {fileID: 0}
-  creatureAttackSound: {fileID: 0}
+  creatureAttackSound: {fileID: 8300000, guid: 3bd6526d5605fdb4e916f9cb27bf61e8, type: 3}
   controller: {fileID: 2693480195332742884}
   animator: {fileID: 1314722003099472528}
 --- !u!114 &2693480195332742884
@@ -222,8 +223,8 @@ MonoBehaviour:
   getKeyDownF: 0
   getKeyDownE: 0
   input: 7700000073000000610000006400000020000000
-  stepRate: 3
-  nextTimeToStep: 0
+  fireRate: 3
+  nextTimeToFire: 0
 --- !u!82 &9087796358826941204
 AudioSource:
   m_ObjectHideFlags: 0

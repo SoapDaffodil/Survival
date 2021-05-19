@@ -60,24 +60,36 @@ public class ClientHandle : MonoBehaviour
             {
                 UIManager.instance.fisrtFloorPlayer.transform.position = _position + new Vector3(-100, 0, 0);
 
-                if (_player.GetComponent<AudioSource>().clip != _player.footStepSound)
+                if(_player.GetComponent<AudioSource>().clip != null && !_player.GetComponent<PlayerManager>().isInstalling && _player.playerType == PlayerType.HUMAN)
                 {
-                    if ((_player.GetComponent<AudioSource>().clip == _player.footStepSound &&  _player.GetComponent<AudioSource>().isPlaying) && !_walk && !_run)
+                    if(_player.GetComponent<AudioSource>().clip != _player.footStepSound)
+                    {
+                        _player.GetComponent<AudioSource>().clip = _player.footStepSound;
+                    }
+                    Debug.Log($"플레이어 걷는 소리 : {_player.GetComponent<AudioSource>().clip.name}");
+                    if ((_player.GetComponent<AudioSource>().clip == _player.footStepSound && _player.GetComponent<AudioSource>().isPlaying) && !_walk && !_run
+                            || _player.GetComponent<AudioSource>().clip != _player.footStepSound)
                     {
                         _player.GetComponent<AudioSource>().Stop();
                     }
-                    else if (_run && (_player.GetComponent<AudioSource>().clip == _player.footStepSound &&  !_player.GetComponent<AudioSource>().isPlaying))
+                    else if (_run && (_player.GetComponent<AudioSource>().clip == _player.footStepSound && !_player.GetComponent<AudioSource>().isPlaying)
+                                || _player.GetComponent<AudioSource>().clip != _player.footStepSound)
                     {
                         _player.GetComponent<AudioSource>().clip = _player.footStepSound;
                         _player.GetComponent<AudioSource>().pitch = 1f;
                         _player.GetComponent<AudioSource>().Play();
                     }
-                    else if (_walk && (_player.GetComponent<AudioSource>().clip == _player.footStepSound && !_player.GetComponent<AudioSource>().isPlaying))
+                    else if (_walk && (_player.GetComponent<AudioSource>().clip == _player.footStepSound && !_player.GetComponent<AudioSource>().isPlaying)
+                              || _player.GetComponent<AudioSource>().clip != _player.footStepSound)
                     {
                         _player.GetComponent<AudioSource>().clip = _player.footStepSound;
                         _player.GetComponent<AudioSource>().pitch = 0.5f;
                         _player.GetComponent<AudioSource>().Play();
                     }
+                }
+                else if(_player.GetComponent<AudioSource>().clip != null && !_player.GetComponent<PlayerManager>().isInstalling && _player.playerType == PlayerType.CREATURE)
+                {
+                    //괴물 걷는 소리
                 }
             }
 
@@ -190,14 +202,16 @@ public class ClientHandle : MonoBehaviour
         
         GameManager.players[_playerId].GetComponent<PlayerController>().KeyChange();
     }
-    
     public static void InstallEMP(Packet _packet)
     {
         int _spawnerId = _packet.ReadInt();
         Vector3 _position = _packet.ReadVector3();
+        int _playerId = _packet.ReadInt();
 
         GameManager.instance.empCount++;
-        GameManager.itemSpawners[_spawnerId].InstallEMP(_position);        
+        GameManager.itemSpawners[_spawnerId].InstallEMP(_position);
+        GameManager.players[_playerId].isInstalling = false;
+        GameManager.players[_playerId].PlayerInstallingSound(GameManager.players[_playerId].isInstalling);
     }
 
     /// <summary>LightTrap 설치</summary>
@@ -207,8 +221,11 @@ public class ClientHandle : MonoBehaviour
         int _spawnerId = _packet.ReadInt();
         Vector3 _position = _packet.ReadVector3();
         int _floor = _packet.ReadInt();
+        int _playerId = _packet.ReadInt();
 
         GameManager.itemSpawners[_spawnerId].InstallTrap(_position, _floor);
+        GameManager.players[_playerId].isInstalling = false;
+        GameManager.players[_playerId].PlayerInstallingSound(GameManager.players[_playerId].isInstalling);
     }
 
     /// <summary>패킷에 담긴 폭탄 생성정보(ID,position,던진player)를 통해 폭탄생성</summary>
@@ -268,6 +285,10 @@ public class ClientHandle : MonoBehaviour
 
         Debug.Log($"드론이동!");
         GameManager.players[_playerId].playerItem.GrabItem.GetComponent<Drone>().Moving();
+        GameManager.players[_playerId].playerItem.GrabItem.GetComponent<Drone>().GetComponent<AudioSource>().clip
+            = GameManager.players[_playerId].playerItem.GrabItem.GetComponent<Drone>().droneMovingSound;
+        GameManager.players[_playerId].playerItem.GrabItem.GetComponent<Drone>().GetComponent<AudioSource>().Play();
+        GameManager.players[_playerId].playerItem.GrabItem.GetComponent<Drone>().GetComponent<AudioSource>().loop = true;
     }
 
     public static void DroneEnabledFalse(Packet _packet)
@@ -276,6 +297,7 @@ public class ClientHandle : MonoBehaviour
 
         Debug.Log($"드론멈춤!");
         GameManager.players[_playerId].playerItem.GrabItem.GetComponent<Drone>().Stop();
+        GameManager.players[_playerId].playerItem.GrabItem.GetComponent<Drone>().GetComponent<AudioSource>().Stop();
     }
 
     /// <summary>드론 position을 담은 패킷을 받음</summary>

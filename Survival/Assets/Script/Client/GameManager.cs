@@ -94,7 +94,7 @@ public class GameManager : MonoBehaviour
             }
             for (int i = 0; i < UIManager.instance.itemImageUI.Length; i++)
             {
-                UIManager.instance.itemImageUI[i].sprite = UIManager.instance.itemImage[
+                UIManager.instance.itemImageUI[i].sprite = UIManager.instance.itemGrayImage[
                     (int)Client.playerType * UIManager.instance.itemImageUI.Length + i];
                 UIManager.instance.itemCountText[i].text = "0";
                 UIManager.instance.skillImageUI[i].sprite = UIManager.instance.skillImage[
@@ -162,18 +162,21 @@ public class GameManager : MonoBehaviour
                 if (_spawner.itemType == ItemType.GUN)
                 {
                     _player.playerItem.item_number1 = _spawner;
+                    UIManager.instance.itemImageUI[0].sprite = UIManager.instance.itemImage[3];
                     UIManager.instance.itemCountText[0].text = "1";
                     UIManager.instance.itemCountText[0].color = UIManager.instance.textColor[(int)UIManager.TextColor.MINT];
                 }
                 else if (_spawner.itemType == ItemType.EMP)
                 {
                     _player.playerItem.item_number2.Add(_spawner);
+                    UIManager.instance.itemImageUI[1].sprite = UIManager.instance.itemImage[4];
                     UIManager.instance.itemCountText[1].text = _player.playerItem.item_number2.Count.ToString();
                     UIManager.instance.itemCountText[1].color = UIManager.instance.textColor[(int)UIManager.TextColor.MINT];
                 }
                 else if (_spawner.itemType == ItemType.BATTERY)
                 {                    
                     _player.playerItem.batteryCount += 30;
+                    UIManager.instance.itemImageUI[2].sprite = UIManager.instance.itemImage[5];
                     UIManager.instance.itemCountText[2].text = (_player.playerItem.batteryCount / 30).ToString();
                     UIManager.instance.itemCountText[2].color = UIManager.instance.textColor[(int)UIManager.TextColor.MINT];
                 }
@@ -187,12 +190,14 @@ public class GameManager : MonoBehaviour
                 if (_spawner.itemType == ItemType.DRONE)
                 {
                     _player.playerItem.item_number1 = _spawner;
+                    UIManager.instance.itemImageUI[0].sprite = UIManager.instance.itemImage[0];
                     UIManager.instance.itemCountText[0].text = "1";
                     UIManager.instance.itemCountText[0].color = UIManager.instance.textColor[(int)UIManager.TextColor.MINT];
                 }
                 else if (_spawner.itemType == ItemType.LIGHTTRAP)
                 {
                     _player.playerItem.item_number2.Add(_spawner);
+                    UIManager.instance.itemImageUI[1].sprite = UIManager.instance.itemImage[1];
                     UIManager.instance.itemCountText[1].text = _player.playerItem.item_number2.Count.ToString();
                     UIManager.instance.itemCountText[1].color = UIManager.instance.textColor[(int)UIManager.TextColor.MINT];
                 }
