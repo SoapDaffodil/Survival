@@ -14,8 +14,6 @@ public enum ServerPackets
     spawnPlayer,        //player 스폰
     playerPosition,     //player position
     playerRotation,     //player rotation
-    playerSit,          //player 앉기
-    playerAttack,       //player 공격
     playerDisconnected, //plyaer 연결끊김
     playerHP,           //player hp
     playerRespawned,    //player 리스폰
@@ -39,7 +37,7 @@ public enum ServerPackets
 
 
     //선희
-    cure,               //플레이어 체력 회복 어디에 쓰이지??
+    cure,               //플레이어 체력 회복 어디에 쓰이지?? -> 삭제해도 됨
     droneEnabled,       //드론 활성화
     droneEnabledFalse,  //드론 비활성화
     dronePosition,      //드론 position
@@ -51,7 +49,13 @@ public enum ServerPackets
     //선희
     //udpTest
 
-    motionCure,         //치료중
+    motionSit,          //player 앉기 animation
+    motionAttack,       //player 공격 animation
+    motionInstall,      //player 설치 animation
+    motionHit,          //player hit animation
+    motionTeleportation,//player teleportation animation
+    motionCure,         //player cure animation
+    motionDie,          //player die animation
 }
 
 /// <summary>클라이언트가 보내는 packet이 어떤정보인지 알려주는 역할</summary>

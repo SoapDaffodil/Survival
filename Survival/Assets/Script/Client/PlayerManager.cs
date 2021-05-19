@@ -115,11 +115,11 @@ public class PlayerManager : MonoBehaviour
         }
         
 
-        //HP가 0이 되면 죽음
+        /*//HP가 0이 되면 죽음
         if (hp <= 0f)
         {
             Die();
-        }
+        }*/
     }
 
     //3Dobject renderer off

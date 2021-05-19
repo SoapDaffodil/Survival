@@ -150,35 +150,7 @@ public class ServerSend
             SendUDPDataToAll(_player.id, _packet);
         }
     }
-
-    /// <summary>플레이어의 앉기정보를 모든 클라이언트에 UDP전송</summary>
-    /// <param name="_playerId"></param>
-    /// <param name="_sit"></param>
-    public static void PlayerSit(int _playerId, bool _sit)
-    {
-        using (Packet _packet = new Packet((int)ServerPackets.playerSit))
-        {
-            _packet.Write(_playerId);
-            _packet.Write(_sit);
-
-            SendUDPDataToAll(_packet);
-        }
-    }
-
-    /// <summary>플레이어의 공격정보를 모든 클라이언트에 UDP전송</summary>
-    /// <param name="_playerId"></param>
-    /// <param name="_sit"></param>
-    public static void PlayerAttack(int _playerId, bool _attack)
-    {
-        using (Packet _packet = new Packet((int)ServerPackets.playerAttack))
-        {
-            _packet.Write(_playerId);
-            _packet.Write(_attack);
-
-            SendUDPDataToAll(_packet);
-        }
-    }
-
+    
     /// <summary>특정 플레이어가 연결이 끊길때 모든 클라이언트에게 해당사항 TCP전송</summary>
     /// <param name="_playerId">연결이 끊긴 플레이어ID</param>
     public static void PlayerDisconnected(int _playerId)
@@ -361,22 +333,7 @@ public class ServerSend
             SendTCPData(_playerID, _packet);
         }
     }
-
-    /// <summary>치료중인지 판단</summary>
-    /// <param name="_playerId">플레이어 ID</param>
-    /// <param name="_cure">회복중</param>
-    public static void MotionCure(int _playerId, bool _cure)
-    {
-        using (Packet _packet = new Packet((int)ServerPackets.motionCure))
-        {
-            _packet.Write(_playerId);
-            _packet.Write(_cure);
-
-            SendTCPDataToAll(_packet);
-        }
-    }
-
-
+    
     /// <summary>EMP 설치완료</summary>
     /// <param name="_spawnerId">아이템 ID</param>
     /// <param name="_byPlayer">플레이어 ID</param>
@@ -511,6 +468,103 @@ public class ServerSend
         }
     }
 
+    /// <summary>플레이어의 앉기정보를 모든 클라이언트에 TCP전송</summary>
+    /// <param name="_playerId"></param>
+    /// <param name="_sit"></param>
+    public static void MotionSit(int _playerId, bool _sit)
+    {
+        using (Packet _packet = new Packet((int)ServerPackets.motionSit))
+        {
+            _packet.Write(_playerId);
+            _packet.Write(_sit);
+
+            SendTCPDataToAll(_packet);
+        }
+    }
+
+    /// <summary>플레이어의 공격정보를 모든 클라이언트에 TCP전송</summary>
+    /// <param name="_playerId"></param>
+    /// <param name="_sit"></param>
+    public static void MotionAttack(int _playerId, bool _attack)
+    {
+        using (Packet _packet = new Packet((int)ServerPackets.motionAttack))
+        {
+            _packet.Write(_playerId);
+            _packet.Write(_attack);
+
+            SendTCPDataToAll(_packet);
+        }
+    }
+
+    /// <summary>플레이어의 설치정보를 모든 클라이언트에 TCP전송</summary>
+    /// <param name="_playerId"></param>
+    /// <param name="_install"></param>
+    public static void MotionInstall(int _playerId, bool _install)
+    {
+        using (Packet _packet = new Packet((int)ServerPackets.motionInstall))
+        {
+            _packet.Write(_playerId);
+            _packet.Write(_install);
+
+            SendTCPDataToAll(_packet);
+        }
+    }
+
+    /// <summary>플레이어의 맞은정보를 모든 클라이언트에 TCP전송</summary>
+    /// <param name="_playerId"></param>
+    /// <param name="_hit"></param>
+    public static void MotionHit(int _playerId, bool _hit)
+    {
+        using (Packet _packet = new Packet((int)ServerPackets.motionHit))
+        {
+            _packet.Write(_playerId);
+            _packet.Write(_hit);
+
+            SendTCPDataToAll(_packet);
+        }
+    }
+
+    /// <summary>플레이어의 공간이동정보를 모든 클라이언트에 TCP전송</summary>
+    /// <param name="_playerId"></param>
+    /// <param name="_teleport"></param>
+    public static void MotionTeleportation(int _playerId, bool _teleport)
+    {
+        using (Packet _packet = new Packet((int)ServerPackets.motionTeleportation))
+        {
+            _packet.Write(_playerId);
+            _packet.Write(_teleport);
+
+            SendTCPDataToAll(_packet);
+        }
+    }
+
+    /// <summary>치료중인지 판단</summary>
+    /// <param name="_playerId">플레이어 ID</param>
+    /// <param name="_cure">회복중</param>
+    public static void MotionCure(int _playerId, bool _cure)
+    {
+        using (Packet _packet = new Packet((int)ServerPackets.motionCure))
+        {
+            _packet.Write(_playerId);
+            _packet.Write(_cure);
+
+            SendTCPDataToAll(_packet);
+        }
+    }
+
+    /// <summary>치료중인지 판단</summary>
+    /// <param name="_playerId">플레이어 ID</param>
+    /// <param name="_die">회복중</param>
+    public static void MotionDie(int _playerId, bool _die)
+    {
+        using (Packet _packet = new Packet((int)ServerPackets.motionDie))
+        {
+            _packet.Write(_playerId);
+            _packet.Write(_die);
+
+            SendTCPDataToAll(_packet);
+        }
+    }
 
     /*
     public static void UDPTest(int _toClient)

@@ -1131,6 +1131,7 @@ GameObject:
   - component: {fileID: 3533747223197338932}
   - component: {fileID: 6565255205294191122}
   - component: {fileID: 2151770456254203086}
+  - component: {fileID: 5192003598616592972}
   m_Layer: 0
   m_Name: Creature_model
   m_TagString: Untagged
@@ -1170,6 +1171,7 @@ MonoBehaviour:
   id: 0
   username: 
   playerType: 0
+  animator: {fileID: 5192003598616592972}
   controller: {fileID: 2151770456254203086}
   shootOrigin: {fileID: 6968508464104744299}
   gravity: -19.62
@@ -1193,13 +1195,32 @@ CharacterController:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Height: 0.044
+  m_Height: 0.04
   m_Radius: 0.01
   m_SlopeLimit: 45
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 0.022, z: 0}
+  m_Center: {x: 0, y: 0.02, z: 0}
+--- !u!95 &5192003598616592972
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4197835119811303310}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 64d904d573123b84a8a1cfd57ebae52e, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &4833177444961100364
 GameObject:
   m_ObjectHideFlags: 0

@@ -152,11 +152,14 @@ public class ItemSpawner : MonoBehaviour
         }
     }
     
-    /// <summary>설치정보를 모든 클라이언트에게 전송</summary>
-    /// <param name="_byPlayer">설치한 플레이어</param>
-    /// <param name="_position">설치한 위치</param>
-    public void Install(int _byPlayer, Vector3 _position, int _floor)
+    IEnumerator Installing(float time, int _byPlayer, Vector3 _position, int _floor)
     {
+        if (this.transform.parent != null)
+        {
+            this.transform.parent.GetComponent<Player>().animator.SetBool("Install", true);
+            ServerSend.MotionInstall(this.transform.parent.GetComponent<Player>().id, true);
+        }
+        yield return new WaitForSeconds(time);
         switch (this.tag)
         {
             case "EMP":
@@ -164,6 +167,8 @@ public class ItemSpawner : MonoBehaviour
                 this.transform.position = _position;
                 if (this.transform.parent != null)
                 {
+                    this.transform.parent.GetComponent<Player>().animator.SetBool("Install", false);
+                    ServerSend.MotionInstall(this.transform.parent.GetComponent<Player>().id, false);
                     this.transform.SetParent(null, true);
                 }
                 ServerSend.InstallTrap(spawnerId, _position, _floor);
@@ -174,6 +179,8 @@ public class ItemSpawner : MonoBehaviour
                 this.transform.position = _position;
                 if (this.transform.parent != null)
                 {
+                    this.transform.parent.GetComponent<Player>().animator.SetBool("Install", false);
+                    ServerSend.MotionInstall(this.transform.parent.GetComponent<Player>().id, false);
                     this.transform.SetParent(null, true);
                 }
                 ServerSend.InstallTrap(spawnerId, _position, _floor);
@@ -182,6 +189,14 @@ public class ItemSpawner : MonoBehaviour
                 ServerSend.Error(_byPlayer, $"This item is not for installation - {this.tag}");
                 break;
         }
+    }
+
+    /// <summary>설치정보를 모든 클라이언트에게 전송</summary>
+    /// <param name="_byPlayer">설치한 플레이어</param>
+    /// <param name="_position">설치한 위치</param>
+    public void Install(int _byPlayer, Vector3 _position, int _floor)
+    {
+        StartCoroutine(Installing(1f, _byPlayer, _position, _floor));
     }
 
     /// <summary>EMPZONE에 EMP를 설치했다는 정보를 모든 클라이언트에게 전송</summary>

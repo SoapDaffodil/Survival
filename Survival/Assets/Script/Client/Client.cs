@@ -340,8 +340,6 @@ public class Client : MonoBehaviour
             { (int)ServerPackets.spawnPlayer, ClientHandle.SpawnPlayer},
             { (int)ServerPackets.playerPosition, ClientHandle.PlayerPosition},
             { (int)ServerPackets.playerRotation, ClientHandle.PlayerRotation},
-            { (int)ServerPackets.playerSit, ClientHandle.PlayerSit},
-            { (int)ServerPackets.playerAttack, ClientHandle.PlayerAttack},
             { (int)ServerPackets.playerDisconnected, ClientHandle.PlayerDisconnected},
             { (int)ServerPackets.playerHP, ClientHandle.PlayerHP},
             { (int)ServerPackets.playerRespawned, ClientHandle.PlayerRespawned},
@@ -368,7 +366,13 @@ public class Client : MonoBehaviour
             { (int)ServerPackets.spawnBullet, ClientHandle.SpawnBullet},
             { (int)ServerPackets.bulletPosition, ClientHandle.BulletPosition},
             { (int)ServerPackets.bulletCrush, ClientHandle.BulletCrush},
+            { (int)ServerPackets.motionSit, ClientHandle.MotionSit},
+            { (int)ServerPackets.motionAttack, ClientHandle.MotionAttack},
+            { (int)ServerPackets.motionInstall, ClientHandle.MotionInstall},
+            { (int)ServerPackets.motionHit, ClientHandle.MotionHit},
+            { (int)ServerPackets.motionTeleportation, ClientHandle.MotionTeleportation},
             { (int)ServerPackets.motionCure, ClientHandle.MotionCure},
+             { (int)ServerPackets.motionDie, ClientHandle.MotionDie},
             { (int)ServerPackets.creatureAttackTrue, ClientHandle.CreatureAttackTrue},
             //{ (int)ServerPackets.udpTest, ClientHandle.UDPTest }
         };

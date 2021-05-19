@@ -11,6 +11,7 @@ public class Player : MonoBehaviour
     public string username;                 //player 이름
     public PlayerType playerType;           //player 타입(괴물,인간)
 
+    public Animator animator;               //player animation
     public CharacterController controller;  //player의 컨트롤러
     public Transform shootOrigin;           //총알방향
     public float gravity = -9.81f;          //중력가속도
@@ -84,7 +85,17 @@ public class Player : MonoBehaviour
                 _inputDirection.x += 1;
             }
             Move(_inputDirection, (inputs[0] || inputs[1] || inputs[2] || inputs[3]), inputs[5], inputs[6], inputs[7]);
+            if (inputs[7] && playerType == PlayerType.CREATURE)
+            {
+                StartCoroutine(Wait(1f));
+            }
         }
+    }
+    IEnumerator Wait(float time)
+    {
+        controller.enabled = false;
+        yield return new WaitForSeconds(time);
+        controller.enabled = true;
     }
 
     private void Update()
@@ -137,10 +148,15 @@ public class Player : MonoBehaviour
         {
             moveSpeed = 0.25f;
         }
-        ServerSend.PlayerSit(this.id, _sit);
-        ServerSend.PlayerAttack(this.id, _attack);
+        ServerSend.MotionSit(this.id, _sit);
+        ServerSend.MotionAttack(this.id, _attack);
         ServerSend.PlayerPosition(this, _walk, _run);
         ServerSend.PlayerRotation(this);
+        
+        animator.SetBool("Sit", _sit);
+        animator.SetBool("Attack", _attack);
+        animator.SetBool("Walk", _walk);
+        animator.SetBool("Run", _run);
     }
 
     /// <summary>실제 총알을 통해 총알방향의 hit판정</summary>
@@ -155,7 +171,6 @@ public class Player : MonoBehaviour
             }
 
             NetworkManager.instance.InstantiateBullet(shootOrigin).Initialize(_viewDirection, firePower, id, _EMPInstallFinished);
-
         /*
         if (Physics.Raycast(shootOrigin.position, _viewDirection, out RaycastHit _hit, 25f))
         {
@@ -187,6 +202,17 @@ public class Player : MonoBehaviour
         //}
     }
 
+    IEnumerator MotionHit(float time, Player _player)
+    {
+        ServerSend.MotionHit(_player.id, true);
+        _player.animator.SetBool("HitReaction", true);
+
+        yield return new WaitForSeconds(time);
+
+        ServerSend.MotionHit(_player.id, false);
+        _player.animator.SetBool("HitReaction", false);
+    }
+
     /// <summary>괴물 공격</summary>
     /// <param name="_viewDirection"> 괴물 공격 방향 </param>
     public void CreatureAttack(Vector3 _viewDirection)
@@ -199,19 +225,20 @@ public class Player : MonoBehaviour
                 Player hitPlayer = _hit.collider.GetComponent<Player>();
                 if (hitPlayer.playerType == PlayerType.HUMAN)
                 {
+                    StartCoroutine(MotionHit(1f, hitPlayer));
                     isCreatureAttack = true;
 
                     Debug.Log($"공격 맞음 : {_hit.collider.gameObject.name}");
                     hitPlayer.TakeDamage(50f);
                     hitPlayer.moveSpeed *= 2;
-                    Invoke("SpeedDown", 2f);                 
+                    hitPlayer.Invoke("SpeedDown", 2f);
+
+                    this.gameObject.GetComponent<Player>().controller.enabled = false;
+                    Invoke("EndStun", 2f);
+                    //스킬 비활성화
+                    ServerSend.CreatureAttackTrue(id, isCreatureAttack);
                 }
-                this.gameObject.GetComponent<Player>().controller.enabled = false;
-                Invoke("EndStun", 2f);
-                //스킬 비활성화
-                ServerSend.CreatureAttackTrue(id, isCreatureAttack);
             }
-            
         }
     }
 
@@ -245,9 +272,17 @@ public class Player : MonoBehaviour
         if (hp <= 0f)
         {
             hp = 0f;
-            controller.enabled = false;
+            for (int i=0;i< Server.clients.Count;i++)
+            {
+                Server.clients[i].player.controller.enabled = false;
+            }
+            //controller.enabled = false;
             transform.position = new Vector3(0f, 25f, 0f);
             ServerSend.PlayerPosition(this, false, false);
+
+            ServerSend.MotionDie(id, true);
+            animator.SetBool("Die", true);
+
             //리스폰 불필요 > 그냥 사망 게임종료로 수정해야함
             //StartCoroutine(Respawn());
         }
@@ -312,10 +347,12 @@ public class Player : MonoBehaviour
         controller.enabled = true;
     }
 
-    /// <summary>스킬 순간이동</summary>
-    /// <param name="_target">target 포지션</param>
-    public void Teleportation(Vector3 _target)
+    IEnumerator Teleportationing(float time, Vector3 _target)
     {
+        ServerSend.MotionTeleportation(id, true);
+        animator.SetBool("SkillTeleportation", true);
+
+        yield return new WaitForSeconds(time);
         controller.enabled = false;
         controller.transform.position = _target;
         if (this.GetComponentInChildren<Drone>() != null && this.GetComponentInChildren<Drone>().controller.enabled)
@@ -326,6 +363,16 @@ public class Player : MonoBehaviour
             Destroy(_drone.gameObject, 1f);
         }
         controller.enabled = true;
+
+        ServerSend.MotionTeleportation(id, false);
+        animator.SetBool("SkillTeleportation", false);
+    }
+
+    /// <summary>스킬 순간이동</summary>
+    /// <param name="_target">target 포지션</param>
+    public void Teleportation(Vector3 _target)
+    {
+        StartCoroutine(Teleportationing(1f, _target));
     }
 
     public void SpeedUp()
