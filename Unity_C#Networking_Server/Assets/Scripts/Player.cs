@@ -273,9 +273,17 @@ public class Player : MonoBehaviour
         if (hp <= 0f)
         {
             hp = 0f;
-            for (int i=0;i< Server.clients.Count;i++)
-            {
-                Server.clients[i].player.controller.enabled = false;
+            for (int i=1;i<= Server.clients.Count;i++)
+            { 
+                try
+                {
+                    Debug.Log($"Server.clients[{i}].player : {Server.clients[i].player.name}");
+                    Server.clients[i].player.controller.enabled = false;
+                }catch(Exception e)
+                {
+                    break;
+                }
+                              
             }
             //controller.enabled = false;
             transform.position = new Vector3(0f, 25f, 0f);

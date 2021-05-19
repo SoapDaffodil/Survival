@@ -51,7 +51,7 @@ public class PlayerController : MonoBehaviour
             {
                 ItemSpawner _grabItem = this.GetComponent<PlayerManager>().playerItem.GrabItem;
 
-                if (_grabItem != null && _grabItem.itemType == ItemType.GUN)
+                if (_grabItem != null && _grabItem.itemType == ItemType.GUN && GameManager.EMPInstallFinished)
                 {
                     Gun gun = _grabItem.GetComponent<Gun>();
                     if (gun.currentBattery != 0 && Time.time >= nextTimeToFire)

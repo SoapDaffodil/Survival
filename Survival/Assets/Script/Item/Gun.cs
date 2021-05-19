@@ -50,6 +50,12 @@ public class Gun : MonoBehaviour
         UIManager.instance.itemCountText[2].text = (batteryAmount / 30).ToString();
         this.GetComponent<AudioSource>().PlayOneShot(reloadSound);
 
+        if(batteryAmount /30 == 0)
+        {
+            UIManager.instance.itemImageUI[2].sprite = UIManager.instance.itemGrayImage[5];
+            UIManager.instance.itemCountText[2].color = UIManager.instance.textColor[(int)UIManager.TextColor.GRAY];
+        }
+
         return true;
     }
 }

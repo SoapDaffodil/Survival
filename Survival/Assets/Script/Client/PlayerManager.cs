@@ -46,6 +46,7 @@ public class PlayerManager : MonoBehaviour
     public AudioClip footStepSound;
     public AudioClip busurukSound;
     public AudioClip creatureAttackSound;
+    public AudioClip endSound;
 
     public PlayerController controller;
     public Animator animator;
