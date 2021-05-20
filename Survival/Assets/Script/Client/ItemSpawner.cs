@@ -195,57 +195,63 @@ public class ItemSpawner : MonoBehaviour
     /// <param name="_position">아이템 설치 층</param>
     public void InstallTrap(Vector3 _position, int _floor)
     {
-        ItemThrow(_position);
-        hasItem = false;
-        gameObject.GetComponent<BoxCollider>().size = new Vector3(0.015f, 0.015f, 0.015f);
-        gameObject.GetComponent<BoxCollider>().isTrigger = true;
+        if(this.transform.parent.GetComponent<PlayerManager>().id == Client.instance.myId)
+        {
+            ItemThrow(_position);
+            hasItem = false;
+            gameObject.GetComponent<BoxCollider>().size = new Vector3(0.015f, 0.015f, 0.015f);
+            gameObject.GetComponent<BoxCollider>().isTrigger = true;
+            GameManager.instance.trapCount++;
+            Debug.Log($"설치한 플레이어 : {Client.playerType}  trap Count : {GameManager.instance.trapCount}");
 
-        switch (this.itemType)
-        {
-            case ItemType.EMP:
-                GameManager.instance.AddEMPTrap(_floor, this);
-                this.gameObject.GetComponent<EMP>().isDetectiveMode = true;
-                Debug.Log($"EMPTrap 설치완료");
-                break;
-            case ItemType.LIGHTTRAP:
-                GameManager.instance.AddLightTrap(_floor, this);
-                this.gameObject.GetComponent<LightTrap>().isDetectiveMode = true;
-                this.gameObject.GetComponent<LightTrap>().trapId = this.gameObject.GetComponent<ItemSpawner>().spawnerId;
-                Debug.Log($"LightTrap 설치완료");
-                break;
-            default:
-                Debug.Log("트랩 아이템이 아닙니다");
-                break;
+            switch (this.itemType)
+            {
+                case ItemType.EMP:
+                    GameManager.instance.AddEMPTrap(_floor, this);
+                    this.gameObject.GetComponent<EMP>().isDetectiveMode = true;
+                    Debug.Log($"EMPTrap 설치완료");
+                    break;
+                case ItemType.LIGHTTRAP:
+                    GameManager.instance.AddLightTrap(_floor, this);
+                    this.gameObject.GetComponent<LightTrap>().isDetectiveMode = true;
+                    this.gameObject.GetComponent<LightTrap>().trapId = this.gameObject.GetComponent<ItemSpawner>().spawnerId;
+                    Debug.Log($"LightTrap 설치완료");
+                    break;
+                default:
+                    Debug.Log("트랩 아이템이 아닙니다");
+                    break;
+            }
+            /*
+            itemModel.enabled = true;
+            this.transform.position = _position;
+            switch (this.itemType)
+            {
+                case ItemType.EMP:
+                    _installPlayer.playerItem.GrabItem = null;
+                    _installPlayer.playerItem.item_number2.Remove(this);
+                    itemModel.enabled = true;
+                    transform.position = _position;
+                    if (transform.parent != null)
+                    {
+                        transform.SetParent(null, true);
+                    }
+                    break;
+                case ItemType.LIGHTTRAP:
+                    _installPlayer.playerItem.GrabItem = null;
+                    _installPlayer.playerItem.item_number2.Remove(this);
+                    GameManager.instance.AddLightTrap(_floor, this);
+                    itemModel.enabled = true;
+                    transform.position = _position;
+                    if (transform.parent != null)
+                    {
+                        transform.SetParent(null, true);
+                    }
+                    break;
+                default:
+                    Debug.Log("설치가능한 아이템이 아닙니다");
+                    break;
+            }*/
         }
-        /*
-        itemModel.enabled = true;
-        this.transform.position = _position;
-        switch (this.itemType)
-        {
-            case ItemType.EMP:
-                _installPlayer.playerItem.GrabItem = null;
-                _installPlayer.playerItem.item_number2.Remove(this);
-                itemModel.enabled = true;
-                transform.position = _position;
-                if (transform.parent != null)
-                {
-                    transform.SetParent(null, true);
-                }
-                break;
-            case ItemType.LIGHTTRAP:
-                _installPlayer.playerItem.GrabItem = null;
-                _installPlayer.playerItem.item_number2.Remove(this);
-                GameManager.instance.AddLightTrap(_floor, this);
-                itemModel.enabled = true;
-                transform.position = _position;
-                if (transform.parent != null)
-                {
-                    transform.SetParent(null, true);
-                }
-                break;
-            default:
-                Debug.Log("설치가능한 아이템이 아닙니다");
-                break;
-        }*/
+
     }
 }
