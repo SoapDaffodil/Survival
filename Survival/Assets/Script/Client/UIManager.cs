@@ -236,7 +236,7 @@ public class UIManager : MonoBehaviour
             Vector3 target = Vector3.zero;
             try
             {
-                target = ItemSpawner.lightTrapList[buttonNumber - 1].trap.transform.position + new Vector3(0, 1f, 0);
+                target = ItemSpawner.lightTrapList[buttonNumber - 1].trap.transform.position + new Vector3(0, 5f, 0);
             }
             catch
             {
