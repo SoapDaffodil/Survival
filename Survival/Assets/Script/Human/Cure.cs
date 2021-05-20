@@ -22,15 +22,14 @@ public class Cure : MonoBehaviour
 
         if (UIManager.instance.hpSlider != null)
         {
-            Debug.Log("slider : " + UIManager.instance.hpSlider);
             currenGauge = minGauge;
             UIManager.instance.hpSlider.value = minGauge;
             UIManager.instance.hpSlider.gameObject.SetActive(false);
         }
         else
         {
-            Debug.Log("slider : " + UIManager.instance.powerSlider);
-            Debug.Log("슬라이더가 없음");
+            //Debug.Log("slider : " + UIManager.instance.powerSlider);
+            //Debug.Log("슬라이더가 없음");
         }
     }
 
@@ -51,7 +50,6 @@ public class Cure : MonoBehaviour
                     {
                         this.GetComponent<AudioSource>().clip = this.GetComponent<PlayerManager>().busurukSound;
                     }
-                    Debug.Log($"플레이어 치료 소리 : {this.GetComponent<AudioSource>().clip.name}");
 
                     if ((this.GetComponent<AudioSource>().clip == this.GetComponent<PlayerManager>().busurukSound && !this.GetComponent<AudioSource>().isPlaying)
                         || this.GetComponent<AudioSource>().clip != this.GetComponent<PlayerManager>().busurukSound)
@@ -59,7 +57,6 @@ public class Cure : MonoBehaviour
                         this.GetComponent<AudioSource>().clip = this.GetComponent<PlayerManager>().busurukSound;
                         this.GetComponent<AudioSource>().pitch = 3f;
                         this.GetComponent<AudioSource>().Play();
-                        Debug.Log("소리 재생");
                     }
                 }
             }
@@ -70,7 +67,6 @@ public class Cure : MonoBehaviour
                 UIManager.instance.hpSlider.gameObject.SetActive(false);
                 UIManager.instance.HPGuage[(int)PlayerType.HUMAN].value += 50;
 
-                Debug.Log($"플레이어 체력 : {GameManager.players[Client.instance.myId].GetComponent<PlayerManager>().hp}");
                 ClientSend.Cure(GameManager.players[Client.instance.myId].GetComponent<PlayerManager>().hp);
                 ClientSend.SkillCure(false);
                 currenGauge = minGauge;
@@ -82,12 +78,10 @@ public class Cure : MonoBehaviour
                     {
                         this.GetComponent<AudioSource>().clip = this.GetComponent<PlayerManager>().busurukSound;
                     }
-                    Debug.Log($"플레이어 치료 소리 : {this.GetComponent<AudioSource>().clip.name}");
                     if ((this.GetComponent<AudioSource>().clip == this.GetComponent<PlayerManager>().busurukSound && this.GetComponent<AudioSource>().isPlaying)
                         || this.GetComponent<AudioSource>().clip != this.GetComponent<PlayerManager>().busurukSound)
                     {
                         this.GetComponent<AudioSource>().Stop();
-                        Debug.Log("소리 멈춤");
                     }
                 }
             }

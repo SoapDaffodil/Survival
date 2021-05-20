@@ -31,7 +31,7 @@ public class CameraController : MonoBehaviour
             Look();
         }
         Look();
-        Debug.DrawRay(transform.position, transform.forward * 2, Color.red);
+        //Debug.DrawRay(transform.position, transform.forward * 2, Color.red);
     }
 
     private void Look()

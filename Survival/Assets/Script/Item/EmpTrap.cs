@@ -17,7 +17,6 @@ public class EmpTrap : MonoBehaviour
     {
         if (isDetectedMode == true)
         {
-            Debug.Log("감지용 설치 완료!");
             gameObject.GetComponent<SphereCollider>().radius = 5f;
             gameObject.GetComponent<SphereCollider>().isTrigger = true;
         }

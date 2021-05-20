@@ -83,7 +83,6 @@ public class PlayerController : MonoBehaviour
             */
             if(this.GetComponent<PlayerManager>().playerType == PlayerType.CREATURE)
             {
-                Debug.Log("몬스터 공격!");
                 this.GetComponent<PlayerManager>().GetComponent<AudioSource>().PlayOneShot(this.GetComponent<PlayerManager>().creatureAttackSound);
                 ClientSend.CreatureAttack(camTransform.forward);
             }
@@ -185,7 +184,6 @@ public class PlayerController : MonoBehaviour
                 case PlayerType.HUMAN:
                     if (_grabItem != null && _grabItem.itemType == ItemType.GUN)
                     {
-                        Debug.Log($"장전!");
                         _grabItem.GetComponent<Gun>().Reloade();
                     }
                     else
@@ -271,18 +269,15 @@ public class PlayerController : MonoBehaviour
         if(other.CompareTag("EMPZONE"))
         {
             isInEMPZone = true;
-            Debug.Log($"isINEMPZone : {isInEMPZone}");
         }    
         if(other.CompareTag("HIDEZONE"))
         {
             isInHideZone = true;
-            Debug.Log($"isInHideZone : {isInHideZone}");
         }
     }
 
     public void OnTriggerStay(Collider other)
     {
-        Debug.Log($"현재 콜라이더 : {other.name}");
         if (getKeyDownF)
         {
             getKeyDownF = false;
@@ -313,7 +308,6 @@ public class PlayerController : MonoBehaviour
                         case ItemType.GUN: case ItemType.DRONE:
                             if (this.GetComponent<PlayerManager>().playerItem.item_number1 == null)
                             {
-                                Debug.Log($"아이템 줍기");
                                 ClientSend.PlayerGetItem(other.gameObject);
                             }
                             else
@@ -322,7 +316,6 @@ public class PlayerController : MonoBehaviour
                             }
                             break;
                         default:
-                            Debug.Log("아이템 줍기");
                             ClientSend.PlayerGetItem(other.gameObject);
                             break;
                     }
@@ -340,7 +333,6 @@ public class PlayerController : MonoBehaviour
 
         if (getKeyDownE)
         {
-            Debug.Log($"현재 콜라이더 : {other.name}");
             getKeyDownE = false;
             ItemSpawner _grabItem = this.GetComponent<PlayerManager>().playerItem.GrabItem;
             if (_grabItem != null) {
@@ -351,10 +343,8 @@ public class PlayerController : MonoBehaviour
                     if (isInEMPZone)
                     {
                         emp.chargingSpeed = 15f;
-                        Debug.Log($"지금은 : {other.gameObject.name}");
                         if (emp.isInstalling)
                         {
-                            Debug.Log($"emp 설치 취소");
                             emp.InstallCancle();
                             this.GetComponent<PlayerManager>().isInstalling = false;
                             this.GetComponent<PlayerManager>().PlayerInstallingSound(this.GetComponent<PlayerManager>().isInstalling);
@@ -369,16 +359,23 @@ public class PlayerController : MonoBehaviour
                     }                   
                     else
                     {
-                        emp.chargingSpeed = 40f;
-                        emp.isInstalling = true;
-                        emp.gaugeCheck = true;
-                        this.GetComponent<PlayerManager>().isInstalling = true;
-                        this.GetComponent<PlayerManager>().PlayerInstallingSound(this.GetComponent<PlayerManager>().isInstalling);
+                        if(GameManager.instance.trapCount < GameManager.instance.maxTrapCount && this.GetComponent<PlayerManager>().id == Client.instance.myId)
+                        {
+                            emp.chargingSpeed = 40f;
+                            emp.isInstalling = true;
+                            emp.gaugeCheck = true;
+                            this.GetComponent<PlayerManager>().isInstalling = true;
+                            this.GetComponent<PlayerManager>().PlayerInstallingSound(this.GetComponent<PlayerManager>().isInstalling);
+                        }
+                        else
+                        {
+                            Debug.Log("설치 가능한 트랩을 모두 설치했습니다");
+                        }
+                        
                     }
                 }
                 else if (_grabItem.itemType == ItemType.LIGHTTRAP && this.GetComponent<PlayerManager>().playerType == PlayerType.CREATURE)
                 {
-                    Debug.Log($"grabItem : {_grabItem.itemType}");
                     
                     if(!this.GetComponent<PlayerManager>().isCreatureAttack)
                     {
@@ -386,7 +383,6 @@ public class PlayerController : MonoBehaviour
                         {
                             if (GameManager.instance.trapCount < GameManager.instance.maxTrapCount)
                             {
-                                Debug.Log($"라이트 트랩 설치");
                                 int _floor = (this.transform.position.y < 10f) ? 1 : 2;
                                 this.GetComponent<PlayerManager>().isInstalling = true;
                                 this.GetComponent<PlayerManager>().PlayerInstallingSound(this.GetComponent<PlayerManager>().isInstalling);
@@ -417,12 +413,10 @@ public class PlayerController : MonoBehaviour
         if(other.CompareTag("EMPZONE"))
         {
             isInEMPZone = false;
-            Debug.Log($"isINEMPZone : {isInEMPZone}");
         }
         if(other.CompareTag("HIDEZONE"))
         {
             isInHideZone = false;
-            Debug.Log($"isInHideZone : {isInHideZone}");
         }
     }
     /*

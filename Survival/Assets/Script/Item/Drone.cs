@@ -65,7 +65,7 @@ public class Drone : MonoBehaviour
         }
         else
         {
-            Debug.Log($"Error - parent null");
+            //Debug.Log($"Error - parent null");
         }
         /*player.transform.GetChild(0).GetComponent<Camera>().gameObject.SetActive(false);
         player.GetComponent<PlayerController>().enabled = false;

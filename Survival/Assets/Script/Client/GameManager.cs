@@ -40,7 +40,7 @@ public class GameManager : MonoBehaviour
         }
         else if (instance != this)
         {
-            Debug.Log("Instance already exists, destroying object!");
+            //Debug.Log("Instance already exists, destroying object!");
             Destroy(this);
         }
         itemSpawnerObject = new Dictionary<ItemType, GameObject>() {
@@ -194,7 +194,7 @@ public class GameManager : MonoBehaviour
                 }
                 else
                 {
-                    Debug.Log($"Error - 서버에서 이미 동작하였습니다. 아이템을 먹을 수 없습니다");
+                    //Debug.Log($"Error - 서버에서 이미 동작하였습니다. 아이템을 먹을 수 없습니다");
                 }
                 break;
 
@@ -221,7 +221,7 @@ public class GameManager : MonoBehaviour
                 }
                 else
                 {
-                    Debug.Log($"Error - 서버에서 이미 동작하였습니다. 아이템을 먹을 수 없습니다");
+                    //Debug.Log($"Error - 서버에서 이미 동작하였습니다. 아이템을 먹을 수 없습니다");
                 }
                 break;
         }
@@ -303,7 +303,6 @@ public class GameManager : MonoBehaviour
             {
                 UIManager.instance.HPBarUI[0].sprite = UIManager.instance.HPBarImage[1];
                 UIManager.instance.HPGuage[(int)PlayerType.CREATURE].gameObject.SetActive(true);
-                Debug.Log($"UI 바뀐 플레이어 : {players[i].gameObject.name}");
             }
         }
 

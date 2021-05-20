@@ -33,7 +33,6 @@ public  class EMP : MonoBehaviour
 
         if (UIManager.instance.powerSlider != null)
         {
-            Debug.Log("slider : " + UIManager.instance.powerSlider);
             finished = false;
             currenGauge = minGauge;
             UIManager.instance.powerSlider.value = minGauge;
@@ -41,8 +40,8 @@ public  class EMP : MonoBehaviour
         }
         else
         {
-            Debug.Log("slider : " + UIManager.instance.powerSlider);
-            Debug.Log("슬라이더가 없음");
+           // Debug.Log("slider : " + UIManager.instance.powerSlider);
+           // Debug.Log("슬라이더가 없음");
 
         }
     }
@@ -77,7 +76,6 @@ public  class EMP : MonoBehaviour
                     {
                         if (GameManager.instance.trapCount < GameManager.instance.maxTrapCount)
                         {
-                            Debug.Log($"EMP 트랩 설치");
                             int _floor = (this.transform.parent.position.y < 10f) ? 1 : 2;
                             ClientSend.Install(this.transform.position, GameManager.players[Client.instance.myId].GetComponent<PlayerManager>().playerItem.GrabItem.spawnerId, _floor);
                         }
@@ -112,10 +110,15 @@ public  class EMP : MonoBehaviour
         {
             for(int i = 1; i <= GameManager.players.Count; i++)
             {
-                if(GameManager.players[i].playerType == PlayerType.CREATURE)
+                if(GameManager.players[i].playerType == PlayerType.CREATURE && GameManager.players[i].id != Client.instance.myId)
                 {
-                    Debug.Log("키체인지");
-                    other.GetComponent<PlayerController>().KeyChange();
+                    GameManager.players[i].GetComponent<PlayerController>().KeyChange();
+                    Debug.Log($"괴물이 EMP Trap에 감지 되었습니다");
+                }
+                else
+                {
+                    Debug.Log($"플레이어 : {GameManager.players[i].playerType == PlayerType.CREATURE}");
+                    Debug.Log($"GameManager.players[{i}].id : {GameManager.players[i].id} Client.instance.myId : {Client.instance.myId}");
                 }
             }
         }

@@ -63,7 +63,7 @@ public class Client : MonoBehaviour
         }
         else if(instance != this)
         {
-            Debug.Log("Instance already exists, destorying object!");
+            //Debug.Log("Instance already exists, destorying object!");
             Destroy(this);
         }
     }
@@ -147,7 +147,7 @@ public class Client : MonoBehaviour
 
             catch(Exception _ex)
             {
-                Debug.Log($"Error sending data to server via TCP: {_ex}");
+                //Debug.Log($"Error sending data to server via TCP: {_ex}");
             }
         }
 
@@ -273,7 +273,7 @@ public class Client : MonoBehaviour
             }
             catch(Exception _ex)
             {
-                Debug.Log($"Error sending data to server via UDP: {_ex}");
+                //Debug.Log($"Error sending data to server via UDP: {_ex}");
             }
         }
 
@@ -378,7 +378,7 @@ public class Client : MonoBehaviour
             { (int)ServerPackets.creatureAttackTrue, ClientHandle.CreatureAttackTrue},
             //{ (int)ServerPackets.udpTest, ClientHandle.UDPTest }
         };
-        Debug.Log("Initialized packets.");
+        //Debug.Log("Initialized packets.");
     }
 
     /// <summary>모든연결해제</summary>
@@ -390,7 +390,7 @@ public class Client : MonoBehaviour
             tcp.socket.Close();
             udp.socket.Close();
 
-            Debug.Log("Disconnected from server.");
+           // Debug.Log("Disconnected from server.");
         }
     }
 }

@@ -108,14 +108,10 @@ public class PlayerManager : MonoBehaviour
         if(playerType == PlayerType.CREATURE)
         {
             UIManager.instance.HPGuage[(int) PlayerType.CREATURE].value -= (currentHp - hp);
-            Debug.Log($"플레이어 : {playerType}   체력 : {GameManager.players[Client.instance.myId].hp}");
-            Debug.Log($"감소한 체력 : {currentHp - hp}");
         }
         else
         {
             UIManager.instance.HPGuage[(int)PlayerType.HUMAN].value -= (currentHp - hp);
-            Debug.Log($"플레이어 : {playerType}   체력 : {GameManager.players[Client.instance.myId].hp}");
-            Debug.Log($"감소한 체력 : {currentHp - hp}");
         }
         
 
@@ -141,11 +137,7 @@ public class PlayerManager : MonoBehaviour
 
     public void Hide(Vector3 _position)
     {
-        Debug.Log($"현재 플레이어의 위치 : { transform.position}");
-        transform.position = _position;
-        
-        Debug.Log($"은폐 위치 : {_position}");
-        Debug.Log("은폐");
+        transform.position = _position;       
     }
 
     public void PlayerInstallingSound(bool _isInstalling)
@@ -156,12 +148,10 @@ public class PlayerManager : MonoBehaviour
             {
                 this.GetComponent<AudioSource>().clip = busurukSound;
             }
-            Debug.Log($"설치 소리 클립 : {this.GetComponent<AudioSource>().clip.name}");
             if( (this.GetComponent<AudioSource>().clip == busurukSound && this.GetComponent<AudioSource>().isPlaying) 
                 || this.GetComponent<AudioSource>().clip != busurukSound)
             {
                 this.GetComponent<AudioSource>().Stop();
-                Debug.Log("소리 멈춤");
             }
             else if( (this.GetComponent<AudioSource>().clip == busurukSound && !this.GetComponent<AudioSource>().isPlaying) 
                 || this.GetComponent<AudioSource>().clip != busurukSound)
@@ -169,13 +159,11 @@ public class PlayerManager : MonoBehaviour
                 this.GetComponent<AudioSource>().clip = busurukSound;
                 this.GetComponent<AudioSource>().pitch = 3f;
                 this.GetComponent<AudioSource>().Play();
-                Debug.Log("소리 재생");
             }
         }
         if(this.GetComponent<AudioSource>().clip != null && !_isInstalling)
         {
             this.GetComponent<AudioSource>().Stop();
-            Debug.Log("소리 멈춤");
         }
     }
 

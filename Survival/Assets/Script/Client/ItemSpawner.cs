@@ -137,7 +137,7 @@ public class ItemSpawner : MonoBehaviour
         }
         else
         {
-            Debug.Log($"아이템을 버릴 수 없습니다\nError - 부모오브젝트 {transform.parent}");
+            //Debug.Log($"아이템을 버릴 수 없습니다\nError - 부모오브젝트 {transform.parent}");
         }
     }
 
@@ -181,7 +181,6 @@ public class ItemSpawner : MonoBehaviour
         ItemThrow(_position);
         hasItem = false;
         Debug.Log($"EMP Zone 설치완료");
-        Debug.Log($"empCount : {GameManager.instance.empCount}");
 
         if (GameManager.instance.empCount == 2)
         {
@@ -202,7 +201,6 @@ public class ItemSpawner : MonoBehaviour
             gameObject.GetComponent<BoxCollider>().size = new Vector3(0.015f, 0.015f, 0.015f);
             gameObject.GetComponent<BoxCollider>().isTrigger = true;
             GameManager.instance.trapCount++;
-            Debug.Log($"설치한 플레이어 : {Client.playerType}  trap Count : {GameManager.instance.trapCount}");
 
             switch (this.itemType)
             {
@@ -251,6 +249,10 @@ public class ItemSpawner : MonoBehaviour
                     Debug.Log("설치가능한 아이템이 아닙니다");
                     break;
             }*/
+        }
+        else
+        {
+            itemModel.enabled = false;
         }
 
     }

@@ -83,7 +83,7 @@ public class UIManager : MonoBehaviour
         }
         else if (instance != this)
         {
-            Debug.Log("Instance already exists, destoying object!");
+            //Debug.Log("Instance already exists, destoying object!");
             Destroy(this);
         }
         map.SetActive(mapActive);
@@ -94,14 +94,11 @@ public class UIManager : MonoBehaviour
     {
         if(GameObject.FindWithTag("Player") != null)
         {
-            Debug.Log($"공격한 플레이어 : {GameManager.players[Client.instance.myId].playerType}");
-            Debug.Log($"isCretureAttack : {GameManager.players[Client.instance.myId].isCreatureAttack}");
             if (GameManager.players[Client.instance.myId].playerType == PlayerType.CREATURE && GameManager.players[Client.instance.myId].isCreatureAttack)
             {
                 if (seconds > 0)
                 {
                     seconds -= Time.deltaTime;
-                    Debug.Log(seconds);
                     CreatureSkillUIControll(seconds);
                 }
                 else
@@ -115,7 +112,6 @@ public class UIManager : MonoBehaviour
                 if (seconds > 0)
                 {
                     seconds -= Time.deltaTime;
-                    Debug.Log(seconds);
                     CreatureSpeedUpSkillCoolTime(seconds);
                 }
                 else

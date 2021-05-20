@@ -11,7 +11,7 @@ public class ClientHandle : MonoBehaviour
         string _msg = _packet.ReadString();
         int _myId = _packet.ReadInt();
 
-        Debug.Log($"Message from server: {_msg}");
+        //Debug.Log($"Message from server: {_msg}");
         Client.instance.myId = _myId;
         //ClientSend.WelcomeReceived();
 
@@ -28,7 +28,7 @@ public class ClientHandle : MonoBehaviour
     {
         string _msg = _packet.ReadString();
 
-        Debug.Log($"Error _ Message from server: {_msg}");
+        //Debug.Log($"Error _ Message from server: {_msg}");
     }
 
     public static void SpawnPlayer(Packet _packet)
@@ -54,7 +54,7 @@ public class ClientHandle : MonoBehaviour
             _player.transform.position = _position;
             _player.animator.SetBool("Walk", _walk);
             _player.animator.SetBool("Run", _run);
-            Debug.Log($"walk : {_player.animator.GetBool("Walk")}, run : {_player.animator.GetBool("Run")}, stand : {!_player.animator.GetBool("Walk") && !_player.animator.GetBool("Run")}");
+            //Debug.Log($"walk : {_player.animator.GetBool("Walk")}, run : {_player.animator.GetBool("Run")}, stand : {!_player.animator.GetBool("Walk") && !_player.animator.GetBool("Run")}");
 
             if (_id == Client.instance.myId)
             {
@@ -68,7 +68,6 @@ public class ClientHandle : MonoBehaviour
                     {
                         _player.GetComponent<AudioSource>().clip = _player.footStepSound;
                     }
-                    Debug.Log($"플레이어 걷는 소리 : {_player.GetComponent<AudioSource>().clip.name}");
                     if ((_player.GetComponent<AudioSource>().clip == _player.footStepSound && _player.GetComponent<AudioSource>().isPlaying) && !_walk && !_run
                             || _player.GetComponent<AudioSource>().clip != _player.footStepSound)
                     {
@@ -285,7 +284,6 @@ public class ClientHandle : MonoBehaviour
     {
         int _playerId = _packet.ReadInt();
 
-        Debug.Log($"드론이동!");
         GameManager.players[_playerId].playerItem.GrabItem.GetComponent<Drone>().Moving();
         GameManager.players[_playerId].playerItem.GrabItem.GetComponent<Drone>().GetComponent<AudioSource>().clip
             = GameManager.players[_playerId].playerItem.GrabItem.GetComponent<Drone>().droneMovingSound;
@@ -297,7 +295,6 @@ public class ClientHandle : MonoBehaviour
     {
         int _playerId = _packet.ReadInt();
 
-        Debug.Log($"드론멈춤!");
         GameManager.players[_playerId].playerItem.GrabItem.GetComponent<Drone>().Stop();
         GameManager.players[_playerId].playerItem.GrabItem.GetComponent<Drone>().GetComponent<AudioSource>().Stop();
     }
