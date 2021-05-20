@@ -109,6 +109,19 @@ public class UIManager : MonoBehaviour
                 }
                 
             }
+            if(GameManager.players[Client.instance.myId].playerType == PlayerType.CREATURE && GameManager.players[Client.instance.myId].isCreatureSpeedUp)
+            {
+                if (seconds > 0)
+                {
+                    seconds -= Time.deltaTime;
+                    Debug.Log(seconds);
+                    CreatureSpeedUpSkillCoolTime(seconds);
+                }
+                else
+                {
+                    seconds = 10f;
+                }
+            }
         }
     }
 
@@ -252,5 +265,20 @@ public class UIManager : MonoBehaviour
             }
         }
         
+    }
+
+    public void CreatureSpeedUpSkillCoolTime(float second)
+    {
+        coolTimeBackGroundImage[0].gameObject.SetActive(true);
+        coolTimeText[0].gameObject.SetActive(true);
+
+        coolTimeText[0].text = string.Format("{0:F0}", second);
+
+        if (second <= 0)
+        {
+            coolTimeBackGroundImage[0].gameObject.SetActive(false);
+            coolTimeText[0].gameObject.SetActive(false);
+            GameManager.players[Client.instance.myId].isCreatureSpeedUp = false;
+        }
     }
 }

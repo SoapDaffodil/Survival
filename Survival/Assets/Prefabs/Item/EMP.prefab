@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 5164048207632254053}
   m_Layer: 0
   m_Name: EMP
-  m_TagString: EMP
+  m_TagString: Item
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

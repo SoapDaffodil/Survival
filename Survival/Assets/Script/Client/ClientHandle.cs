@@ -462,6 +462,24 @@ public class ClientHandle : MonoBehaviour
             UIManager.instance.endImageUI.gameObject.SetActive(true);
             _player.GetComponent<AudioSource>().clip = _player.endSound;
             _player.GetComponent<AudioSource>().Play();
+            for (int i = 0; i < UIManager.instance.HPBarUI.Length; i++)
+            {
+                UIManager.instance.HPBarUI[i].gameObject.SetActive(false);
+            }
+            for (int i = 0; i < UIManager.instance.skillImageUI.Length; i++)
+            {
+                UIManager.instance.skillImageUI[i].gameObject.SetActive(false);
+                UIManager.instance.itemImageUI[i].gameObject.SetActive(false);
+                UIManager.instance.itemCountText[i].gameObject.SetActive(false);
+            }
+            for (int i = 0; i < UIManager.instance.creatureKey.Length; i++)
+            {
+                UIManager.instance.creatureKey[i].gameObject.SetActive(false);
+            }
+            GameObject.Find("Aim").gameObject.SetActive(false);
+
+            
+
             if (_player.playerType == Client.playerType)
             {
                 //패배

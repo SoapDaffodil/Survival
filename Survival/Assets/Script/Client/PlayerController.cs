@@ -140,7 +140,7 @@ public class PlayerController : MonoBehaviour
             {
                 if(this.GetComponent<PlayerManager>().playerItem.GrabItem.itemType == ItemType.EMP || this.GetComponent<PlayerManager>().playerItem.GrabItem.itemType == ItemType.LIGHTTRAP)
                 {
-                    this.GetComponent<PlayerManager>().playerItem.GrabItem.GetComponent<SphereCollider>().enabled = true;
+                    this.GetComponent<PlayerManager>().playerItem.GrabItem.GetComponent<Collider>().enabled = true;
                 }
             }
             StartCoroutine(WaitForMilliSec());
@@ -211,11 +211,12 @@ public class PlayerController : MonoBehaviour
                     break;
             }
         }
-        if (Input.GetKeyDown(KeyCode.Q))
+        if (Input.GetKeyDown(KeyCode.Q) && !this.GetComponent<PlayerManager>().isCreatureSpeedUp)
         {
             if(this.GetComponent<PlayerManager>().playerType == PlayerType.CREATURE && !this.GetComponent<PlayerManager>().isCreatureAttack)
             {
                 ClientSend.SpeedUp(GameManager.players[Client.instance.myId]);
+                this.GetComponent<PlayerManager>().isCreatureSpeedUp = true;
             }
         }
     }
@@ -377,8 +378,11 @@ public class PlayerController : MonoBehaviour
                 }
                 else if (_grabItem.itemType == ItemType.LIGHTTRAP && this.GetComponent<PlayerManager>().playerType == PlayerType.CREATURE)
                 {
+                    Debug.Log($"grabItem : {_grabItem.itemType}");
+                    
                     if(!this.GetComponent<PlayerManager>().isCreatureAttack)
                     {
+                        Debug.Log($"라이트 트랩 설치");
                         int _floor = (this.transform.position.y < 10f) ? 1 : 2;
                         this.GetComponent<PlayerManager>().isInstalling = true;
                         this.GetComponent<PlayerManager>().PlayerInstallingSound(this.GetComponent<PlayerManager>().isInstalling);

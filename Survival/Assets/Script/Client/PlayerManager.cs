@@ -42,6 +42,7 @@ public class PlayerManager : MonoBehaviour
     public bool isCuring = false;           //플레이어 치료 중
     public bool isCreatureAttack = false;    //괴물 공격 성공
     public bool isInstalling = false;       //설치 오브젝트 설치중
+    public bool isCreatureSpeedUp = false;   // 괴물 이속증가 여부
 
     public AudioClip footStepSound;
     public AudioClip busurukSound;

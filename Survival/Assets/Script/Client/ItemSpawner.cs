@@ -106,7 +106,7 @@ public class ItemSpawner : MonoBehaviour
     {
         if (transform.parent != null)
         {
-            transform.parent.GetComponent<PlayerManager>().playerItem.GrabItem.GetComponent<SphereCollider>().enabled = true;
+            transform.parent.GetComponent<PlayerManager>().playerItem.GrabItem.GetComponent<Collider>().enabled = true;
             transform.parent.GetComponent<PlayerManager>().playerItem.GrabItem = null;
             switch (itemType)
             {
@@ -155,7 +155,7 @@ public class ItemSpawner : MonoBehaviour
         transform.position = _position;
         if (transform.parent != _byPlayer.transform) {
             transform.SetParent(_byPlayer.transform, true);
-            gameObject.GetComponent<SphereCollider>().enabled = false;
+            gameObject.GetComponent<Collider>().enabled = false;
         }
         if (_byPlayer.playerItem.GrabItem != null && _byPlayer.playerItem.GrabItem.transform.parent == _byPlayer.transform)
         {
@@ -197,8 +197,8 @@ public class ItemSpawner : MonoBehaviour
     {
         ItemThrow(_position);
         hasItem = false;
-        gameObject.GetComponent<SphereCollider>().radius = 5f;
-        gameObject.GetComponent<SphereCollider>().isTrigger = true;
+        gameObject.GetComponent<BoxCollider>().size = new Vector3(0.015f, 0.015f, 0.015f);
+        gameObject.GetComponent<BoxCollider>().isTrigger = true;
 
         switch (this.itemType)
         {

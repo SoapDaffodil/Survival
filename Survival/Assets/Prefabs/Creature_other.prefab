@@ -2168,7 +2168,7 @@ GameObject:
   - component: {fileID: 2535635960826750020}
   m_Layer: 0
   m_Name: Creature_other
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2260,7 +2260,7 @@ MonoBehaviour:
   isCreatureAttack: 0
   isInstalling: 0
   footStepSound: {fileID: 0}
-  busurukSound: {fileID: 0}
+  busurukSound: {fileID: 8300000, guid: 8cca37822680c4e42a9a14d956db4ed1, type: 3}
   creatureAttackSound: {fileID: 8300000, guid: 3bd6526d5605fdb4e916f9cb27bf61e8, type: 3}
   endSound: {fileID: 8300000, guid: 988e14b2cc0fa45498607c30d995bdce, type: 3}
   controller: {fileID: 0}
