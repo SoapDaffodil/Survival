@@ -47,16 +47,11 @@ public class UIManager : MonoBehaviour
     public GameObject map;
     public bool mapActive = false;
 
-    /// <summary>LightTrap 버튼 리스트</summary>
-    public UnityEngine.UI.Button[] lightTrapUIButton;
-
     /// <summary>몬스터의 현재 키배치</summary>
     [Tooltip("몬스터의 현재 키배치")]
     public Text[] creatureKey;
 
     public Slider[] HPGuage;
-
-    public GameObject[] UI_LightTrapList;
 
     public Sprite[] HPBarImage;
     public Sprite[] itemGrayImage;
@@ -70,8 +65,14 @@ public class UIManager : MonoBehaviour
     
     public float seconds = 10f;
 
+    /// <summary>LightTrap 버튼 리스트</summary>
+    public Vector3 objectUIRatio;
+    public GameObject[] UI_LightTrapList;
+    public UnityEngine.UI.Button[] lightTrapUIButton;
     public Material[] material_UI_LightTrap;
-    public Vector3[] position_UI_LightTrap = { new Vector3(200, -49.9f, 0), new Vector3(400, -49.9f, 0) };
+    public Sprite[] sprite_UI_LightTrap;
+    public Vector3[] position_UI_LightTrap = { new Vector3(300, 0, 0), new Vector3(1050, 0, 0) };
+    //public Vector3[] position_UI_LightTrap = { new Vector3(200, -49.9f, 0), new Vector3(400, -49.9f, 0) };
 
     /// <summary>이미 존재하는지 체크</summary>
     private void Awake()
@@ -86,6 +87,7 @@ public class UIManager : MonoBehaviour
             Destroy(this);
         }
         map.SetActive(mapActive);
+        objectUIRatio = new Vector3(701/120, 1, 815/135);
     }
 
     private void Update()
@@ -205,8 +207,10 @@ public class UIManager : MonoBehaviour
             }
             UI_LightTrapList[i].SetActive(true);
             lightTrapUIButton[i].gameObject.SetActive(true);
-            UI_LightTrapList[i].transform.position = ItemSpawner.lightTrapList[i].trap.transform.position + position_UI_LightTrap[ItemSpawner.lightTrapList[i].floor - 1];
-            UI_LightTrapList[i].GetComponent<MeshRenderer>().material = material_UI_LightTrap[i];
+            Vector3 objectPosition = ItemSpawner.lightTrapList[i].trap.transform.position;
+            UI_LightTrapList[i].GetComponent<RectTransform>().localPosition = new Vector3(objectPosition.x * objectUIRatio.x,
+                objectPosition.y * objectUIRatio.y, objectPosition.z * objectUIRatio.z) + position_UI_LightTrap[ItemSpawner.lightTrapList[i].floor - 1];
+            UI_LightTrapList[i].GetComponent<Image>().sprite = sprite_UI_LightTrap[i];
         }
     }
 

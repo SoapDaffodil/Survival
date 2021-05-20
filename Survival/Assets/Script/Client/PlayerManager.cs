@@ -65,7 +65,8 @@ public class PlayerManager : MonoBehaviour
     {
         if (controller != null)
         {
-            UIManager.instance.fisrtFloorPlayer.transform.rotation = Quaternion.Euler(this.transform.rotation.eulerAngles + new Vector3(0, 180, 0));
+            //UIManager.instance.fisrtFloorPlayer.GetComponent<RectTransform>().localRotation = Quaternion.Euler(this.transform.rotation.eulerAngles + new Vector3(0, 180, 0));
+            UIManager.instance.fisrtFloorPlayer.GetComponent<RectTransform>().localRotation = Quaternion.Euler(0, 0, this.transform.rotation.eulerAngles.y);
         }
     }
 
