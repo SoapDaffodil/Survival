@@ -205,6 +205,7 @@ MonoBehaviour:
   footStepSound: {fileID: 0}
   busurukSound: {fileID: 0}
   creatureAttackSound: {fileID: 8300000, guid: 3bd6526d5605fdb4e916f9cb27bf61e8, type: 3}
+  endSound: {fileID: 8300000, guid: 988e14b2cc0fa45498607c30d995bdce, type: 3}
   controller: {fileID: 2693480195332742884}
   animator: {fileID: 1314722003099472528}
 --- !u!114 &2693480195332742884
@@ -223,6 +224,7 @@ MonoBehaviour:
   getKeyDownF: 0
   getKeyDownE: 0
   input: 7700000073000000610000006400000020000000
+  isInEMPZone: 0
   fireRate: 3
   nextTimeToFire: 0
 --- !u!82 &9087796358826941204

@@ -162,23 +162,32 @@ public class GameManager : MonoBehaviour
                 if (_spawner.itemType == ItemType.GUN)
                 {
                     _player.playerItem.item_number1 = _spawner;
-                    UIManager.instance.itemImageUI[0].sprite = UIManager.instance.itemImage[3];
-                    UIManager.instance.itemCountText[0].text = "1";
-                    UIManager.instance.itemCountText[0].color = UIManager.instance.textColor[(int)UIManager.TextColor.MINT];
+                    if(_player.id == Client.instance.myId)
+                    {
+                        UIManager.instance.itemImageUI[0].sprite = UIManager.instance.itemImage[(int)_player.playerType * UIManager.instance.itemImageUI.Length];
+                        UIManager.instance.itemCountText[0].text = "1";
+                        UIManager.instance.itemCountText[0].color = UIManager.instance.textColor[(int)UIManager.TextColor.MINT];
+                    }                    
                 }
                 else if (_spawner.itemType == ItemType.EMP)
                 {
                     _player.playerItem.item_number2.Add(_spawner);
-                    UIManager.instance.itemImageUI[1].sprite = UIManager.instance.itemImage[4];
-                    UIManager.instance.itemCountText[1].text = _player.playerItem.item_number2.Count.ToString();
-                    UIManager.instance.itemCountText[1].color = UIManager.instance.textColor[(int)UIManager.TextColor.MINT];
+                    if (_player.id == Client.instance.myId)
+                    {
+                        UIManager.instance.itemImageUI[1].sprite = UIManager.instance.itemImage[(int)_player.playerType * UIManager.instance.itemImageUI.Length + 1];
+                        UIManager.instance.itemCountText[1].text = _player.playerItem.item_number2.Count.ToString();
+                        UIManager.instance.itemCountText[1].color = UIManager.instance.textColor[(int)UIManager.TextColor.MINT];
+                    }                    
                 }
                 else if (_spawner.itemType == ItemType.BATTERY)
                 {                    
                     _player.playerItem.batteryCount += 30;
-                    UIManager.instance.itemImageUI[2].sprite = UIManager.instance.itemImage[5];
-                    UIManager.instance.itemCountText[2].text = (_player.playerItem.batteryCount / 30).ToString();
-                    UIManager.instance.itemCountText[2].color = UIManager.instance.textColor[(int)UIManager.TextColor.MINT];
+                    if (_player.id == Client.instance.myId)
+                    {
+                        UIManager.instance.itemImageUI[2].sprite = UIManager.instance.itemImage[(int)_player.playerType * UIManager.instance.itemImageUI.Length + 2];
+                        UIManager.instance.itemCountText[2].text = (_player.playerItem.batteryCount / 30).ToString();
+                        UIManager.instance.itemCountText[2].color = UIManager.instance.textColor[(int)UIManager.TextColor.MINT];
+                    }                    
                 }
                 else
                 {
@@ -190,16 +199,22 @@ public class GameManager : MonoBehaviour
                 if (_spawner.itemType == ItemType.DRONE)
                 {
                     _player.playerItem.item_number1 = _spawner;
-                    UIManager.instance.itemImageUI[0].sprite = UIManager.instance.itemImage[0];
-                    UIManager.instance.itemCountText[0].text = "1";
-                    UIManager.instance.itemCountText[0].color = UIManager.instance.textColor[(int)UIManager.TextColor.MINT];
+                    if (_player.id == Client.instance.myId)
+                    {
+                        UIManager.instance.itemImageUI[0].sprite = UIManager.instance.itemImage[(int)_player.playerType * UIManager.instance.itemImageUI.Length];
+                        UIManager.instance.itemCountText[0].text = "1";
+                        UIManager.instance.itemCountText[0].color = UIManager.instance.textColor[(int)UIManager.TextColor.MINT];
+                    }                   
                 }
                 else if (_spawner.itemType == ItemType.LIGHTTRAP)
                 {
                     _player.playerItem.item_number2.Add(_spawner);
-                    UIManager.instance.itemImageUI[1].sprite = UIManager.instance.itemImage[1];
-                    UIManager.instance.itemCountText[1].text = _player.playerItem.item_number2.Count.ToString();
-                    UIManager.instance.itemCountText[1].color = UIManager.instance.textColor[(int)UIManager.TextColor.MINT];
+                    if (_player.id == Client.instance.myId)
+                    {
+                        UIManager.instance.itemImageUI[1].sprite = UIManager.instance.itemImage[(int)_player.playerType * UIManager.instance.itemImageUI.Length + 1];
+                        UIManager.instance.itemCountText[1].text = _player.playerItem.item_number2.Count.ToString();
+                        UIManager.instance.itemCountText[1].color = UIManager.instance.textColor[(int)UIManager.TextColor.MINT];
+                    }                   
                 }
                 else
                 {

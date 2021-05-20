@@ -113,6 +113,8 @@ public class ItemSpawner : MonoBehaviour
                 case ItemType.GUN: case ItemType.DRONE:
                     transform.parent.GetComponent<PlayerManager>().playerItem.item_number1 = null;
                     transform.parent.GetComponent<PlayerManager>().animator.SetBool("Gun", false);
+                    UIManager.instance.itemImageUI[0].sprite = UIManager.instance.itemGrayImage
+                        [(int)GameManager.players[Client.instance.myId].playerType * UIManager.instance.itemImageUI.Length];
                     UIManager.instance.itemCountText[0].text = "0";
                     UIManager.instance.itemCountText[0].color = UIManager.instance.textColor[(int)UIManager.TextColor.GRAY];
                     break;
@@ -121,6 +123,8 @@ public class ItemSpawner : MonoBehaviour
                     UIManager.instance.itemCountText[1].text = transform.parent.GetComponent<PlayerManager>().playerItem.item_number2.Count.ToString();
                     if(transform.parent.GetComponent<PlayerManager>().playerItem.item_number2.Count == 0)
                     {
+                        UIManager.instance.itemImageUI[1].sprite = UIManager.instance.itemGrayImage
+                            [(int)GameManager.players[Client.instance.myId].playerType * UIManager.instance.itemImageUI.Length + 1];
                         UIManager.instance.itemCountText[1].color = UIManager.instance.textColor[(int)UIManager.TextColor.GRAY];
                     }
                     

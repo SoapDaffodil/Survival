@@ -20,6 +20,7 @@ public class UIManager : MonoBehaviour
     public Text[] itemCountText;
     public Image[] skillImageUI;
     public Image[] coolTimeBackGroundImage;
+    public Image endImageUI;
     public Text[] coolTimeText;
 
     /// <summary>EMP설치게이지</summary>
@@ -63,6 +64,9 @@ public class UIManager : MonoBehaviour
     public Sprite[] skillGrayImage;
     public Sprite[] itemImage;
     public Sprite[] skillImage;
+
+    public enum EndType {VICTORY, DEFEAT};
+    public Sprite[] endImage;
    
     
     public float seconds = 10f;

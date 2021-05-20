@@ -45,6 +45,11 @@ public class Drone : MonoBehaviour
                 _player.GetComponent<PlayerManager>().playerItem.item_number1 = null;
                 _player.GetComponent<PlayerManager>().playerItem.GrabItem = null;
                 Destroy(this.gameObject, 2f);
+
+                UIManager.instance.itemImageUI[0].sprite = UIManager.instance.itemGrayImage
+                        [(int)GameManager.players[Client.instance.myId].playerType * UIManager.instance.itemImageUI.Length];
+                UIManager.instance.itemCountText[0].text = "0";
+                UIManager.instance.itemCountText[0].color = UIManager.instance.textColor[(int)UIManager.TextColor.GRAY];
             }
         }
     }

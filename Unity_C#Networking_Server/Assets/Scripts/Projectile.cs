@@ -64,7 +64,7 @@ public class Projectile : MonoBehaviour
         Collider[] _colliders = Physics.OverlapSphere(transform.position, explosionRadius);
         foreach (Collider _collider in _colliders)
         {
-            if (_collider.CompareTag("Player"))
+            if (_collider.GetComponent<Player>().playerType == PlayerType.CREATURE)
             {
                 //_collider.GetComponent<Player>().TakeDamage(explosionDamage);
                 ServerSend.KeyChange(_collider.gameObject.GetComponent<Player>().id);
