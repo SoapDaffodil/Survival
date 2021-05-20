@@ -59,8 +59,17 @@ public class ClientHandle : MonoBehaviour
             if (_id == Client.instance.myId)
             {
                 //UIManager.instance.fisrtFloorPlayer.transform.position = _position + UIManager.instance.position_UI_LightTrap[0];
-                UIManager.instance.fisrtFloorPlayer.GetComponent<RectTransform>().localPosition = new Vector3(_position.x * UIManager.instance.objectUIRatio.x + 50,
-                    _position.y * UIManager.instance.objectUIRatio.y, _position.z * UIManager.instance.objectUIRatio.z) + UIManager.instance.position_UI_LightTrap[0];
+                Vector3 UIPosition = new Vector3(_position.x * UIManager.instance.objectUIRatio.x,
+                    _position.z * UIManager.instance.objectUIRatio.z + UIManager.instance.position_UI_LightTrap[0].y, UIManager.instance.position_UI_LightTrap[0].z);
+                if (_position.y > 8f)
+                {
+                    UIPosition.x += UIManager.instance.position_UI_LightTrap[1].x;
+                }
+                else
+                {
+                    UIPosition.x += UIManager.instance.position_UI_LightTrap[0].x;
+                }
+                UIManager.instance.fisrtFloorPlayer.GetComponent<RectTransform>().anchoredPosition = UIPosition;
 
                 if (_player.GetComponent<AudioSource>().clip != null && !_player.GetComponent<PlayerManager>().isInstalling && _player.playerType == PlayerType.HUMAN)
                 {
