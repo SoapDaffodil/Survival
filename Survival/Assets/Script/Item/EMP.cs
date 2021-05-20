@@ -73,8 +73,20 @@ public  class EMP : MonoBehaviour
                 }
                 else
                 {
-                    int _floor = (this.transform.parent.position.y < 10f) ? 1 : 2;
-                    ClientSend.Install(this.transform.position, GameManager.players[Client.instance.myId].GetComponent<PlayerManager>().playerItem.GrabItem.spawnerId, _floor);
+                    if (this.transform.parent.GetComponent<PlayerManager>().id == Client.instance.myId)
+                    {
+                        if (GameManager.instance.trapCount < GameManager.instance.maxTrapCount)
+                        {
+                            Debug.Log($"EMP 트랩 설치");
+                            int _floor = (this.transform.parent.position.y < 10f) ? 1 : 2;
+                            ClientSend.Install(this.transform.position, GameManager.players[Client.instance.myId].GetComponent<PlayerManager>().playerItem.GrabItem.spawnerId, _floor);
+                        }
+                        else
+                        {
+                            Debug.Log($"설치 가능한 트랩을 모두 설치했습니다");
+                        }
+                    }
+                    
                 }
                 
             }

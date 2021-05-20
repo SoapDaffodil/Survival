@@ -382,11 +382,22 @@ public class PlayerController : MonoBehaviour
                     
                     if(!this.GetComponent<PlayerManager>().isCreatureAttack)
                     {
-                        Debug.Log($"라이트 트랩 설치");
-                        int _floor = (this.transform.position.y < 10f) ? 1 : 2;
-                        this.GetComponent<PlayerManager>().isInstalling = true;
-                        this.GetComponent<PlayerManager>().PlayerInstallingSound(this.GetComponent<PlayerManager>().isInstalling);
-                        ClientSend.Install(this.transform.position, _grabItem.spawnerId, _floor);
+                        if (this.GetComponent<PlayerManager>().id == Client.instance.myId)
+                        {
+                            if (GameManager.instance.trapCount < GameManager.instance.maxTrapCount)
+                            {
+                                Debug.Log($"라이트 트랩 설치");
+                                int _floor = (this.transform.position.y < 10f) ? 1 : 2;
+                                this.GetComponent<PlayerManager>().isInstalling = true;
+                                this.GetComponent<PlayerManager>().PlayerInstallingSound(this.GetComponent<PlayerManager>().isInstalling);
+                                ClientSend.Install(this.transform.position, _grabItem.spawnerId, _floor);
+                            }
+                            else
+                            {
+                                Debug.Log($"설치 가능한 트랩을 모두 설치했습니다");
+                            }
+
+                        }
                     }                    
                 }
                 else
