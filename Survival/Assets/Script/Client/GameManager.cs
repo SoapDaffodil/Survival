@@ -54,7 +54,6 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        UIManager.instance.startMenu.SetActive(false);
         switch (Client.playerType)
         {
             case PlayerType.CREATURE:

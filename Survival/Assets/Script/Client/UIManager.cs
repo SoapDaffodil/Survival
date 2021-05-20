@@ -9,7 +9,6 @@ public class UIManager : MonoBehaviour
     public Color[] textColor = {new Color(0.49f, 0.49f, 0.49f) , new Color(0f, 0.87f, 1f)};
     public static UIManager instance;
 
-    public GameObject startMenu;//지울예정(StartScene으로 이전)
     public Sprite[] startButtonImage;
 
     public GameObject HumanUI;
@@ -72,7 +71,7 @@ public class UIManager : MonoBehaviour
     public float seconds = 10f;
 
     public Material[] material_UI_LightTrap;
-    public Vector3[] position_UI_LightTrap = { new Vector3(-100, 0, 0), new Vector3(-200, 0, 0) };
+    public Vector3[] position_UI_LightTrap = { new Vector3(200, -49.9f, 0), new Vector3(400, -49.9f, 0) };
 
     /// <summary>이미 존재하는지 체크</summary>
     private void Awake()
@@ -182,7 +181,6 @@ public class UIManager : MonoBehaviour
             || clickedButton.name == "Creature" || clickedButton.name == "CREATURE")
         {
             Client.playerType = PlayerType.CREATURE;
-            startMenu.SetActive(false);
             SetActiveCreatureKey(false);
             Client.instance.ConnectToServer();
         }
@@ -190,7 +188,6 @@ public class UIManager : MonoBehaviour
             || clickedButton.name == "Human" || clickedButton.name == "HUMAN")
         {
             Client.playerType = PlayerType.HUMAN;
-            startMenu.SetActive(false);
             SetActiveCreatureKey(false);
             Client.instance.ConnectToServer();
         }
