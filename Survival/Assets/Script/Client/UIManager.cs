@@ -87,7 +87,9 @@ public class UIManager : MonoBehaviour
             Destroy(this);
         }
         map.SetActive(mapActive);
-        objectUIRatio = new Vector3(701/120, 1, 815/135);
+        objectUIRatio = new Vector3(701f/120f, 1, 815f/135f);
+        position_UI_LightTrap[0] = new Vector3(650.5f, 0, 0);
+        position_UI_LightTrap[1] = new Vector3(1400.5f, 0, 0);
     }
 
     private void Update()
@@ -208,8 +210,9 @@ public class UIManager : MonoBehaviour
             UI_LightTrapList[i].SetActive(true);
             lightTrapUIButton[i].gameObject.SetActive(true);
             Vector3 objectPosition = ItemSpawner.lightTrapList[i].trap.transform.position;
-            UI_LightTrapList[i].GetComponent<RectTransform>().localPosition = new Vector3(objectPosition.x * objectUIRatio.x,
-                objectPosition.y * objectUIRatio.y, objectPosition.z * objectUIRatio.z) + position_UI_LightTrap[ItemSpawner.lightTrapList[i].floor - 1];
+            UI_LightTrapList[i].GetComponent<RectTransform>().anchoredPosition =
+                new Vector3(objectPosition.x * objectUIRatio.x + position_UI_LightTrap[ItemSpawner.lightTrapList[i].floor - 1].x,
+                objectPosition.z * objectUIRatio.z + position_UI_LightTrap[ItemSpawner.lightTrapList[i].floor - 1].y, position_UI_LightTrap[ItemSpawner.lightTrapList[i].floor - 1].z);
             UI_LightTrapList[i].GetComponent<Image>().sprite = sprite_UI_LightTrap[i];
         }
     }
@@ -237,7 +240,7 @@ public class UIManager : MonoBehaviour
             Vector3 target = Vector3.zero;
             try
             {
-                target = ItemSpawner.lightTrapList[buttonNumber - 1].trap.transform.position;
+                target = ItemSpawner.lightTrapList[buttonNumber - 1].trap.transform.position + new Vector3(0, 1f, 0);
             }
             catch
             {
