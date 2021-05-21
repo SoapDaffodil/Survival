@@ -12,7 +12,7 @@ public class Client : MonoBehaviour
     public static PlayerType playerType;
     public static int dataBufferSize = 4096;
     
-    public string ip = "192.168.10.102";
+    public string ip = "192.168.10.103";
     public int port = 80;
     //public string ip = "127.0.0.1";
     //public int port = 26950;
@@ -54,9 +54,9 @@ public class Client : MonoBehaviour
     {
         if(instance == null)
         {
-            //ip = "192.168.10.102";
+            ip = "192.168.10.103";
             port = 80;
-            ip = "127.0.0.1";
+            //ip = "127.0.0.1";
              //port = 80;
 
             instance = this;

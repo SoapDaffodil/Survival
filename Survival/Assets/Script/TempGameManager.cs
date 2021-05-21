@@ -71,8 +71,7 @@ public class TempGameManager : MonoBehaviour
         */
 
         for (int i = 1; i <= GameManager.players.Count; i++)
-        {
-            UIManager.instance.endImageUI.gameObject.SetActive(true);
+        {            
             GameManager.players[i].GetComponent<AudioSource>().clip = GameManager.players[i].endSound;
             GameManager.players[i].GetComponent<AudioSource>().Play();
 
@@ -80,11 +79,11 @@ public class TempGameManager : MonoBehaviour
             {
                 if (GameManager.players[i].id == Client.instance.myId)
                 {
-                    UIManager.instance.endImageUI.sprite = UIManager.instance.endImage[(int)UIManager.EndType.VICTORY];
+                    endUI.GetComponent<Image>().sprite = UIManager.instance.endImage[(int)UIManager.EndType.VICTORY];
                 }
                 else
                 {
-                    UIManager.instance.endImageUI.sprite = UIManager.instance.endImage[(int)UIManager.EndType.DEFEAT];
+                    endUI.GetComponent<Image>().sprite = UIManager.instance.endImage[(int)UIManager.EndType.DEFEAT];
                 }
             }
         }
