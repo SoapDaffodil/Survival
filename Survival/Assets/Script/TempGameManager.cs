@@ -47,6 +47,10 @@ public class TempGameManager : MonoBehaviour
                 }
                 timer.text = string.Format($"{(int)(seconds / 60)} : {(int)((int)seconds % 60)}");
             }
+            
+        }
+        else
+        {
             for (int i = 1; i <= GameManager.players.Count; i++)
             {
                 GameManager.players[i].GetComponent<AudioSource>().clip = GameManager.players[i].endSound;
