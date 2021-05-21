@@ -24,10 +24,12 @@ public class ItemRandomSpawn : MonoBehaviour
             Debug.Log($"아이템 위치의 수와 아이템의 수가 맞지 않습니다");
             return;
         }
-        for(int i = randomCount.Count; i > 0; i--)
+        Random.InitState(System.DateTime.Now.Millisecond);
+        for (int i = randomCount.Count; i > 0; i--)
         {
             int itemNumber = Random.Range(0, i - 1);
-            Instantiate(itemPrefabs[randomCount[itemNumber]], itemSpawnTransform[itemNumber].position, itemSpawnTransform[itemNumber].rotation).GetComponent<ItemSpawner>().Initialize();
+            GameObject temp = Instantiate(itemPrefabs[randomCount[itemNumber]], itemSpawnTransform[itemNumber].position, itemSpawnTransform[itemNumber].rotation);
+            temp.GetComponent<ItemSpawner>().Initialize();
             randomCount[itemNumber] = randomCount[i - 1];
             itemSpawnTransform[itemNumber] = itemSpawnTransform[i - 1];
         }

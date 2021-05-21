@@ -10,6 +10,8 @@ public class Player : MonoBehaviour
     public int id;                          //id
     public string username;                 //player 이름
     public PlayerType playerType;           //player 타입(괴물,인간)
+    public GameObject itemGrabPosition;
+
 
     public Animator animator;               //player animation
     public CharacterController controller;  //player의 컨트롤러
@@ -20,6 +22,7 @@ public class Player : MonoBehaviour
     public float throwForce = 600f;         //폭탄 던지기속도
     public float hp;                        //체력
     public float maxHp = 100f;              //최대체력
+    public bool immortal = false;
     public int itemAmount = 0;              //아이템 소요개수
     public int maxItemAmount = 100;         //아이템 최대소요개수
 
@@ -224,8 +227,10 @@ public class Player : MonoBehaviour
             {
                 Debug.Log($"레이에 맞은 플레이어 : {_hit.collider.gameObject.name}");
                 Player hitPlayer = _hit.collider.GetComponent<Player>();
-                if (hitPlayer.playerType == PlayerType.HUMAN)
+                if (hitPlayer.playerType == PlayerType.HUMAN && !hitPlayer.immortal)
                 {
+                    hitPlayer.immortal = true;
+                    StartCoroutine(Immortal(3f, hitPlayer));
                     StartCoroutine(MotionHit(1f, hitPlayer));
                     isCreatureAttack = true;
 
@@ -241,6 +246,11 @@ public class Player : MonoBehaviour
                 }
             }
         }
+    }
+    IEnumerator Immortal(float time, Player _player)
+    {
+        yield return new WaitForSeconds(time);
+        _player.immortal = false;
     }
 
     /// <summary>투척</summary>

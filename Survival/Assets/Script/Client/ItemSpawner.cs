@@ -152,6 +152,10 @@ public class ItemSpawner : MonoBehaviour
     public void ItemGrab(PlayerManager _byPlayer, Vector3 _position)
     {
         itemModel.enabled = true;
+        if (transform.localScale.x > 1000)
+        {
+            transform.localScale /= 3;
+        }
         transform.position = _position;
         if (transform.parent != _byPlayer.transform) {
             transform.SetParent(_byPlayer.transform, true);
@@ -198,6 +202,7 @@ public class ItemSpawner : MonoBehaviour
         {
             ItemThrow(_position);
             hasItem = false;
+            gameObject.transform.localScale /= 3;
             gameObject.GetComponent<BoxCollider>().size = new Vector3(0.015f, 0.015f, 0.015f);
             gameObject.GetComponent<BoxCollider>().isTrigger = true;
             GameManager.instance.trapCount++;

@@ -136,10 +136,13 @@ public class ItemSpawner : MonoBehaviour
                 spawners[_grabSpawnerId].ItemReleaseGrab();
             }
 
-            Vector3 _itemPosition = _byPlayer.transform.position;
-            _itemPosition.y = 1f;
+            Vector3 _itemPosition = _byPlayer.itemGrabPosition.transform.position;
             itemModel.enabled = true;
+            if(transform.localScale.x > 1000){
+                transform.localScale /= 3;
+            }
             transform.position = _itemPosition;
+            transform.rotation = Quaternion.Euler(0, -90, 0);
             if (transform.parent != _byPlayer.transform)
             {
                 transform.SetParent(_byPlayer.transform, true);
@@ -171,6 +174,10 @@ public class ItemSpawner : MonoBehaviour
                     ServerSend.MotionInstall(this.transform.parent.GetComponent<Player>().id, false);
                     this.transform.SetParent(null, true);
                 }
+                if (transform.localScale.x > 1000)
+                {
+                    transform.localScale /= 3;
+                }
                 gameObject.GetComponent<BoxCollider>().size = new Vector3(0.015f, 0.015f, 0.015f);
                 gameObject.GetComponent<BoxCollider>().isTrigger = true;
                 ServerSend.InstallTrap(spawnerId, this.transform.position, _floor, _byPlayer);
@@ -184,6 +191,10 @@ public class ItemSpawner : MonoBehaviour
                     this.transform.parent.GetComponent<Player>().animator.SetBool("Install", false);
                     ServerSend.MotionInstall(this.transform.parent.GetComponent<Player>().id, false);
                     this.transform.SetParent(null, true);
+                }
+                if (transform.localScale.x > 1000)
+                {
+                    transform.localScale /= 3;
                 }
                 gameObject.GetComponent<BoxCollider>().size = new Vector3(0.015f, 0.015f, 0.015f);
                 gameObject.GetComponent<BoxCollider>().isTrigger = true;

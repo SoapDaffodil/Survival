@@ -237,8 +237,6 @@ public class PlayerController : MonoBehaviour
             {
                 int _grabItemId = (this.GetComponent<PlayerManager>().playerItem.GrabItem != null) ? this.GetComponent<PlayerManager>().playerItem.GrabItem.spawnerId : -1;
                 ClientSend.PlayerGrabItem(_grabItemId, this.GetComponent<PlayerManager>().playerItem.item_number1.spawnerId, 1);
-
-
             }
         }
         if (Input.GetKeyDown(KeyCode.Alpha2))
