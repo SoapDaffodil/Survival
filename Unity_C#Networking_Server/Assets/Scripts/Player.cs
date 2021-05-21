@@ -17,8 +17,9 @@ public class Player : MonoBehaviour
     public CharacterController controller;  //player의 컨트롤러
     public Transform shootOrigin;           //총알방향
     public float gravity = -9.81f;          //중력가속도
-    public float moveSpeed = 10f;            //움직임속도
-    public float jumpSpeed = 10f;            //점프속도
+    public float moveSpeed = 10f;           //움직임속도
+    public float playerMoveSpeed = 1f;      //실험체, 인간 속도차등
+    public float jumpSpeed = 10f;           //점프속도
     public float throwForce = 600f;         //폭탄 던지기속도
     public float hp;                        //체력
     public float maxHp = 100f;              //최대체력
@@ -45,6 +46,13 @@ public class Player : MonoBehaviour
 
         moveSpeed = 1f;
         jumpSpeed = 10f;
+        if(_playerType ==PlayerType.CREATURE){
+            playerMoveSpeed = 1.2f;
+        }
+        else
+        {
+            playerMoveSpeed = 1f;
+        }
 
         id = _id;
         
@@ -126,7 +134,7 @@ public class Player : MonoBehaviour
         Vector3 _right = Vector3.Normalize(Vector3.Cross(_forward, new Vector3(0, 1, 0)));*/
 
         Vector3 _moveDirection = transform.right * _inputDirection.x + transform.forward * _inputDirection.y;
-        _moveDirection *= moveSpeed;
+        _moveDirection *= moveSpeed*playerMoveSpeed;
 
         if (controller.isGrounded)
         {
@@ -238,7 +246,7 @@ public class Player : MonoBehaviour
 
                     Debug.Log($"공격 맞음 : {_hit.collider.gameObject.name}");
                     hitPlayer.TakeDamage(50f);
-                    hitPlayer.moveSpeed *= 2;
+                    hitPlayer.playerMoveSpeed *= 2;
                     hitPlayer.Invoke("SpeedDown", 2f);
 
                     this.gameObject.GetComponent<Player>().controller.enabled = false;
@@ -398,14 +406,14 @@ public class Player : MonoBehaviour
 
     public void SpeedUp()
     {
-        moveSpeed *= 2;
+        playerMoveSpeed *= 2;
         Debug.Log("이속 증가 중");
         Invoke("SpeedDown", 5f);                 
     }
 
     public void SpeedDown()
     {
-        moveSpeed /= 2;
+        playerMoveSpeed /= 2;
         Debug.Log("이속 원상복귀");
     }
 
