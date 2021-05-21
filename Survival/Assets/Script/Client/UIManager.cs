@@ -51,6 +51,8 @@ public class UIManager : MonoBehaviour
     [Tooltip("몬스터의 현재 키배치")]
     public Text[] creatureKey;
 
+    public Image[] creaturekeyBackground;
+
     public Slider[] HPGuage;
 
     public Sprite[] HPBarImage;

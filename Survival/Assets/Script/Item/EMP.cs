@@ -110,14 +110,13 @@ public  class EMP : MonoBehaviour
         {
             for(int i = 1; i <= GameManager.players.Count; i++)
             {
-                if(GameManager.players[i].playerType == PlayerType.CREATURE && GameManager.players[i].id != Client.instance.myId)
+                if(GameManager.players[i].playerType == PlayerType.CREATURE)
                 {
-                    GameManager.players[i].GetComponent<PlayerController>().KeyChange();
-                    Debug.Log($"괴물이 EMP Trap에 감지 되었습니다");
+                    ClientSend.KeyChange(GameManager.players[i]);
                 }
                 else
                 {
-                    Debug.Log($"플레이어 : {GameManager.players[i].playerType == PlayerType.CREATURE}");
+                    Debug.Log($"플레이어 {i} : {GameManager.players[i].playerType}");
                     Debug.Log($"GameManager.players[{i}].id : {GameManager.players[i].id} Client.instance.myId : {Client.instance.myId}");
                 }
             }

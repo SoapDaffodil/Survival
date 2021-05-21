@@ -483,6 +483,7 @@ public class ClientHandle : MonoBehaviour
             for (int i = 0; i < UIManager.instance.creatureKey.Length; i++)
             {
                 UIManager.instance.creatureKey[i].gameObject.SetActive(false);
+                UIManager.instance.creaturekeyBackground[i].gameObject.SetActive(false);
             }
             GameObject.Find("Aim").gameObject.SetActive(false);
 

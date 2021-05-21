@@ -278,6 +278,17 @@ public class ClientSend : MonoBehaviour
         }
     }
 
+    /// <summary>keyChange packet TCP전송(한번만 전송하므로 누락이 될지언정 오류가 발생하지는 않음)</summary>
+    /// <param name="_player">플레이어</param>
+    public static void KeyChange(PlayerManager _player)
+    {
+        using (Packet _packet = new Packet((int)ClientPackets.keyChange))
+        {
+            _packet.Write(_player.id);
+            SendTCPData(_packet);
+        }
+    }
+
     /*
     public static void UDPTestReceived()
     {

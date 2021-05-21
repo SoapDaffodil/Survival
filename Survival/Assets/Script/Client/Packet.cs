@@ -90,6 +90,7 @@ public enum ClientPackets
     skillCure,          //스킬 치료
     skillTeleportation, //스킬 순간이동
     skillDrone,         //드론 활성화
+    keyChange,          //키체인지
     // udpTestReceived
 }
 
