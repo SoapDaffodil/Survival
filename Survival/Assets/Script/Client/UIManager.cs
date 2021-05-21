@@ -132,43 +132,50 @@ public class UIManager : MonoBehaviour
             }
             */
             if (seconds <= 0)
-            {
-                seconds = 59f;
-                min -= 1f;
-                if (min <= 0)
+            {               
+                if(min > 0)
+                {
+                    min -= 1f;
+                    seconds = 59f;
+                }
+                
+                if (min <= 0f && seconds <= 0f)
                 {
                     min = 0f;
-                    for(int i = 0; i < GameManager.players.Count; i++)
-                    {
-                        if(GameManager.players[i].playerType == PlayerType.HUMAN && GameManager.players[i].hp > 0)
-                        {
-                            endImageUI.gameObject.SetActive(true);
-                            GameManager.players[i].GetComponent<AudioSource>().clip = GameManager.players[i].endSound;
-                            GameManager.players[i].GetComponent<AudioSource>().Play();
-                            for (int j = 0; j < HPBarUI.Length; j++)
-                            {
-                                HPBarUI[j].gameObject.SetActive(false);
-                            }
-                            for (int j = 0; j < skillImageUI.Length; j++)
-                            {
-                                skillImageUI[j].gameObject.SetActive(false);
-                                itemImageUI[j].gameObject.SetActive(false);
-                                itemCountText[j].gameObject.SetActive(false);
-                            }
-                            for (int j = 0; j < creatureKey.Length; j++)
-                            {
-                                creatureKey[i].gameObject.SetActive(false);
-                                creaturekeyBackground[i].gameObject.SetActive(false);
-                            }
-                            GameObject.Find("Aim").gameObject.SetActive(false);
+                    seconds = 0f;
 
+                    for (int j = 0; j < HPBarUI.Length; j++)
+                    {
+                        HPBarUI[j].gameObject.SetActive(false);
+                    }
+                    for (int j = 0; j < skillImageUI.Length; j++)
+                    {
+                        skillImageUI[j].gameObject.SetActive(false);
+                        itemImageUI[j].gameObject.SetActive(false);
+                        itemCountText[j].gameObject.SetActive(false);
+                    }
+                    for (int j = 0; j < creatureKey.Length; j++)
+                    {
+                        creatureKey[j].gameObject.SetActive(false);
+                        creaturekeyBackground[j].gameObject.SetActive(false);
+                    }
+                    GameObject.Find("Aim").gameObject.SetActive(false);
+
+                    for (int i = 1; i <= GameManager.players.Count; i++)
+                    {
+                        endImageUI.gameObject.SetActive(true);
+                        GameManager.players[i].GetComponent<AudioSource>().clip = GameManager.players[i].endSound;
+                        GameManager.players[i].GetComponent<AudioSource>().Play();
+                        
+                        if (GameManager.players[i].playerType == PlayerType.HUMAN && GameManager.players[i].hp > 0)
+                        {                          
                             if (GameManager.players[i].id == Client.instance.myId)
                             {
-                                endImageUI.sprite = endImage[(int)EndType.DEFEAT];
+                                endImageUI.sprite = endImage[(int)EndType.VICTORY];
                             }
                             else
                             {
-                                endImageUI.sprite = endImage[(int)EndType.VICTORY];
+                                endImageUI.sprite = endImage[(int)EndType.DEFEAT];
                             }
                         }
                     }
