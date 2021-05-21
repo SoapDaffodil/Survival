@@ -63,9 +63,12 @@ public class UIManager : MonoBehaviour
 
     public enum EndType {VICTORY, DEFEAT};
     public Sprite[] endImage;
-   
-    
-    public float seconds = 10f;
+
+
+    //public float seconds = 10f;
+    public float seconds = 0f;
+    public float min = 3f;
+    public Text timer;
 
     /// <summary>LightTrap 버튼 리스트</summary>
     public Vector3 objectUIRatio;
@@ -124,6 +127,20 @@ public class UIManager : MonoBehaviour
                 }
             }
         }
+
+        
+        if(seconds <= 0)
+        {
+            seconds = 59f;
+            min -= 1f;
+            seconds -= Time.deltaTime;                       
+            if(min <= 0)
+            {
+                min = 0f;
+            }
+        }
+        timer.text = string.Format("{0:F0} : {0:F0}", min, seconds);
+
     }
 
     /// <summary>버튼에 커서가 들어오면 실행</summary>
@@ -283,4 +300,12 @@ public class UIManager : MonoBehaviour
             GameManager.players[Client.instance.myId].isCreatureSpeedUp = false;
         }
     }
+
+    /*
+    public void TimerUI()
+    {
+        if(seconds <= )
+        timer.text = string.Format("{0:F0} : {0:F0}", min, seconds);
+    }
+    */
 }

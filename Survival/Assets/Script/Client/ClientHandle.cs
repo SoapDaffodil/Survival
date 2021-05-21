@@ -466,6 +466,7 @@ public class ClientHandle : MonoBehaviour
 
         if (GameManager.players.TryGetValue(_id, out PlayerManager _player))
         {
+            /*
             _player.animator.SetBool("Die", _die);
             UIManager.instance.endImageUI.gameObject.SetActive(true);
             _player.GetComponent<AudioSource>().clip = _player.endSound;
@@ -499,6 +500,7 @@ public class ClientHandle : MonoBehaviour
                 //승리
                 UIManager.instance.endImageUI.sprite = UIManager.instance.endImage[(int)UIManager.EndType.VICTORY];
             }
+            */          
         }
     }
 
