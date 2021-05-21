@@ -95,12 +95,16 @@ public class UIManager : MonoBehaviour
         objectUIRatio = new Vector3(701f/120f, 1, 815f/135f);
         position_UI_LightTrap[0] = new Vector3(650.5f, 0, 0);
         position_UI_LightTrap[1] = new Vector3(1400.5f, 0, 0);
+        min = 1f;
+        seconds = 0f;
     }
 
     private void Update()
     {
+        
         if(GameObject.FindWithTag("Player") != null)
         {
+            /*
             if (GameManager.players[Client.instance.myId].playerType == PlayerType.CREATURE && GameManager.players[Client.instance.myId].isCreatureAttack)
             {
                 if (seconds > 0)
@@ -126,20 +130,57 @@ public class UIManager : MonoBehaviour
                     seconds = 10f;
                 }
             }
-        }
-
-        
-        if(seconds <= 0)
-        {
-            seconds = 59f;
-            min -= 1f;
-            seconds -= Time.deltaTime;                       
-            if(min <= 0)
+            */
+            if (seconds <= 0)
             {
-                min = 0f;
+                seconds = 59f;
+                min -= 1f;
+                if (min <= 0)
+                {
+                    min = 0f;
+                    for(int i = 0; i < GameManager.players.Count; i++)
+                    {
+                        if(GameManager.players[i].playerType == PlayerType.HUMAN && GameManager.players[i].hp > 0)
+                        {
+                            endImageUI.gameObject.SetActive(true);
+                            GameManager.players[i].GetComponent<AudioSource>().clip = GameManager.players[i].endSound;
+                            GameManager.players[i].GetComponent<AudioSource>().Play();
+                            for (int j = 0; j < HPBarUI.Length; j++)
+                            {
+                                HPBarUI[j].gameObject.SetActive(false);
+                            }
+                            for (int j = 0; j < skillImageUI.Length; j++)
+                            {
+                                skillImageUI[j].gameObject.SetActive(false);
+                                itemImageUI[j].gameObject.SetActive(false);
+                                itemCountText[j].gameObject.SetActive(false);
+                            }
+                            for (int j = 0; j < creatureKey.Length; j++)
+                            {
+                                creatureKey[i].gameObject.SetActive(false);
+                                creaturekeyBackground[i].gameObject.SetActive(false);
+                            }
+                            GameObject.Find("Aim").gameObject.SetActive(false);
+
+                            if (GameManager.players[i].id == Client.instance.myId)
+                            {
+                                endImageUI.sprite = endImage[(int)EndType.DEFEAT];
+                            }
+                            else
+                            {
+                                endImageUI.sprite = endImage[(int)EndType.VICTORY];
+                            }
+                        }
+                    }
+                }
             }
+            seconds = seconds - Time.deltaTime;
+            timer.text = string.Format("{0:F0} : {1:F0}", min, seconds);
+
         }
-        timer.text = string.Format("{0:F0} : {0:F0}", min, seconds);
+        
+        
+        
 
     }
 
