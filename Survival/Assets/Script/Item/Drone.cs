@@ -14,7 +14,7 @@ public class Drone : MonoBehaviour
     void Start()
     {       
        // flash = gameObject.GetComponent<Light>();
-        droneCam = GameObject.Find("DroneCam").GetComponent<Camera>();
+        droneCam = this.GetComponentInChildren<Camera>();
 
        // flash.type = LightType.Point;
        // flash.range = 0f;
