@@ -23,33 +23,34 @@ public class Drone : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.R) && isDroneMoving)
-        {           
-            ClientSend.DroneStop(this.gameObject);
-        }
-
-        // 드론 빛 이동
-        if (Input.GetKeyDown(KeyCode.C) && isDroneMoving)
+        if (isDroneMoving)
         {
-            if (this.transform.parent != null)
+            if (Input.GetKeyDown(KeyCode.R))
             {
-                isDroneMoving = false;
-                PlayerController _player = this.transform.parent.GetComponent<PlayerController>();
-                transform.SetParent(null, true);
-                ClientSend.SkillTeleportation(this.transform.position);
-                this.GetComponent<AudioSource>().PlayOneShot(droneTeleportSound);
+                ClientSend.DroneStop(this.gameObject);
+            }
+            if (Input.GetKeyDown(KeyCode.C))
+            {
+                if (this.transform.parent != null)
+                {
+                    isDroneMoving = false;
+                    PlayerController _player = this.transform.parent.GetComponent<PlayerController>();
+                    transform.SetParent(null, true);
+                    ClientSend.SkillTeleportation(this.transform.position);
+                    this.GetComponent<AudioSource>().PlayOneShot(droneTeleportSound);
 
-                droneCam.gameObject.SetActive(false);
-                _player.enabled = true;
-                _player.camTransform.gameObject.SetActive(true);
-                _player.GetComponent<PlayerManager>().playerItem.item_number1 = null;
-                _player.GetComponent<PlayerManager>().playerItem.GrabItem = null;
-                Destroy(this.gameObject, 2f);
+                    droneCam.gameObject.SetActive(false);
+                    _player.enabled = true;
+                    _player.camTransform.gameObject.SetActive(true);
+                    _player.GetComponent<PlayerManager>().playerItem.item_number1 = null;
+                    _player.GetComponent<PlayerManager>().playerItem.GrabItem = null;
+                    Destroy(this.gameObject, 2f);
 
-                UIManager.instance.itemImageUI[0].sprite = UIManager.instance.itemGrayImage
-                        [(int)GameManager.players[Client.instance.myId].playerType * UIManager.instance.itemImageUI.Length];
-                UIManager.instance.itemCountText[0].text = "0";
-                UIManager.instance.itemCountText[0].color = UIManager.instance.textColor[(int)UIManager.TextColor.GRAY];
+                    UIManager.instance.itemImageUI[0].sprite = UIManager.instance.itemGrayImage
+                            [(int)GameManager.players[Client.instance.myId].playerType * UIManager.instance.itemImageUI.Length];
+                    UIManager.instance.itemCountText[0].text = "0";
+                    UIManager.instance.itemCountText[0].color = UIManager.instance.textColor[(int)UIManager.TextColor.GRAY];
+                }
             }
         }
     }

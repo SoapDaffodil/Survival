@@ -293,6 +293,7 @@ public class ClientHandle : MonoBehaviour
     {
         int _playerId = _packet.ReadInt();
 
+        GameManager.players[_playerId].controller.enabled = false;
         GameManager.players[_playerId].playerItem.GrabItem.GetComponent<Drone>().Moving();
         GameManager.players[_playerId].playerItem.GrabItem.GetComponent<Drone>().GetComponent<AudioSource>().clip
             = GameManager.players[_playerId].playerItem.GrabItem.GetComponent<Drone>().droneMovingSound;
@@ -303,7 +304,7 @@ public class ClientHandle : MonoBehaviour
     public static void DroneEnabledFalse(Packet _packet)
     {
         int _playerId = _packet.ReadInt();
-
+        GameManager.players[_playerId].controller.enabled = true;
         GameManager.players[_playerId].playerItem.GrabItem.GetComponent<Drone>().Stop();
         GameManager.players[_playerId].playerItem.GrabItem.GetComponent<Drone>().GetComponent<AudioSource>().Stop();
     }
