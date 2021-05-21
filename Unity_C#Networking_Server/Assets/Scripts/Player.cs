@@ -47,7 +47,7 @@ public class Player : MonoBehaviour
         moveSpeed = 1f;
         jumpSpeed = 10f;
         if(_playerType ==PlayerType.CREATURE){
-            playerMoveSpeed = 1.2f;
+            playerMoveSpeed = 1.5f;
         }
         else
         {
@@ -73,6 +73,7 @@ public class Player : MonoBehaviour
     /// <summary>Processes player input and moves the player.</summary>
     public void FixedUpdate()
     {
+        Debug.Log($"{moveSpeed} , {playerMoveSpeed}");
         if (controller.enabled)
         {
             //채력이 0이면 움직이지 못함
@@ -421,15 +422,5 @@ public class Player : MonoBehaviour
     {
        controller.enabled = true;
        Debug.Log("괴물 스턴 종료");
-    }
-
-    public void OnTriggerEnter(Collider other)
-    {
-        if (other.tag == "EMP" && playerType == PlayerType.CREATURE && !other.GetComponent<ItemSpawner>().hasItem)
-        {
-            ServerSend.KeyChange(id);
-            /*int _floor = (this.transform.position.y > 8f) ? 2 : 1;
-            ItemSpawner.empTrapList.Remove(new ItemSpawner.TrapInfo(_floor, other.GetComponent<ItemSpawner>()));*/
-        }
     }
 }

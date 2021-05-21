@@ -54,10 +54,10 @@ public class Client : MonoBehaviour
     {
         if(instance == null)
         {
-            ip = "192.168.10.100";
+            //ip = "192.168.10.100";
             port = 80;
-            //ip = "127.0.0.1";
-             //port = 80;
+            ip = "127.0.0.1";
+            //port = 80;
 
             instance = this;
         }

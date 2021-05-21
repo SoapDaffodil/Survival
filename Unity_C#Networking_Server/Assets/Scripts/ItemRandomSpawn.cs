@@ -28,7 +28,7 @@ public class ItemRandomSpawn : MonoBehaviour
         for (int i = randomCount.Count; i > 0; i--)
         {
             int itemNumber = Random.Range(0, i - 1);
-            GameObject temp = Instantiate(itemPrefabs[randomCount[itemNumber]], itemSpawnTransform[itemNumber].position, itemSpawnTransform[itemNumber].rotation);
+            GameObject temp = Instantiate(itemPrefabs[randomCount[itemNumber]], itemSpawnTransform[i-1].position, itemSpawnTransform[i-1].rotation);
             temp.GetComponent<ItemSpawner>().Initialize();
             randomCount[itemNumber] = randomCount[i - 1];
             itemSpawnTransform[itemNumber] = itemSpawnTransform[i - 1];
