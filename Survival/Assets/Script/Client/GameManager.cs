@@ -54,6 +54,7 @@ public class GameManager : MonoBehaviour
         empCount = 0;
         trapCount = 0;
         maxTrapCount = 3;
+        Cursor.visible = false;
     }
 
     private void Start()

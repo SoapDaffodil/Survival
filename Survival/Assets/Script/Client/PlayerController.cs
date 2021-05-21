@@ -127,6 +127,7 @@ public class PlayerController : MonoBehaviour
         {
             UIManager.instance.mapActive = !UIManager.instance.mapActive;
             UIManager.instance.map.SetActive(UIManager.instance.mapActive);
+            Cursor.visible = UIManager.instance.mapActive;
         }
         if (Input.GetKeyDown(KeyCode.U))
         {
