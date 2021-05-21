@@ -402,4 +402,14 @@ public class Player : MonoBehaviour
        controller.enabled = true;
        Debug.Log("괴물 스턴 종료");
     }
+
+    public void OnTriggerEnter(Collider other)
+    {
+        if (other.tag == "EMP" && playerType == PlayerType.CREATURE && !other.GetComponent<ItemSpawner>().hasItem)
+        {
+            ServerSend.KeyChange(id);
+            /*int _floor = (this.transform.position.y > 8f) ? 2 : 1;
+            ItemSpawner.empTrapList.Remove(new ItemSpawner.TrapInfo(_floor, other.GetComponent<ItemSpawner>()));*/
+        }
+    }
 }

@@ -164,26 +164,30 @@ public class ItemSpawner : MonoBehaviour
         {
             case "EMP":
                 empTrapList.Add(new TrapInfo(_floor, this));
-                this.transform.position = _position;
+                this.transform.position = _position + new Vector3(0, 10 * (_floor - 1), 0);
                 if (this.transform.parent != null)
                 {
                     this.transform.parent.GetComponent<Player>().animator.SetBool("Install", false);
                     ServerSend.MotionInstall(this.transform.parent.GetComponent<Player>().id, false);
                     this.transform.SetParent(null, true);
                 }
-                ServerSend.InstallTrap(spawnerId, _position, _floor, _byPlayer);
+                gameObject.GetComponent<BoxCollider>().size = new Vector3(0.015f, 0.015f, 0.015f);
+                gameObject.GetComponent<BoxCollider>().isTrigger = true;
+                ServerSend.InstallTrap(spawnerId, this.transform.position, _floor, _byPlayer);
                 break;
             case "LIGHTTRAP":
                 lightTrapList.Add(new TrapInfo(_floor, this));
                 itemModel.enabled = true;
-                this.transform.position = _position;
+                this.transform.position = _position + new Vector3(0, 10 * (_floor - 1), 0);
                 if (this.transform.parent != null)
                 {
                     this.transform.parent.GetComponent<Player>().animator.SetBool("Install", false);
                     ServerSend.MotionInstall(this.transform.parent.GetComponent<Player>().id, false);
                     this.transform.SetParent(null, true);
                 }
-                ServerSend.InstallTrap(spawnerId, _position, _floor, _byPlayer);
+                gameObject.GetComponent<BoxCollider>().size = new Vector3(0.015f, 0.015f, 0.015f);
+                gameObject.GetComponent<BoxCollider>().isTrigger = true;
+                ServerSend.InstallTrap(spawnerId, this.transform.position, _floor, _byPlayer);
                 break;
             default:
                 ServerSend.Error(_byPlayer, $"This item is not for installation - {this.tag}");

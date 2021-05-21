@@ -192,7 +192,7 @@ public class PlayerController : MonoBehaviour
                         {
                             if (GameManager.instance.trapCount < GameManager.instance.maxTrapCount)
                             {
-                                int _floor = (this.transform.position.y < 10f) ? 1 : 2;
+                                int _floor = (this.transform.position.y < 8f) ? 1 : 2;
                                 this.GetComponent<PlayerManager>().isInstalling = true;
                                 this.GetComponent<PlayerManager>().PlayerInstallingSound(this.GetComponent<PlayerManager>().isInstalling);
                                 ClientSend.Install(this.transform.position, _grabItem.spawnerId, _floor);

@@ -61,7 +61,7 @@ public class ClientHandle : MonoBehaviour
                 //UIManager.instance.fisrtFloorPlayer.transform.position = _position + UIManager.instance.position_UI_LightTrap[0];
                 Vector3 UIPosition = new Vector3(_position.x * UIManager.instance.objectUIRatio.x,
                     _position.z * UIManager.instance.objectUIRatio.z + UIManager.instance.position_UI_LightTrap[0].y, UIManager.instance.position_UI_LightTrap[0].z);
-                if (_position.y > 10f)
+                if (_position.y > 8f)
                 {
                     UIPosition.x += UIManager.instance.position_UI_LightTrap[1].x;
                 }

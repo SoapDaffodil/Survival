@@ -76,7 +76,7 @@ public  class EMP : MonoBehaviour
                     {
                         if (GameManager.instance.trapCount < GameManager.instance.maxTrapCount)
                         {
-                            int _floor = (this.transform.parent.position.y < 10f) ? 1 : 2;
+                            int _floor = (this.transform.parent.position.y < 8f) ? 1 : 2;
                             ClientSend.Install(this.transform.position, GameManager.players[Client.instance.myId].GetComponent<PlayerManager>().playerItem.GrabItem.spawnerId, _floor);
                         }
                         else
