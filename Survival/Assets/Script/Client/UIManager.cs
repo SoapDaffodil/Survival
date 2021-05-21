@@ -66,9 +66,6 @@ public class UIManager : MonoBehaviour
 
 
     //public float seconds = 10f;
-    public float seconds = 0f;
-    public float min = 3f;
-    public Text timer;
 
     /// <summary>LightTrap 버튼 리스트</summary>
     public Vector3 objectUIRatio;
@@ -95,8 +92,6 @@ public class UIManager : MonoBehaviour
         objectUIRatio = new Vector3(701f/120f, 1, 815f/135f);
         position_UI_LightTrap[0] = new Vector3(650.5f, 0, 0);
         position_UI_LightTrap[1] = new Vector3(1400.5f, 0, 0);
-        min = 1f;
-        seconds = 0f;
     }
 
     private void Update()
@@ -131,59 +126,7 @@ public class UIManager : MonoBehaviour
                 }
             }
             */
-            if (seconds <= 0)
-            {               
-                if(min > 0)
-                {
-                    min -= 1f;
-                    seconds = 59f;
-                }
-                
-                if (min <= 0f && seconds <= 0f)
-                {
-                    min = 0f;
-                    seconds = 0f;
-
-                    for (int j = 0; j < HPBarUI.Length; j++)
-                    {
-                        HPBarUI[j].gameObject.SetActive(false);
-                    }
-                    for (int j = 0; j < skillImageUI.Length; j++)
-                    {
-                        skillImageUI[j].gameObject.SetActive(false);
-                        itemImageUI[j].gameObject.SetActive(false);
-                        itemCountText[j].gameObject.SetActive(false);
-                    }
-                    for (int j = 0; j < creatureKey.Length; j++)
-                    {
-                        creatureKey[j].gameObject.SetActive(false);
-                        creaturekeyBackground[j].gameObject.SetActive(false);
-                    }
-                    GameObject.Find("Aim").gameObject.SetActive(false);
-
-                    for (int i = 1; i <= GameManager.players.Count; i++)
-                    {
-                        endImageUI.gameObject.SetActive(true);
-                        GameManager.players[i].GetComponent<AudioSource>().clip = GameManager.players[i].endSound;
-                        GameManager.players[i].GetComponent<AudioSource>().Play();
-                        
-                        if (GameManager.players[i].playerType == PlayerType.HUMAN && GameManager.players[i].hp > 0)
-                        {                          
-                            if (GameManager.players[i].id == Client.instance.myId)
-                            {
-                                endImageUI.sprite = endImage[(int)EndType.VICTORY];
-                            }
-                            else
-                            {
-                                endImageUI.sprite = endImage[(int)EndType.DEFEAT];
-                            }
-                        }
-                    }
-                }
-            }
-            seconds = seconds - Time.deltaTime;
-            timer.text = string.Format("{0:F0} : {1:F0}", min, seconds);
-
+            
         }
         
         
@@ -348,12 +291,4 @@ public class UIManager : MonoBehaviour
             GameManager.players[Client.instance.myId].isCreatureSpeedUp = false;
         }
     }
-
-    /*
-    public void TimerUI()
-    {
-        if(seconds <= )
-        timer.text = string.Format("{0:F0} : {0:F0}", min, seconds);
-    }
-    */
 }

@@ -5,10 +5,19 @@ using UnityEngine.UI;
 
 public class TempGameManager : MonoBehaviour
 {
-    public float seconds = 0f;
-    public float min = 3f;
+    public float seconds;
+    public float min;
     public Text timer;
-    public bool isGameFinish = false;
+    public bool isGameFinish;
+    public GameObject playUI;
+    public GameObject endUI;
+
+    private void Start()
+    {
+        seconds = 10f;
+        min = 0f;
+        isGameFinish = false;
+    }
 
     private void Update()
     {
@@ -32,48 +41,52 @@ public class TempGameManager : MonoBehaviour
             timer.text = string.Format("{0:F0} : {1:F0}", min, seconds);
 
         }
+        else
+        {
+            EndUI();
+        }
     }
 
-    public void EndUI(bool _isGameFinish)
+    public void EndUI()
     {
-        if(_isGameFinish)
+        playUI.SetActive(false);
+        endUI.SetActive(true);
+        /*
+        for (int j = 0; j < UIManager.instance.HPBarUI.Length; j++)
         {
-            for (int j = 0; j < UIManager.instance.HPBarUI.Length; j++)
-            {
-                UIManager.instance.HPBarUI[j].gameObject.SetActive(false);
-            }
-            for (int j = 0; j < UIManager.instance.skillImageUI.Length; j++)
-            {
-                UIManager.instance.skillImageUI[j].gameObject.SetActive(false);
-                UIManager.instance.itemImageUI[j].gameObject.SetActive(false);
-                UIManager.instance.itemCountText[j].gameObject.SetActive(false);
-            }
-            for (int j = 0; j < UIManager.instance.creatureKey.Length; j++)
-            {
-                UIManager.instance.creatureKey[j].gameObject.SetActive(false);
-                UIManager.instance.creaturekeyBackground[j].gameObject.SetActive(false);
-            }
-            GameObject.Find("Aim").gameObject.SetActive(false);
+            UIManager.instance.HPBarUI[j].gameObject.SetActive(false);
+        }
+        for (int j = 0; j < UIManager.instance.skillImageUI.Length; j++)
+        {
+            UIManager.instance.skillImageUI[j].gameObject.SetActive(false);
+            UIManager.instance.itemImageUI[j].gameObject.SetActive(false);
+            UIManager.instance.itemCountText[j].gameObject.SetActive(false);
+        }
+        for (int j = 0; j < UIManager.instance.creatureKey.Length; j++)
+        {
+            UIManager.instance.creatureKey[j].gameObject.SetActive(false);
+            UIManager.instance.creaturekeyBackground[j].gameObject.SetActive(false);
+        }
+        //GameObject.Find("Aim").gameObject.SetActive(false);
+        */
 
-            for (int i = 1; i <= GameManager.players.Count; i++)
-            {
-                UIManager.instance.endImageUI.gameObject.SetActive(true);
-                GameManager.players[i].GetComponent<AudioSource>().clip = GameManager.players[i].endSound;
-                GameManager.players[i].GetComponent<AudioSource>().Play();
+        for (int i = 1; i <= GameManager.players.Count; i++)
+        {
+            UIManager.instance.endImageUI.gameObject.SetActive(true);
+            GameManager.players[i].GetComponent<AudioSource>().clip = GameManager.players[i].endSound;
+            GameManager.players[i].GetComponent<AudioSource>().Play();
 
-                if (GameManager.players[i].playerType == PlayerType.HUMAN && GameManager.players[i].hp > 0)
+            if (GameManager.players[i].playerType == PlayerType.HUMAN && GameManager.players[i].hp > 0)
+            {
+                if (GameManager.players[i].id == Client.instance.myId)
                 {
-                    if (GameManager.players[i].id == Client.instance.myId)
-                    {
-                        UIManager.instance.endImageUI.sprite = UIManager.instance.endImage[(int)UIManager.EndType.VICTORY];
-                    }
-                    else
-                    {
-                        UIManager.instance.endImageUI.sprite = UIManager.instance.endImage[(int)UIManager.EndType.DEFEAT];
-                    }
+                    UIManager.instance.endImageUI.sprite = UIManager.instance.endImage[(int)UIManager.EndType.VICTORY];
+                }
+                else
+                {
+                    UIManager.instance.endImageUI.sprite = UIManager.instance.endImage[(int)UIManager.EndType.DEFEAT];
                 }
             }
         }
-        
     }
 }
