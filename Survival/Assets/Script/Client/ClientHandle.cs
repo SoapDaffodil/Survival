@@ -504,6 +504,11 @@ public class ClientHandle : MonoBehaviour
             */          
         }
     }
+    //임시 시간초
+    public static void StartTime(Packet _packet)
+    {
+        TempGameManager.StartTime(_packet.ReadFloat());
+    }
 
     /*
     /// <summary>서버로 부터 UDPTest data를 받음</summary>

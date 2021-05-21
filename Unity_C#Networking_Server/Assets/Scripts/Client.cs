@@ -224,6 +224,19 @@ public class Client
                 _playerType = (PlayerType)PlayerType.Parse(typeof(PlayerType), "HUMAN");
                 break;
         }
+        if(_playerType == PlayerType.HUMAN)
+        {
+            Server.human = true;
+        }
+        if(_playerType == PlayerType.CREATURE)
+        {
+            Server.creature = true;
+        }
+        if (Server.human && Server.creature)
+        {
+            ServerSend.StartTime(300f);
+        }
+
         player = NetworkManager.instance.InstantiatePlayer(_playerType);
         player.Initialize(id, _playerType);
         player.controller.enabled = false;

@@ -7,6 +7,10 @@ using UnityEngine;
 
 public class Server
 {
+    //임시 시간
+    public static bool human;
+    public static bool creature;
+
     public static int MaxPlayers { get; private set; }
     public static int Port { get; private set; }
     public static Dictionary<int, Client> clients = new Dictionary<int, Client>();
@@ -21,6 +25,11 @@ public class Server
     /// <param name="_port">서버의 포트</param>
     public static void Start(int _maxPlayers, int _port)
     {
+        //임시
+        human = false;
+        creature = false;
+        ///////////////
+
         MaxPlayers = _maxPlayers;
         Port = _port;
 

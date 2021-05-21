@@ -22,7 +22,7 @@ public class Player : MonoBehaviour
     public float throwForce = 600f;         //폭탄 던지기속도
     public float hp;                        //체력
     public float maxHp = 100f;              //최대체력
-    public bool immortal = false;
+    public bool immortal;
     public int itemAmount = 0;              //아이템 소요개수
     public int maxItemAmount = 100;         //아이템 최대소요개수
 
@@ -37,6 +37,7 @@ public class Player : MonoBehaviour
 
     public void Initialize(int _id, PlayerType _playerType)
     {
+        immortal = false;
         maxHp = 100f;
         hp = maxHp;
         itemAmount = 0;
@@ -103,7 +104,7 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
-        Debug.DrawRay(shootOrigin.position + shootOrigin.forward * 0.7f, viewPoint * 3f, Color.green);
+        Debug.DrawRay(shootOrigin.position + viewPoint * 5, viewPoint * 3, Color.green);
     }
     /// <summary>Updates the player input with newly received input.</summary>
     /// <param name="_inputs">The new key inputs.</param>
@@ -221,9 +222,9 @@ public class Player : MonoBehaviour
     public void CreatureAttack(Vector3 _viewDirection)
     {
         viewPoint = _viewDirection;
-        if(Physics.Raycast(shootOrigin.position + shootOrigin.forward * 0.7f, _viewDirection, out RaycastHit _hit, 10f))
+        if(Physics.Raycast(shootOrigin.position + _viewDirection * 5, _viewDirection, out RaycastHit _hit, 3f))
         {
-            if(_hit.collider.GetComponent<Player>() != null)
+            if (_hit.collider.GetComponent<Player>() != null)
             {
                 Debug.Log($"레이에 맞은 플레이어 : {_hit.collider.gameObject.name}");
                 Player hitPlayer = _hit.collider.GetComponent<Player>();

@@ -5,45 +5,79 @@ using UnityEngine.UI;
 
 public class TempGameManager : MonoBehaviour
 {
-    public float seconds;
-    public float min;
+    public static float seconds;
     public Text timer;
     public bool isGameFinish;
     public GameObject playUI;
     public GameObject endUI;
+    public TempGameManager instance;
+    public static bool limit;
+
+    public static void SetSeconds(float _sec)
+    {
+        seconds = _sec;
+    }
+    public static void StartTime(float _sec)
+    {
+        limit = true;
+        SetSeconds(300f);
+    }
 
     private void Start()
     {
-        seconds = 10f;
-        min = 0f;
+        if(instance == null)
+        {
+            instance = this;
+        }
         isGameFinish = false;
+        limit = false;
     }
 
     private void Update()
     {
         if(!isGameFinish)
         {
-            if (seconds <= 0)
-            {
-                if (min > 0)
-                {
-                    min -= 1f;
-                    seconds = 59f;
-                }
-
-                if (min <= 0f && seconds <= 0f)
+            if (limit) {
+                seconds -= Time.deltaTime;
+                if (seconds <= 0f)
                 {
                     isGameFinish = true;
+                    limit = false;
+                    EndUI();
+                }
+                timer.text = string.Format($"{(int)(seconds / 60)} : {(int)((int)seconds % 60)}");
+            }
+            for (int i = 1; i <= GameManager.players.Count; i++)
+            {
+                GameManager.players[i].GetComponent<AudioSource>().clip = GameManager.players[i].endSound;
+                GameManager.players[i].GetComponent<AudioSource>().Play();
+
+                if (GameManager.players[i].playerType == PlayerType.HUMAN && GameManager.players[i].hp <= 0)
+                {
+                    if (GameManager.players[i].id == Client.instance.myId)
+                    {
+                        endUI.GetComponent<Image>().sprite = UIManager.instance.endImage[(int)UIManager.EndType.DEFEAT];
+                    }
+                    else
+                    {
+                        endUI.GetComponent<Image>().sprite = UIManager.instance.endImage[(int)UIManager.EndType.VICTORY];
+                    }
+                    break;
+                }
+
+                if (GameManager.players[i].playerType == PlayerType.CREATURE && GameManager.players[i].hp <= 0)
+                {
+                    if (GameManager.players[i].id == Client.instance.myId)
+                    {
+                        endUI.GetComponent<Image>().sprite = UIManager.instance.endImage[(int)UIManager.EndType.DEFEAT];
+                    }
+                    else
+                    {
+                        endUI.GetComponent<Image>().sprite = UIManager.instance.endImage[(int)UIManager.EndType.VICTORY];
+                    }
+                    break;
                 }
             }
-
-            seconds = seconds - Time.deltaTime;
-            timer.text = string.Format("{0:F0} : {1:F0}", min, seconds);
-
-        }
-        else
-        {
-            EndUI();
         }
     }
 

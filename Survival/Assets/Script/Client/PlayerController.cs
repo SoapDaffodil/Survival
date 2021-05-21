@@ -129,10 +129,11 @@ public class PlayerController : MonoBehaviour
             UIManager.instance.map.SetActive(UIManager.instance.mapActive);
             Cursor.visible = UIManager.instance.mapActive;
         }
+        /*
         if (Input.GetKeyDown(KeyCode.U))
         {
             KeyChange();
-        }
+        }*/
         if (Input.GetKeyDown(KeyCode.E))
         {
             //getKeyDownE = true;

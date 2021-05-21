@@ -12,7 +12,7 @@ public class Client : MonoBehaviour
     public static PlayerType playerType;
     public static int dataBufferSize = 4096;
     
-    public string ip = "192.168.10.103";
+    public string ip = "192.168.10.100";
     public int port = 80;
     //public string ip = "127.0.0.1";
     //public int port = 26950;
@@ -54,7 +54,7 @@ public class Client : MonoBehaviour
     {
         if(instance == null)
         {
-            ip = "192.168.10.103";
+            ip = "192.168.10.100";
             port = 80;
             //ip = "127.0.0.1";
              //port = 80;
@@ -376,6 +376,8 @@ public class Client : MonoBehaviour
             { (int)ServerPackets.motionCure, ClientHandle.MotionCure},
              { (int)ServerPackets.motionDie, ClientHandle.MotionDie},
             { (int)ServerPackets.creatureAttackTrue, ClientHandle.CreatureAttackTrue},
+            //임시 시간
+            { (int)ServerPackets.startTime, ClientHandle.StartTime},
             //{ (int)ServerPackets.udpTest, ClientHandle.UDPTest }
         };
         //Debug.Log("Initialized packets.");

@@ -568,6 +568,16 @@ public class ServerSend
         }
     }
 
+    //임시 시간초
+    public static void StartTime(float _time)
+    {
+        using (Packet _packet = new Packet((int)ServerPackets.startTime))
+        {
+            _packet.Write(_time);
+            SendTCPDataToAll(_packet);
+        }
+    }
+
     /*
     public static void UDPTest(int _toClient)
     {

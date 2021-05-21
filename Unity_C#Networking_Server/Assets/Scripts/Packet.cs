@@ -56,6 +56,9 @@ public enum ServerPackets
     motionTeleportation,//player teleportation animation
     motionCure,         //player cure animation
     motionDie,          //player die animation
+
+    //임시 시간초
+    startTime,
 }
 
 /// <summary>클라이언트가 보내는 packet이 어떤정보인지 알려주는 역할</summary>

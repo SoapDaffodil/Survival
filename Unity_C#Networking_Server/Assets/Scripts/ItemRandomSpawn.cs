@@ -10,7 +10,7 @@ public class ItemRandomSpawn : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {   //gun, drone, emp, lighttrap, battery
-        int[] itemCount = { 6, 6, 18, 18, 18 };
+        int[] itemCount = { 6, 0, 18, 24, 18 };
         for (int i=0;i<itemCount.Length;i++)
         {
             for (int j = 0; j < itemCount[i]; j++)
