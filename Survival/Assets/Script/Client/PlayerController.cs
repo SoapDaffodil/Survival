@@ -16,7 +16,6 @@ public class PlayerController : MonoBehaviour
 
     public float fireRate = 3f;
     public float nextTimeToFire;
-    public bool isCreatureAttack = false;
 
     private void Start()
     {
