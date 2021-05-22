@@ -60,7 +60,7 @@ public class Player : MonoBehaviour
         hp = maxHp;
 
         inputs = new bool[8];
-        firePower = 300f;
+        firePower = 200f;
 }
 
     private void Start()

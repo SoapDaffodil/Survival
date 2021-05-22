@@ -11,7 +11,7 @@ public class Bullet : MonoBehaviour
     public Rigidbody rigidBody;
     public int thrownByPlayer;
     public Vector3 initialForce;            //발사벡터
-    public float damage = 5f;             //총 데미지
+    public float damage = 10f;             //총 데미지
     public bool EMPisInstalled;
 
     private void Start()
