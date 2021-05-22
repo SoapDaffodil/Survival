@@ -31,7 +31,7 @@ public class Player : MonoBehaviour
     private bool[] inputs;
     private float yVelocity = 0;
 
-    public float firePower = 600f;            //총 발사 파워
+    public float firePower;            //총 발사 파워
     
     public bool creatureAttack = false;
     private Vector3 viewPoint;
@@ -60,7 +60,7 @@ public class Player : MonoBehaviour
         hp = maxHp;
 
         inputs = new bool[8];
-        firePower = 600f;
+        firePower = 300f;
 }
 
     private void Start()

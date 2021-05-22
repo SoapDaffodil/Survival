@@ -47,6 +47,13 @@ public class TempGameManager : MonoBehaviour
                 }
                 timer.text = string.Format($"{(int)(seconds / 60)} : {(int)((int)seconds % 60)}");
             }
+            for(int i = 1; i <= GameManager.players.Count; i++)
+            {
+                if(GameManager.players[i].hp <= 0)
+                {
+                    isGameFinish = true;
+                }
+            }
             
         }
         else
