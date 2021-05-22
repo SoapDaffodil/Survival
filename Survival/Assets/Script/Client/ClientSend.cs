@@ -171,7 +171,14 @@ public class ClientSend : MonoBehaviour
         using (Packet _packet = new Packet((int)ClientPackets.installEMP))
         {
             _packet.Write(_position.x);
-            _packet.Write(0.5f);
+            if (_position.y >= 8f)
+            {
+                _packet.Write(8f);
+            }
+            else
+            {
+                _packet.Write(0.5f);
+            }
             _packet.Write(_position.z);
 
             _packet.Write(_emp.spawnerId);
@@ -189,9 +196,15 @@ public class ClientSend : MonoBehaviour
         using (Packet _packet = new Packet((int)ClientPackets.install))
         {
             _packet.Write(_position.x);
-            _packet.Write(0.2f);
+            if (_position.y >= 8f)
+            {
+                _packet.Write(5f);
+            }
+            else
+            {
+                _packet.Write(0.2f);
+            }
             _packet.Write(_position.z);
-
             _packet.Write(_spawnerId);
             _packet.Write(_floor);
 
