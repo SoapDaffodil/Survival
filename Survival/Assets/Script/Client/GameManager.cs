@@ -10,7 +10,8 @@ public class GameManager : MonoBehaviour
     public static bool EMPInstallFinished = false;
     public int empCount = 0;                //EMPZONE에 설치된 EMP 갯수
     public int trapCount = 0;               //설치된 Trap 갯수
-    public int maxTrapCount = 3;            //최대로 설치할 수 있는 Trap 갯수
+    public int maxLightTrapCount = 3;       //최대로 설치할 수 있는 LightTrap 갯수
+    public int maxEMPTrapCount = 2;         //최대로 설치할 수 있는 EMPTrap 갯수
 
     public static Dictionary<int, PlayerManager> players = new Dictionary<int, PlayerManager>();            //모든플레이어정보 저장
     public static Dictionary<int, ItemSpawner> itemSpawners = new Dictionary<int, ItemSpawner>();           //모든아이템정보 저장
@@ -53,7 +54,8 @@ public class GameManager : MonoBehaviour
         EMPInstallFinished = false;
         empCount = 0;
         trapCount = 0;
-        maxTrapCount = 3;
+        maxLightTrapCount = 3;
+        maxEMPTrapCount = 2;
         Cursor.visible = false;
     }
 

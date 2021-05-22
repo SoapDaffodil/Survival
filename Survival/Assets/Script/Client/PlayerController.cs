@@ -16,6 +16,7 @@ public class PlayerController : MonoBehaviour
 
     public float fireRate = 3f;
     public float nextTimeToFire;
+    public bool isCreatureAttack = false;
 
     private void Start()
     {
@@ -83,8 +84,10 @@ public class PlayerController : MonoBehaviour
             */
             if(this.GetComponent<PlayerManager>().playerType == PlayerType.CREATURE)
             {
-                this.GetComponent<PlayerManager>().GetComponent<AudioSource>().PlayOneShot(this.GetComponent<PlayerManager>().creatureAttackSound);
-                ClientSend.CreatureAttack(camTransform.forward);
+                // this.GetComponent<PlayerManager>().GetComponent<AudioSource>().PlayOneShot(this.GetComponent<PlayerManager>().creatureAttackSound);
+                // ClientSend.CreatureAttack(camTransform.forward);
+                   isCreatureAttack = true;
+
             }
             
                                    
@@ -170,7 +173,7 @@ public class PlayerController : MonoBehaviour
                     }
                     else
                     {
-                        if (GameManager.instance.trapCount < GameManager.instance.maxTrapCount && this.GetComponent<PlayerManager>().id == Client.instance.myId)
+                        if (GameManager.instance.trapCount < GameManager.instance.maxEMPTrapCount && this.GetComponent<PlayerManager>().id == Client.instance.myId)
                         {
                             emp.chargingSpeed = 40f;
                             emp.isInstalling = true;
@@ -192,7 +195,7 @@ public class PlayerController : MonoBehaviour
                     {
                         if (this.GetComponent<PlayerManager>().id == Client.instance.myId)
                         {
-                            if (GameManager.instance.trapCount < GameManager.instance.maxTrapCount)
+                            if (GameManager.instance.trapCount < GameManager.instance.maxLightTrapCount)
                             {
                                 int _floor = (this.transform.position.y < 8f) ? 1 : 2;
                                 this.GetComponent<PlayerManager>().isInstalling = true;
@@ -482,6 +485,19 @@ public class PlayerController : MonoBehaviour
                 Debug.Log($"아이템을 들고있지 않습니다");
             }
         }*/
+
+        if(isCreatureAttack && other.GetComponent<PlayerManager>() != null)
+        {
+            Debug.Log($"isCreatureAttack : {isCreatureAttack}");
+            Debug.Log($"other.name : {other.gameObject.name}");
+
+            if (other.GetComponent<PlayerManager>().playerType == PlayerType.HUMAN)
+            {
+                Debug.Log("괴물 공격!");
+                ClientSend.CreatureAttack(isCreatureAttack);
+            }
+            
+        }
     }
 
     private void OnTriggerExit(Collider other)

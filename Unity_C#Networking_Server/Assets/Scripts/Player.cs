@@ -33,7 +33,8 @@ public class Player : MonoBehaviour
 
     public float firePower = 600f;            //총 발사 파워
 
-    public bool isCreatureAttack = false;
+    public bool isCreatureAttackTrue = false;
+    public bool CreatureAttack = false;
     private Vector3 viewPoint;
 
     public void Initialize(int _id, PlayerType _playerType)
@@ -227,6 +228,7 @@ public class Player : MonoBehaviour
         _player.animator.SetBool("HitReaction", false);
     }
 
+    /*
     /// <summary>괴물 공격</summary>
     /// <param name="_viewDirection"> 괴물 공격 방향 </param>
     public void CreatureAttack(Vector3 _viewDirection)
@@ -258,9 +260,9 @@ public class Player : MonoBehaviour
             }
         }
     }
-    IEnumerator Immortal(float time, Player _player)
+    */
+    public void Immortal(Player _player)
     {
-        yield return new WaitForSeconds(time);
         _player.immortal = false;
     }
 
@@ -422,5 +424,31 @@ public class Player : MonoBehaviour
     {
        controller.enabled = true;
        Debug.Log("괴물 스턴 종료");
+    }
+
+    public void OnTriggerStay(Collider other)
+    {
+        Debug.Log($"현재 콜라이더 : {other.gameObject.name}");
+        if(other.gameObject.GetComponent<Player>() != null)
+        {
+            Debug.Log($"현재 콜라이더 : {other.gameObject.GetComponent<Player>().playerType}");
+            if (other.gameObject.GetComponent<Player>().playerType == PlayerType.HUMAN && !other.gameObject.GetComponent<Player>().immortal && CreatureAttack)
+            {
+                Debug.Log($"괴물 공격 성공! : {other.gameObject.GetComponent<Player>().playerType}");
+                Player human = other.gameObject.GetComponent<Player>();
+                human.immortal = true;
+                Invoke("Immortal(human)", 3f);
+                isCreatureAttackTrue = true;
+
+                human.TakeDamage(50f);
+                human.playerMoveSpeed *= 2;
+                human.Invoke("SpeedDown", 2f);
+
+                this.gameObject.GetComponent<Player>().controller.enabled = false;
+                Invoke("EndStun", 2f);
+
+                ServerSend.CreatureAttackTrue(id, isCreatureAttackTrue);
+            }
+        }
     }
 }

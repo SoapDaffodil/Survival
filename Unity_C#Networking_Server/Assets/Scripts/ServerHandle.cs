@@ -70,9 +70,11 @@ public class ServerHandle
     /// <param name="_packet"></param>
     public static void CreatureAttack(int _fromClient, Packet _packet)
     {
-        Vector3 _shootDirection = _packet.ReadVector3();
+        //Vector3 _shootDirection = _packet.ReadVector3();
+        //Server.clients[_fromClient].player.CreatureAttack(_shootDirection);
 
-        Server.clients[_fromClient].player.CreatureAttack(_shootDirection);
+        bool _isCreatureAttack = _packet.ReadBool();
+        Server.clients[_fromClient].player.CreatureAttack = true;
     }
 
     /// <summary>투척에 대한 패킷을 통해 아이템버리는 것 처리</summary>

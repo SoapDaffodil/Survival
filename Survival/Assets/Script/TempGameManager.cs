@@ -51,6 +51,8 @@ public class TempGameManager : MonoBehaviour
         }
         else
         {
+            playUI.gameObject.SetActive(false);
+            endUI.gameObject.SetActive(true);
             for (int i = 1; i <= GameManager.players.Count; i++)
             {
                 GameManager.players[i].GetComponent<AudioSource>().clip = GameManager.players[i].endSound;
