@@ -82,15 +82,16 @@ public class PlayerController : MonoBehaviour
                 }
             }
             */
-            if(this.GetComponent<PlayerManager>().playerType == PlayerType.CREATURE)
+            if (this.GetComponent<PlayerManager>().playerType == PlayerType.CREATURE)
             {
                 // this.GetComponent<PlayerManager>().GetComponent<AudioSource>().PlayOneShot(this.GetComponent<PlayerManager>().creatureAttackSound);
                 // ClientSend.CreatureAttack(camTransform.forward);
-                   isCreatureAttack = true;
+
+                ClientSend.CreatureAttack(true);
 
             }
-            
-                                   
+
+
         }
         if (Input.GetKeyDown(KeyCode.Mouse1))
         {
@@ -407,95 +408,6 @@ public class PlayerController : MonoBehaviour
             {
                 Debug.Log($"주위에 아무것도 없습니다");
             }
-        }
-
-        /*if (getKeyDownE)
-        {
-            getKeyDownE = false;
-            ItemSpawner _grabItem = this.GetComponent<PlayerManager>().playerItem.GrabItem;
-            if (_grabItem != null) {
-                if (_grabItem.itemType == ItemType.EMP && this.GetComponent<PlayerManager>().playerType == PlayerType.HUMAN)
-                {
-                    EMP emp = _grabItem.GetComponent<EMP>();
-
-                    if (isInEMPZone)
-                    {
-                        emp.chargingSpeed = 15f;
-                        if (emp.isInstalling)
-                        {
-                            emp.InstallCancle();
-                            this.GetComponent<PlayerManager>().isInstalling = false;
-                            this.GetComponent<PlayerManager>().PlayerInstallingSound(this.GetComponent<PlayerManager>().isInstalling);
-                        }
-                        else
-                        {
-                            emp.isInstalling = true;
-                            emp.gaugeCheck = true;
-                            this.GetComponent<PlayerManager>().isInstalling = true;
-                            this.GetComponent<PlayerManager>().PlayerInstallingSound(this.GetComponent<PlayerManager>().isInstalling);
-                        }
-                    }                   
-                    else
-                    {
-                        if(GameManager.instance.trapCount < GameManager.instance.maxTrapCount && this.GetComponent<PlayerManager>().id == Client.instance.myId)
-                        {
-                            emp.chargingSpeed = 40f;
-                            emp.isInstalling = true;
-                            emp.gaugeCheck = true;
-                            this.GetComponent<PlayerManager>().isInstalling = true;
-                            this.GetComponent<PlayerManager>().PlayerInstallingSound(this.GetComponent<PlayerManager>().isInstalling);
-                        }
-                        else
-                        {
-                            Debug.Log("설치 가능한 트랩을 모두 설치했습니다");
-                        }
-                        
-                    }
-                }
-                else if (_grabItem.itemType == ItemType.LIGHTTRAP && this.GetComponent<PlayerManager>().playerType == PlayerType.CREATURE)
-                {
-                    
-                    if(!this.GetComponent<PlayerManager>().isCreatureAttack)
-                    {
-                        if (this.GetComponent<PlayerManager>().id == Client.instance.myId)
-                        {
-                            if (GameManager.instance.trapCount < GameManager.instance.maxTrapCount)
-                            {
-                                int _floor = (this.transform.position.y < 10f) ? 1 : 2;
-                                this.GetComponent<PlayerManager>().isInstalling = true;
-                                this.GetComponent<PlayerManager>().PlayerInstallingSound(this.GetComponent<PlayerManager>().isInstalling);
-                                ClientSend.Install(this.transform.position, _grabItem.spawnerId, _floor);
-                            }
-                            else
-                            {
-                                Debug.Log($"설치 가능한 트랩을 모두 설치했습니다");
-                            }
-
-                        }
-                    }                    
-                }
-                else
-                {
-                    Debug.Log($"설치할 수 없는 아이템입니다");
-                }
-            }
-            else
-            {
-                Debug.Log($"아이템을 들고있지 않습니다");
-            }
-        }*/
-
-        if(isCreatureAttack && other.GetComponent<PlayerManager>() != null)
-        {
-            Debug.Log($"isCreatureAttack : {isCreatureAttack}");
-            Debug.Log($"other.name : {other.gameObject.name}");
-
-            if (other.GetComponent<PlayerManager>().playerType == PlayerType.HUMAN)
-            {
-                Debug.Log("괴물 공격!");
-                ClientSend.CreatureAttack(isCreatureAttack);
-            }
-            
         }
     }
 
