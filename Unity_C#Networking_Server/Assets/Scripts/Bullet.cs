@@ -19,7 +19,7 @@ public class Bullet : MonoBehaviour
         id = nextBullet;
         nextBullet++;
         bullets.Add(id, this);
-        damage = 10f;
+        damage = 25f;
 
         ServerSend.SpawnBullet(this, thrownByPlayer);
 

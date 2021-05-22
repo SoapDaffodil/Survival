@@ -37,13 +37,26 @@ public class Projectile : MonoBehaviour
     /// <param name="collision"></param>
     private void OnCollisionEnter(Collision collision)
     {
-        if(collision.gameObject.GetComponent<Player>() != null)
+        try
+        {
+            if (collision.gameObject.GetComponent<Player>().playerType == PlayerType.CREATURE)
+            {
+                Explode();
+                ServerSend.KeyChange(collision.gameObject.GetComponentInParent<Player>().id);
+            }
+        }
+        catch
+        {
+            Explode();
+        }
+        /*
+        if (collision.gameObject.GetComponent<Player>() != null)
         {
             if (collision.gameObject.GetComponent<Player>().playerType == PlayerType.CREATURE)
             {
                 Explode();
             }
-        }        
+        }*/
     }
 
     /// <summary>초기 발사상태</summary>
@@ -62,14 +75,14 @@ public class Projectile : MonoBehaviour
         ServerSend.ProjectileExploded(this);
 
         Collider[] _colliders = Physics.OverlapSphere(transform.position, explosionRadius);
-        foreach (Collider _collider in _colliders)
+        /*foreach (Collider _collider in _colliders)
         {
-            if (_collider.GetComponent<Player>().playerType == PlayerType.CREATURE)
+            if (_collider.GetComponentInParent<Player>() != null && _collider.GetComponentInParent<Player>().playerType == PlayerType.CREATURE)
             {
                 //_collider.GetComponent<Player>().TakeDamage(explosionDamage);
-                ServerSend.KeyChange(_collider.gameObject.GetComponent<Player>().id);
+                ServerSend.KeyChange(_collider.GetComponentInParent<Player>().id);
             }
-        }
+        }*/
 
         projectiles.Remove(id); //폭탄 dictionary 삭제
         Destroy(gameObject);    //폭탄 object 파괴
