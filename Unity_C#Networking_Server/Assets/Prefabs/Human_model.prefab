@@ -2809,7 +2809,7 @@ GameObject:
   - component: {fileID: 8985481435649779211}
   - component: {fileID: 7436568807036201270}
   m_Layer: 0
-  m_Name: Collider
+  m_Name: HumanCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

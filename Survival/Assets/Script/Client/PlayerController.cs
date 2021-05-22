@@ -16,7 +16,6 @@ public class PlayerController : MonoBehaviour
 
     public float fireRate = 3f;
     public float nextTimeToFire;
-    public bool isCreatureAttack = false;
 
     private void Start()
     {
@@ -86,7 +85,8 @@ public class PlayerController : MonoBehaviour
             {
                 // this.GetComponent<PlayerManager>().GetComponent<AudioSource>().PlayOneShot(this.GetComponent<PlayerManager>().creatureAttackSound);
                 // ClientSend.CreatureAttack(camTransform.forward);
-                   isCreatureAttack = true;
+                 
+                ClientSend.CreatureAttack(true);
 
             }
             
@@ -191,8 +191,8 @@ public class PlayerController : MonoBehaviour
                 else if (_grabItem.itemType == ItemType.LIGHTTRAP && this.GetComponent<PlayerManager>().playerType == PlayerType.CREATURE)
                 {
 
-                    if (!this.GetComponent<PlayerManager>().isCreatureAttack)
-                    {
+                    //if (!this.GetComponent<PlayerManager>().isCreatureAttack)
+                    //{
                         if (this.GetComponent<PlayerManager>().id == Client.instance.myId)
                         {
                             if (GameManager.instance.trapCount < GameManager.instance.maxLightTrapCount)
@@ -208,7 +208,7 @@ public class PlayerController : MonoBehaviour
                             }
 
                         }
-                    }
+                    //}
                 }
                 else
                 {
@@ -267,7 +267,7 @@ public class PlayerController : MonoBehaviour
                     }
                     break;
                 case PlayerType.CREATURE:
-                    if (_grabItem != null && _grabItem.itemType == ItemType.DRONE && !this.GetComponent<PlayerManager>().isCreatureAttack)
+                    if (_grabItem != null && _grabItem.itemType == ItemType.DRONE)// && !this.GetComponent<PlayerManager>().isCreatureAttack)
                     {
                         if(_grabItem.transform.parent == null)
                         {
@@ -286,7 +286,7 @@ public class PlayerController : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.Q) && !this.GetComponent<PlayerManager>().isCreatureSpeedUp)
         {
-            if(this.GetComponent<PlayerManager>().playerType == PlayerType.CREATURE && !this.GetComponent<PlayerManager>().isCreatureAttack)
+            if(this.GetComponent<PlayerManager>().playerType == PlayerType.CREATURE)// && !this.GetComponent<PlayerManager>().isCreatureAttack)
             {
                 ClientSend.SpeedUp(GameManager.players[Client.instance.myId]);
                 this.GetComponent<PlayerManager>().isCreatureSpeedUp = true;
@@ -485,7 +485,7 @@ public class PlayerController : MonoBehaviour
                 Debug.Log($"아이템을 들고있지 않습니다");
             }
         }*/
-
+        /*
         if(isCreatureAttack && other.GetComponent<PlayerManager>() != null)
         {
             Debug.Log($"isCreatureAttack : {isCreatureAttack}");
@@ -497,7 +497,7 @@ public class PlayerController : MonoBehaviour
                 ClientSend.CreatureAttack(isCreatureAttack);
             }
             
-        }
+        }*/
     }
 
     private void OnTriggerExit(Collider other)

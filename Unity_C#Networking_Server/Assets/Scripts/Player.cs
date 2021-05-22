@@ -32,9 +32,8 @@ public class Player : MonoBehaviour
     private float yVelocity = 0;
 
     public float firePower = 600f;            //총 발사 파워
-
-    public bool isCreatureAttackTrue = false;
-    public bool CreatureAttack = false;
+    
+    public bool creatureAttack = false;
     private Vector3 viewPoint;
 
     public void Initialize(int _id, PlayerType _playerType)
@@ -261,8 +260,9 @@ public class Player : MonoBehaviour
         }
     }
     */
-    public void Immortal(Player _player)
+    IEnumerator Immortal(float _time, Player _player)
     {
+        yield return new WaitForSeconds(_time);
         _player.immortal = false;
     }
 
@@ -429,26 +429,30 @@ public class Player : MonoBehaviour
     public void OnTriggerStay(Collider other)
     {
         Debug.Log($"현재 콜라이더 : {other.gameObject.name}");
-        if(other.gameObject.GetComponent<Player>() != null)
+        try
         {
-            Debug.Log($"현재 콜라이더 : {other.gameObject.GetComponent<Player>().playerType}");
-            if (other.gameObject.GetComponent<Player>().playerType == PlayerType.HUMAN && !other.gameObject.GetComponent<Player>().immortal && CreatureAttack)
+            Player player = other.transform.parent.GetComponent<Player>();
+            if(player.playerType == PlayerType.HUMAN && !player.immortal && creatureAttack)
             {
-                Debug.Log($"괴물 공격 성공! : {other.gameObject.GetComponent<Player>().playerType}");
-                Player human = other.gameObject.GetComponent<Player>();
-                human.immortal = true;
-                Invoke("Immortal(human)", 3f);
-                isCreatureAttackTrue = true;
+                creatureAttack = false;
+                Debug.Log($"괴물 공격 성공! : {player.playerType}");
 
-                human.TakeDamage(50f);
-                human.playerMoveSpeed *= 2;
-                human.Invoke("SpeedDown", 2f);
+                player.immortal = true;
+                StartCoroutine(Immortal(1f, player));
+                
+                player.TakeDamage(50f);
+                player.playerMoveSpeed *= 2;
+                player.Invoke("SpeedDown", 2f);
 
                 this.gameObject.GetComponent<Player>().controller.enabled = false;
                 Invoke("EndStun", 2f);
 
-                ServerSend.CreatureAttackTrue(id, isCreatureAttackTrue);
+                ServerSend.CreatureAttackTrue(id, true);
             }
+        }
+        catch
+        {
+            return;
         }
     }
 }

@@ -666,7 +666,7 @@ GameObject:
   - component: {fileID: 8586556777121166634}
   - component: {fileID: 3765719534020995179}
   m_Layer: 0
-  m_Name: Collider
+  m_Name: CreatureCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

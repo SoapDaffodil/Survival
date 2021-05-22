@@ -74,7 +74,7 @@ public class ServerHandle
         //Server.clients[_fromClient].player.CreatureAttack(_shootDirection);
 
         bool _isCreatureAttack = _packet.ReadBool();
-        Server.clients[_fromClient].player.CreatureAttack = true;
+        Server.clients[_fromClient].player.CreatureAttack = _isCreatureAttack;
     }
 
     /// <summary>투척에 대한 패킷을 통해 아이템버리는 것 처리</summary>
