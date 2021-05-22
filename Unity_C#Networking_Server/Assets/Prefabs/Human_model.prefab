@@ -2106,6 +2106,7 @@ Transform:
   - {fileID: 7200979829531570362}
   - {fileID: 3830621976240305021}
   - {fileID: 2867288750731440275}
+  - {fileID: 8985481435649779211}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2130,14 +2131,17 @@ MonoBehaviour:
   shootOrigin: {fileID: 7200979829531570362}
   gravity: -19.62
   moveSpeed: 5
+  playerMoveSpeed: 1
   jumpSpeed: 5
   throwForce: 600
   hp: 0
   maxHp: 100
+  immortal: 0
   itemAmount: 0
   maxItemAmount: 3
   firePower: 5
-  isCreatureAttack: 0
+  isCreatureAttackTrue: 0
+  CreatureAttack: 0
 --- !u!143 &3312009482221505388
 CharacterController:
   m_ObjectHideFlags: 0
@@ -2794,6 +2798,51 @@ Transform:
   m_Father: {fileID: 2867288750731440275}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &8852435663692872568
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8985481435649779211}
+  - component: {fileID: 7436568807036201270}
+  m_Layer: 0
+  m_Name: Collider
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8985481435649779211
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8852435663692872568}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 7753779234381516807}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!136 &7436568807036201270
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8852435663692872568}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  m_Radius: 0.015
+  m_Height: 0.04
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.02, z: 0}
 --- !u!1 &8921684426684417895
 GameObject:
   m_ObjectHideFlags: 0
