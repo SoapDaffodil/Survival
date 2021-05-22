@@ -103,18 +103,17 @@ public class PlayerManager : MonoBehaviour
     {
         float currentHp = hp;
         hp = _health;
-        
-        
-        if(playerType == PlayerType.CREATURE)
-        {
-            UIManager.instance.HPGuage[(int) PlayerType.CREATURE].value -= (currentHp - hp);
-        }
-        else
-        {
-            UIManager.instance.HPGuage[(int)PlayerType.HUMAN].value -= (currentHp - hp);
-        }
-        
 
+        if (id == Client.instance.myId) {
+            if (playerType == PlayerType.CREATURE)
+            {
+                UIManager.instance.HPGuage[(int)PlayerType.CREATURE].value -= (currentHp - hp);
+            }
+            else
+            {
+                UIManager.instance.HPGuage[(int)PlayerType.HUMAN].value -= (currentHp - hp);
+            }
+        }
         /*//HP가 0이 되면 죽음
         if (hp <= 0f)
         {
