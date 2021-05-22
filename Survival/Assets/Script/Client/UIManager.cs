@@ -87,7 +87,7 @@ public class UIManager : MonoBehaviour
             //Debug.Log("Instance already exists, destoying object!");
             Destroy(this);
         }
-        map.SetActive(mapActive);
+        map.SetActive(false);
         objectUIRatio = new Vector3(701f/120f, 1, 815f/135f);
         position_UI_LightTrap[0] = new Vector3(650.5f, 0, 0);
         position_UI_LightTrap[1] = new Vector3(1400.5f, 0, 0);
