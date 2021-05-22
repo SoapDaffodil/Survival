@@ -107,14 +107,17 @@ public class GameManager : MonoBehaviour
                     (int)Client.playerType * UIManager.instance.itemImageUI.Length + i];
             }
 
-            if (!EMPInstallFinished && Client.playerType == PlayerType.CREATURE)
+            if (Client.playerType == PlayerType.CREATURE)
             {
-                UIManager.instance.HPBarUI[0].sprite = UIManager.instance.HPBarImage[0];
-                UIManager.instance.HPGuage[(int)PlayerType.CREATURE].gameObject.SetActive(false);
-            }
-            else
-            {
-                UIManager.instance.HPBarUI[0].sprite = UIManager.instance.HPBarImage[1];
+                if (!EMPInstallFinished)
+                {
+                    UIManager.instance.HPBarUI[0].sprite = UIManager.instance.HPBarImage[0];
+                    UIManager.instance.HPGuage[(int)PlayerType.CREATURE].gameObject.SetActive(false);
+                }
+                else
+                {
+                    UIManager.instance.HPBarUI[0].sprite = UIManager.instance.HPBarImage[1];
+                }
             }
         }
         else

@@ -45,7 +45,6 @@ public class UIManager : MonoBehaviour
     /// <summary>맵 UI</summary>
     [Tooltip("맵 UI")]
     public GameObject map;
-    public bool mapActive = false;
 
     /// <summary>몬스터의 현재 키배치</summary>
     [Tooltip("몬스터의 현재 키배치")]

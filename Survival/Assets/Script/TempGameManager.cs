@@ -43,7 +43,8 @@ public class TempGameManager : MonoBehaviour
                 {
                     isGameFinish = true;
                     limit = false;
-                    EndUI();
+                    TimeOver();
+                    Cursor.visible = true;
                 }
                 timer.text = string.Format($"{(int)(seconds / 60)} : {(int)((int)seconds % 60)}");
             }
@@ -52,6 +53,7 @@ public class TempGameManager : MonoBehaviour
                 if(GameManager.players[i].hp <= 0)
                 {
                     isGameFinish = true;
+                    Cursor.visible = true;
                 }
             }
             
@@ -94,7 +96,7 @@ public class TempGameManager : MonoBehaviour
         }
     }
 
-    public void EndUI()
+    public void TimeOver()
     {
         playUI.SetActive(false);
         endUI.SetActive(true);
