@@ -42,7 +42,20 @@ public class Gun : MonoBehaviour
         int chargeCapacity = batteryCapacity - currentBattery;
         int chargeBattery = Mathf.Clamp(batteryAmount, 0, chargeCapacity);
         currentBattery = Mathf.Clamp(batteryAmount + currentBattery, 0, batteryCapacity);
+
+        int before = batteryAmount / 30;
         batteryAmount = batteryAmount - chargeBattery;
+        if(before > batteryAmount)
+        {
+            try
+            {
+                ClientSend.PlayerUseItem(transform.parent.GetComponent<PlayerManager>().playerItem.item_number2[0].spawnerId);
+            }
+            catch
+            {
+                Debug.Log($"error - 건을 소유하고 있지 않음");
+            }
+        }
         GameManager.players[Client.instance.myId].GetComponent<PlayerManager>().playerItem.batteryCount = batteryAmount;
 
         UIManager.instance.currentBulletText.text = string.Format(" {0:} ", currentBattery);

@@ -180,12 +180,17 @@ public class GameManager : MonoBehaviour
                     {
                         UIManager.instance.itemImageUI[1].sprite = UIManager.instance.itemImage[(int)_player.playerType * UIManager.instance.itemImageUI.Length + 1];
                         UIManager.instance.itemCountText[1].text = _player.playerItem.item_number2.Count.ToString();
+                        if (_player.playerItem.item_number2[0].itemType == ItemType.BATTERY)
+                        {
+                            UIManager.instance.itemCountText[1].text = (_player.playerItem.item_number1.GetComponent<Gun>().batteryAmount / 30).ToString();
+                        }
                         UIManager.instance.itemCountText[1].color = UIManager.instance.textColor[(int)UIManager.TextColor.MINT];
                     }                    
                 }
                 else if (_spawner.itemType == ItemType.BATTERY)
-                {                    
+                {
                     _player.playerItem.batteryCount += 30;
+                    UIManager.instance.bulletAmoutText.text = _player.playerItem.batteryCount.ToString();
                     if (_player.id == Client.instance.myId)
                     {
                         UIManager.instance.itemImageUI[2].sprite = UIManager.instance.itemImage[(int)_player.playerType * UIManager.instance.itemImageUI.Length + 2];

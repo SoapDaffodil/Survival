@@ -118,6 +118,18 @@ public class ServerHandle
         ItemSpawner.spawners[_spawnerId].ItemGrab(_grabSpawnerId, Server.clients[_fromClient].player, _key);
     }
 
+    /// <summary>아이템사용에 관한 패킷을 통해 아이템들기 처리</summary>
+    /// <param name="_fromClient"></param>
+    /// <param name="_packet"></param>
+    public static void PlayerUseItem(int _fromClient, Packet _packet)
+    {
+        int _spawnerId = _packet.ReadInt();
+        int _itemNumber = _packet.ReadInt();
+
+        ItemSpawner.spawners[_spawnerId].ItemReleaseGrab();
+        ServerSend.ItemUse(_spawnerId, _fromClient, _itemNumber);
+    }
+
     /// <summary>설치 관련정보 패킷을 통해 처리</summary>
     /// <param name="_fromClient"></param>
     /// <param name="_packet"></param>

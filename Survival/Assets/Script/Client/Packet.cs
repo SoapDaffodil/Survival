@@ -23,6 +23,7 @@ public enum ServerPackets
     itemPickedUp,       //아이템 획득
     itemThrow,          //아이템 버리기
     itemGrab,           //아이템 들기
+    itemUse,            //아이템 사용
 
 
     spawnProjectile,    //폭탄 생성
@@ -76,6 +77,7 @@ public enum ClientPackets
     playerGetItem,      //아이템 획득
     playerThrowItem,    //아이템 버리기
     playerGrabItem,     //아이템 들기
+    playerUseItem,      //아이템 사용
 
     installEMP,         //EMP 설치완료
     install,            //EMP or LightTrap 설치

@@ -310,7 +310,7 @@ public class PlayerController : MonoBehaviour
 
     public void KeyChange()
     {
-        int changeSize = 5;
+        int changeSize = 4;
         KeyCode[] changeInput = new KeyCode[input.Length];
         int[] index = new int[input.Length];
         int[] random = new int[input.Length];

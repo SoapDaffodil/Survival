@@ -205,6 +205,27 @@ public class ClientHandle : MonoBehaviour
         GameManager.itemSpawners[_spawnerId].ItemGrab(GameManager.players[_byPlayer], _position);
     }
 
+    /// <summary>아이템 사용정보 update</summary>
+    /// <param name="_packet"></param>
+    public static void ItemUse(Packet _packet)
+    {
+        int _spawnerId = _packet.ReadInt();
+        int _byPlayer = _packet.ReadInt();
+        int _itemNumber = _packet.ReadInt();
+
+        ItemSpawner item = GameManager.itemSpawners[_spawnerId];
+        item.ItemReleaseGrab();
+        switch (_itemNumber)
+        {
+            case 1:
+                GameManager.players[_byPlayer].playerItem.item_number1 = null;
+                break;
+            case 2:
+                GameManager.players[_byPlayer].playerItem.item_number2.Remove(item);
+                break;
+        }
+    }
+
     public static void KeyChange(Packet _packet)
     {
         // 패킷에서 받아오는 정보

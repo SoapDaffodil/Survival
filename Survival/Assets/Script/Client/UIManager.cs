@@ -92,6 +92,11 @@ public class UIManager : MonoBehaviour
         objectUIRatio = new Vector3(701f/120f, 1, 815f/135f);
         position_UI_LightTrap[0] = new Vector3(650.5f, 0, 0);
         position_UI_LightTrap[1] = new Vector3(1400.5f, 0, 0);
+        if (Client.playerType == PlayerType.HUMAN)
+        {
+            bulletAmoutText.text = "0";
+            currentBulletText.text = "0";
+        }
     }
 
     private void Update()

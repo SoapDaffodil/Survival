@@ -281,6 +281,22 @@ public class ServerSend
         }
     }
 
+    /// <summary>사용한 아이템ID, 사용한 플레이어 TCP전송</summary>
+    /// <param name="_spawnerId">사용한 아이템ID</param>
+    /// <param name="_byPlayer">아이템을 사용한 플레이어</param>
+    /// <param name="_position">아이템을 사용한 위치</param>
+    public static void ItemUse(int _spawnerId, int _byPlayer, int _itemNumber)
+    {
+        using (Packet _packet = new Packet((int)ServerPackets.itemUse))
+        {
+            _packet.Write(_spawnerId);
+            _packet.Write(_byPlayer);
+            _packet.Write(_itemNumber);
+
+            SendTCPDataToAll(_packet);
+        }
+    }
+
     /// <summary>폭탄 생성 TCP전송</summary>
     /// <param name="_projectile">폭탄</param>
     /// <param name="_thrownByPlayer">폭탄을 던진 player</param>

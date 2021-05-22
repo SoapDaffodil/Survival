@@ -169,8 +169,6 @@ public class ItemSpawner : MonoBehaviour
 
         if(_byPlayer.playerItem.GrabItem.itemType == ItemType.GUN)
         {
-            UIManager.instance.currentBulletText.text = "0";
-            UIManager.instance.bulletAmoutText.text = "0";
             _byPlayer.animator.SetBool("Gun", true);
         }
         else if (_byPlayer.playerType == PlayerType.HUMAN)

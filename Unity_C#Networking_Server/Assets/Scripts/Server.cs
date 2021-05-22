@@ -156,6 +156,7 @@ public class Server
             { (int)ClientPackets.playerGetItem, ServerHandle.PlayerGetItem },
             {(int)ClientPackets.playerThrowItem, ServerHandle.PlayerThrowItem },
             {(int)ClientPackets.playerGrabItem, ServerHandle.PlayerGrabItem },
+            {(int)ClientPackets.playerUseItem, ServerHandle.PlayerUseItem },
 
             { (int)ClientPackets.installEMP, ServerHandle.InstallEMP },
             {(int)ClientPackets.install, ServerHandle.Install },
