@@ -47,7 +47,7 @@ public class Player : MonoBehaviour
         moveSpeed = 1f;
         jumpSpeed = 10f;
         if(_playerType ==PlayerType.CREATURE){
-            playerMoveSpeed = 1.5f;
+            playerMoveSpeed = 1f;
         }
         else
         {
