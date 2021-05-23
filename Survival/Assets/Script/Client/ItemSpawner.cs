@@ -59,7 +59,8 @@ public class ItemSpawner : MonoBehaviour
         {
             itemType = (ItemType)ItemType.Parse(typeof(ItemType), this.name);
         }
-        catch(System.Exception ex)
+        
+        catch (System.Exception ex)
         {
             itemType = (ItemType)ItemType.Parse(typeof(ItemType), this.name.Remove(this.name.Length - "(Clone)".Length, "(Clone)".Length));
         }

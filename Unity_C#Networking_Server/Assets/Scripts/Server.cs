@@ -108,9 +108,9 @@ public class Server
                 }
             }
         }
-        catch (Exception _ex)
+        catch (System.Exception e)
         {
-            Debug.Log($"Error receiving UDP data: {_ex}");
+            Debug.Log($"Error receiving UDP data: {e}");
         }
     }
 
@@ -126,9 +126,9 @@ public class Server
                 udpListener.BeginSend(_packet.ToArray(), _packet.Length(), _clientEndPoint, null, null);
             }
         }
-        catch (Exception _ex)
+        catch (System.Exception e)
         {
-            Debug.Log($"Error sending data to {_clientEndPoint} via UDP: {_ex}");
+            Debug.Log($"Error sending data to {_clientEndPoint} via UDP: {e}");
         }
     }
 

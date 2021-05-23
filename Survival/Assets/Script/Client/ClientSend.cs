@@ -173,7 +173,7 @@ public class ClientSend : MonoBehaviour
             _packet.Write(_position.x);
             if (_position.y >= 8f)
             {
-                _packet.Write(8f);
+                _packet.Write(12f);
             }
             else
             {
@@ -198,7 +198,7 @@ public class ClientSend : MonoBehaviour
             _packet.Write(_position.x);
             if (_position.y >= 8f)
             {
-                _packet.Write(5f);
+                _packet.Write(2.2f);
             }
             else
             {

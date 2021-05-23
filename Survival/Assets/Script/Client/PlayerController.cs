@@ -45,250 +45,290 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        if(Input.GetKey(KeyCode.Mouse0))
+        if (!UIManager.instance.map.activeSelf)
         {
-            if (this.GetComponent<PlayerManager>().playerType == PlayerType.HUMAN)
+            if (Input.GetKey(KeyCode.Mouse0))
             {
-                ItemSpawner _grabItem = this.GetComponent<PlayerManager>().playerItem.GrabItem;
-
-                if (_grabItem != null && _grabItem.itemType == ItemType.GUN && GameManager.EMPInstallFinished)
+                if (this.GetComponent<PlayerManager>().playerType == PlayerType.HUMAN)
                 {
-                    Gun gun = _grabItem.GetComponent<Gun>();
-                    if (gun.currentBattery != 0 && Time.time >= nextTimeToFire)
+                    ItemSpawner _grabItem = this.GetComponent<PlayerManager>().playerItem.GrabItem;
+
+                    if (_grabItem != null && _grabItem.itemType == ItemType.GUN && GameManager.EMPInstallFinished)
                     {
-                        nextTimeToFire = Time.time + 1 / fireRate;
-                        gun.GetComponent<AudioSource>().PlayOneShot(gun.normalGunSound);
-                        ClientSend.PlayerShootBullet(camTransform.forward);
-                    }
-                }
-            }
-        }
-        if (Input.GetKeyDown(KeyCode.Mouse0))
-        {
-            /*
-            if(this.GetComponent<PlayerManager>().playerType == PlayerType.HUMAN)
-            {
-                ItemSpawner _grabItem = this.GetComponent<PlayerManager>().playerItem.GrabItem;
-
-                if (_grabItem != null && _grabItem.itemType == ItemType.GUN)
-                {
-                    Gun gun = _grabItem.GetComponent<Gun>();
-                    if (gun.currentBattery != 0)
-                    {
-                        gun.normalGunSound.PlayOneShot(gun.normalGunSound.clip);
-                        ClientSend.PlayerShootBullet(camTransform.forward);
-                    }                  
-                }
-            }
-            */
-            if (this.GetComponent<PlayerManager>().playerType == PlayerType.CREATURE)
-            {
-                // this.GetComponent<PlayerManager>().GetComponent<AudioSource>().PlayOneShot(this.GetComponent<PlayerManager>().creatureAttackSound);
-                // ClientSend.CreatureAttack(camTransform.forward);
-
-                ClientSend.CreatureAttack(true);
-
-            }
-
-
-        }
-        if (Input.GetKeyDown(KeyCode.Mouse1))
-        {
-            ItemSpawner _grabItem = this.GetComponent<PlayerManager>().playerItem.GrabItem;
-
-            if (_grabItem != null)
-            {
-                if (this.GetComponent<PlayerManager>().playerType == PlayerType.HUMAN && _grabItem.itemType == ItemType.GUN)
-                {
-                    Gun gun = _grabItem.GetComponent<Gun>();
-                    if (gun.currentBattery >= 5)
-                    {
-                        gun.GetComponent<AudioSource>().PlayOneShot(gun.empGunSound);
-                        ClientSend.PlayerShootBomb(camTransform.forward);
-                    }
-                }
-            }            
-        }
-        //상호작용(아이템획득, 문열기, 은폐 등
-        if (Input.GetKeyDown(KeyCode.F))
-        {
-            getKeyDownF = true;
-            StartCoroutine(WaitForMilliSec());
-        }
-        if (Input.GetKeyDown(KeyCode.G))
-        {
-            if (this.GetComponent<PlayerManager>().playerItem.GrabItem != null)
-            {
-                ClientSend.PlayerThrowItem(this.GetComponent<PlayerManager>().playerItem.GrabItem, transform.position);
-            }
-            else
-            {
-                Debug.Log($"들고있는 아이템이 없습니다");
-            }
-        }
-        if (Input.GetKeyDown(KeyCode.M))
-        {
-            UIManager.instance.map.SetActive(!UIManager.instance.map.activeSelf);
-            Cursor.visible = UIManager.instance.map.activeSelf;
-        }
-        /*
-        if (Input.GetKeyDown(KeyCode.U))
-        {
-            KeyChange();
-        }*/
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            //getKeyDownE = true;
-            if(this.GetComponent<PlayerManager>().playerItem.GrabItem != null)
-            {
-                if(this.GetComponent<PlayerManager>().playerItem.GrabItem.itemType == ItemType.EMP || this.GetComponent<PlayerManager>().playerItem.GrabItem.itemType == ItemType.LIGHTTRAP)
-                {
-                    this.GetComponent<PlayerManager>().playerItem.GrabItem.GetComponent<Collider>().enabled = true;
-                }
-            }
-            ItemSpawner _grabItem = this.GetComponent<PlayerManager>().playerItem.GrabItem;
-            if (_grabItem != null)
-            {
-                if (_grabItem.itemType == ItemType.EMP && this.GetComponent<PlayerManager>().playerType == PlayerType.HUMAN)
-                {
-                    EMP emp = _grabItem.GetComponent<EMP>();
-
-                    if (isInEMPZone)
-                    {
-                        emp.chargingSpeed = 15f;
-                        if (emp.isInstalling)
+                        Gun gun = _grabItem.GetComponent<Gun>();
+                        if (gun.currentBattery != 0 && Time.time >= nextTimeToFire)
                         {
-                            emp.InstallCancle();
-                            this.GetComponent<PlayerManager>().isInstalling = false;
-                            this.GetComponent<PlayerManager>().PlayerInstallingSound(this.GetComponent<PlayerManager>().isInstalling);
+                            nextTimeToFire = Time.time + 1 / fireRate;
+                            gun.GetComponent<AudioSource>().PlayOneShot(gun.normalGunSound);
+                            ClientSend.PlayerShootBullet(camTransform.forward);
+                        }
+                    }
+                }
+            }
+            if (Input.GetKeyDown(KeyCode.Mouse0))
+            {
+                /*
+                if(this.GetComponent<PlayerManager>().playerType == PlayerType.HUMAN)
+                {
+                    ItemSpawner _grabItem = this.GetComponent<PlayerManager>().playerItem.GrabItem;
+
+                    if (_grabItem != null && _grabItem.itemType == ItemType.GUN)
+                    {
+                        Gun gun = _grabItem.GetComponent<Gun>();
+                        if (gun.currentBattery != 0)
+                        {
+                            gun.normalGunSound.PlayOneShot(gun.normalGunSound.clip);
+                            ClientSend.PlayerShootBullet(camTransform.forward);
+                        }                  
+                    }
+                }
+                */
+                if (this.GetComponent<PlayerManager>().playerType == PlayerType.CREATURE)
+                {
+                    // this.GetComponent<PlayerManager>().GetComponent<AudioSource>().PlayOneShot(this.GetComponent<PlayerManager>().creatureAttackSound);
+                    // ClientSend.CreatureAttack(camTransform.forward);
+
+                    ClientSend.CreatureAttack(true);
+
+                }
+
+
+            }
+            if (Input.GetKeyDown(KeyCode.Mouse1))
+            {
+                ItemSpawner _grabItem = this.GetComponent<PlayerManager>().playerItem.GrabItem;
+
+                if (_grabItem != null)
+                {
+                    if (this.GetComponent<PlayerManager>().playerType == PlayerType.HUMAN && _grabItem.itemType == ItemType.GUN)
+                    {
+                        Gun gun = _grabItem.GetComponent<Gun>();
+                        if (gun.currentBattery >= 5)
+                        {
+                            gun.GetComponent<AudioSource>().PlayOneShot(gun.empGunSound);
+                            ClientSend.PlayerShootBomb(camTransform.forward);
+                        }
+                    }
+                }
+            }
+            //상호작용(아이템획득, 문열기, 은폐 등
+            if (Input.GetKeyDown(KeyCode.F))
+            {
+                getKeyDownF = true;
+                StartCoroutine(WaitForMilliSec());
+            }
+            if (Input.GetKeyDown(KeyCode.G))
+            {
+                if (this.GetComponent<PlayerManager>().playerItem.GrabItem != null)
+                {
+                    ClientSend.PlayerThrowItem(this.GetComponent<PlayerManager>().playerItem.GrabItem, transform.position);
+                }
+                else
+                {
+                    Debug.Log($"들고있는 아이템이 없습니다");
+                }
+            }
+            if (Input.GetKeyDown(KeyCode.M))
+            {
+                UIManager.instance.map.SetActive(!UIManager.instance.map.activeSelf);
+                Cursor.visible = UIManager.instance.map.activeSelf;
+            }
+            /*
+            if (Input.GetKeyDown(KeyCode.U))
+            {
+                KeyChange();
+            }*/
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                //getKeyDownE = true;
+                if (this.GetComponent<PlayerManager>().playerItem.GrabItem != null)
+                {
+                    if (this.GetComponent<PlayerManager>().playerItem.GrabItem.itemType == ItemType.EMP || this.GetComponent<PlayerManager>().playerItem.GrabItem.itemType == ItemType.LIGHTTRAP)
+                    {
+                        this.GetComponent<PlayerManager>().playerItem.GrabItem.GetComponent<Collider>().enabled = true;
+                    }
+                }
+                ItemSpawner _grabItem = this.GetComponent<PlayerManager>().playerItem.GrabItem;
+                if (_grabItem != null)
+                {
+                    if (_grabItem.itemType == ItemType.EMP && this.GetComponent<PlayerManager>().playerType == PlayerType.HUMAN)
+                    {
+                        EMP emp = _grabItem.GetComponent<EMP>();
+
+                        if (isInEMPZone)
+                        {
+                            emp.chargingSpeed = 15f;
+                            if (emp.isInstalling)
+                            {
+                                emp.InstallCancle();
+                                this.GetComponent<PlayerManager>().isInstalling = false;
+                                this.GetComponent<PlayerManager>().PlayerInstallingSound(this.GetComponent<PlayerManager>().isInstalling);
+                            }
+                            else
+                            {
+                                emp.isInstalling = true;
+                                emp.gaugeCheck = true;
+                                this.GetComponent<PlayerManager>().isInstalling = true;
+                                this.GetComponent<PlayerManager>().PlayerInstallingSound(this.GetComponent<PlayerManager>().isInstalling);
+                            }
                         }
                         else
                         {
-                            emp.isInstalling = true;
-                            emp.gaugeCheck = true;
-                            this.GetComponent<PlayerManager>().isInstalling = true;
-                            this.GetComponent<PlayerManager>().PlayerInstallingSound(this.GetComponent<PlayerManager>().isInstalling);
+                            if (GameManager.instance.trapCount < GameManager.instance.maxEMPTrapCount && this.GetComponent<PlayerManager>().id == Client.instance.myId)
+                            {
+                                emp.chargingSpeed = 40f;
+                                emp.isInstalling = true;
+                                emp.gaugeCheck = true;
+                                this.GetComponent<PlayerManager>().isInstalling = true;
+                                this.GetComponent<PlayerManager>().PlayerInstallingSound(this.GetComponent<PlayerManager>().isInstalling);
+                            }
+                            else
+                            {
+                                Debug.Log("설치 가능한 트랩을 모두 설치했습니다");
+                            }
+
+                        }
+                    }
+                    else if (_grabItem.itemType == ItemType.LIGHTTRAP && this.GetComponent<PlayerManager>().playerType == PlayerType.CREATURE)
+                    {
+
+                        if (!this.GetComponent<PlayerManager>().isCreatureAttack)
+                        {
+                            if (this.GetComponent<PlayerManager>().id == Client.instance.myId)
+                            {
+                                if (GameManager.instance.trapCount < GameManager.instance.maxLightTrapCount)
+                                {
+                                    int _floor = (this.transform.position.y < 8f) ? 1 : 2;
+                                    this.GetComponent<PlayerManager>().isInstalling = true;
+                                    this.GetComponent<PlayerManager>().PlayerInstallingSound(this.GetComponent<PlayerManager>().isInstalling);
+                                    ClientSend.Install(this.transform.position, _grabItem.spawnerId, _floor);
+                                }
+                                else
+                                {
+                                    Debug.Log($"설치 가능한 트랩을 모두 설치했습니다");
+                                }
+
+                            }
                         }
                     }
                     else
                     {
-                        if (GameManager.instance.trapCount < GameManager.instance.maxEMPTrapCount && this.GetComponent<PlayerManager>().id == Client.instance.myId)
-                        {
-                            emp.chargingSpeed = 40f;
-                            emp.isInstalling = true;
-                            emp.gaugeCheck = true;
-                            this.GetComponent<PlayerManager>().isInstalling = true;
-                            this.GetComponent<PlayerManager>().PlayerInstallingSound(this.GetComponent<PlayerManager>().isInstalling);
-                        }
-                        else
-                        {
-                            Debug.Log("설치 가능한 트랩을 모두 설치했습니다");
-                        }
-
-                    }
-                }
-                else if (_grabItem.itemType == ItemType.LIGHTTRAP && this.GetComponent<PlayerManager>().playerType == PlayerType.CREATURE)
-                {
-
-                    if (!this.GetComponent<PlayerManager>().isCreatureAttack)
-                    {
-                        if (this.GetComponent<PlayerManager>().id == Client.instance.myId)
-                        {
-                            if (GameManager.instance.trapCount < GameManager.instance.maxLightTrapCount)
-                            {
-                                int _floor = (this.transform.position.y < 8f) ? 1 : 2;
-                                this.GetComponent<PlayerManager>().isInstalling = true;
-                                this.GetComponent<PlayerManager>().PlayerInstallingSound(this.GetComponent<PlayerManager>().isInstalling);
-                                ClientSend.Install(this.transform.position, _grabItem.spawnerId, _floor);
-                            }
-                            else
-                            {
-                                Debug.Log($"설치 가능한 트랩을 모두 설치했습니다");
-                            }
-
-                        }
+                        Debug.Log($"설치할 수 없는 아이템입니다");
                     }
                 }
                 else
                 {
-                    Debug.Log($"설치할 수 없는 아이템입니다");
+                    Debug.Log($"아이템을 들고있지 않습니다");
+                }
+                //StartCoroutine(WaitForMilliSec());
+            }
+            if (Input.GetKeyDown(KeyCode.C) && this.GetComponent<PlayerManager>().playerType == PlayerType.HUMAN)
+            {
+                if (this.GetComponent<PlayerManager>().hp < this.GetComponent<PlayerManager>().maxHp)
+                {
+                    GameManager.players[Client.instance.myId].isCuring = true;
+                    ClientSend.SkillCure(true);
+                }
+                else
+                {
+                    Debug.Log("체력이 가득 차 있습니다!");
+                }
+
+            }
+
+            if (Input.GetKeyDown(KeyCode.Alpha1))
+            {
+                if (this.GetComponent<PlayerManager>().playerItem.item_number1 != null)
+                {
+                    int _grabItemId = (this.GetComponent<PlayerManager>().playerItem.GrabItem != null) ? this.GetComponent<PlayerManager>().playerItem.GrabItem.spawnerId : -1;
+                    ClientSend.PlayerGrabItem(_grabItemId, this.GetComponent<PlayerManager>().playerItem.item_number1.spawnerId, 1);
                 }
             }
-            else
+            if (Input.GetKeyDown(KeyCode.Alpha2))
             {
-                Debug.Log($"아이템을 들고있지 않습니다");
+                if (this.GetComponent<PlayerManager>().playerItem.item_number2.Count > 0)
+                {
+                    int _grabItemId = (this.GetComponent<PlayerManager>().playerItem.GrabItem != null) ? this.GetComponent<PlayerManager>().playerItem.GrabItem.spawnerId : -1;
+                    ClientSend.PlayerGrabItem(_grabItemId, this.GetComponent<PlayerManager>().playerItem.item_number2[0].spawnerId, 2);
+                }
             }
-            //StartCoroutine(WaitForMilliSec());
-        }
-        if (Input.GetKeyDown(KeyCode.C) && this.GetComponent<PlayerManager>().playerType == PlayerType.HUMAN)
-        {
-            if(this.GetComponent<PlayerManager>().hp < this.GetComponent<PlayerManager>().maxHp)
+            if (Input.GetKeyUp(KeyCode.R))
             {
-                GameManager.players[Client.instance.myId].isCuring = true;
-                ClientSend.SkillCure(true);
-            }
-            else
-            {
-                Debug.Log("체력이 가득 차 있습니다!");
-            }
-            
-        }
-
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            if (this.GetComponent<PlayerManager>().playerItem.item_number1 != null)
-            {
-                int _grabItemId = (this.GetComponent<PlayerManager>().playerItem.GrabItem != null) ? this.GetComponent<PlayerManager>().playerItem.GrabItem.spawnerId : -1;
-                ClientSend.PlayerGrabItem(_grabItemId, this.GetComponent<PlayerManager>().playerItem.item_number1.spawnerId, 1);
-            }
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            if (this.GetComponent<PlayerManager>().playerItem.item_number2.Count > 0)
-            {
-                int _grabItemId = (this.GetComponent<PlayerManager>().playerItem.GrabItem != null) ? this.GetComponent<PlayerManager>().playerItem.GrabItem.spawnerId : -1;
-                ClientSend.PlayerGrabItem(_grabItemId, this.GetComponent<PlayerManager>().playerItem.item_number2[0].spawnerId, 2);
-            }
-        }
-        if (Input.GetKeyUp(KeyCode.R))
-        {
-            ItemSpawner _grabItem = this.GetComponent<PlayerManager>().playerItem.GrabItem;
-            switch (this.GetComponent<PlayerManager>().playerType)
-            {
-                case PlayerType.HUMAN:
-                    if (_grabItem != null && _grabItem.itemType == ItemType.GUN)
-                    {
-                        _grabItem.GetComponent<Gun>().Reloade();
-                    }
-                    else
-                    {
-                        Debug.Log($"총을 들어주세요");
-                    }
-                    break;
-                case PlayerType.CREATURE:
-                    if (_grabItem != null && _grabItem.itemType == ItemType.DRONE && !this.GetComponent<PlayerManager>().isCreatureAttack)
-                    {
-                        if(_grabItem.transform.parent == null)
+                ItemSpawner _grabItem = this.GetComponent<PlayerManager>().playerItem.GrabItem;
+                switch (this.GetComponent<PlayerManager>().playerType)
+                {
+                    case PlayerType.HUMAN:
+                        if (_grabItem != null && _grabItem.itemType == ItemType.GUN)
                         {
-                            _grabItem.transform.SetParent(gameObject.transform);
+                            _grabItem.GetComponent<Gun>().Reloade();
                         }
-                        ClientSend.SkillDrone(_grabItem.spawnerId);
+                        else
+                        {
+                            Debug.Log($"총을 들어주세요");
+                        }
+                        break;
+                    case PlayerType.CREATURE:
+                        if (_grabItem != null && _grabItem.itemType == ItemType.DRONE && !this.GetComponent<PlayerManager>().isCreatureAttack)
+                        {
+                            if (_grabItem.transform.parent == null)
+                            {
+                                _grabItem.transform.SetParent(gameObject.transform);
+                            }
+                            ClientSend.SkillDrone(_grabItem.spawnerId);
+                        }
+                        else
+                        {
+                            Debug.Log($"드론을 들어주세요");
+                        }
+                        break;
+                    default:
+                        break;
+                }
+            }
+            if (Input.GetKeyDown(KeyCode.Q) && !this.GetComponent<PlayerManager>().isCreatureSpeedUp)
+            {
+                if (this.GetComponent<PlayerManager>().playerType == PlayerType.CREATURE && !this.GetComponent<PlayerManager>().isCreatureAttack)
+                {
+                    ClientSend.SpeedUp(GameManager.players[Client.instance.myId]);
+                    this.GetComponent<PlayerManager>().isCreatureSpeedUp = true;
+                }
+            }
+        }
+        else
+        {
+            if (Input.GetKeyDown(KeyCode.M))
+            {
+                UIManager.instance.map.SetActive(!UIManager.instance.map.activeSelf);
+                Cursor.visible = UIManager.instance.map.activeSelf;
+            }
+            KeyCode[] numberKey = { KeyCode.Alpha1, KeyCode.Alpha2, KeyCode.Alpha3, KeyCode.Alpha4, KeyCode.Alpha5 };
+            for (int i=0;i<ItemSpawner.lightTrapList.Count;i++)
+            {
+                if (Input.GetKeyDown(numberKey[i]))
+                {
+                    if (ItemSpawner.lightTrapList.Count < i+1)
+                    {
+                        Debug.Log($"{i + 1}번째 LightTrap이 없습니다");
+                        return;
                     }
                     else
                     {
-                        Debug.Log($"드론을 들어주세요");
+                        Vector3 target = Vector3.zero;
+                        try
+                        {
+                            target = ItemSpawner.lightTrapList[i].trap.transform.position + new Vector3(0, 5f, 0);
+                        }
+                        catch (System.Exception e)
+                        {
+                            //temp 수정해야함
+                            //target = GameManager.instance.drone.transform.position;
+                        }
+                        UIManager.instance.map.SetActive(false);
+                        Cursor.visible = UIManager.instance.map.activeSelf;
+                        ClientSend.SkillTeleportation(target);
+                        break;
                     }
-                    break;
-                default:
-                    break;
-            }
-        }
-        if (Input.GetKeyDown(KeyCode.Q) && !this.GetComponent<PlayerManager>().isCreatureSpeedUp)
-        {
-            if(this.GetComponent<PlayerManager>().playerType == PlayerType.CREATURE && !this.GetComponent<PlayerManager>().isCreatureAttack)
-            {
-                ClientSend.SpeedUp(GameManager.players[Client.instance.myId]);
-                this.GetComponent<PlayerManager>().isCreatureSpeedUp = true;
+                }
             }
         }
     }

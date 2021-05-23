@@ -302,7 +302,7 @@ public class Player : MonoBehaviour
                 {
                     Debug.Log($"Server.clients[{i}].player : {Server.clients[i].player.name}");
                     Server.clients[i].player.controller.enabled = false;
-                }catch(Exception e)
+                }catch (System.Exception e)
                 {
                     break;
                 }
@@ -460,7 +460,7 @@ public class Player : MonoBehaviour
                 ServerSend.CreatureAttackTrue(id, true);
             }
         }
-        catch
+        catch (System.Exception e)
         {
             return;
         }

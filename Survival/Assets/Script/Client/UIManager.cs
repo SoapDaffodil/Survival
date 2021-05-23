@@ -252,7 +252,8 @@ public class UIManager : MonoBehaviour
             {
                 target = ItemSpawner.lightTrapList[buttonNumber - 1].trap.transform.position + new Vector3(0, 5f, 0);
             }
-            catch
+            
+            catch (System.Exception e)
             {
                 //temp 수정해야함
                 //target = GameManager.instance.drone.transform.position;

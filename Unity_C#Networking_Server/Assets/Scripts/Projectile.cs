@@ -45,7 +45,7 @@ public class Projectile : MonoBehaviour
                 ServerSend.KeyChange(collision.gameObject.GetComponentInParent<Player>().id);
             }
         }
-        catch
+        catch (System.Exception e)
         {
             Explode();
         }
