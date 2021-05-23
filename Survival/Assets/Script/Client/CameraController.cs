@@ -36,8 +36,8 @@ public class CameraController : MonoBehaviour
 
     private void Look()
     {
-        float _mouseVertical = -Input.GetAxis("Mouse Y")*5;
-        float _mouseHorizontal = Input.GetAxis("Mouse X")*5;
+        float _mouseVertical = -Input.GetAxis("Mouse Y")*1;
+        float _mouseHorizontal = Input.GetAxis("Mouse X")*1;
 
         verticalRotation += _mouseVertical * sensitivity * Time.deltaTime;
         horizontalRotation += _mouseHorizontal * sensitivity * Time.deltaTime;

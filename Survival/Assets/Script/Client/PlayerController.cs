@@ -86,6 +86,7 @@ public class PlayerController : MonoBehaviour
                 // this.GetComponent<PlayerManager>().GetComponent<AudioSource>().PlayOneShot(this.GetComponent<PlayerManager>().creatureAttackSound);
                 // ClientSend.CreatureAttack(camTransform.forward);
 
+                Debug.Log($"괴물 공격! in Client");
                 ClientSend.CreatureAttack(true);
 
             }

@@ -51,7 +51,7 @@ public class Gun : MonoBehaviour
             {
                 ClientSend.PlayerUseItem(transform.parent.GetComponent<PlayerManager>().playerItem.item_number2[0].spawnerId);
             }
-            catch
+            catch(System.Exception e)
             {
                 Debug.Log($"error - 건을 소유하고 있지 않음");
             }

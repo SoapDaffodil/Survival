@@ -65,7 +65,6 @@ public class Cure : MonoBehaviour
                 GameManager.players[Client.instance.myId].GetComponent<PlayerManager>().isCuring = false;
                 currenGauge = maxGauge;
                 UIManager.instance.hpSlider.gameObject.SetActive(false);
-                UIManager.instance.HPGuage[(int)PlayerType.HUMAN].value += 50;
 
                 ClientSend.Cure(GameManager.players[Client.instance.myId].GetComponent<PlayerManager>().hp);
                 ClientSend.SkillCure(false);

@@ -101,17 +101,15 @@ public class PlayerManager : MonoBehaviour
     /// <param name="_health"></param>
     public void SetHealth(float _health)
     {
-        float currentHp = hp;
         hp = _health;
-
         if (id == Client.instance.myId) {
             if (playerType == PlayerType.CREATURE)
             {
-                UIManager.instance.HPGuage[(int)PlayerType.CREATURE].value -= (currentHp - hp);
+                UIManager.instance.HPGuage[(int)PlayerType.CREATURE].value = _health;
             }
             else
             {
-                UIManager.instance.HPGuage[(int)PlayerType.HUMAN].value -= (currentHp - hp);
+                UIManager.instance.HPGuage[(int)PlayerType.HUMAN].value = _health;
             }
         }
         /*//HP가 0이 되면 죽음

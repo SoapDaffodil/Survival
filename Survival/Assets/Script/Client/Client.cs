@@ -52,10 +52,10 @@ public class Client : MonoBehaviour
     {
         if(instance == null)
         {
-            //ip = "192.168.10.101";
+            ip = "192.168.10.101";
             port = 80;
             
-            ip = "127.0.0.1";
+            //ip = "127.0.0.1";
             //port = 80;
 
             //ip = "127.0.0.1";
@@ -147,7 +147,7 @@ public class Client : MonoBehaviour
                 }
             }
 
-            catch(Exception _ex)
+            catch(System.Exception  _ex)
             {
                 //Debug.Log($"Error sending data to server via TCP: {_ex}");
             }
@@ -173,7 +173,7 @@ public class Client : MonoBehaviour
                 receivedData.Reset(HandleData(_data));
                 stream.BeginRead(receiveBuffer, 0, dataBufferSize, ReceiveCallback, null);
             }
-            catch
+            catch(System.Exception e)
             {
                 Disconnect();
             }
@@ -273,7 +273,7 @@ public class Client : MonoBehaviour
                     socket.BeginSend(_packet.ToArray(), _packet.Length(), null, null);
                 }
             }
-            catch(Exception _ex)
+            catch(System.Exception  _ex)
             {
                 //Debug.Log($"Error sending data to server via UDP: {_ex}");
             }
@@ -297,7 +297,7 @@ public class Client : MonoBehaviour
                 }
                 HandleData(_data);
             }
-            catch
+            catch(System.Exception e)
             {
                 Disconnect();
             }

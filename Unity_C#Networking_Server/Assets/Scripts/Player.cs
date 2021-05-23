@@ -260,11 +260,13 @@ public class Player : MonoBehaviour
         }
     }
     */
+   
     IEnumerator Immortal(float _time, Player _player)
     {
         yield return new WaitForSeconds(_time);
         _player.immortal = false;
     }
+    
 
     /// <summary>투척</summary>
     /// <param name="_viewDirection"></param>
@@ -302,7 +304,7 @@ public class Player : MonoBehaviour
                 {
                     Debug.Log($"Server.clients[{i}].player : {Server.clients[i].player.name}");
                     Server.clients[i].player.controller.enabled = false;
-                }catch(Exception e)
+                }catch(System.Exception e)
                 {
                     break;
                 }
@@ -420,12 +422,13 @@ public class Player : MonoBehaviour
         Debug.Log("이속 원상복귀");
     }
 
+    
     public void EndStun()
     {
        controller.enabled = true;
        Debug.Log("괴물 스턴 종료");
     }
-
+    
     public void OnTriggerEnter(Collider other)
     {
         if (other.tag == "EMP" && playerType == PlayerType.CREATURE && !other.GetComponent<ItemSpawner>().hasItem)
@@ -436,9 +439,11 @@ public class Player : MonoBehaviour
         }
     }
 
+    /*
     public void OnTriggerStay(Collider other)
     {
         Debug.Log($"현재 콜라이더 : {other.gameObject.name}");
+        Debug.Log($"괴물 creatureAttack! : {creatureAttack}");
         try
         {
             Player player = other.transform.parent.GetComponent<Player>();
@@ -446,6 +451,7 @@ public class Player : MonoBehaviour
             {
                 creatureAttack = false;
                 Debug.Log($"괴물 공격 성공! : {player.playerType}");
+                Debug.Log($"괴물 creatureAttack! : {creatureAttack}");
 
                 player.immortal = true;
                 StartCoroutine(Immortal(1f, player));
@@ -459,10 +465,23 @@ public class Player : MonoBehaviour
 
                 ServerSend.CreatureAttackTrue(id, true);
             }
+            else
+            {
+                Invoke("SetCreatureAttackFalse", 0.2f);
+            }
         }
-        catch
+        catch(System.Exception e)
         {
+            Invoke("SetCreatrueAttackFalse", 0.2f);
+            Debug.Log($"괴물 creatureAttack! : {creatureAttack}");
             return;
         }
     }
+    */
+    /*
+    public void SetCreatureAttackFalse()
+    {
+        creatureAttack = false;
+    }
+    */
 }

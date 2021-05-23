@@ -665,6 +665,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8586556777121166634}
   - component: {fileID: 3765719534020995179}
+  - component: {fileID: 512485683359294108}
   m_Layer: 0
   m_Name: CreatureCollider
   m_TagString: Untagged
@@ -700,6 +701,18 @@ CapsuleCollider:
   m_Height: 0.04
   m_Direction: 1
   m_Center: {x: 0, y: 0.025, z: 0}
+--- !u!114 &512485683359294108
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2102525709503704774}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a67ea5fc74eabe4478e8027b73e4b564, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2121770068037141915
 GameObject:
   m_ObjectHideFlags: 0
@@ -1233,8 +1246,7 @@ MonoBehaviour:
   itemAmount: 0
   maxItemAmount: 3
   firePower: 5
-  isCreatureAttackTrue: 0
-  CreatureAttack: 0
+  creatureAttack: 0
 --- !u!143 &2151770456254203086
 CharacterController:
   m_ObjectHideFlags: 0

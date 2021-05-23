@@ -65,9 +65,9 @@ public class Client
                     stream.BeginWrite(_packet.ToArray(), 0, _packet.Length(), null, null);
                 }
             }
-            catch (Exception _ex)
+            catch (System.Exception e)
             {
-                Debug.Log($"Error sending data to player {id} via TCP: {_ex}");
+                Debug.Log($"Error sending data to player {id} via TCP: {e}");
             }
         }
 
@@ -90,9 +90,9 @@ public class Client
                 receivedData.Reset(HandleData(_data));
                 stream.BeginRead(receiveBuffer, 0, dataBufferSize, ReceiveCallback, null);
             }
-            catch (Exception _ex)
+            catch (System.Exception e)
             {
-                Debug.Log($"Error receiveig TCP data: {_ex}");
+                Debug.Log($"Error receiveig TCP data: {e}");
                 Server.clients[id].Disconnect();
             }
         }

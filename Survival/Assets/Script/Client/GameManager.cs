@@ -119,6 +119,10 @@ public class GameManager : MonoBehaviour
                     UIManager.instance.HPBarUI[0].sprite = UIManager.instance.HPBarImage[1];
                 }
             }
+            else
+            {
+                UIManager.instance.HPBarUI[0].sprite = UIManager.instance.HPBarImage[1];
+            }
         }
         else
         {//다른 크라이언트의 플레이어인경우
