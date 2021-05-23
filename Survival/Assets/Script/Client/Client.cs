@@ -146,8 +146,8 @@ public class Client : MonoBehaviour
                     stream.BeginWrite(_packet.ToArray(), 0, _packet.Length(), null, null);
                 }
             }
-
-            catch(System.Exception  _ex)
+            
+            catch (System.Exception e)
             {
                 //Debug.Log($"Error sending data to server via TCP: {_ex}");
             }
@@ -173,7 +173,7 @@ public class Client : MonoBehaviour
                 receivedData.Reset(HandleData(_data));
                 stream.BeginRead(receiveBuffer, 0, dataBufferSize, ReceiveCallback, null);
             }
-            catch(System.Exception e)
+            catch (System.Exception e)
             {
                 Disconnect();
             }
@@ -273,7 +273,7 @@ public class Client : MonoBehaviour
                     socket.BeginSend(_packet.ToArray(), _packet.Length(), null, null);
                 }
             }
-            catch(System.Exception  _ex)
+            catch (System.Exception e)
             {
                 //Debug.Log($"Error sending data to server via UDP: {_ex}");
             }
@@ -297,7 +297,7 @@ public class Client : MonoBehaviour
                 }
                 HandleData(_data);
             }
-            catch(System.Exception e)
+            catch (System.Exception e)
             {
                 Disconnect();
             }

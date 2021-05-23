@@ -453,7 +453,7 @@ public class Packet : IDisposable
             }
             return _value; // Return the string
         }
-        catch(System.Exception e)
+        catch (System.Exception e)
         {
             throw new Exception("Could not read value of type 'string'!");
         }
